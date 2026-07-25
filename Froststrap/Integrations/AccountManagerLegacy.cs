@@ -139,8 +139,13 @@ namespace Froststrap.Integrations
 
                 var info = await AccountManager.FetchUserFromCookieAsync(cookie).ConfigureAwait(false);
                 if (info is null)
-                    return null;
+                {
+                    App.Logger.WriteLine(log, "Cookie captured but authenticated-user lookup failed.");
+                    throw new InvalidOperationException(
+                        "Login succeeded but the account cookie could not be validated. Try again.");
+                }
 
+                App.Logger.WriteLine(log, $"Validated @{info.Value.Username} ({info.Value.UserId}).");
                 return new AccountManagerAccount(cookie, info.Value.UserId, info.Value.Username, info.Value.DisplayName);
             }
             catch (Exception ex)
