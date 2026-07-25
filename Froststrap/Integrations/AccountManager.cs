@@ -229,15 +229,35 @@ namespace Froststrap.Integrations
             return account;
         }
 
+        /// <summary>
+        /// Isolated client for per-account cookie requests. Must not reuse
+        /// <see cref="App.HttpClient"/> — its shared CookieContainer contaminates
+        /// .ROBLOSECURITY across accounts and blocks AltMan saves.
+        /// </summary>
+        private static HttpClient CreateCookieIsolatedClient()
+        {
+            var handler = new HttpClientHandler
+            {
+                UseCookies = false,
+                AutomaticDecompression = DecompressionMethods.All
+            };
+            return new HttpClient(handler);
+        }
+
         public static async Task<(long UserId, string Username, string DisplayName)?> FetchUserFromCookieAsync(string cookie)
         {
             try
             {
+                using var client = CreateCookieIsolatedClient();
                 using var req = new HttpRequestMessage(HttpMethod.Get, "https://users.roblox.com/v1/users/authenticated");
                 req.Headers.TryAddWithoutValidation("Cookie", $".ROBLOSECURITY={cookie}");
-                using var resp = await App.HttpClient.SendAsync(req);
+                using var resp = await client.SendAsync(req);
                 if (!resp.IsSuccessStatusCode)
+                {
+                    App.Logger.WriteLine(LOG_IDENT + "::FetchUser",
+                        $"Authenticated user lookup failed: {(int)resp.StatusCode} {resp.ReasonPhrase}");
                     return null;
+                }
 
                 using var doc = JsonDocument.Parse(await resp.Content.ReadAsStringAsync());
                 long id = doc.RootElement.GetProperty("id").GetInt64();
@@ -287,6 +307,7 @@ namespace Froststrap.Integrations
 
             try
             {
+                using var client = CreateCookieIsolatedClient();
                 using var req = new HttpRequestMessage(HttpMethod.Post, "https://presence.roblox.com/v1/presence/users");
                 req.Headers.TryAddWithoutValidation("Cookie", $".ROBLOSECURITY={account.Cookie}");
                 req.Content = new StringContent(
@@ -294,7 +315,7 @@ namespace Froststrap.Integrations
                     Encoding.UTF8,
                     "application/json");
 
-                using var resp = await App.HttpClient.SendAsync(req);
+                using var resp = await client.SendAsync(req);
                 if (!resp.IsSuccessStatusCode)
                     return;
 
@@ -331,9 +352,10 @@ namespace Froststrap.Integrations
 
             try
             {
+                using var client = CreateCookieIsolatedClient();
                 using var req = new HttpRequestMessage(HttpMethod.Get, "https://usermoderation.roblox.com/v1/not-approved");
                 req.Headers.TryAddWithoutValidation("Cookie", $".ROBLOSECURITY={account.Cookie}");
-                using var resp = await App.HttpClient.SendAsync(req);
+                using var resp = await client.SendAsync(req);
 
                 if ((int)resp.StatusCode == 401 || (int)resp.StatusCode == 403)
                 {
@@ -370,9 +392,10 @@ namespace Froststrap.Integrations
 
             try
             {
+                using var client = CreateCookieIsolatedClient();
                 using var req = new HttpRequestMessage(HttpMethod.Get, "https://apis.roblox.com/user-settings-api/v1/account-insights/age-group");
                 req.Headers.TryAddWithoutValidation("Cookie", $".ROBLOSECURITY={account.Cookie}");
-                using var resp = await App.HttpClient.SendAsync(req);
+                using var resp = await client.SendAsync(req);
                 if (!resp.IsSuccessStatusCode)
                     return;
 
@@ -410,9 +433,10 @@ namespace Froststrap.Integrations
 
             try
             {
+                using var client = CreateCookieIsolatedClient();
                 using var req = new HttpRequestMessage(HttpMethod.Get, "https://voice.roblox.com/v1/settings");
                 req.Headers.TryAddWithoutValidation("Cookie", $".ROBLOSECURITY={account.Cookie}");
-                using var resp = await App.HttpClient.SendAsync(req);
+                using var resp = await client.SendAsync(req);
                 if (!resp.IsSuccessStatusCode)
                 {
                     account.VoiceStatus = "Unknown";
@@ -677,6 +701,7 @@ namespace Froststrap.Integrations
             try
             {
                 string? cookie = Shared.GetRoblosecurityForUser(userId);
+                using var client = CreateCookieIsolatedClient();
                 using var req = new HttpRequestMessage(HttpMethod.Post, "https://presence.roblox.com/v1/presence/users");
                 if (!string.IsNullOrEmpty(cookie))
                     req.Headers.TryAddWithoutValidation("Cookie", $".ROBLOSECURITY={cookie}");
@@ -685,7 +710,7 @@ namespace Froststrap.Integrations
                     Encoding.UTF8,
                     "application/json");
 
-                using var resp = await App.HttpClient.SendAsync(req);
+                using var resp = await client.SendAsync(req);
                 if (!resp.IsSuccessStatusCode)
                     return null;
 
