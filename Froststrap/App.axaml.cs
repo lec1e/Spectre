@@ -403,7 +403,16 @@ public partial class App : Application
 
             if (installLocation == null)
             {
-                if (OperatingSystem.IsWindows())
+                if (LaunchSettings.UninstallFlag.Active)
+                {
+                    // Uninstall without a registry InstallLocation — still wipe the default root.
+                    // Do NOT call DoInstall here or we'd re-create the app during uninstall.
+                    installLocation = Path.Combine(Paths.LocalAppData, ProjectName);
+                    Paths.Initialize(installLocation);
+                    Logger.Initialize(true);
+                    Logger.WriteLine(LOG_IDENT, $"Uninstall with no registry location — targeting '{installLocation}'");
+                }
+                else if (OperatingSystem.IsWindows())
                 {
                     // First run: install into %LOCALAPPDATA%\Eclipse like Froststrap
                     Logger.Initialize(true);
@@ -524,16 +533,23 @@ public partial class App : Application
 
             await Installer.RunMigrations();
 
-            if (!LaunchSettings.BypassUpdateCheck && !OperatingSystem.IsLinux())
+            // Never self-update or re-register while uninstalling — that races cleanup and can
+            // leave Apps & features / LocalAppData looking "still installed".
+            bool isUninstalling = LaunchSettings.UninstallFlag.Active;
+
+            if (!isUninstalling && !LaunchSettings.BypassUpdateCheck && !OperatingSystem.IsLinux())
                 await Installer.HandleUpgrade();
 
-            if (Settings.Prop.AllowCookieAccess)
+            if (!isUninstalling && Settings.Prop.AllowCookieAccess)
                 await Task.Run(Cookies.LoadCookies);
 
             if (OperatingSystem.IsWindows())
             {
-                WindowsRegistry.RegisterApis();
-                WindowsRegistry.RegisterUninstallEntry();
+                if (!isUninstalling)
+                {
+                    WindowsRegistry.RegisterApis();
+                    WindowsRegistry.RegisterUninstallEntry();
+                }
 
                 try
                 {
@@ -554,7 +570,14 @@ public partial class App : Application
             }
             else if (OperatingSystem.IsLinux())
             {
-                LinuxRegistry.RegisterAll();
+                if (!isUninstalling)
+                    LinuxRegistry.RegisterAll();
+            }
+
+            if (isUninstalling
+                && ApplicationLifetime is IClassicDesktopStyleApplicationLifetime uninstallDesktop)
+            {
+                uninstallDesktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             }
 
             PlatformSettings?.ColorValuesChanged += (sender, args) =>
@@ -565,7 +588,7 @@ public partial class App : Application
                 });
             };
 
-            LaunchHandler.ProcessLaunchArgs();
+            await LaunchHandler.ProcessLaunchArgs();
         }
 
         base.OnFrameworkInitializationCompleted();
