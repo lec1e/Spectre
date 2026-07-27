@@ -529,8 +529,9 @@ namespace Froststrap
             // Per-launch override from -versionprofile <id>
             string? overrideId = App.LaunchSettings.VersionProfileFlag.Data;
             VersionProfile? profile = null;
+            bool hadExplicitProfileOverride = !string.IsNullOrEmpty(overrideId);
 
-            if (!string.IsNullOrEmpty(overrideId))
+            if (hadExplicitProfileOverride)
             {
                 profile = App.Settings.Prop.VersionProfiles.FirstOrDefault(p => p.Id == overrideId);
             }
@@ -545,6 +546,10 @@ namespace Froststrap
                 pinnedGuid = profile.VersionGuid;
                 return true;
             }
+
+            // Explicit Latest LIVE (empty VersionGuid) must not fall through to a stale CustomVersionGuid.
+            if (hadExplicitProfileOverride && profile is not null && string.IsNullOrEmpty(profile.VersionGuid))
+                return false;
 
             if (App.Settings.Prop.UseCustomVersion
                 && Utility.VersionGuidValidator.IsWellFormed(App.Settings.Prop.CustomVersionGuid))
@@ -675,12 +680,20 @@ namespace Froststrap
                 _latestVersionGuid = App.Settings.Prop.StudioVersionOverrideHash.Trim();
                 App.Logger.WriteLine(LOG_IDENT, $"Studio version override active: pinned to {_latestVersionGuid}");
             }
+            else if (!IsStudioLaunch
+                && App.LaunchSettings.VersionFlag.Active
+                && !string.IsNullOrEmpty(App.LaunchSettings.VersionFlag.Data))
+            {
+                // Explicit -version always wins (AltMan joins pass the selected/installed GUID here).
+                _latestVersionGuid = App.LaunchSettings.VersionFlag.Data;
+                App.Logger.WriteLine(LOG_IDENT, $"Version set to {_latestVersionGuid} from arguments");
+            }
             else if (!IsStudioLaunch && TryResolvePlayerVersionPin(out string pinnedGuid))
             {
                 _latestVersionGuid = pinnedGuid;
                 App.Logger.WriteLine(LOG_IDENT, $"Versions Manager pin active: {_latestVersionGuid}");
             }
-            else if (!App.LaunchSettings.VersionFlag.Active || string.IsNullOrEmpty(App.LaunchSettings.VersionFlag.Data))
+            else
             {
                 ClientVersion clientVersion;
 
@@ -747,12 +760,6 @@ namespace Froststrap
 
                 _latestVersionGuid = clientVersion.VersionGuid;
                 _latestVersion = Utilities.ParseVersionSafe(clientVersion.Version);
-            }
-            else
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"Version set to {App.LaunchSettings.VersionFlag.Data} from arguments");
-                _latestVersionGuid = App.LaunchSettings.VersionFlag.Data;
-                // we can't determine the version
             }
 
             if (StaticDirectory)

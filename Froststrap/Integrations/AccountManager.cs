@@ -586,8 +586,7 @@ namespace Froststrap.Integrations
 
         /// <summary>
         /// Versions Manager profile the join should pin to: the account's own override when it has
-        /// one, otherwise the globally active profile. Passed per-launch, so it never mutates the
-        /// global selection.
+        /// one, otherwise the globally active profile.
         /// </summary>
         private static string ResolveVersionProfileId(string? accountProfileId)
         {
@@ -598,25 +597,82 @@ namespace Froststrap.Integrations
         }
 
         /// <summary>
+        /// Resolve the exact Roblox client GUID the join must use, from the currently selected
+        /// Versions Manager profile (in-memory), falling back to the installed player build.
+        /// Passing this as <c>-version</c> prevents the child bootstrapper from re-querying CDN
+        /// "latest" and deploying a different build than the one the user has selected / is on.
+        /// </summary>
+        private static string? ResolveVersionGuid(string profileId, out VersionProfile? profile)
+        {
+            profile = null;
+
+            if (!string.IsNullOrEmpty(profileId))
+                profile = App.Settings.Prop.VersionProfiles.FirstOrDefault(p => p.Id == profileId);
+
+            if (profile is not null && VersionGuidValidator.IsWellFormed(profile.VersionGuid))
+                return profile.VersionGuid;
+
+            if (App.Settings.Prop.UseCustomVersion
+                && VersionGuidValidator.IsWellFormed(App.Settings.Prop.CustomVersionGuid))
+                return App.Settings.Prop.CustomVersionGuid;
+
+            // Latest LIVE / no pin: stick to whatever player build is already installed so AltMan
+            // joins don't redeploy a different CDN hash than the one the user is currently on.
+            if (VersionGuidValidator.IsWellFormed(App.PlayerState.Prop.VersionGuid))
+                return App.PlayerState.Prop.VersionGuid;
+
+            return null;
+        }
+
+        /// <summary>
         /// Runs the join through this Froststrap build with an explicit channel and version pin.
         /// Handing the URI to the OS instead would let whichever app currently owns the
         /// <c>roblox-player:</c> association (stock Roblox, another bootstrapper) service the join
         /// from its own install and deploy an unrelated client version.
         /// </summary>
-        private static void LaunchThroughFroststrap(string launchUri, string channel, string versionProfileId)
+        private static void LaunchThroughFroststrap(string launchUri, string channel, string versionProfileId, string? versionGuid)
         {
             const string LOG = LOG_IDENT + "::LaunchThroughFroststrap";
 
-            string appPath = Paths.Application;
-
+            // Prefer the running executable so AltMan always uses this build's bootstrapper,
+            // not a stale Paths.Application left behind by a partial update.
+            string appPath = Paths.Process;
             if (string.IsNullOrEmpty(appPath) || !File.Exists(appPath))
-                appPath = Paths.Process;
+                appPath = Paths.Application;
 
             if (string.IsNullOrEmpty(appPath) || !File.Exists(appPath))
             {
                 App.Logger.WriteLine(LOG, "Froststrap executable unavailable; deferring to the protocol handler");
                 Utilities.ShellExecute(launchUri);
                 return;
+            }
+
+            // Persist in-memory profile selection (e.g. Behaviour dropdown) so the child
+            // process loads the same Versions Manager state, and point the version junction
+            // at the selected profile's install folder before launch.
+            try
+            {
+                App.Settings.Save();
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException(LOG + "::SaveSettings", ex);
+            }
+
+            if (!string.IsNullOrEmpty(versionProfileId))
+            {
+                var profile = App.Settings.Prop.VersionProfiles.FirstOrDefault(p => p.Id == versionProfileId);
+                if (profile is not null && VersionGuidValidator.IsWellFormed(profile.VersionGuid))
+                {
+                    try
+                    {
+                        VersionJunctionManager.SetInstallTarget(profile);
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Logger.WriteException(LOG + "::SetInstallTarget", ex);
+                    }
+                }
             }
 
             var startInfo = new ProcessStartInfo
@@ -635,6 +691,16 @@ namespace Froststrap.Integrations
                 startInfo.ArgumentList.Add("-versionprofile");
                 startInfo.ArgumentList.Add(versionProfileId);
             }
+
+            // Hard pin: bootstrapper uses this GUID instead of Deployment.GetInfo("latest").
+            if (VersionGuidValidator.IsWellFormed(versionGuid))
+            {
+                startInfo.ArgumentList.Add("-version");
+                startInfo.ArgumentList.Add(versionGuid!);
+            }
+
+            App.Logger.WriteLine(LOG,
+                $"Spawning '{appPath}' channel='{channel}' profile='{(string.IsNullOrEmpty(versionProfileId) ? "<none>" : versionProfileId)}' version='{(versionGuid ?? "<cdn-latest>")}'");
 
             try
             {
@@ -679,12 +745,14 @@ namespace Froststrap.Integrations
                 string browserTrackerId = Random.Shared.Next(1_000_000_000, int.MaxValue).ToString();
                 string channel = ResolveLaunchChannel();
                 string profileId = ResolveVersionProfileId(versionProfileId);
+                string? versionGuid = ResolveVersionGuid(profileId, out _);
 
                 string launchUri =
                     $"roblox-player:1+launchmode:play+gameinfo:{ticket}{launcherSegment}+browsertrackerid:{browserTrackerId}+robloxLocale:en_us+gameLocale:en_us+channel:{channel}";
 
-                App.Logger.WriteLine(LOG, $"Launching auth-ticket join for place {placeId} on channel '{channel}', version profile '{(string.IsNullOrEmpty(profileId) ? "<global>" : profileId)}'");
-                LaunchThroughFroststrap(launchUri, channel, profileId);
+                App.Logger.WriteLine(LOG,
+                    $"Launching auth-ticket join for place {placeId} on channel '{channel}', profile '{(string.IsNullOrEmpty(profileId) ? "<global>" : profileId)}', version '{(versionGuid ?? "<cdn-latest>")}'");
+                LaunchThroughFroststrap(launchUri, channel, profileId, versionGuid);
                 return "Success";
             }
             catch (Exception ex)
