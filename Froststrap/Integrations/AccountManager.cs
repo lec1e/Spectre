@@ -562,12 +562,92 @@ namespace Froststrap.Integrations
         }
 
         public static async Task<string> JoinServer(AltManAccount account, long placeId, string jobId = "", bool followUser = false, bool joinVip = false)
-            => await JoinServerInternal(account.Cookie, placeId, jobId, followUser, joinVip);
+            => await JoinServerInternal(account.Cookie, placeId, jobId, followUser, joinVip, account.VersionProfileId);
 
         public static async Task<string> JoinServer(AccountManagerAccount account, long placeId, string jobId = "", bool followUser = false, bool joinVip = false)
-            => await JoinServerInternal(account.SecurityToken, placeId, jobId, followUser, joinVip);
+            => await JoinServerInternal(account.SecurityToken, placeId, jobId, followUser, joinVip, null);
 
-        private static async Task<string> JoinServerInternal(string cookie, long placeId, string jobId, bool followUser, bool joinVip)
+        /// <summary>
+        /// The channel the normal launch path would resolve to. Joins must carry it explicitly:
+        /// an empty <c>channel:</c> segment makes the bootstrapper fall back to production and,
+        /// under <see cref="ChannelChangeMode.Automatic"/>, overwrite the saved player channel.
+        /// </summary>
+        private static string ResolveLaunchChannel()
+        {
+            if (App.Settings.Prop.ForceLiveChannel)
+                return RobloxInterfaces.Deployment.DefaultChannel;
+
+            string channel = App.Settings.Prop.PlayerChannel;
+
+            return string.IsNullOrWhiteSpace(channel)
+                ? RobloxInterfaces.Deployment.DefaultChannel
+                : channel.Trim();
+        }
+
+        /// <summary>
+        /// Versions Manager profile the join should pin to: the account's own override when it has
+        /// one, otherwise the globally active profile. Passed per-launch, so it never mutates the
+        /// global selection.
+        /// </summary>
+        private static string ResolveVersionProfileId(string? accountProfileId)
+        {
+            if (!string.IsNullOrWhiteSpace(accountProfileId))
+                return accountProfileId.Trim();
+
+            return App.Settings.Prop.ActiveVersionProfileId ?? "";
+        }
+
+        /// <summary>
+        /// Runs the join through this Froststrap build with an explicit channel and version pin.
+        /// Handing the URI to the OS instead would let whichever app currently owns the
+        /// <c>roblox-player:</c> association (stock Roblox, another bootstrapper) service the join
+        /// from its own install and deploy an unrelated client version.
+        /// </summary>
+        private static void LaunchThroughFroststrap(string launchUri, string channel, string versionProfileId)
+        {
+            const string LOG = LOG_IDENT + "::LaunchThroughFroststrap";
+
+            string appPath = Paths.Application;
+
+            if (string.IsNullOrEmpty(appPath) || !File.Exists(appPath))
+                appPath = Paths.Process;
+
+            if (string.IsNullOrEmpty(appPath) || !File.Exists(appPath))
+            {
+                App.Logger.WriteLine(LOG, "Froststrap executable unavailable; deferring to the protocol handler");
+                Utilities.ShellExecute(launchUri);
+                return;
+            }
+
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = appPath,
+                UseShellExecute = false
+            };
+
+            startInfo.ArgumentList.Add("-player");
+            startInfo.ArgumentList.Add(launchUri);
+            startInfo.ArgumentList.Add("-channel");
+            startInfo.ArgumentList.Add(channel);
+
+            if (!string.IsNullOrEmpty(versionProfileId))
+            {
+                startInfo.ArgumentList.Add("-versionprofile");
+                startInfo.ArgumentList.Add(versionProfileId);
+            }
+
+            try
+            {
+                Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException(LOG, ex);
+                Utilities.ShellExecute(launchUri);
+            }
+        }
+
+        private static async Task<string> JoinServerInternal(string cookie, long placeId, string jobId, bool followUser, bool joinVip, string? versionProfileId)
         {
             const string LOG = LOG_IDENT + "::JoinServer";
             try
@@ -597,11 +677,14 @@ namespace Froststrap.Integrations
                     : $"+placelauncherurl:{Uri.EscapeDataString(placeLauncher)}";
 
                 string browserTrackerId = Random.Shared.Next(1_000_000_000, int.MaxValue).ToString();
-                string launchUri =
-                    $"roblox-player:1+launchmode:play+gameinfo:{ticket}{launcherSegment}+browsertrackerid:{browserTrackerId}+robloxLocale:en_us+gameLocale:en_us+channel:";
+                string channel = ResolveLaunchChannel();
+                string profileId = ResolveVersionProfileId(versionProfileId);
 
-                App.Logger.WriteLine(LOG, $"Launching auth-ticket join for place {placeId}");
-                Utilities.ShellExecute(launchUri);
+                string launchUri =
+                    $"roblox-player:1+launchmode:play+gameinfo:{ticket}{launcherSegment}+browsertrackerid:{browserTrackerId}+robloxLocale:en_us+gameLocale:en_us+channel:{channel}";
+
+                App.Logger.WriteLine(LOG, $"Launching auth-ticket join for place {placeId} on channel '{channel}', version profile '{(string.IsNullOrEmpty(profileId) ? "<global>" : profileId)}'");
+                LaunchThroughFroststrap(launchUri, channel, profileId);
                 return "Success";
             }
             catch (Exception ex)
