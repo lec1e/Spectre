@@ -290,6 +290,14 @@ namespace Froststrap.UI.ViewModels.Settings
                 {
                     App.Settings.Prop.UseCustomVersion = true;
                     App.Settings.Prop.CustomVersionGuid = profile.VersionGuid;
+                    try
+                    {
+                        VersionJunctionManager.SetInstallTarget(profile);
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Logger.WriteException(LOG_IDENT + "::Activate.SetInstallTarget", ex);
+                    }
                 }
             }
 

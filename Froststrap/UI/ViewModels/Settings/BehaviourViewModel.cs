@@ -101,6 +101,7 @@
                     App.Settings.Prop.UseCustomVersion = true;
                     App.Settings.Prop.CustomVersionGuid = value.VersionGuid;
                 }
+                App.Settings.Save();
                 OnPropertyChanged(nameof(SelectedVersionProfile));
             }
         }
