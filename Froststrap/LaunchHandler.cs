@@ -34,7 +34,7 @@ namespace Froststrap
             }
         }
 
-        public static void ProcessLaunchArgs()
+        public static async Task ProcessLaunchArgs()
         {
             const string LOG_IDENT = "LaunchHandler::ProcessLaunchArgs";
 
@@ -42,7 +42,7 @@ namespace Froststrap
             if (App.LaunchSettings.UninstallFlag.Active)
             {
                 App.Logger.WriteLine(LOG_IDENT, "Opening uninstaller");
-                _ = LaunchUninstaller();
+                await LaunchUninstaller();
             }
             else if (App.LaunchSettings.MenuFlag.Active)
             {
@@ -83,6 +83,16 @@ namespace Froststrap
 
         public static async Task LaunchUninstaller()
         {
+            const string LOG_IDENT = "LaunchHandler::LaunchUninstaller";
+
+            // Prevent Avalonia from shutting down when the uninstall dialog closes —
+            // otherwise DoUninstall / post-exit cleanup never runs and files remain.
+            if (Avalonia.Application.Current?.ApplicationLifetime is
+                Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            }
+
             using var interlock = new InterProcessLock("Uninstaller");
 
             if (!interlock.IsAcquired)
@@ -105,7 +115,7 @@ namespace Froststrap
                 var dialog = new UninstallerDialog();
 
                 var tcs = new TaskCompletionSource();
-                dialog.Closed += (s, e) => tcs.SetResult();
+                dialog.Closed += (sender, e) => tcs.SetResult();
 
                 dialog.Show();
                 await tcs.Task;
@@ -116,13 +126,18 @@ namespace Froststrap
 
             if (!confirmed)
             {
+                App.Logger.WriteLine(LOG_IDENT, "Uninstall cancelled by user.");
                 App.Terminate();
                 return;
             }
 
+            App.Logger.WriteLine(LOG_IDENT, $"Running uninstall (keepData={keepData})");
             await Installer.DoUninstall(keepData);
-            await Frontend.ShowMessageBox(Strings.Bootstrapper_SuccessfullyUninstalled, MessageBoxImage.Information);
-            // Exit immediately so the post-exit cleaner can delete Eclipse.exe (Froststrap pattern).
+
+            if (!App.LaunchSettings.QuietFlag.Active)
+                await Frontend.ShowMessageBox(Strings.Bootstrapper_SuccessfullyUninstalled, MessageBoxImage.Information);
+
+            // Exit immediately so the post-exit cleaner can delete Eclipse.exe.
             App.Terminate();
             Environment.Exit(0);
         }

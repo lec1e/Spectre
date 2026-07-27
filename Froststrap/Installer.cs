@@ -249,6 +249,13 @@ namespace Froststrap
             TryDeleteFile(Path.Combine(installRoot, ".version"));
             TryDeleteFile(Path.Combine(installRoot, "eclipse.png"));
             TryDeleteFile(Path.Combine(installRoot, "froststrap.png"));
+            TryDeleteFile(Path.Combine(installRoot, "PlayerState.json"));
+            TryDeleteFile(Path.Combine(installRoot, "StudioState.json"));
+            TryDeleteFile(Path.Combine(installRoot, "AppStorage.json"));
+            TryDeleteFile(Path.Combine(installRoot, "GlobalSettings.json"));
+            TryDeleteFile(Path.Combine(installRoot, "FastFlags.json"));
+            TryDeleteFile(Path.Combine(installRoot, "accounts.v2.json"));
+            TryDeleteFile(Path.Combine(installRoot, "accounts.json"));
 
             if (Paths.Roblox == Path.Combine(installRoot, "Roblox"))
                 TryDeleteDirectory(Paths.Roblox);
@@ -311,6 +318,7 @@ namespace Froststrap
         {
             const string LOG_IDENT = "Installer::KillOtherEclipseProcesses";
             int self = Environment.ProcessId;
+            bool killedAny = false;
 
             foreach (string name in new[] { App.ProjectName, "Eclipse", "Eclipse-QA", "Froststrap" })
             {
@@ -322,6 +330,8 @@ namespace Froststrap
                             continue;
                         App.Logger.WriteLine(LOG_IDENT, $"Killing leftover {proc.ProcessName} ({proc.Id})");
                         proc.Kill(entireProcessTree: true);
+                        killedAny = true;
+                        try { proc.WaitForExit(3000); } catch { /* ignore */ }
                     }
                     catch (Exception ex)
                     {
@@ -333,6 +343,10 @@ namespace Froststrap
                     }
                 }
             }
+
+            // Give Windows a moment to release file locks on Eclipse.exe / Versions.
+            if (killedAny)
+                Thread.Sleep(750);
         }
 
         private static void TryDeleteFile(string path)
@@ -507,26 +521,40 @@ namespace Froststrap
 
                 File.WriteAllText(scriptPath, sb.ToString());
 
-                // Froststrap uses UseShellExecute=true so the cleaner outlives this process.
-                // Avoid nested `start` quoting (that was dropping the cleanup script).
+                // Detach from Eclipse's process/job so Avalonia shutdown cannot kill the cleaner.
+                // `start "" /min` creates an independent process that outlives this EXE.
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = "cmd.exe",
-                    Arguments = $"/c \"{scriptPath}\"",
+                    Arguments = $"/c start \"\" /min cmd.exe /c \"{scriptPath}\"",
                     UseShellExecute = true,
-                    WindowStyle = ProcessWindowStyle.Hidden
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true
                 });
 
-                // Froststrap backup: fixed delay delete of the EXE if the script path fails.
-                string frostDelete = wipeFolder
-                    ? $"del /f /q \"{Safe(applicationPath)}\" & del /f /q \"{Safe(processPath)}\" & rd /s /q \"{Safe(installRoot)}\""
-                    : $"del /f /q \"{Safe(applicationPath)}\" & del /f /q \"{Safe(processPath)}\"";
+                // Backup delayed wipe in its own script file (avoids nested-quote breakage).
+                string backupPath = Path.Combine(Path.GetTempPath(), $"eclipse-uninstall-backup-{Guid.NewGuid():N}.cmd");
+                var backup = new System.Text.StringBuilder();
+                backup.AppendLine("@echo off");
+                backup.AppendLine("timeout /t 10 /nobreak >NUL");
+                backup.AppendLine($"del /f /q \"{Safe(applicationPath)}\" >NUL 2>&1");
+                backup.AppendLine($"del /f /q \"{Safe(processPath)}\" >NUL 2>&1");
+                if (wipeFolder)
+                {
+                    backup.AppendLine($"rd /s /q \"{Safe(installRoot)}\" >NUL 2>&1");
+                    if (!string.Equals(installRoot, defaultRoot, StringComparison.OrdinalIgnoreCase))
+                        backup.AppendLine($"rd /s /q \"{Safe(defaultRoot)}\" >NUL 2>&1");
+                }
+                backup.AppendLine("del \"%~f0\" >NUL 2>&1");
+                File.WriteAllText(backupPath, backup.ToString());
+
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = "cmd.exe",
-                    Arguments = $"/c timeout /t 8 /nobreak >NUL & {frostDelete}",
+                    Arguments = $"/c start \"\" /min cmd.exe /c \"{backupPath}\"",
                     UseShellExecute = true,
-                    WindowStyle = ProcessWindowStyle.Hidden
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true
                 });
 
                 App.Logger.WriteLine(LOG_IDENT, $"Scheduled post-exit cleanup (wipeFolder={wipeFolder}) via {scriptPath}");
