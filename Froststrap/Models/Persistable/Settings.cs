@@ -39,6 +39,7 @@ namespace Froststrap.Models.Persistable
         public List<string> CleanerDirectories { get; set; } = [];
         public bool BackgroundUpdatesEnabled { get; set; } = false;
         public bool EnableBetterMatchmaking { get; set; } = false;
+        public bool EnableAntiAfk { get; set; } = false;
         public bool JoinSmallerServer { get; set; } = false;
         public int BestRegionAmounts { get; set; } = 5;
         public int MaxServerCheck { get; set; } = 25;

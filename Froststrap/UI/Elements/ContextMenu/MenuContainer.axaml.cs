@@ -26,6 +26,7 @@ namespace Froststrap.UI.Elements.ContextMenu
         private NativeMenuItem? VersionMenuItem;
         private NativeMenuItem? PlaytimeMenuItem;
         private NativeMenuItem? RichPresenceMenuItem;
+        private NativeMenuItem? AntiAfkMenuItem;
         private NativeMenuItem? InviteDeeplinkMenuItem;
         private NativeMenuItem? AutoJoinRegionMenuItem;
         private NativeMenuItem? ServerDetailsMenuItem;
@@ -55,14 +56,16 @@ namespace Froststrap.UI.Elements.ContextMenu
             if (menu == null) return;
             var items = menu.Items.OfType<NativeMenuItem>().ToList();
 
+            // NativeMenuItemSeparator inherits NativeMenuItem, so separators count in this list.
             VersionMenuItem = items.ElementAtOrDefault(0);
             PlaytimeMenuItem = items.ElementAtOrDefault(1);
             RichPresenceMenuItem = items.ElementAtOrDefault(3);
-            InviteDeeplinkMenuItem = items.ElementAtOrDefault(4);
-            AutoJoinRegionMenuItem = items.ElementAtOrDefault(5);
-            ServerDetailsMenuItem = items.ElementAtOrDefault(6);
-            GameHistoryMenuItem = items.ElementAtOrDefault(7);
-            CloseRobloxMenuItem = items.ElementAtOrDefault(9);
+            AntiAfkMenuItem = items.ElementAtOrDefault(4);
+            InviteDeeplinkMenuItem = items.ElementAtOrDefault(5);
+            AutoJoinRegionMenuItem = items.ElementAtOrDefault(6);
+            ServerDetailsMenuItem = items.ElementAtOrDefault(7);
+            GameHistoryMenuItem = items.ElementAtOrDefault(8);
+            CloseRobloxMenuItem = items.ElementAtOrDefault(10);
         }
 
         public MenuContainer(Watcher watcher) : this()
@@ -105,6 +108,12 @@ namespace Froststrap.UI.Elements.ContextMenu
 
                         _watcher?.PlayerRichPresence?.SetVisibility(RichPresenceMenuItem.IsChecked);
                         _watcher?.StudioRichPresence?.SetVisibility(RichPresenceMenuItem.IsChecked);
+                    }
+
+                    if (AntiAfkMenuItem != null)
+                    {
+                        AntiAfkMenuItem.IsChecked = App.Settings.Prop.EnableAntiAfk;
+                        AntiAfkMenuItem.IsVisible = OperatingSystem.IsWindows();
                     }
 
                     VersionMenuItem?.SetValue(NativeMenuItem.HeaderProperty, $"{App.ProjectName} v{App.Version}");
@@ -180,6 +189,16 @@ namespace Froststrap.UI.Elements.ContextMenu
                 _watcher?.PlayerRichPresence?.SetVisibility(isChecked);
                 _watcher?.StudioRichPresence?.SetVisibility(isChecked);
             }
+        }
+
+        private void AntiAfkMenuItem_Click(object? sender, EventArgs e)
+        {
+            if (sender is not NativeMenuItem item)
+                return;
+
+            bool enabled = item.IsChecked;
+            _watcher?.AntiAfk?.SetEnabled(enabled);
+            App.Logger.WriteLine("MenuContainer", $"Anti-AFK toggled via tray: {enabled}");
         }
 
         private async void InviteDeeplinkMenuItem_Click(object? sender, EventArgs e)
