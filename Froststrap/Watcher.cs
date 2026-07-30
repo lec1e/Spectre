@@ -18,6 +18,8 @@ namespace Froststrap
         public readonly PlayerDiscordRichPresence? PlayerRichPresence;
         public readonly StudioDiscordRichPresence? StudioRichPresence;
 
+        public readonly AntiAfkService? AntiAfk;
+
         private readonly CancellationTokenSource _cancellationTokenSource = new();
         private bool _isDisposed = false;
         private int _gameModeHandle = -1;
@@ -93,6 +95,12 @@ namespace Froststrap
 
                 if (_watcherData.LaunchMode == LaunchMode.Player)
                     IntegrationWatcher = new IntegrationWatcher(ActivityWatcher, _watcherData.ProcessId);
+
+                if (_watcherData.LaunchMode == LaunchMode.Player && OperatingSystem.IsWindows())
+                {
+                    AntiAfk = new AntiAfkService();
+                    AntiAfk.Start();
+                }
 
                 _notifyIcon = new(this);
             }
@@ -390,6 +398,7 @@ namespace Froststrap
             }
 
             IntegrationWatcher?.Dispose();
+            AntiAfk?.Dispose();
             _notifyIcon?.Dispose();
             PlayerRichPresence?.Dispose();
             StudioRichPresence?.Dispose();

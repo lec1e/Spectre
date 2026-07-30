@@ -11,6 +11,7 @@
 
 using System.Collections.Concurrent;
 using System.Net.Http.Headers;
+using Froststrap.Utility.RoValra;
 
 namespace Froststrap.Integrations
 {
@@ -483,77 +484,196 @@ namespace Froststrap.Integrations
         {
             try
             {
-                var datacentersResult = await GetDatacentersAsync(cancellationToken);
-                if (datacentersResult == null)
-                    return [];
-
-                var (_, dcMap) = datacentersResult.Value;
-
-                using var httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Froststrap/1.0");
-                var ipinfoJson = await httpClient.GetStringAsync("https://ipinfo.io/json", cancellationToken);
-                var ipinfo = JsonSerializer.Deserialize<IPInfoResponse>(ipinfoJson);
-
-                if (string.IsNullOrEmpty(ipinfo?.Loc))
-                    return [];
-
-                string[] location = ipinfo.Loc.Split(',');
-                double userLat = double.Parse(location[0], CultureInfo.InvariantCulture);
-                double userLon = double.Parse(location[1], CultureInfo.InvariantCulture);
-
-                var datacentersJson = await httpClient.GetStringAsync("https://apis.rovalra.com/v1/datacenters/list", cancellationToken);
-                var datacenters = JsonSerializer.Deserialize<List<DatacenterEntry>>(datacentersJson);
-
-                if (datacenters == null || datacenters.Count == 0)
-                    return [];
-
-                var regionDistance = new Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
-
-                foreach (var dc in datacenters)
+                // Prefer live/estimated ping ranking from RoValra (same pipeline as Region Selector).
+                var ranked = await RegionPingService.GetRegionsAsync(measureLive: true, ct: cancellationToken);
+                if (ranked.Count > 0)
                 {
-                    if (dc.Location == null || dc.Location.LatLong == null || dc.Location.LatLong.Length < 2)
-                        continue;
-
-                    if (!double.TryParse(dc.Location.LatLong[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double lat) ||
-                        !double.TryParse(dc.Location.LatLong[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
-                        continue;
-
-                    double distance = GetDistance(userLat, userLon, lat, lon);
-
-                    string? regionKey = null;
-                    foreach (var dcId in dc.DataCenterIds)
-                    {
-                        if (dcMap.TryGetValue(dcId, out string? region))
-                        {
-                            regionKey = region;
-                            break;
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(regionKey))
-                    {
-                        regionKey = $"{dc.Location.City}, {dc.Location.Country}".TrimStart(',').Trim();
-                        if (string.IsNullOrEmpty(regionKey))
-                            regionKey = "Unknown";
-                    }
-
-                    if (!regionDistance.TryGetValue(regionKey, out double existingDistance) || distance < existingDistance)
-                        regionDistance[regionKey] = distance;
+                    var closest = ranked
+                        .Take(Math.Max(1, topCount))
+                        .Select(r => r.Key)
+                        .ToList();
+                    App.Logger.WriteLine(LOG_IDENT,
+                        $"Top {closest.Count} regions by RoValra ping: {string.Join(", ", ranked.Take(closest.Count).Select(r => r.Label))}");
+                    return closest;
                 }
 
-                var closestRegions = regionDistance
-                    .OrderBy(kvp => kvp.Value)
-                    .Take(topCount)
-                    .Select(kvp => kvp.Key)
-                    .ToList();
-
-                App.Logger.WriteLine("RobloxServerFetcher", $"Top {closestRegions.Count} regions: {string.Join(", ", closestRegions)}");
-                return closestRegions;
+                App.Logger.WriteLine(LOG_IDENT, "RoValra ping ranking empty — falling back to distance heuristic.");
+                return await GetClosestRegionsByDistanceAsync(topCount, cancellationToken);
             }
             catch (Exception ex)
             {
                 App.Logger.WriteException("RobloxServerFetcher::GetClosestRegionsForAutoMode", ex);
                 return [];
+            }
+        }
+
+        private async Task<List<string>> GetClosestRegionsByDistanceAsync(int topCount, CancellationToken cancellationToken)
+        {
+            var datacentersResult = await GetDatacentersAsync(cancellationToken);
+            if (datacentersResult == null)
+                return [];
+
+            var (_, dcMap) = datacentersResult.Value;
+
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Froststrap/1.0");
+            var ipinfoJson = await httpClient.GetStringAsync("https://ipinfo.io/json", cancellationToken);
+            var ipinfo = JsonSerializer.Deserialize<IPInfoResponse>(ipinfoJson);
+
+            if (string.IsNullOrEmpty(ipinfo?.Loc))
+                return [];
+
+            string[] location = ipinfo.Loc.Split(',');
+            double userLat = double.Parse(location[0], CultureInfo.InvariantCulture);
+            double userLon = double.Parse(location[1], CultureInfo.InvariantCulture);
+
+            var datacentersJson = await httpClient.GetStringAsync(DatacenterUrl, cancellationToken);
+            var datacenters = JsonSerializer.Deserialize<List<DatacenterEntry>>(datacentersJson);
+
+            if (datacenters == null || datacenters.Count == 0)
+                return [];
+
+            var regionDistance = new Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var dc in datacenters)
+            {
+                if (dc.Location == null || dc.Location.LatLong == null || dc.Location.LatLong.Length < 2)
+                    continue;
+
+                if (!double.TryParse(dc.Location.LatLong[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double lat) ||
+                    !double.TryParse(dc.Location.LatLong[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
+                    continue;
+
+                double distance = GetDistance(userLat, userLon, lat, lon);
+
+                string? regionKey = null;
+                foreach (var dcId in dc.DataCenterIds)
+                {
+                    if (dcMap.TryGetValue(dcId, out string? region))
+                    {
+                        regionKey = region;
+                        break;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(regionKey))
+                {
+                    regionKey = $"{dc.Location.City}, {dc.Location.Country}".TrimStart(',').Trim();
+                    if (string.IsNullOrEmpty(regionKey))
+                        regionKey = "Unknown";
+                }
+
+                if (!regionDistance.TryGetValue(regionKey, out double existingDistance) || distance < existingDistance)
+                    regionDistance[regionKey] = distance;
+            }
+
+            return regionDistance
+                .OrderBy(kvp => kvp.Value)
+                .Take(topCount)
+                .Select(kvp => kvp.Key)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Picks a joinable server using RoValra region listing ranked by measured/estimated ping.
+        /// Tries the preferred region first (if any), then the next-closest regions until one has servers.
+        /// </summary>
+        public async Task<ServerSelectionResult> FindBestServerViaRoValraAsync(
+            long placeId,
+            string? preferredRegion = null,
+            bool joinSmallerServer = true,
+            int maxRegionsToTry = 8,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var ranked = await RegionPingService.GetRegionsAsync(measureLive: true, ct: cancellationToken);
+                if (ranked.Count == 0)
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "RoValra region ranking returned no regions.");
+                    return new ServerSelectionResult();
+                }
+
+                var tryOrder = new List<RegionPingInfo>();
+
+                if (!string.IsNullOrWhiteSpace(preferredRegion) &&
+                    !preferredRegion.Equals("Auto", StringComparison.OrdinalIgnoreCase) &&
+                    !preferredRegion.Equals(Strings.Common_Auto, StringComparison.OrdinalIgnoreCase))
+                {
+                    var preferred = ranked.FirstOrDefault(r =>
+                        r.Key.Equals(preferredRegion, StringComparison.OrdinalIgnoreCase) ||
+                        r.DisplayName.Equals(preferredRegion, StringComparison.OrdinalIgnoreCase) ||
+                        r.City.Equals(preferredRegion, StringComparison.OrdinalIgnoreCase) ||
+                        preferredRegion.Contains(r.City, StringComparison.OrdinalIgnoreCase));
+
+                    if (preferred is not null)
+                        tryOrder.Add(preferred);
+                    else
+                        App.Logger.WriteLine(LOG_IDENT, $"Preferred region '{preferredRegion}' not in RoValra list — using closest by ping.");
+                }
+
+                foreach (var region in ranked)
+                {
+                    if (tryOrder.Count >= Math.Max(1, maxRegionsToTry))
+                        break;
+                    if (tryOrder.Any(r => r.Key.Equals(region.Key, StringComparison.OrdinalIgnoreCase)))
+                        continue;
+                    tryOrder.Add(region);
+                }
+
+                int rank = 0;
+                foreach (var region in tryOrder)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    rank++;
+
+                    App.Logger.WriteLine(LOG_IDENT,
+                        $"Trying RoValra region #{rank}: {region.Label} ({region.Country}/{region.City})");
+
+                    var resp = await RoValraApi.GetServersByRegionAsync(
+                        placeId, region.Country, region.City, "0", cancellationToken);
+
+                    var servers = resp?.Servers?
+                        .Where(s => !string.IsNullOrWhiteSpace(s.ServerId))
+                        .Where(s => !s.MaxPlayers.HasValue || !s.Playing.HasValue || s.Playing < s.MaxPlayers)
+                        .ToList();
+
+                    if (servers is null || servers.Count == 0)
+                    {
+                        App.Logger.WriteLine(LOG_IDENT, $"No open servers in {region.DisplayName} — trying next closest.");
+                        continue;
+                    }
+
+                    RoValrasServer? best = joinSmallerServer
+                        ? servers.OrderBy(s => s.Playing ?? int.MaxValue).ThenBy(s => s.FirstSeen ?? DateTime.MaxValue).FirstOrDefault()
+                        : servers.OrderByDescending(s => s.Playing ?? 0).ThenBy(s => s.FirstSeen ?? DateTime.MaxValue).FirstOrDefault();
+
+                    best ??= servers[0];
+
+                    App.Logger.WriteLine(LOG_IDENT,
+                        $"Selected {best.ServerId} in {region.DisplayName} (ping {region.PingText}, players {best.Playing}/{best.MaxPlayers})");
+
+                    return new ServerSelectionResult
+                    {
+                        ServerId = best.ServerId,
+                        Region = region.DisplayName,
+                        Rank = rank,
+                        Players = best.Playing ?? 0,
+                        MaxPlayers = best.MaxPlayers ?? 0
+                    };
+                }
+
+                App.Logger.WriteLine(LOG_IDENT, $"No RoValra servers found across {tryOrder.Count} closest regions.");
+                return new ServerSelectionResult();
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException($"{LOG_IDENT}::FindBestServerViaRoValra", ex);
+                return new ServerSelectionResult();
             }
         }
 
@@ -815,18 +935,23 @@ namespace Froststrap.Integrations
                     }
                 }
 
-                var topRegions = await GetClosestRegionsForAutoModeAsync(bestRegionAmounts, cancellationToken);
-                if (topRegions.Count == 0)
-                {
-                    await Frontend.ShowMessageBox("Could not determine your location for Auto mode. Please try again later.", MessageBoxImage.Warning);
-                    return false;
-                }
-
-                var result = await FindBestServerInRegionAsync(placeId, topRegions, joinSmallerServer, maxServerCheck, cookie: cookie, cancellationToken: cancellationToken);
+                var result = await FindBestServerViaRoValraAsync(
+                    placeId,
+                    preferredRegion: null,
+                    joinSmallerServer: joinSmallerServer,
+                    maxRegionsToTry: Math.Max(bestRegionAmounts, 5),
+                    cancellationToken: cancellationToken);
 
                 if (!result.Found)
                 {
-                    await Frontend.ShowMessageBox($"Could not find a suitable server after checking servers in {topRegions.Count} regions.", MessageBoxImage.Information);
+                    var topRegions = await GetClosestRegionsForAutoModeAsync(bestRegionAmounts, cancellationToken);
+                    if (topRegions.Count > 0)
+                        result = await FindBestServerInRegionAsync(placeId, topRegions, joinSmallerServer, maxServerCheck, cookie: cookie, cancellationToken: cancellationToken);
+                }
+
+                if (!result.Found)
+                {
+                    await Frontend.ShowMessageBox("Could not find a suitable server in your closest regions.", MessageBoxImage.Information);
                     return false;
                 }
 

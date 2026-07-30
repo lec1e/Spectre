@@ -881,76 +881,64 @@ namespace Froststrap
         {
             const string LOG_IDENT = "Bootstrapper::GetBetterMatchmakingServerID";
 
-            if (!string.IsNullOrEmpty(App.Settings.Prop.SelectedRegion) &&
-                !App.Settings.Prop.SelectedRegion.Equals("Auto", StringComparison.OrdinalIgnoreCase))
+            var fetcher = new Integrations.RobloxServerFetcher();
+            long placeId = (long)_joinData.PlaceId!;
+            string? preferred = App.Settings.Prop.SelectedRegion;
+            bool hasPreferred = !string.IsNullOrEmpty(preferred) &&
+                !preferred.Equals("Auto", StringComparison.OrdinalIgnoreCase) &&
+                !preferred.Equals(Strings.Common_Auto, StringComparison.OrdinalIgnoreCase);
+
+            // Primary path: RoValra ping-ranked regions → region server list → closest fallback.
+            SetStatus(hasPreferred
+                ? string.Format(Strings.Bootstrapper_Status_SearchingServers, preferred)
+                : string.Format(Strings.Bootstrapper_Status_FindingTopRegions, App.Settings.Prop.BestRegionAmounts));
+
+            var rovalraResult = await fetcher.FindBestServerViaRoValraAsync(
+                placeId,
+                preferredRegion: hasPreferred ? preferred : null,
+                joinSmallerServer: App.Settings.Prop.JoinSmallerServer,
+                maxRegionsToTry: Math.Max(App.Settings.Prop.BestRegionAmounts, 5),
+                cancellationToken: cancellationToken);
+
+            if (rovalraResult.Found)
             {
-                App.Logger.WriteLine(LOG_IDENT, $"User selected specific region: {App.Settings.Prop.SelectedRegion}");
-
-                var selectedRegionFetcher = new Integrations.RobloxServerFetcher();
-                string? selectedRegionCookie = await selectedRegionFetcher.ResolveCookieAsync();
-                if (string.IsNullOrEmpty(selectedRegionCookie))
-                    throw new HttpRequestException("Could not obtain a valid .ROBLOSECURITY cookie");
-
-                SetStatus(string.Format(Strings.Bootstrapper_Status_SearchingServers, App.Settings.Prop.SelectedRegion));
-
-                var selectedRegionResult = await selectedRegionFetcher.FindBestServerInSelectedRegionAsync(
-                    (long)_joinData.PlaceId!,
-                    App.Settings.Prop.SelectedRegion,
-                    App.Settings.Prop.JoinSmallerServer,
-                    App.Settings.Prop.MaxServerCheck,
-                    cookie: selectedRegionCookie,
-                    cancellationToken: cancellationToken);
-
-                if (selectedRegionResult.Found)
-                {
-                    App.Logger.WriteLine(LOG_IDENT, $"Found server in selected region {App.Settings.Prop.SelectedRegion}: {selectedRegionResult.ServerId} (players: {selectedRegionResult.Players})");
-                    return selectedRegionResult.ServerId!;
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, $"No servers found in selected region {App.Settings.Prop.SelectedRegion}. Falling back to Auto mode.");
+                App.Logger.WriteLine(LOG_IDENT,
+                    $"RoValra matchmaking selected {rovalraResult.ServerId} in {rovalraResult.Region} (rank {rovalraResult.Rank}, players: {rovalraResult.Players})");
+                return rovalraResult.ServerId!;
             }
 
             if (cancellationToken.IsCancellationRequested)
             {
-                App.Logger.WriteLine(LOG_IDENT, "Matchmaking was cancelled before auto mode could start.");
+                App.Logger.WriteLine(LOG_IDENT, "Matchmaking was cancelled.");
                 return "";
             }
 
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var autoFetcher = new Integrations.RobloxServerFetcher();
-
-            if (cancellationToken.IsCancellationRequested)
-                return "";
+            // Legacy fallback: cookie-based Roblox server list scrape by datacenter distance.
+            App.Logger.WriteLine(LOG_IDENT, "RoValra found no servers — falling back to legacy region scrape.");
 
             SetStatus(string.Format(Strings.Bootstrapper_Status_FindingTopRegions, App.Settings.Prop.BestRegionAmounts));
-
-            var topRegions = await autoFetcher.GetClosestRegionsForAutoModeAsync(App.Settings.Prop.BestRegionAmounts, cancellationToken);
-
-            if (cancellationToken.IsCancellationRequested)
-                return "";
-
+            var topRegions = await fetcher.GetClosestRegionsForAutoModeAsync(App.Settings.Prop.BestRegionAmounts, cancellationToken);
             if (topRegions.Count == 0)
-                throw new HttpRequestException("No regions found from datacenter list");
+                throw new HttpRequestException("No regions found from RoValra/datacenter list");
 
             if (!string.IsNullOrEmpty(_joinData.JobId))
             {
-                string? defaultRegion = await GetServerRegionAsync(_joinData.JobId, (long)_joinData.PlaceId!, cancellationToken);
-                if (defaultRegion != null && topRegions.Count > 0 &&
+                string? defaultRegion = await GetServerRegionAsync(_joinData.JobId, placeId, cancellationToken);
+                if (defaultRegion != null &&
                     defaultRegion.Equals(topRegions[0], StringComparison.OrdinalIgnoreCase))
                 {
-                    App.Logger.WriteLine(LOG_IDENT, $"Default server is already in the closest region. Keeping it.");
+                    App.Logger.WriteLine(LOG_IDENT, "Default server is already in the closest region. Keeping it.");
                     return _joinData.JobId;
                 }
             }
 
             SetStatus(Strings.Bootstrapper_Status_SearchingNearbyServers);
-            string? autoCookie = await autoFetcher.ResolveCookieAsync();
+            string? autoCookie = await fetcher.ResolveCookieAsync();
             if (string.IsNullOrEmpty(autoCookie))
                 throw new HttpRequestException("Could not obtain a valid .ROBLOSECURITY cookie");
 
-            var autoResult = await autoFetcher.FindBestServerInRegionAsync(
-                (long)_joinData.PlaceId!,
+            var autoResult = await fetcher.FindBestServerInRegionAsync(
+                placeId,
                 topRegions,
                 App.Settings.Prop.JoinSmallerServer,
                 App.Settings.Prop.MaxServerCheck,
