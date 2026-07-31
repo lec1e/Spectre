@@ -69,7 +69,7 @@
   <!-- NuGet packages -->
   <ItemGroup>
     <PackageReference Include="AnimatedImage.Avalonia" Version="2.1.4" />
-    <PackageReference Include="Avalonia" Version="12.0.5" />
+    <PackageReference Include="Avalonia" Version="12.1.1" />
     <PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0-rc1" />
     <PackageReference Include="Avalonia.Desktop" Version="12.0.5" />
     <PackageReference Include="Avalonia.Labs.Notifications" Version="12.0.2" />
