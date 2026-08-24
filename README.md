@@ -1,10 +1,6 @@
 <h1 align="center">Eclipse</h1>
 
 <p align="center">
-  <img src="./.resources/Eclipse.png" height="180" alt="Eclipse application logo"/>
-</p>
-
-<p align="center">
   <a href="https://github.com/lec1e/Eclipse/releases/latest">
     <img src="https://img.shields.io/github/v/release/lec1e/Eclipse?label=latest&color=a855f7" alt="Latest release"/>
   </a>
@@ -19,7 +15,19 @@
 </p>
 
 <p align="center">
-  <img src="./social-preview.png" width="640" alt="Eclipse app branding"/>
+  <img src="./.github/preview/home.png" width="900" alt="Eclipse Home — liquid glass UI"/>
+</p>
+
+<p align="center">
+  <img src="./.github/preview/games.png" width="440" alt="Eclipse Games"/>
+  &nbsp;
+  <img src="./.github/preview/library.png" width="440" alt="Eclipse Library"/>
+</p>
+
+<p align="center">
+  <img src="./.github/preview/mods.png" width="440" alt="Eclipse Mods"/>
+  &nbsp;
+  <img src="./.github/preview/settings.png" width="440" alt="Eclipse Settings"/>
 </p>
 
 ## What’s new vs stock Froststrap
