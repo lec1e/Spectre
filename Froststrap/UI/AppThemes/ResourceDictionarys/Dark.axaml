@@ -13,9 +13,15 @@
 
 	<SolidColorBrush x:Key="NotificationBackgroundColor"   Color="#14121C" />
 
-	<SolidColorBrush x:Key="BrandAccentBrush"              Color="#A855F7" />
-	<SolidColorBrush x:Key="BrandSurfaceBrush"             Color="#14121C" />
-	<SolidColorBrush x:Key="BrandHairlineBrush"            Color="#2A2438" />
-	<SolidColorBrush x:Key="BrandInkBrush"                 Color="#0A0A0F" />
-	<SolidColorBrush x:Key="BrandPurpleBrush"              Color="#C084FC" />
+	<SolidColorBrush x:Key="BrandAccentBrush"              Color="#C084FC" />
+	<SolidColorBrush x:Key="BrandSurfaceBrush"             Color="#12101A" />
+	<SolidColorBrush x:Key="BrandHairlineBrush"            Color="#66A78BFA" />
+	<SolidColorBrush x:Key="BrandInkBrush"                 Color="#07060C" />
+	<SolidColorBrush x:Key="BrandPurpleBrush"              Color="#E879F9" />
+	<SolidColorBrush x:Key="GlassHeaderBrush"              Color="#E012081C" />
+	<SolidColorBrush x:Key="GlassRailBrush"                Color="#D01A0B2E" />
+	<SolidColorBrush x:Key="GlassStageBrush"               Color="#B8140A24" />
+	<SolidColorBrush x:Key="GlassFillBrush"                Color="#C012081C" />
+	<SolidColorBrush x:Key="GlassCardBrush"                Color="#B81A0B2E" />
+	<SolidColorBrush x:Key="GlassBorderBrush"              Color="#88C4B5FD" />
 </ResourceDictionary>

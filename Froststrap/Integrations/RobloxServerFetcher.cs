@@ -537,11 +537,11 @@ namespace Froststrap.Integrations
 
             foreach (var dc in datacenters)
             {
-                if (dc.Location == null || dc.Location.LatLong == null || dc.Location.LatLong.Length < 2)
+                if (dc.Location == null || dc.Location.LatLong.Length < 2)
                     continue;
 
-                if (!double.TryParse(dc.Location.LatLong[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double lat) ||
-                    !double.TryParse(dc.Location.LatLong[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
+                if (!TryGetJsonElementDouble(dc.Location.LatLong[0], out double lat) ||
+                    !TryGetJsonElementDouble(dc.Location.LatLong[1], out double lon))
                     continue;
 
                 double distance = GetDistance(userLat, userLon, lat, lon);
@@ -981,6 +981,24 @@ namespace Froststrap.Integrations
             {
                 App.Logger.WriteException("RobloxServerFetcher::JoinBestServerAsync", ex);
                 return false;
+            }
+        }
+
+        private static bool TryGetJsonElementDouble(JsonElement element, out double value)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.Number:
+                    return element.TryGetDouble(out value);
+                case JsonValueKind.String:
+                    return double.TryParse(
+                        element.GetString(),
+                        NumberStyles.Float,
+                        CultureInfo.InvariantCulture,
+                        out value);
+                default:
+                    value = 0;
+                    return false;
             }
         }
     }

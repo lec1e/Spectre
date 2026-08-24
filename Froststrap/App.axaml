@@ -20,6 +20,7 @@
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/TitleBar.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/CardAction.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/IconButton.axaml" />
+        <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/LiquidGlassPanel.axaml" />
 
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 
@@ -47,13 +48,15 @@
             <FontFamily x:Key="BuilderIconsRegular">avares://Eclipse/Resources/Fonts#BuilderIcons-Regular</FontFamily>
             <FontFamily x:Key="BuilderIconsFilled">avares://Eclipse/Resources/Fonts#BuilderIcons-Filled</FontFamily>
 
-            <SolidColorBrush x:Key="BrandInkBrush" Color="#07060C" />
-            <SolidColorBrush x:Key="BrandAccentBrush" Color="#C084FC" />
-            <SolidColorBrush x:Key="BrandHairlineBrush" Color="#2E2640" />
-            <SolidColorBrush x:Key="GlassHeaderBrush" Color="#AA07060C" />
-            <SolidColorBrush x:Key="GlassRailBrush" Color="#9907060C" />
-            <SolidColorBrush x:Key="GlassStageBrush" Color="#5512101A" />
-            <SolidColorBrush x:Key="GlassFillBrush" Color="#6612101A" />
+            <SolidColorBrush x:Key="BrandInkBrush" Color="#05060C" />
+            <SolidColorBrush x:Key="BrandAccentBrush" Color="#C4B5FD" />
+            <SolidColorBrush x:Key="BrandHairlineBrush" Color="#66FFFFFF" />
+            <SolidColorBrush x:Key="GlassHeaderBrush" Color="#E007080F" />
+            <SolidColorBrush x:Key="GlassRailBrush" Color="#D006070D" />
+            <SolidColorBrush x:Key="GlassStageBrush" Color="#B8080A12" />
+            <SolidColorBrush x:Key="GlassFillBrush" Color="#C0070812" />
+            <SolidColorBrush x:Key="GlassCardBrush" Color="#C0080A12" />
+            <SolidColorBrush x:Key="GlassBorderBrush" Color="#66FFFFFF" />
 
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
             <converters:EnumNameConverter x:Key="EnumNameConverter" />

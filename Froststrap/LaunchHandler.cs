@@ -439,7 +439,8 @@ namespace Froststrap
 
             try
             {
-                string? code = await Utility.VipServerPicker.PickAsync(placeId.Value);
+                var dialog = new VipServerPickerDialog(placeId.Value);
+                string? code = await dialog.ShowDialog<string?>(GetOwnerWindow());
                 if (!string.IsNullOrEmpty(code))
                 {
                     App.LaunchSettings.RobloxLaunchArgs = Utility.LaunchArgsUtility.AppendAccessCode(args, code);

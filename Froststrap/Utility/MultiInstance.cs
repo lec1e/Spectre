@@ -139,16 +139,20 @@ namespace Froststrap.Utility
 
             try
             {
-                if (!SingletonEventExists())
-                    return;
-
-                App.Logger.WriteLine(LOG_IDENT, "A running client holds the singleton event — sweeping it before launch.");
-                SweepSingletonEvents();
+                if (SingletonEventExists())
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "A running client holds the singleton event — sweeping it before launch.");
+                    SweepSingletonEvents();
+                }
             }
             catch (Exception ex)
             {
                 App.Logger.WriteException(LOG_IDENT + "::Prepare", ex);
             }
+
+            // Safety net behind this launch: if the newly-started client became primary and creates
+            // ROBLOX_singletonEvent slightly after we swept, close it before the next launch.
+            ScheduleSingletonSweep();
         }
 
         // Safety net behind the held mutex: if the client we just launched still became the

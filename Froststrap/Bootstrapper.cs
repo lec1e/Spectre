@@ -1102,9 +1102,16 @@ namespace Froststrap
                     await ApplyFastFlagsBasedOnPlaceId(_joinData.PlaceId.Value, contentDirectory);
                 }
 
-                bool isRobloxUri = _launchCommandLine.StartsWith("roblox://", StringComparison.Ordinal);
-                if (isRobloxUri)
-                    App.Logger.WriteLine(LOG_IDENT, "Joining through roblox:// URI - skipping Better Matchmaking");
+                bool hasAccessCode = !string.IsNullOrWhiteSpace(LaunchArgsUtility.TryExtractAccessCode(_launchCommandLine));
+                bool eligibleForBetterMatchmaking =
+                    App.Settings.Prop.EnableBetterMatchmaking &&
+                    !hasAccessCode &&
+                    _joinData.PlaceId != null &&
+                    (_joinData.JoinType == GameJoinType.RequestGame || _joinData.JoinType == GameJoinType.RequestGameJob);
+
+                if (!eligibleForBetterMatchmaking)
+                    App.Logger.WriteLine(LOG_IDENT,
+                        $"Skipping Better Matchmaking (joinType={_joinData.JoinType}, accessCode={(hasAccessCode ? "yes" : "no")})");
                 else
                 {
                     bool isFollowUser = false;
@@ -1137,10 +1144,7 @@ namespace Froststrap
 
                     try
                     {
-                        if (App.Settings.Prop.EnableBetterMatchmaking &&
-                            _joinData.JoinType == GameJoinType.RequestGame &&
-                            _joinData.PlaceId != null &&
-                            !isFollowUser)
+                        if (!isFollowUser)
                         {
                             if (_skipMatchmaking)
                             {
@@ -1323,9 +1327,16 @@ namespace Froststrap
                 await ApplyFastFlagsBasedOnPlaceId(_joinData.PlaceId.Value, contentDirectory);
             }
 
-            bool isRobloxUri = _launchCommandLine.StartsWith("roblox://", StringComparison.Ordinal);
-            if (isRobloxUri)
-                App.Logger.WriteLine(LOG_IDENT, "Joining through roblox:// URI - skipping Better Matchmaking");
+            bool hasAccessCode = !string.IsNullOrWhiteSpace(LaunchArgsUtility.TryExtractAccessCode(_launchCommandLine));
+            bool eligibleForBetterMatchmaking =
+                App.Settings.Prop.EnableBetterMatchmaking &&
+                !hasAccessCode &&
+                _joinData.PlaceId != null &&
+                (_joinData.JoinType == GameJoinType.RequestGame || _joinData.JoinType == GameJoinType.RequestGameJob);
+
+            if (!eligibleForBetterMatchmaking)
+                App.Logger.WriteLine(LOG_IDENT,
+                    $"Skipping Better Matchmaking (joinType={_joinData.JoinType}, accessCode={(hasAccessCode ? "yes" : "no")})");
             else
             {
                 bool isFollowUser = false;
@@ -1358,10 +1369,7 @@ namespace Froststrap
 
                 try
                 {
-                    if (App.Settings.Prop.EnableBetterMatchmaking &&
-                        _joinData.JoinType == GameJoinType.RequestGame &&
-                        _joinData.PlaceId != null &&
-                        !isFollowUser)
+                    if (!isFollowUser)
                     {
                         if (_skipMatchmaking)
                         {

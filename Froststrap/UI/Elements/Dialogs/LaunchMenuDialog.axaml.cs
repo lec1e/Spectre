@@ -1,4 +1,6 @@
-﻿using Froststrap.UI.ViewModels.Dialogs;
+﻿using Avalonia.Controls;
+using Avalonia.Media;
+using Froststrap.UI.ViewModels.Dialogs;
 
 namespace Froststrap.UI.Elements.Dialogs
 {
@@ -12,6 +14,15 @@ namespace Froststrap.UI.Elements.Dialogs
         public LaunchMenuDialog()
         {
             InitializeComponent();
+
+            TransparencyLevelHint =
+            [
+                WindowTransparencyLevel.AcrylicBlur,
+                WindowTransparencyLevel.Mica,
+                WindowTransparencyLevel.Blur,
+                WindowTransparencyLevel.None
+            ];
+            Background = Brushes.Transparent;
 
             var viewModel = new LaunchMenuViewModel();
 

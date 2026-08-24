@@ -9,6 +9,7 @@
 */
 
 using Froststrap.RobloxInterfaces;
+using Froststrap.Utility;
 
 namespace Froststrap.Models.Entities
 {
@@ -42,14 +43,11 @@ namespace Froststrap.Models.Entities
 
                 foreach (var group in response.SearchResults)
                 {
-                    if (results.Count >= 5) break;
-
-                    if (group.Contents is null) continue;
+                    if (group.Contents is null)
+                        continue;
 
                     foreach (var item in group.Contents)
                     {
-                        if (results.Count >= 5) break;
-
                         if (item.UniverseId == 0 || !seenUniverses.Add(item.UniverseId))
                             continue;
 
@@ -62,6 +60,18 @@ namespace Froststrap.Models.Entities
                         });
                     }
                 }
+
+                // Prefer names that actually match the typed words (not just Roblox popularity order).
+                var ranked = results
+                    .Select(r => (Item: r, Score: GameNameMatch.Score(r.Name, searchQuery)))
+                    .OrderByDescending(x => x.Score)
+                    .ThenByDescending(x => x.Item.PlayerCount ?? 0)
+                    .ToList();
+
+                if (ranked.Any(x => x.Score > 0))
+                    ranked = ranked.Where(x => x.Score > 0).ToList();
+
+                return ranked.Take(12).Select(x => x.Item).ToList();
             }
             catch (Exception ex)
             {
@@ -122,7 +132,14 @@ namespace Froststrap.Models.Entities
                         }
                     }
 
-                    return (results, nextCursor);
+                    var ranked = results
+                        .Select(r => (Item: r, Score: GameNameMatch.Score(r.Name, keyword)))
+                        .OrderByDescending(x => x.Score)
+                        .ThenByDescending(x => x.Item.PlayerCount ?? 0)
+                        .Select(x => x.Item)
+                        .ToList();
+
+                    return (ranked, nextCursor);
                 }
             }
             catch (Exception ex)

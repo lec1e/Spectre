@@ -7,76 +7,61 @@
              Background="Transparent">
 
   <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-    <StackPanel Margin="28,20,24,28" Spacing="24">
+    <StackPanel Margin="28,20,28,28" Spacing="28">
 
-      <!-- HERO -->
-      <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="6"
-                  MaxWidth="560">
-        <TextBlock Text="{Binding Greeting}" FontSize="14" FontWeight="Medium"
-                   Foreground="#CBD5E1" HorizontalAlignment="Left" TextAlignment="Left" />
-        <TextBlock Text="{Binding DisplayName}" FontSize="42" FontWeight="Bold"
-                   Margin="0,-2,0,0" HorizontalAlignment="Left" TextAlignment="Left">
+      <!-- HERO — open, no boxed card -->
+      <StackPanel Spacing="8" MaxWidth="640">
+        <TextBlock Text="{Binding Greeting}" FontSize="13" FontWeight="Medium"
+                   Foreground="#B8A0D8" />
+        <TextBlock Text="{Binding DisplayName}" FontSize="38" FontWeight="Bold"
+                   Margin="0,-4,0,0">
           <TextBlock.Foreground>
             <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-              <GradientStop Color="#C4B5FD" Offset="0" />
-              <GradientStop Color="#A78BFA" Offset="0.35" />
+              <GradientStop Color="#F8F0FF" Offset="0" />
+              <GradientStop Color="#C084FC" Offset="0.45" />
               <GradientStop Color="#67E8F9" Offset="1" />
             </LinearGradientBrush>
           </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock Text="{Binding Tagline}" FontSize="14" FontWeight="Medium"
-                   Foreground="#94A3B8" HorizontalAlignment="Left" TextAlignment="Left"
-                   TextWrapping="Wrap" />
+        <TextBlock Text="{Binding Tagline}" FontSize="14"
+                   Foreground="#9B8AB8" TextWrapping="Wrap" MaxWidth="480" />
 
-        <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,14,0,0"
-                    HorizontalAlignment="Left" VerticalAlignment="Center">
-          <Button Classes="eclipse-primary" Width="168" Height="44" Padding="0" CornerRadius="12"
-                  BorderThickness="0" VerticalAlignment="Center"
-                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                  Command="{Binding LaunchRobloxCommand}">
+        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,12,0,0">
+          <Button Classes="eclipse-primary" Width="160" Height="42" Padding="0" CornerRadius="12"
+                  BorderThickness="0" Command="{Binding LaunchRobloxCommand}">
             <StackPanel Orientation="Horizontal" Spacing="8"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
-              <ic:Lucide Icon="Play" Width="16" Height="16" StrokeBrush="White"
-                         VerticalAlignment="Center" />
-              <TextBlock Text="Launch Roblox" FontWeight="SemiBold" Foreground="White"
-                         VerticalAlignment="Center" />
+              <ic:Lucide Icon="Play" Width="15" Height="15" StrokeBrush="White" />
+              <TextBlock Text="Launch Roblox" FontWeight="SemiBold" Foreground="White" />
             </StackPanel>
           </Button>
-          <Button Classes="eclipse-ghost" Width="148" Height="44" Padding="0" CornerRadius="12"
-                  VerticalAlignment="Center"
-                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+          <Button Classes="eclipse-ghost" Width="140" Height="42" Padding="0" CornerRadius="12"
                   Command="{Binding OpenFolderCommand}">
             <StackPanel Orientation="Horizontal" Spacing="8"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
-              <ic:Lucide Icon="Folder" Width="16" Height="16" StrokeBrush="#F1F5F9"
-                         VerticalAlignment="Center" />
-              <TextBlock Text="Open Folder" Foreground="#F1F5F9" VerticalAlignment="Center" />
+              <ic:Lucide Icon="Folder" Width="15" Height="15" StrokeBrush="#E9D5FF" />
+              <TextBlock Text="Open Folder" Foreground="#E9D5FF" />
             </StackPanel>
           </Button>
         </StackPanel>
       </StackPanel>
 
       <!-- RECENTLY PLAYED -->
-      <StackPanel Spacing="12">
+      <StackPanel Spacing="14">
         <Grid ColumnDefinitions="*,Auto">
-          <StackPanel Orientation="Horizontal" Spacing="8">
-            <ic:Lucide Icon="Clock" Width="16" Height="16" Opacity="0.75"
-                       VerticalAlignment="Center" StrokeBrush="#CBD5E1" />
-            <TextBlock Text="Recently Played" FontSize="17" FontWeight="SemiBold" Foreground="#F8FAFC" />
-          </StackPanel>
+          <TextBlock Text="Recently Played" FontSize="15" FontWeight="SemiBold" Foreground="#F3E8FF" />
           <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Padding="0"
                   Command="{Binding OpenQuickPlayCommand}">
-            <TextBlock Text="View All ›" FontSize="13" Foreground="#A78BFA" />
+            <TextBlock Text="View all" FontSize="12.5" Foreground="#C084FC" />
           </Button>
         </Grid>
 
-        <Border IsVisible="{Binding HasNoRecentGames}" Height="100" CornerRadius="14"
-                BorderBrush="#22FFFFFF" BorderThickness="1" Background="#140B0B12"
-                Padding="18">
-          <StackPanel VerticalAlignment="Center" Spacing="4">
-            <TextBlock Text="No recent games yet" FontSize="14" FontWeight="SemiBold" Foreground="#E2E8F0" />
-            <TextBlock Text="Play something with Eclipse tracking on, or sign in via AltMan to pull Roblox history."
-                       FontSize="12" Foreground="#9AA3B5" TextWrapping="Wrap" />
+        <Border IsVisible="{Binding HasNoRecentGames}" Height="88" CornerRadius="14"
+                Background="#33000000" BorderBrush="#22FFFFFF" BorderThickness="1" Padding="16">
+          <StackPanel VerticalAlignment="Center" Spacing="3">
+            <TextBlock Text="No recent games yet" FontSize="13.5" FontWeight="SemiBold" Foreground="#E9D5FF" />
+            <TextBlock Text="Play with Eclipse tracking on to build your history."
+                       FontSize="12" Foreground="#8B7AA8" />
           </StackPanel>
         </Border>
 
@@ -88,32 +73,31 @@
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="vm:HomeGameCard">
-              <Border Height="148" Margin="0,0,12,0" CornerRadius="14" ClipToBounds="True"
-                      BorderBrush="#22FFFFFF" BorderThickness="1" Background="#1A0B0B12">
+              <Border Height="136" Margin="0,0,10,0" CornerRadius="14" ClipToBounds="True"
+                      BorderBrush="#33FFFFFF" BorderThickness="1">
                 <Panel>
                   <Border Background="{Binding TintBrush}" />
                   <Image Stretch="UniformToFill" IsVisible="{Binding HasImage}"
                          Source="{Binding ImageUrl, Converter={StaticResource UrlToBitmapConverter}}" />
-                  <Border Background="#44000000" />
                   <Border>
                     <Border.Background>
-                      <LinearGradientBrush StartPoint="50%,25%" EndPoint="50%,100%">
+                      <LinearGradientBrush StartPoint="50%,30%" EndPoint="50%,100%">
                         <GradientStop Color="#00000000" Offset="0" />
-                        <GradientStop Color="#F0000000" Offset="1" />
+                        <GradientStop Color="#F00A0612" Offset="1" />
                       </LinearGradientBrush>
                     </Border.Background>
                   </Border>
-                  <Grid Margin="12" ColumnDefinitions="*,Auto" VerticalAlignment="Bottom">
-                    <StackPanel Spacing="2" Margin="0,0,8,0">
-                      <TextBlock Text="{Binding Name}" FontSize="13.5" FontWeight="SemiBold"
+                  <Grid Margin="11" ColumnDefinitions="*,Auto" VerticalAlignment="Bottom">
+                    <StackPanel Spacing="2" Margin="0,0,6,0">
+                      <TextBlock Text="{Binding Name}" FontSize="12.5" FontWeight="SemiBold"
                                  Foreground="White" TextTrimming="CharacterEllipsis" />
-                      <TextBlock Text="{Binding Subtitle}" FontSize="11" Foreground="#B0B8C8" />
+                      <TextBlock Text="{Binding Subtitle}" FontSize="10.5" Foreground="#C4B5FD" Opacity="0.8" />
                     </StackPanel>
-                    <Button Grid.Column="1" Classes="eclipse-primary" Width="32" Height="32" Padding="0" CornerRadius="16"
+                    <Button Grid.Column="1" Classes="eclipse-primary" Width="30" Height="30" Padding="0" CornerRadius="15"
                             BorderThickness="0" VerticalAlignment="Bottom"
                             Command="{Binding $parent[UserControl].((vm:HomeDashboardViewModel)DataContext).PlayPlaceCommand}"
                             CommandParameter="{Binding PlaceId}">
-                      <ic:Lucide Icon="Play" Width="13" Height="13" StrokeBrush="White"
+                      <ic:Lucide Icon="Play" Width="12" Height="12" StrokeBrush="White"
                                  HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Button>
                   </Grid>
@@ -124,115 +108,88 @@
         </ItemsControl>
       </StackPanel>
 
-      <!-- FEATURED | NEWS -->
-      <Grid ColumnDefinitions="1.4*,*" ColumnSpacing="14" MinHeight="250">
-        <Border Grid.Column="0" Padding="16" CornerRadius="16"
-                Background="#99101018" BorderBrush="#28FFFFFF" BorderThickness="1">
-          <DockPanel>
-            <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,14">
-              <StackPanel Spacing="2">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                  <ic:Lucide Icon="Star" Width="15" Height="15" StrokeBrush="#FBBF24" VerticalAlignment="Center" />
-                  <TextBlock Text="Featured" FontSize="17" FontWeight="SemiBold" Foreground="#F8FAFC" />
-                </StackPanel>
-                <TextBlock Text="Hand-picked experiences" FontSize="12" Foreground="#7C8499" Margin="23,0,0,0" />
-              </StackPanel>
-              <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Padding="0"
-                      VerticalAlignment="Top" Command="{Binding OpenQuickPlayCommand}">
-                <TextBlock Text="Explore ›" FontSize="13" Foreground="#A78BFA" />
-              </Button>
-            </Grid>
-
-            <ItemsControl ItemsSource="{Binding FeaturedGames}">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="vm:HomeFeaturedItem">
-                  <Border Margin="0,0,0,10" Padding="11" CornerRadius="12"
-                          Background="#330B0B12" BorderBrush="#18FFFFFF" BorderThickness="1">
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                      <Border Width="78" Height="52" CornerRadius="10" ClipToBounds="True" Background="#220B0B12">
-                        <Panel>
-                          <Border Background="{Binding TintBrush}" />
-                          <Image Stretch="UniformToFill" IsVisible="{Binding HasImage}"
-                                 Source="{Binding ImageUrl, Converter={StaticResource UrlToBitmapConverter}}" />
-                        </Panel>
-                      </Border>
-                      <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13.5"
-                                   Foreground="#F1F5F9" TextTrimming="CharacterEllipsis" />
-                        <TextBlock Text="{Binding Description}" FontSize="11.5" Foreground="#8B92A8"
-                                   TextTrimming="CharacterEllipsis" />
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                          <StackPanel Orientation="Horizontal" Spacing="4">
-                            <ic:Lucide Icon="ThumbsUp" Width="12" Height="12" Opacity="0.6" StrokeBrush="#CBD5E1" />
-                            <TextBlock Text="{Binding Rating}" FontSize="11" Foreground="#A8B0C0" />
-                          </StackPanel>
-                          <StackPanel Orientation="Horizontal" Spacing="4">
-                            <ic:Lucide Icon="Users" Width="12" Height="12" Opacity="0.6" StrokeBrush="#CBD5E1" />
-                            <TextBlock Text="{Binding Players}" FontSize="11" Foreground="#A8B0C0" />
-                          </StackPanel>
-                        </StackPanel>
-                      </StackPanel>
-                      <Button Grid.Column="2" Classes="eclipse-ghost" Height="32" MinWidth="70" Padding="12,0"
-                              CornerRadius="9" VerticalAlignment="Center"
-                              BorderBrush="#8B5CF6" BorderThickness="1.5"
-                              Foreground="#C4B5FD" Content="Play" FontWeight="SemiBold"
-                              Command="{Binding $parent[UserControl].((vm:HomeDashboardViewModel)DataContext).PlayPlaceCommand}"
-                              CommandParameter="{Binding PlaceId}" />
-                    </Grid>
-                  </Border>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-          </DockPanel>
-        </Border>
-
-        <Border Grid.Column="1" Padding="16" CornerRadius="16"
-                Background="#99101018" BorderBrush="#28FFFFFF" BorderThickness="1">
-          <DockPanel>
-            <StackPanel DockPanel.Dock="Top" Spacing="2" Margin="0,0,0,12">
-              <StackPanel Orientation="Horizontal" Spacing="8">
-                <ic:Lucide Icon="Radio" Width="15" Height="15" StrokeBrush="#A78BFA" VerticalAlignment="Center" />
-                <TextBlock Text="News" FontSize="17" FontWeight="SemiBold" Foreground="#F8FAFC" />
-              </StackPanel>
-              <TextBlock Text="Stay up to date" FontSize="12" Foreground="#7C8499" Margin="23,0,0,0" />
-            </StackPanel>
-
-            <Button DockPanel.Dock="Bottom" Margin="0,8,0,0"
-                    Background="Transparent" BorderThickness="0" Padding="0"
-                    HorizontalAlignment="Left" Command="{Binding OpenNewsCommand}">
-              <TextBlock Text="View All News ›" FontSize="13" Foreground="#A78BFA" />
+      <!-- FEATURED | NEWS — lighter panels, less visual noise -->
+      <Grid ColumnDefinitions="1.35*,*" ColumnSpacing="20" MinHeight="240">
+        <StackPanel Grid.Column="0" Spacing="12">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="Featured" FontSize="15" FontWeight="SemiBold" Foreground="#F3E8FF" />
+            <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Padding="0"
+                    Command="{Binding OpenQuickPlayCommand}">
+              <TextBlock Text="Explore" FontSize="12.5" Foreground="#C084FC" />
             </Button>
+          </Grid>
 
-            <ItemsControl ItemsSource="{Binding NewsItems}">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="vm:HomeNewsItem">
-                  <Border Margin="0,0,0,8" Padding="10" CornerRadius="11" Background="#280B0B12">
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
-                      <Border Width="34" Height="34" CornerRadius="9">
-                        <Border.Background>
-                          <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                            <GradientStop Color="#8B5CF6" Offset="0" />
-                            <GradientStop Color="#4F46E5" Offset="1" />
-                          </LinearGradientBrush>
-                        </Border.Background>
-                        <ic:Lucide Icon="{Binding Icon}" Width="15" Height="15" StrokeBrush="White"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-                      </Border>
-                      <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12.5"
-                                   Foreground="#F1F5F9" TextTrimming="CharacterEllipsis" />
-                        <TextBlock Text="{Binding Subtitle}" FontSize="11" Foreground="#8B92A8"
-                                   TextTrimming="CharacterEllipsis" />
-                      </StackPanel>
-                      <TextBlock Grid.Column="2" Text="{Binding When}" FontSize="11"
-                                 Foreground="#6B7280" VerticalAlignment="Top" Margin="0,1,0,0" />
-                    </Grid>
-                  </Border>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-          </DockPanel>
-        </Border>
+          <ItemsControl ItemsSource="{Binding FeaturedGames}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:HomeFeaturedItem">
+                <Border Margin="0,0,0,8" Padding="10" CornerRadius="12"
+                        Background="#28000000" BorderBrush="#18FFFFFF" BorderThickness="1">
+                  <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Border Width="72" Height="48" CornerRadius="9" ClipToBounds="True" Background="#22000000">
+                      <Panel>
+                        <Border Background="{Binding TintBrush}" />
+                        <Image Stretch="UniformToFill" IsVisible="{Binding HasImage}"
+                               Source="{Binding ImageUrl, Converter={StaticResource UrlToBitmapConverter}}" />
+                      </Panel>
+                    </Border>
+                    <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
+                      <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13"
+                                 Foreground="#F1F5F9" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Text="{Binding Description}" FontSize="11" Foreground="#8B7AA8"
+                                 TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                    <Button Grid.Column="2" Classes="eclipse-ghost" Height="30" MinWidth="64" Padding="10,0"
+                            CornerRadius="9" VerticalAlignment="Center"
+                            BorderBrush="#88A855F7" BorderThickness="1"
+                            Foreground="#E9D5FF" Content="Play" FontWeight="SemiBold" FontSize="12"
+                            Command="{Binding $parent[UserControl].((vm:HomeDashboardViewModel)DataContext).PlayPlaceCommand}"
+                            CommandParameter="{Binding PlaceId}" />
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Spacing="12">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="News" FontSize="15" FontWeight="SemiBold" Foreground="#F3E8FF" />
+            <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Padding="0"
+                    Command="{Binding OpenNewsCommand}">
+              <TextBlock Text="All" FontSize="12.5" Foreground="#C084FC" />
+            </Button>
+          </Grid>
+
+          <ItemsControl ItemsSource="{Binding NewsItems}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:HomeNewsItem">
+                <Border Margin="0,0,0,6" Padding="10,9" CornerRadius="11"
+                        Background="#22000000">
+                  <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <Border Width="32" Height="32" CornerRadius="9">
+                      <Border.Background>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                          <GradientStop Color="#A855F7" Offset="0" />
+                          <GradientStop Color="#4F46E5" Offset="1" />
+                        </LinearGradientBrush>
+                      </Border.Background>
+                      <ic:Lucide Icon="{Binding Icon}" Width="14" Height="14" StrokeBrush="White"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <StackPanel Grid.Column="1" Spacing="1" VerticalAlignment="Center">
+                      <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12.5"
+                                 Foreground="#F1F5F9" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Text="{Binding Subtitle}" FontSize="11" Foreground="#8B7AA8"
+                                 TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="2" Text="{Binding When}" FontSize="10.5"
+                               Foreground="#7C6B99" VerticalAlignment="Center" />
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
       </Grid>
     </StackPanel>
   </ScrollViewer>

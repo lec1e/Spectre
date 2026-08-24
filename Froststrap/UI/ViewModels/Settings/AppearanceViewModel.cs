@@ -576,7 +576,7 @@ namespace Froststrap.UI.ViewModels.Settings
         #region Custom App Themes
         public IEnumerable<Theme> Themes { get; } = Enum.GetValues<Theme>();
 
-        public IEnumerable<string> ThemePresets { get; } = global::Froststrap.Utility.ThemeManager.Presets.Keys;
+        public IEnumerable<string> ThemePresets { get; } = global::Froststrap.Utility.ThemeManager.PresetNames;
 
         public string SelectedThemePreset
         {
@@ -584,12 +584,23 @@ namespace Froststrap.UI.ViewModels.Settings
             set
             {
                 if (string.IsNullOrEmpty(value)) return;
+                if (App.Settings.Prop.SelectedThemePreset == value
+                    && global::Froststrap.Utility.ThemeManager.Presets.ContainsKey(value))
+                {
+                    // Re-apply so toggles / stuck state can recover
+                    global::Froststrap.Utility.ThemeManager.ApplyPreset(value);
+                    OnPropertyChanged(nameof(SelectedThemePreset));
+                    ApplyThemeUpdate();
+                    return;
+                }
+
                 App.Settings.Prop.SelectedThemePreset = value;
                 global::Froststrap.Utility.ThemeManager.ApplyPreset(value);
                 OnPropertyChanged(nameof(SelectedThemePreset));
                 OnPropertyChanged(nameof(EnableGlass));
                 OnPropertyChanged(nameof(EnableGlow));
                 OnPropertyChanged(nameof(EnableAurora));
+                OnPropertyChanged(nameof(EnableLiquidCursor));
                 ApplyThemeUpdate();
             }
         }
@@ -601,6 +612,8 @@ namespace Froststrap.UI.ViewModels.Settings
             {
                 App.Settings.Prop.EnableGlass = value;
                 global::Froststrap.Utility.ThemeManager.ApplyFromSettings();
+                // Force notify even if signature matched earlier
+                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
                 OnPropertyChanged(nameof(EnableGlass));
             }
         }
@@ -611,7 +624,7 @@ namespace Froststrap.UI.ViewModels.Settings
             set
             {
                 App.Settings.Prop.EnableGlow = value;
-                global::Froststrap.Utility.ThemeManager.ApplyFromSettings();
+                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
                 OnPropertyChanged(nameof(EnableGlow));
             }
         }
@@ -622,18 +635,30 @@ namespace Froststrap.UI.ViewModels.Settings
             set
             {
                 App.Settings.Prop.EnableAurora = value;
-                global::Froststrap.Utility.ThemeManager.ApplyFromSettings();
+                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
                 OnPropertyChanged(nameof(EnableAurora));
 
-                // Push live update to any aurora layers already on screen.
                 if (Avalonia.Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     foreach (var window in desktop.Windows)
                     {
                         foreach (var aurora in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.AnimatedAuroraBackground>())
                             aurora.SyncFromSettings();
+                        foreach (var abyss in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.AbyssGlowBackground>())
+                            abyss.SyncFromSettings();
                     }
                 }
+            }
+        }
+
+        public bool EnableLiquidCursor
+        {
+            get => App.Settings.Prop.EnableLiquidCursor;
+            set
+            {
+                App.Settings.Prop.EnableLiquidCursor = value;
+                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
+                OnPropertyChanged(nameof(EnableLiquidCursor));
             }
         }
 

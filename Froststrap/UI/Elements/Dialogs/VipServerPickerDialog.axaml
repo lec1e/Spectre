@@ -1,0 +1,63 @@
+<base:AvaloniaWindow xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
+        xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+        xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Dialogs"
+        x:Class="Froststrap.UI.Elements.Dialogs.VipServerPickerDialog"
+        x:DataType="vm:VipServerPickerViewModel"
+        Title="Pick a VIP server"
+        Width="560" Height="520"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent"
+        CanResize="False">
+    <Panel>
+        <Border Background="#F205040A" />
+
+        <controls:LiquidGlassPanel Margin="14"
+                                   Padding="16"
+                                   CornerRadius="22"
+                                   TintOpacity="0.95"
+                                   MaterialOpacity="0.97">
+            <Grid RowDefinitions="Auto,*,Auto">
+                <TextBlock Text="{Binding GameName}"
+                           FontWeight="SemiBold"
+                           FontSize="16" />
+
+                <Grid Grid.Row="1" Margin="0,12,0,12">
+                    <ListBox ItemsSource="{Binding Servers}"
+                             SelectedItem="{Binding SelectedServer}"
+                             Background="Transparent"
+                             BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="0,3"
+                                        Padding="12,10"
+                                        CornerRadius="12"
+                                        Background="#22FFFFFF"
+                                        BorderBrush="#44FFFFFF"
+                                        BorderThickness="1">
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <TextBlock Text="Loading VIP servers..."
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               IsVisible="{Binding IsLoading}" />
+
+                    <TextBlock Text="No VIP servers found."
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               IsVisible="{Binding ShowEmptyState}" />
+                </Grid>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                    <Button Content="Skip" Click="Skip_Click" />
+                    <Button Content="Join" Classes="accent" Click="Join_Click" />
+                </StackPanel>
+            </Grid>
+        </controls:LiquidGlassPanel>
+    </Panel>
+</base:AvaloniaWindow>

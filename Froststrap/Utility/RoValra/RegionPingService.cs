@@ -57,7 +57,13 @@ namespace Froststrap.Utility.RoValra
 
             var dcs = await RoValraApi.GetDatacentersAsync(ct);
             if (dcs is null || dcs.Count == 0)
+            {
+                App.Logger.WriteLine(LOG_IDENT,
+                    dcs is null
+                        ? "RoValra datacenters returned null (possible schema mismatch)."
+                        : "RoValra datacenters returned empty list.");
                 return _cached ?? Array.Empty<RegionPingInfo>();
+            }
 
             var (userLat, userLon) = await ResolveUserLocationAsync(ct);
 
@@ -66,10 +72,10 @@ namespace Froststrap.Utility.RoValra
             {
                 if (entry.Inactive || entry.Location is null)
                     continue;
-                if (entry.Location.LatLong is not { Length: >= 2 })
+                if (entry.Location.LatLong.Length < 2)
                     continue;
-                if (!double.TryParse(entry.Location.LatLong[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double lat) ||
-                    !double.TryParse(entry.Location.LatLong[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
+                if (!TryGetJsonElementDouble(entry.Location.LatLong[0], out double lat) ||
+                    !TryGetJsonElementDouble(entry.Location.LatLong[1], out double lon))
                     continue;
 
                 string city = entry.Location.City?.Trim() ?? "";
@@ -141,6 +147,24 @@ namespace Froststrap.Utility.RoValra
                     return r.PingMs;
             }
             return null;
+        }
+
+        private static bool TryGetJsonElementDouble(JsonElement element, out double value)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.Number:
+                    return element.TryGetDouble(out value);
+                case JsonValueKind.String:
+                    return double.TryParse(
+                        element.GetString(),
+                        NumberStyles.Float,
+                        CultureInfo.InvariantCulture,
+                        out value);
+                default:
+                    value = 0;
+                    return false;
+            }
         }
 
         public static RegionPingInfo? FindByDatacenterId(int datacenterId) =>

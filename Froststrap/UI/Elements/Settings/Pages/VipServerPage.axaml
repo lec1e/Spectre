@@ -2,32 +2,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
              xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
+             xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
              x:Class="Froststrap.UI.Elements.Settings.Pages.VipServerPage"
+             x:Name="RootPage"
              x:DataType="vm:VipServerViewModel">
   <ScrollViewer>
     <StackPanel Margin="14" Spacing="12">
       <TextBlock Text="VIP Server" FontSize="18" FontWeight="SemiBold" />
       <TextBlock TextWrapping="Wrap" Opacity="0.7" FontSize="13"
-                 Text="Before you join a Roblox game (from Chrome, Edge, Firefox, Brave, Opera, or the Roblox site), Eclipse can show a list of free shared VIP servers from rbxservers.xyz. Pick one to land in that server, or skip to launch normally." />
+                 Text="Browse and search VIP-enabled games from RBXServers. Open a game to pick a shared VIP server and join it directly from Eclipse." />
 
-      <controls:OptionControl Header="Show VIP server picker before launching games"
-                              Description="Opens a picker just before Roblox starts. Works for launches from any browser that opens the roblox-player protocol. Only appears for game launches that include a place ID.">
-        <ToggleSwitch IsChecked="{Binding VipServerPromptEnabled}" />
-      </controls:OptionControl>
+      <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+        <TextBox x:Name="SearchTextBox"
+                 Text="{Binding SearchQuery, Mode=TwoWay}"
+                 PlaceholderText="Search RBXServers games (name or place ID)"
+                 MinHeight="36" />
+        <Button Grid.Column="1"
+                Content="Search"
+                Classes="accent"
+                Command="{Binding SearchGamesCommand}" />
+        <Button Grid.Column="2"
+                Content="Refresh"
+                Command="{Binding RefreshGamesCommand}" />
+      </Grid>
 
-      <Border Padding="12" CornerRadius="6" BorderThickness="1">
-        <StackPanel Spacing="4">
-          <TextBlock Text="Heads up" FontWeight="SemiBold" FontSize="13" />
-          <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.75"
-                     Text="Servers in the list are uploaded by other users on rbxservers.xyz. We don't run that site and we don't vet servers. If a server is full or expired, pick another or skip." />
+      <TextBlock Text="{Binding StatusMessage}"
+                 FontSize="12"
+                 Opacity="0.7"
+                 TextWrapping="Wrap" />
+
+      <Border IsVisible="{Binding IsLoading}" Background="#44000000" MinHeight="140" CornerRadius="12">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+          <ui:FAProgressRing IsActive="{Binding IsLoading}" Width="40" Height="40" />
+          <TextBlock Text="Loading VIP games..." Opacity="0.75" />
         </StackPanel>
       </Border>
 
-      <Border Padding="12" CornerRadius="6" BorderThickness="1">
+      <ItemsControl ItemsSource="{Binding VisibleGames}" IsVisible="{Binding HasGames}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:VipFeaturedGameCard">
+            <controls:Card Width="190" CornerRadius="14" Padding="0" ClipToBounds="True" Margin="5">
+              <StackPanel>
+                <Border CornerRadius="14,14,0,0" ClipToBounds="True">
+                  <Image Source="{Binding ThumbnailUrl, Converter={StaticResource UrlToBitmapConverter}}"
+                         Height="190"
+                         Width="190"
+                         Stretch="UniformToFill"
+                         RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                </Border>
+                <StackPanel Spacing="6" Margin="8">
+                  <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap" MaxHeight="40"/>
+                  <StackPanel Orientation="Horizontal" Spacing="4">
+                    <ic:Lucide Icon="LockKeyholeOpen" Height="12" Width="12"/>
+                    <TextBlock Text="{Binding ServerCount, StringFormat='{}{0} VIP servers indexed'}"
+                               FontSize="11"
+                               Opacity="0.7"/>
+                  </StackPanel>
+                  <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                    <Button Grid.Column="0"
+                            Content="Open list"
+                            Classes="accent"
+                            Command="{Binding #RootPage.((vm:VipServerViewModel)DataContext).OpenVipServersCommand}"
+                            CommandParameter="{Binding}" />
+                    <Button Grid.Column="1"
+                            Content="Visit page"
+                            Command="{Binding #RootPage.((vm:VipServerViewModel)DataContext).VisitGamePageCommand}"
+                            CommandParameter="{Binding}" />
+                  </Grid>
+                </StackPanel>
+              </StackPanel>
+            </controls:Card>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+      <Border Padding="12" CornerRadius="12" BorderThickness="1"
+              Background="#3312101A" BorderBrush="#33FFFFFF">
         <StackPanel Spacing="4">
-          <TextBlock Text="How it works" FontWeight="SemiBold" FontSize="13" />
+          <TextBlock Text="Heads up" FontWeight="SemiBold" FontSize="13" />
           <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.75"
-                     Text="The picker embeds rbxservers.xyz for your place ID. When you click a server, Eclipse reads the access code from the link and joins that server." />
+                     Text="Servers in the list are uploaded by other users on rbxservers.xyz. We don't run that site and we don't vet servers. If a server is full or expired, pick another." />
         </StackPanel>
       </Border>
     </StackPanel>

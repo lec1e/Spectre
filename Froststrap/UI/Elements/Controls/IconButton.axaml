@@ -70,6 +70,26 @@
         </Setter>
     </Style>
 
+    <!-- Title-bar / chrome icons: never show a hover fill — color the icon only -->
+    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ Border#PART_LayoutRoot">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ Border#PART_LayoutRoot">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ ic|Lucide">
+        <Setter Property="StrokeBrush" Value="#C084FC" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ ic|Lucide">
+        <Setter Property="StrokeBrush" Value="#E9D5FF" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton.Close:pointerover /template/ ic|Lucide">
+        <Setter Property="StrokeBrush" Value="#FB7185" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton.Close:pressed /template/ ic|Lucide">
+        <Setter Property="StrokeBrush" Value="#FDA4AF" />
+    </Style>
+
     <Style Selector="controls|IconButton:pointerover /template/ ic|Lucide">
         <Setter Property="StrokeBrush">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
