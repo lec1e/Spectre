@@ -1,4 +1,6 @@
-<h1 align="center">Eclipse</h1>
+<p align="center">
+  <img src="./.github/preview/banner.png" width="920" alt="Eclipse banner"/>
+</p>
 
 <p align="center">
   <a href="https://github.com/lec1e/Eclipse/releases/latest">
@@ -15,19 +17,19 @@
 </p>
 
 <p align="center">
-  <img src="./.github/preview/home.png" width="900" alt="Eclipse Home — liquid glass UI"/>
+  <img src="./.github/preview/home.png" width="900" alt="Eclipse Home"/>
 </p>
 
 <p align="center">
-  <img src="./.github/preview/games.png" width="440" alt="Eclipse Games"/>
-  &nbsp;
-  <img src="./.github/preview/library.png" width="440" alt="Eclipse Library"/>
+  <img src="./.github/preview/games.png" width="430" alt="Eclipse Games"/>
+  &nbsp;&nbsp;
+  <img src="./.github/preview/library.png" width="430" alt="Eclipse Library"/>
 </p>
 
 <p align="center">
-  <img src="./.github/preview/mods.png" width="440" alt="Eclipse Mods"/>
-  &nbsp;
-  <img src="./.github/preview/settings.png" width="440" alt="Eclipse Settings"/>
+  <img src="./.github/preview/mods.png" width="430" alt="Eclipse Mods"/>
+  &nbsp;&nbsp;
+  <img src="./.github/preview/settings.png" width="430" alt="Eclipse Settings"/>
 </p>
 
 ## What’s new vs stock Froststrap
