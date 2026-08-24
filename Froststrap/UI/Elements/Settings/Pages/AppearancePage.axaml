@@ -23,19 +23,22 @@
             <StackPanel Margin="14">
                 <controls:OptionControl
                     Header="Animated background"
-                    Description="Drifting aurora behind Eclipse windows.">
+                    Description="Deep-ocean abyss with gleaming bioluminescent lights behind the UI.">
                     <ToggleSwitch IsChecked="{Binding EnableAurora}" />
                 </controls:OptionControl>
 
-                <controls:CardExpander Classes="NoUserExpansion" Header="Eclipse theme presets" Description="Midnight ink by default — pick another brand palette anytime." IsExpanded="True">
+                <controls:CardExpander Classes="NoUserExpansion" Header="Eclipse theme presets" Description="Pick a brand palette — shell tint, accents, and liquid cursor colors update live." IsExpanded="True">
                     <controls:CardExpander.HeaderContent>
-                        <ComboBox MinWidth="200" Padding="10,5,10,5"
+                        <ComboBox MinWidth="220" Padding="10,5,10,5"
                                   ItemsSource="{Binding ThemePresets}"
                                   SelectedItem="{Binding SelectedThemePreset, Mode=TwoWay}" />
                     </controls:CardExpander.HeaderContent>
                     <StackPanel Spacing="8">
-                        <controls:OptionControl Header="Glass surfaces" Description="Translucent card fills.">
+                        <controls:OptionControl Header="Glass surfaces" Description="Dark frosted acrylic shell.">
                             <ToggleSwitch IsChecked="{Binding EnableGlass}" />
+                        </controls:OptionControl>
+                        <controls:OptionControl Header="Liquid cursor" Description="Soft blob trail that follows the pointer.">
+                            <ToggleSwitch IsChecked="{Binding EnableLiquidCursor}" />
                         </controls:OptionControl>
                         <controls:OptionControl Header="Glow accents" Description="Accent glow on highlights (best-effort).">
                             <ToggleSwitch IsChecked="{Binding EnableGlow}" />

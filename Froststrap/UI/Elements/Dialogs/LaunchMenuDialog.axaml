@@ -19,81 +19,76 @@
                      MaxHeight="360"
                      SizeToContent="Manual"
                      CanResize="False"
+                     Background="Transparent"
                      WindowStartupLocation="CenterScreen"
                      mc:Ignorable="d">
 
-    <Grid Background="{DynamicResource BrandInkBrush}" RowDefinitions="Auto,*">
-        <controls:AnimatedAuroraBackground Grid.Row="0" Grid.RowSpan="2" ZIndex="0" />
-
-        <Border Grid.Row="0" ZIndex="1"
-                Background="{DynamicResource GlassHeaderBrush}"
-                BorderBrush="{DynamicResource BrandHairlineBrush}"
-                BorderThickness="0,0,0,1">
-            <controls:TitleBar Title="" ShowMaximize="False" ShowMinimize="False" />
-        </Border>
-
-        <Border Grid.Row="1" ZIndex="1"
-                Margin="20,16,20,20"
-                Padding="28,28,28,24"
-                CornerRadius="18"
-                VerticalAlignment="Top"
-                Background="#66101018"
-                BorderBrush="{DynamicResource BrandHairlineBrush}"
-                BorderThickness="1">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16" Margin="0,0,0,28">
-                    <Image Width="64" Height="64" Source="avares://Eclipse/EclipseMark.png"
-                           RenderOptions.BitmapInterpolationMode="HighQuality" />
-                    <StackPanel VerticalAlignment="Center" Spacing="4">
-                        <TextBlock Name="LaunchTitle" Text="Eclipse" FontSize="30" FontWeight="Bold"
-                                   Foreground="{DynamicResource BrandAccentBrush}" />
-                        <TextBlock Text="{Binding Version}"
-                                   FontSize="13"
-                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
+    <Panel>
+        <Border Background="#F205040A" />
+        <controls:LiquidGlassPanel Margin="12"
+                                   CornerRadius="24"
+                                   TintOpacity="0.95"
+                                   MaterialOpacity="0.97">
+            <Grid RowDefinitions="Auto,*">
+                <Border BorderBrush="#28FFFFFF" BorderThickness="0,0,0,1" Background="#44080510">
+                    <controls:TitleBar Title="" ShowMaximize="False" ShowMinimize="False" />
+                </Border>
+                <StackPanel Grid.Row="1" Margin="28,24,28,24">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="14" Margin="0,0,0,26">
+                        <Border Width="64" Height="64" CornerRadius="18" ClipToBounds="True"
+                                BorderBrush="#88C4B5FD" BorderThickness="1">
+                            <Image Width="64" Height="64" Source="avares://Eclipse/EclipseMark.png"
+                                   RenderOptions.BitmapInterpolationMode="HighQuality" />
+                        </Border>
+                        <StackPanel VerticalAlignment="Center" Spacing="3">
+                            <TextBlock Name="LaunchTitle" Text="Eclipse" FontSize="28" FontWeight="Bold"
+                                       Foreground="#F3E8FF" />
+                            <TextBlock Text="{Binding Version}" FontSize="12.5" Foreground="#9B8AB8" />
+                        </StackPanel>
                     </StackPanel>
+
+                    <controls:IconButton Classes="DropDownButton"
+                                         Margin="0,0,0,10"
+                                         HorizontalAlignment="Stretch"
+                                         Height="48"
+                                         CornerRadius="14"
+                                         FontWeight="SemiBold"
+                                         FontSize="14"
+                                         Command="{Binding LaunchCommand}"
+                                         IconSize="22"
+                                         Icon="{Binding LaunchButtonIcon}"
+                                         Content="{Binding LaunchButtonText}"
+                                         Padding="16,0">
+                        <controls:IconButton.Flyout>
+                            <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                <MenuItem Header="{Binding PlayerMenuItemText}"
+                                          Command="{Binding SetLaunchModeCommand}"
+                                          CommandParameter="{x:Static enums:LaunchMode.Player}">
+                                    <MenuItem.Icon>
+                                        <ic:Lucide Icon="Gamepad2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static resources:Strings.Common_Studio}"
+                                          Command="{Binding SetLaunchModeCommand}"
+                                          CommandParameter="{x:Static enums:LaunchMode.Studio}">
+                                    <MenuItem.Icon>
+                                        <ic:Lucide Icon="Wrench" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuFlyout>
+                        </controls:IconButton.Flyout>
+                    </controls:IconButton>
+
+                    <controls:CardAction
+                        Icon="Settings"
+                        Header="{x:Static resources:Strings.Common_Settings}"
+                        CornerRadius="14"
+                        BorderThickness="0"
+                        Command="{Binding LaunchSettingsCommand}"
+                        Padding="12,10"
+                        HorizontalAlignment="Stretch" />
                 </StackPanel>
-
-                <controls:IconButton Classes="DropDownButton"
-                                     Margin="0,0,0,10"
-                                     HorizontalAlignment="Stretch"
-                                     Height="52"
-                                     CornerRadius="12"
-                                     FontWeight="SemiBold"
-                                     FontSize="14"
-                                     Command="{Binding LaunchCommand}"
-                                     IconSize="24"
-                                     Icon="{Binding LaunchButtonIcon}"
-                                     Content="{Binding LaunchButtonText}"
-                                     Padding="16,0">
-                    <controls:IconButton.Flyout>
-                        <MenuFlyout Placement="BottomEdgeAlignedRight">
-                            <MenuItem Header="{Binding PlayerMenuItemText}"
-                                      Command="{Binding SetLaunchModeCommand}"
-                                      CommandParameter="{x:Static enums:LaunchMode.Player}">
-                                <MenuItem.Icon>
-                                    <ic:Lucide Icon="Gamepad2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="{x:Static resources:Strings.Common_Studio}"
-                                      Command="{Binding SetLaunchModeCommand}"
-                                      CommandParameter="{x:Static enums:LaunchMode.Studio}">
-                                <MenuItem.Icon>
-                                    <ic:Lucide Icon="Wrench" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </MenuFlyout>
-                    </controls:IconButton.Flyout>
-                </controls:IconButton>
-
-                <controls:CardAction
-                    Icon="Settings"
-                    Header="{x:Static resources:Strings.Common_Settings}"
-                    CornerRadius="12"
-                    BorderThickness="0"
-                    Command="{Binding LaunchSettingsCommand}"
-                    Padding="12,10"
-                    HorizontalAlignment="Stretch" />
-            </StackPanel>
-        </Border>
-    </Grid>
+            </Grid>
+        </controls:LiquidGlassPanel>
+    </Panel>
 </base:AvaloniaWindow>

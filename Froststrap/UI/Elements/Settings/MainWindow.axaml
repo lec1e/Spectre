@@ -20,134 +20,167 @@
     x:DataType="vm:MainWindowViewModel"
     CanResize="True"
     WindowStartupLocation="CenterScreen"
-    Background="#030306">
+    Background="Transparent">
 
-    <!-- Rail spans content+footer rows so version stays pinned to the window bottom on every page -->
-    <Grid RowDefinitions="52,*,Auto" ColumnDefinitions="78,*">
-        <!-- TOP BAR (full width) -->
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ZIndex="3"
-                Background="#CC080812"
-                BorderBrush="#10FFFFFF" BorderThickness="0,0,0,1">
-            <Grid ColumnDefinitions="Auto,*,Auto" Height="52">
-                <Panel Grid.Column="0" Grid.ColumnSpan="3"
-                       WindowDecorationProperties.ElementRole="TitleBar"
-                       Background="Transparent" />
+    <base:AvaloniaWindow.Styles>
+        <!-- Kill default button chrome so selection pill alone provides the highlight -->
+        <Style Selector="Button.top-nav">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.top-nav /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="Button.top-nav:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button.top-nav:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
 
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10"
-                            VerticalAlignment="Center" Margin="16,0,12,0" IsHitTestVisible="False">
-                    <controls:EclipseLogoMark Width="28" Height="28" />
-                    <TextBlock Text="Eclipse" FontSize="16" FontWeight="SemiBold"
-                               VerticalAlignment="Center" Foreground="#F8FAFC" />
-                </StackPanel>
+        <Style Selector="Border.nav-pill">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="11" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="Height" Value="36" />
+        </Style>
+        <Style Selector="Border.nav-pill:pointerover">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Border.nav-pill.selected">
+            <Setter Property="Background">
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Color="#EEC084FC" Offset="0" />
+                    <GradientStop Color="#AA7C3AED" Offset="1" />
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+        <!-- Selected stays filled; unselected hover only tints the icon via button styles below -->
+        <Style Selector="Button.top-nav:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button.top-nav:pointerover ic|Lucide">
+            <Setter Property="StrokeBrush" Value="#C084FC" />
+        </Style>
+        <Style Selector="Button.top-nav:pointerover TextBlock">
+            <Setter Property="Foreground" Value="#C084FC" />
+        </Style>
+        <Style Selector="Border.nav-pill.selected:pointerover">
+            <Setter Property="Background">
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Color="#F5E1FF" Offset="0" />
+                    <GradientStop Color="#C084FC" Offset="1" />
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+    </base:AvaloniaWindow.Styles>
 
-                <Border Grid.Column="1"
-                        Width="560" Height="36"
-                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                        CornerRadius="10"
-                        Background="#2E12121A"
-                        BorderBrush="#28FFFFFF" BorderThickness="1"
-                        Padding="2,0,8,0">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <elements:SearchBar DataContext="{Binding SearchBar}"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center" />
-                        <Border Grid.Column="1" Padding="7,2" CornerRadius="5"
-                                Background="#1AFFFFFF" VerticalAlignment="Center">
-                            <TextBlock Text="Ctrl K" FontSize="10.5" Foreground="#88FFFFFF" />
+    <Panel>
+        <Border Background="#FF020510" />
+
+        <controls:LiquidGlassPanel x:Name="ShellGlass"
+                                   Margin="10"
+                                   CornerRadius="26"
+                                   TintOpacity="0.55"
+                                   MaterialOpacity="0.72">
+            <Panel>
+                <!-- Abyss MUST be inside the shell — acrylic outside was fully covering it -->
+                <controls:AbyssGlowBackground x:Name="AbyssBackground"
+                                              ZIndex="0" />
+
+                <controls:LiquidCursorOverlay x:Name="LiquidCursor"
+                                              ZIndex="1"
+                                              Opacity="0.45" />
+
+                <Grid ZIndex="2" RowDefinitions="56,*,52" IsHitTestVisible="True">
+                <Border Grid.Row="0"
+                        BorderBrush="#22FFFFFF"
+                        BorderThickness="0,0,0,1"
+                        Background="#55080510">
+                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" Margin="14,0,8,0">
+                        <Panel Grid.Column="0" Grid.ColumnSpan="4"
+                               WindowDecorationProperties.ElementRole="TitleBar"
+                               Background="Transparent" />
+
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10"
+                                    VerticalAlignment="Center" Margin="2,0,18,0" IsHitTestVisible="False">
+                            <controls:EclipseLogoMark Width="26" Height="26" />
+                            <TextBlock Text="Eclipse" FontSize="16" FontWeight="SemiBold"
+                                       VerticalAlignment="Center" Foreground="#F3E8FF" />
+                        </StackPanel>
+
+                        <ItemsControl x:Name="RailItemsControl" Grid.Column="1" VerticalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="4" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:RailNavItem">
+                                    <Button Classes="top-nav"
+                                            Tag="{Binding Tag}"
+                                            ToolTip.Tip="{Binding Title}"
+                                            Click="RailItem_Click"
+                                            IsVisible="{Binding IsVisible}">
+                                        <!-- Single pill wraps icon+text — no separate stretch ghost -->
+                                        <Border Classes="nav-pill"
+                                                Classes.selected="{Binding IsSelected}">
+                                            <StackPanel Orientation="Horizontal" Spacing="7"
+                                                        VerticalAlignment="Center">
+                                                <ic:Lucide Icon="{Binding Icon}" Width="15" Height="15"
+                                                           VerticalAlignment="Center" StrokeBrush="#F8FAFC" />
+                                                <TextBlock Text="{Binding Title}" FontSize="12.5"
+                                                           FontWeight="SemiBold" Foreground="#F8FAFC"
+                                                           VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Border Grid.Column="2"
+                                MaxWidth="380" Height="34"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                CornerRadius="12"
+                                Background="#22000000"
+                                BorderBrush="#44A78BFA" BorderThickness="1"
+                                Padding="2,0,8,0" Margin="12,0,8,0">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <elements:SearchBar DataContext="{Binding SearchBar}"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center" />
+                                <Border Grid.Column="1" Padding="6,2" CornerRadius="7"
+                                        Background="#33A855F7" VerticalAlignment="Center">
+                                    <TextBlock Text="Ctrl K" FontSize="10" Foreground="#E9D5FF" />
+                                </Border>
+                            </Grid>
                         </Border>
+
+                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                            <controls:IconButton Classes="TitleBarButton" Icon="Download"
+                                                 ToolTip.Tip="Deployment" Click="TopDownload_Click" />
+                            <controls:IconButton Classes="TitleBarButton" Icon="Bell"
+                                                 ToolTip.Tip="News" Click="TopNews_Click" />
+                            <controls:IconButton Name="PART_MinimizeButton" Classes="TitleBarButton" Icon="Minus" />
+                            <controls:IconButton Name="PART_MaximizeButton" Classes="TitleBarButton" Icon="Maximize" />
+                            <controls:IconButton Name="PART_CloseButton" Classes="TitleBarButton Close" Icon="X" />
+                        </StackPanel>
                     </Grid>
                 </Border>
 
-                <StackPanel Grid.Column="2" Orientation="Horizontal"
-                            VerticalAlignment="Center" Height="52"
-                            Spacing="0">
-                    <controls:IconButton Classes="TitleBarButton" Icon="Download"
-                                         ToolTip.Tip="Deployment" Click="TopDownload_Click" />
-                    <controls:IconButton Classes="TitleBarButton" Icon="Bell"
-                                         ToolTip.Tip="News" Click="TopNews_Click" />
-                    <controls:IconButton Name="PART_MinimizeButton" Classes="TitleBarButton" Icon="Minus" />
-                    <controls:IconButton Name="PART_MaximizeButton" Classes="TitleBarButton" Icon="Maximize" />
-                    <controls:IconButton Name="PART_CloseButton" Classes="TitleBarButton Close" Icon="X" />
-                </StackPanel>
-            </Grid>
-        </Border>
-
-        <!-- Icon rail: full height beside content + footer -->
-        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" ZIndex="2"
-                Background="#E0080812"
-                BorderBrush="#0CFFFFFF" BorderThickness="0,0,1,0"
-                Padding="8,14,8,12">
-            <Grid RowDefinitions="*,Auto">
-                <ItemsControl x:Name="RailItemsControl">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Spacing="8" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="local:RailNavItem">
-                            <Button Classes="rail-icon"
-                                    Width="62" Height="58"
-                                    HorizontalAlignment="Center"
-                                    Padding="0"
-                                    Tag="{Binding Tag}"
-                                    ToolTip.Tip="{Binding Title}"
-                                    Click="RailItem_Click">
-                                <Panel Width="56" Height="54">
-                                    <!-- Selected: vivid purple→blue gradient (mockup) -->
-                                    <Border x:Name="SelectedPad" CornerRadius="14" IsVisible="{Binding IsSelected}">
-                                        <Border.Background>
-                                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                                                <GradientStop Color="#C4B5FD" Offset="0" />
-                                                <GradientStop Color="#8B5CF6" Offset="0.45" />
-                                                <GradientStop Color="#4F46E5" Offset="1" />
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-                                    </Border>
-                                    <!-- Idle pad so hover styles have a surface -->
-                                    <Border CornerRadius="14" Background="#00000000"
-                                            IsVisible="{Binding !IsSelected}" />
-                                    <StackPanel VerticalAlignment="Center" Spacing="4">
-                                        <ic:Lucide Icon="{Binding Icon}" Width="20" Height="20"
-                                                   HorizontalAlignment="Center" StrokeBrush="#E2E8F0" />
-                                        <TextBlock Text="{Binding Title}" FontSize="10"
-                                                   FontWeight="SemiBold" Foreground="#E8EDF5"
-                                                   HorizontalAlignment="Center" />
-                                    </StackPanel>
-                                </Panel>
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <TextBlock Grid.Row="1"
-                           Text="{Binding VersionText}"
-                           FontSize="10"
-                           Foreground="#66FFFFFF"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Margin="0,10,0,4" />
-            </Grid>
-        </Border>
-
-        <!-- Content stage with aurora INSIDE so it actually shows -->
-        <Border Grid.Row="1" Grid.Column="1" ZIndex="1" Margin="10,8,12,8" CornerRadius="16"
-                Background="Transparent" BorderBrush="#33FFFFFF" BorderThickness="1"
-                ClipToBounds="True">
-            <Grid>
-                <controls:AnimatedAuroraBackground
-                    x:Name="AuroraBackground"
-                    ZIndex="0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch" />
-
-                <Grid ZIndex="1">
+                <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Margin="22,14,22,0" IsVisible="{Binding ShowPageChrome}">
+                    <StackPanel Margin="24,14,24,0" IsVisible="{Binding ShowPageChrome}">
                         <ItemsControl IsVisible="{Binding HasBreadcrumbs}" ItemsSource="{Binding BreadcrumbItems}" Margin="0,0,0,8">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -180,49 +213,53 @@
                                                  HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Stretch" />
                 </Grid>
-            </Grid>
-        </Border>
 
-        <Border Grid.Row="2" Grid.Column="1" ZIndex="2"
-                IsVisible="{Binding ShowFooter}"
-                Margin="10,0,16,12" Padding="10,0,12,0" Height="50"
-                CornerRadius="14" Background="#99050508"
-                BorderBrush="#447C3AED" BorderThickness="1">
-            <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" ColumnSpacing="8">
-                <local:AccountSelectorView x:Name="AccountSelectorView" Grid.Column="0" />
-                <controls:IconButton Grid.Column="2" Height="36" Padding="20,0"
-                                     Classes="DropDownButton Primary"
-                                     Command="{Binding SaveAndLaunchSettingsCommand}"
-                                     Content="{Binding LaunchButtonText}">
-                    <controls:IconButton.Flyout>
-                        <MenuFlyout Placement="TopEdgeAlignedRight">
-                            <MenuItem Header="{Binding PlayerMenuItemText}" Command="{Binding SetLaunchModeCommand}"
-                                      CommandParameter="{x:Static enums:LaunchMode.Player}">
-                                <MenuItem.Icon><ic:Lucide Icon="Gamepad2" /></MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="{x:Static resources:Strings.Common_Studio}" Command="{Binding SetLaunchModeCommand}"
-                                      CommandParameter="{x:Static enums:LaunchMode.Studio}">
-                                <MenuItem.Icon><ic:Lucide Icon="Wrench" /></MenuItem.Icon>
-                            </MenuItem>
-                        </MenuFlyout>
-                    </controls:IconButton.Flyout>
-                </controls:IconButton>
-                <Button Grid.Column="3" Height="36" Padding="20,0" Classes="accent"
-                        Command="{Binding RestartAppCommand}" Content="{x:Static resources:Strings.Menu_Restart}" />
-                <Button Grid.Column="4" Height="36" Padding="20,0" Classes="accent"
-                        Command="{Binding SaveSettingsCommand}" Content="{x:Static resources:Strings.Menu_Save}" />
-                <Button Grid.Column="5" Height="36" Padding="20,0"
-                        Command="{Binding CloseWindowCommand}" Content="{x:Static resources:Strings.Common_Close}" />
-            </Grid>
-        </Border>
+                <Border Grid.Row="2"
+                        IsVisible="{Binding ShowFooter}"
+                        BorderBrush="#22FFFFFF"
+                        BorderThickness="0,1,0,0"
+                        Background="#88080510"
+                        Padding="14,0">
+                    <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto" ColumnSpacing="8">
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding VersionText}"
+                                   FontSize="11"
+                                   Foreground="#99C4B5FD"
+                                   VerticalAlignment="Center" />
+                        <controls:IconButton Grid.Column="1" Height="34" Padding="18,0"
+                                             Classes="DropDownButton Primary"
+                                             Command="{Binding SaveAndLaunchSettingsCommand}"
+                                             Content="{Binding LaunchButtonText}">
+                            <controls:IconButton.Flyout>
+                                <MenuFlyout Placement="TopEdgeAlignedRight">
+                                    <MenuItem Header="{Binding PlayerMenuItemText}" Command="{Binding SetLaunchModeCommand}"
+                                              CommandParameter="{x:Static enums:LaunchMode.Player}">
+                                        <MenuItem.Icon><ic:Lucide Icon="Gamepad2" /></MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static resources:Strings.Common_Studio}" Command="{Binding SetLaunchModeCommand}"
+                                              CommandParameter="{x:Static enums:LaunchMode.Studio}">
+                                        <MenuItem.Icon><ic:Lucide Icon="Wrench" /></MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuFlyout>
+                            </controls:IconButton.Flyout>
+                        </controls:IconButton>
+                        <Button Grid.Column="2" Height="34" Padding="18,0" Classes="accent"
+                                Command="{Binding RestartAppCommand}" Content="{x:Static resources:Strings.Menu_Restart}" />
+                        <Button Grid.Column="3" Height="34" Padding="18,0" Classes="accent"
+                                Command="{Binding SaveSettingsCommand}" Content="{x:Static resources:Strings.Menu_Save}" />
+                        <Button Grid.Column="4" Height="34" Padding="18,0"
+                                Command="{Binding CloseWindowCommand}" Content="{x:Static resources:Strings.Common_Close}" />
+                    </Grid>
+                </Border>
+                </Grid>
+            </Panel>
+        </controls:LiquidGlassPanel>
 
         <Panel Name="NotificationPanel"
-               Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2"
-               Margin="0,0,0,15" VerticalAlignment="Bottom" ZIndex="1000" />
+               Margin="0,0,0,20" VerticalAlignment="Bottom" ZIndex="1000" />
 
         <Border x:Name="OffscreenIndexingCanvas"
-                Grid.Row="1" Grid.Column="1"
                 Width="905" Height="700"
                 IsHitTestVisible="False" IsVisible="False" Opacity="0" ZIndex="-1000" />
-    </Grid>
+    </Panel>
 </base:AvaloniaWindow>

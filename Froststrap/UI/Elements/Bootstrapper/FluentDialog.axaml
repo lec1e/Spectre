@@ -11,62 +11,71 @@
     mc:Ignorable="d"
     x:Class="Froststrap.UI.Elements.Bootstrapper.FluentDialog"
     x:DataType="vm:FluentDialogViewModel"
-    Width="500"
-    Height="280"
+    Width="520"
+    Height="300"
     MinHeight="0"
     CanResize="False"
     Title="Eclipse"
     WindowStartupLocation="CenterScreen"
     ExtendClientAreaToDecorationsHint="True"
     TransparencyLevelHint="{Binding WindowBackdropType}"
-    Background="{Binding BackgroundColourBrush}">
+    Background="Transparent">
 
-    <Grid>
-        <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding VersionText}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
-        <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding ChannelText}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
-        <controls:TitleBar
-            VerticalAlignment="Top"
-            ShowClose="False"
-            Title=""
-            Icon="{x:Null}"
-            ShowMaximize="False"
-            ShowMinimize="False" />
+    <Panel>
+        <Border Background="#F205040A" />
 
+        <controls:LiquidGlassPanel Margin="14"
+                                   CornerRadius="24"
+                                   TintOpacity="0.95"
+                                   MaterialOpacity="0.97"
+                                   Padding="12">
+            <Grid>
+                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding VersionText}" Foreground="#99E9D5FF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
+                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding ChannelText}" Foreground="#99E9D5FF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
+                <controls:TitleBar
+                    VerticalAlignment="Top"
+                    ShowClose="False"
+                    Title=""
+                    Icon="{x:Null}"
+                    ShowMaximize="False"
+                    ShowMinimize="False" />
 
-        <StackPanel>
-            <Image
-                Width="80"
-                Height="80"
-                Margin="0,45,0,0"
-                HorizontalAlignment="Center"
-                Source="{Binding Icon}"
-                RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                <StackPanel>
+                    <Border Width="84" Height="84" CornerRadius="22" ClipToBounds="True"
+                            Margin="0,34,0,0" HorizontalAlignment="Center"
+                            BorderBrush="#88C4B5FD" BorderThickness="1">
+                        <Image Width="84" Height="84"
+                               Source="{Binding Icon}"
+                               RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                    </Border>
 
-            <TextBlock
-                Margin="0,50,0,0"
-                HorizontalAlignment="Center"
-                TextAlignment="Center"
-                FontSize="18"
-                TextTrimming="CharacterEllipsis" 
-                Text="{Binding Message}"/>
+                    <TextBlock
+                        Margin="0,28,0,0"
+                        HorizontalAlignment="Center"
+                        TextAlignment="Center"
+                        FontSize="18"
+                        TextTrimming="CharacterEllipsis"
+                        Text="{Binding Message}"/>
 
-            <ProgressBar
-                Width="450"
-                Height="10"
-                Margin="0,10,0,15"
-                CornerRadius="50"
-                IsIndeterminate="{Binding ProgressIndeterminate}"
-                Maximum="{Binding ProgressMaximum}"
-                Value="{Binding ProgressValue}"/>
+                    <ProgressBar
+                        Width="420"
+                        Height="10"
+                        Margin="0,14,0,14"
+                        CornerRadius="50"
+                        IsIndeterminate="{Binding ProgressIndeterminate}"
+                        Maximum="{Binding ProgressMaximum}"
+                        Value="{Binding ProgressValue}"/>
 
-            <Button
-                Width="120"
-                Height="30"
-                HorizontalAlignment="Center"
-                Command="{Binding CancelInstallCommand}"
-                Content="{Binding CancelButtonText}"
-                FontSize="14"
-                IsEnabled="{Binding CancelEnabled}"/>
-        </StackPanel>
-    </Grid>
+                    <Button
+                        Width="120"
+                        Height="32"
+                        HorizontalAlignment="Center"
+                        Command="{Binding CancelInstallCommand}"
+                        Content="{Binding CancelButtonText}"
+                        FontSize="14"
+                        IsEnabled="{Binding CancelEnabled}"/>
+                </StackPanel>
+            </Grid>
+        </controls:LiquidGlassPanel>
+    </Panel>
 </base:AvaloniaDialogBase>

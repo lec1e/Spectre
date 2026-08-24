@@ -15,6 +15,7 @@
         public string? CountryName { get; set; }
 
         [JsonPropertyName("latLong")]
-        public string[] LatLong { get; set; } = null!;
+        // RoValra may return lat/long as either JSON numbers or strings; use JsonElement to tolerate both.
+        public JsonElement[] LatLong { get; set; } = [];
     }
 }

@@ -24,7 +24,6 @@ namespace Froststrap.UI.ViewModels.Settings
             Items.Add(new("Appearance", "Theme, glass, aurora", "appearance", LucideIconNames.Palette));
             Items.Add(new("Fast Flags", "Client tuning", "fastflags", LucideIconNames.Flag));
             Items.Add(new("VIP Server", "Join shared VIP links", "vipserver", LucideIconNames.Crown));
-            Items.Add(new("Server Browser", "Browse public servers", "serverbrowser", LucideIconNames.Server));
             Items.Add(new("News", "Roblox news feed", "news", LucideIconNames.Newspaper));
             Items.Add(new("Multi Instance", "Run multiple clients", "multiinstance", LucideIconNames.Copy));
             if (OperatingSystem.IsWindows())
@@ -32,7 +31,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 Items.Add(new("BanAsync", "Clean Roblox traces", "banasync", LucideIconNames.Shield));
                 Items.Add(new("HWID Spoofer", "Spoof machine IDs", "hwidspoofer", LucideIconNames.FingerprintPattern));
             }
-            Items.Add(new("Region Selector", "Prefer regions", "regionselector", LucideIconNames.Globe));
+            Items.Add(new("Server Browser", "Browse by region", "regionselector", LucideIconNames.Globe));
             Items.Add(new("Shortcuts", "Desktop shortcuts", "shortcuts", LucideIconNames.Link2));
             Items.Add(new("Global Settings", "GBS editor", "globalsettings", LucideIconNames.PenLine));
             Items.Add(new("About", "Credits and version", "about", LucideIconNames.CircleAlert));
@@ -50,7 +49,6 @@ namespace Froststrap.UI.ViewModels.Settings
                 case "appearance": _host.NavigateToAppearanceCommand.Execute(null); break;
                 case "fastflags": _host.NavigateToFastFlagsCommand.Execute(null); break;
                 case "vipserver": _host.NavigateToVipServerCommand.Execute(null); break;
-                case "serverbrowser": _host.NavigateToServerBrowserCommand.Execute(null); break;
                 case "news": _host.NavigateToNewsCommand.Execute(null); break;
                 case "multiinstance": _host.NavigateToMultiInstanceCommand.Execute(null); break;
                 case "banasync": _host.NavigateToBanAsyncCommand.Execute(null); break;

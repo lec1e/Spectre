@@ -41,18 +41,26 @@ namespace Froststrap.UI.Elements.Settings.Pages
 
         private void RegionSelectorPage_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            SearchTextBox.KeyDown += (s, args) =>
+            SearchTextBox.KeyDown += async (s, args) =>
             {
-                if (args.Key == Key.Enter)
+                if (args.Key != Key.Enter)
+                    return;
+
+                args.Handled = true;
+                if (DataContext is not RegionSelectorViewModel vm)
+                    return;
+
+                // Enter should find games first (name search). Only run region-server search
+                // when the box already looks like a place ID and servers can be queried.
+                if (long.TryParse(vm.SearchQuery?.Trim(), out _) && vm.SearchCommand.CanExecute(null))
                 {
-                    if (DataContext is RegionSelectorViewModel vm)
-                    {
-                        vm.IsSearchFlyoutOpen = false;
-                        if (vm.SearchCommand.CanExecute(null))
-                            vm.SearchCommand.Execute(null);
-                    }
-                    args.Handled = true;
+                    vm.IsSearchFlyoutOpen = false;
+                    await vm.SearchCommand.ExecuteAsync(null);
+                    return;
                 }
+
+                if (vm.SearchGamesCommand.CanExecute(null))
+                    await vm.SearchGamesCommand.ExecuteAsync(null);
             };
 
             AttachBindingsToWindow();

@@ -377,3 +377,8 @@ publish/
 *.zip
 Eclipse-win-x64-Release.zip
 
+
+# Local release staging / extract scratch
+release-staging/
+logo_extract/
+

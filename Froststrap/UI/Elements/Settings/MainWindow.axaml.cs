@@ -38,6 +38,62 @@ namespace Froststrap.UI.Elements.Settings
         {
             Instance = this;
             InitializeComponent();
+
+            // Frosted glass chrome (Acrylic/Mica when the OS supports it).
+            TransparencyLevelHint =
+            [
+                WindowTransparencyLevel.AcrylicBlur,
+                WindowTransparencyLevel.Mica,
+                WindowTransparencyLevel.Blur,
+                WindowTransparencyLevel.None
+            ];
+            Background = Brushes.Transparent;
+
+            PointerMoved += OnWindowPointerMoved;
+            PointerExited += OnWindowPointerExited;
+            global::Froststrap.Utility.ThemeManager.ThemeChanged += OnThemeChanged;
+            Closed += (_, _) => global::Froststrap.Utility.ThemeManager.ThemeChanged -= OnThemeChanged;
+
+            Dispatcher.UIThread.Post(() =>
+            {
+                ShellGlass?.SyncTintFromTheme();
+                AbyssBackground?.SyncFromTheme();
+                AbyssBackground?.SyncFromSettings();
+                if (LiquidCursor is not null)
+                {
+                    LiquidCursor.IsEffectEnabled = App.Settings?.Prop?.EnableLiquidCursor ?? true;
+                    LiquidCursor.SyncColorsFromTheme();
+                }
+            }, DispatcherPriority.Loaded);
+        }
+
+        private void OnThemeChanged()
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                ShellGlass?.SyncTintFromTheme();
+                AbyssBackground?.SyncFromTheme();
+                AbyssBackground?.SyncFromSettings();
+                if (LiquidCursor is not null)
+                {
+                    LiquidCursor.IsEffectEnabled = App.Settings?.Prop?.EnableLiquidCursor ?? true;
+                    LiquidCursor.SyncColorsFromTheme();
+                }
+            });
+        }
+
+        private void OnWindowPointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
+        {
+            if (LiquidCursor is null)
+                return;
+
+            var p = e.GetPosition(LiquidCursor);
+            LiquidCursor.SetPointer(p, true);
+        }
+
+        private void OnWindowPointerExited(object? sender, Avalonia.Input.PointerEventArgs e)
+        {
+            LiquidCursor?.SetPointer(new Point(-40, -40), false);
         }
 
         public MainWindow(bool showAlreadyRunningWarning) : this()
@@ -78,7 +134,6 @@ namespace Froststrap.UI.Elements.Settings
                 UpdateSelectedRailItem(_viewModel.SelectedPage);
                 AttachTitleBarButtons();
                 BuildSearchIndex();
-                AuroraBackground?.SyncFromSettings();
             }, DispatcherPriority.Loaded);
         }
 
@@ -95,7 +150,6 @@ namespace Froststrap.UI.Elements.Settings
             Add("home", "Home", LucideIconNames.House);
             Add("quickplay", "Games", LucideIconNames.Gamepad2);
             Add("mods", "Library", LucideIconNames.Library);
-            Add("altman", "Profiles", LucideIconNames.Users);
             Add("custommods", "Mods", LucideIconNames.Puzzle);
             Add("tools", "Settings", LucideIconNames.Settings);
 
@@ -178,10 +232,8 @@ namespace Froststrap.UI.Elements.Settings
                 "versions" => () => _viewModel?.NavigateToVersionsManagerCommand.Execute(null),
                 "banasync" => () => _viewModel?.NavigateToBanAsyncCommand.Execute(null),
                 "hwidspoofer" => () => _viewModel?.NavigateToHwidSpooferCommand.Execute(null),
-                "altman" => () => _viewModel?.NavigateToAltManCommand.Execute(null),
                 "multiinstance" => () => _viewModel?.NavigateToMultiInstanceCommand.Execute(null),
                 "vipserver" => () => _viewModel?.NavigateToVipServerCommand.Execute(null),
-                "serverbrowser" => () => _viewModel?.NavigateToServerBrowserCommand.Execute(null),
                 "news" => () => _viewModel?.NavigateToNewsCommand.Execute(null),
                 _ => null
             };
@@ -196,7 +248,7 @@ namespace Froststrap.UI.Elements.Settings
             ["mods"] = (Strings.Menu_PresetMods_Title, LucideIconNames.BookOpen),
             ["fastflags"] = (Strings.Menu_FastFlags_Title, LucideIconNames.Flag),
             ["appearance"] = (Strings.Menu_Appearance_Title, LucideIconNames.Palette),
-            ["regionselector"] = (Strings.Menu_RegionSelector_Title, LucideIconNames.Globe),
+            ["regionselector"] = ("Server Browser", LucideIconNames.Globe),
             ["globalsettings"] = (Strings.Menu_GlobalSettings_Title, LucideIconNames.PenLine),
             ["shortcuts"] = (Strings.Common_Shortcuts, LucideIconNames.Link2),
             ["quickplay"] = (Strings.Menu_QuickPlay_Title, LucideIconNames.Gamepad2),
@@ -204,10 +256,8 @@ namespace Froststrap.UI.Elements.Settings
             ["versions"] = ("Versions Manager", LucideIconNames.Layers),
             ["banasync"] = ("BanAsync", LucideIconNames.Shield),
             ["hwidspoofer"] = ("HWID Spoofer", LucideIconNames.FingerprintPattern),
-            ["altman"] = ("AltMan", LucideIconNames.Users),
             ["multiinstance"] = ("Multi Instance", LucideIconNames.Copy),
             ["vipserver"] = ("VIP Server", LucideIconNames.Crown),
-            ["serverbrowser"] = ("Server Browser", LucideIconNames.Server),
             ["news"] = ("News", LucideIconNames.Newspaper),
         };
 
@@ -263,11 +313,24 @@ namespace Froststrap.UI.Elements.Settings
 
         private void UpdateSelectedRailItem(string selectedPage)
         {
+            string mapped = selectedPage switch
+            {
+                "home" => "home",
+                "quickplay" => "quickplay",
+                "mods" => "mods",
+                "custommods" => "custommods",
+                "tools" or "integrations" or "behaviour" or "linuxsettings"
+                    or "fastflags" or "appearance" or "regionselector" or "globalsettings"
+                    or "shortcuts" or "channels" or "versions" or "banasync" or "hwidspoofer"
+                    or "multiinstance" or "vipserver" or "news" => "tools",
+                _ => selectedPage
+            };
+
             foreach (var item in _railItems)
             {
                 if (item.IsSeparator)
                     continue;
-                item.IsSelected = item.Tag == selectedPage;
+                item.IsSelected = item.Tag == mapped;
             }
         }
 
@@ -594,7 +657,7 @@ namespace Froststrap.UI.Elements.Settings
                 ("mods", Strings.Menu_PresetMods_Title, new ModsPresetsViewModel()),
                 ("fastflags", Strings.Menu_FastFlags_Title, new FastFlagsViewModel()),
                 ("appearance", Strings.Menu_Appearance_Title, new AppearanceViewModel()),
-                ("regionselector", Strings.Menu_RegionSelector_Title, new RegionSelectorViewModel()),
+                ("regionselector", "Server Browser", new RegionSelectorViewModel()),
                 ("globalsettings", Strings.Menu_GlobalSettings_Title, new GlobalSettingsViewModel()),
                 ("shortcuts", Strings.Common_Shortcuts, new ShortcutsViewModel()),
                 ("quickplay", Strings.Menu_QuickPlay_Title, new QuickPlayViewModel()),

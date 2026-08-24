@@ -24,6 +24,14 @@
         </Setter>
     </Style>
 
+    <!-- Chrome icon buttons must not pick up the global button hover fill -->
+    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
     <Style Selector="Button:pressed /template/ ContentPresenter">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">

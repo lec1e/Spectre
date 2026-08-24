@@ -37,6 +37,7 @@ namespace Froststrap.UI.ViewModels.Settings
         private SortOrderComboBoxItem? _selectedSortOrderItem;
         private int _lastFetchProcessedCount;
         private string? _thumbnailUrl;
+        private string _selectedGameName = "";
         private bool _isSearchFlyoutOpen;
         private string _userLocationHint = "";
         #endregion
@@ -160,7 +161,17 @@ namespace Froststrap.UI.ViewModels.Settings
         public string? ThumbnailUrl
         {
             get => _thumbnailUrl;
-            set => SetProperty(ref _thumbnailUrl, value);
+            set
+            {
+                if (SetProperty(ref _thumbnailUrl, value))
+                    OnPropertyChanged(nameof(HasThumbnailPreview));
+            }
+        }
+
+        public string SelectedGameName
+        {
+            get => _selectedGameName;
+            set => SetProperty(ref _selectedGameName, value);
         }
 
         public bool IsSearchFlyoutOpen
@@ -188,6 +199,7 @@ namespace Froststrap.UI.ViewModels.Settings
         public bool IsServerListEmpty => Servers.Count == 0;
         public bool IsServerListEmptyAndNotLoading => IsServerListEmpty && !IsLoading;
         public bool ShowLoadingIndicator => IsLoading && !IsGameSearchLoading;
+        public bool HasThumbnailPreview => !string.IsNullOrWhiteSpace(ThumbnailUrl);
         public bool CanLoadMore => !string.IsNullOrWhiteSpace(_regionCursor);
 
         public string ServerListMessage =>
@@ -255,6 +267,8 @@ namespace Froststrap.UI.ViewModels.Settings
             if (value == null) return;
             PlaceId = value.RootPlaceId.ToString();
             SearchQuery = value.RootPlaceId.ToString();
+            SelectedGameName = value.Name ?? "";
+            ThumbnailUrl = value.ThumbnailUrl;
             IsSearchFlyoutOpen = false;
         }
 
@@ -563,6 +577,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 {
                     if (fetchedUrls != null && i < fetchedUrls.Length && !string.IsNullOrEmpty(fetchedUrls[i]))
                     {
+                        results[i].ThumbnailUrl = fetchedUrls[i];
                         try
                         {
                             var response = await App.HttpClient.GetByteArrayAsync(fetchedUrls[i], token);

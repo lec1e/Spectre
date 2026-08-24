@@ -1,0 +1,58 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Froststrap.UI.Elements.Controls">
+
+  <Style Selector="controls|LiquidGlassPanel">
+    <Setter Property="CornerRadius" Value="22" />
+    <Setter Property="ClipToBounds" Value="True" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel ClipToBounds="True">
+          <ExperimentalAcrylicBorder x:Name="PART_Acrylic"
+                                     CornerRadius="{TemplateBinding CornerRadius}" />
+
+          <!-- Light veil so abyss / content glow stays readable -->
+          <Border IsHitTestVisible="False"
+                  CornerRadius="{TemplateBinding CornerRadius}"
+                  Background="#66050A14" />
+
+          <Border x:Name="PART_Rim"
+                  IsHitTestVisible="False"
+                  CornerRadius="{TemplateBinding CornerRadius}"
+                  BorderThickness="1">
+            <Border.BorderBrush>
+              <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                <GradientStop Color="#88FFFFFF" Offset="0" />
+                <GradientStop Color="#4466CCFF" Offset="0.4" />
+                <GradientStop Color="#338B5CF6" Offset="0.75" />
+                <GradientStop Color="#22000000" Offset="1" />
+              </LinearGradientBrush>
+            </Border.BorderBrush>
+          </Border>
+
+          <Border x:Name="PART_Highlight"
+                  IsHitTestVisible="False"
+                  Height="56"
+                  VerticalAlignment="Top"
+                  Opacity="0.4"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+            <Border.Background>
+              <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                <GradientStop Color="#55FFFFFF" Offset="0" />
+                <GradientStop Color="#18FFFFFF" Offset="0.5" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
+              </LinearGradientBrush>
+            </Border.Background>
+          </Border>
+
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

@@ -1,19 +1,32 @@
 <h1 align="center">Eclipse</h1>
 
 <p align="center">
-  <img src="./.resources/Eclipse.png" height="160" alt="Eclipse logo"/>
+  <img src="./.resources/Eclipse.png" height="180" alt="Eclipse application logo"/>
+</p>
+
+<p align="center">
+  <a href="https://github.com/lec1e/Eclipse/releases/latest">
+    <img src="https://img.shields.io/github/v/release/lec1e/Eclipse?label=latest&color=a855f7" alt="Latest release"/>
+  </a>
+  <a href="https://github.com/lec1e/Eclipse/releases/latest">
+    <img src="https://img.shields.io/github/downloads/lec1e/Eclipse/total?color=22d3ee" alt="Downloads"/>
+  </a>
 </p>
 
 <p align="center">
   <strong>Eclipse</strong> is a Froststrap-based Roblox launcher with MrExLive / ExploitStrap features ported in —
-  Versions Manager profiles, LIVE channel lock, BanAsync tools, multi-instance, and a black/purple multi-theme system.
+  Versions Manager profiles, LIVE channel lock, BanAsync tools, multi-instance, and a dark Eclipse glass theme system.
+</p>
+
+<p align="center">
+  <img src="./social-preview.png" width="640" alt="Eclipse app branding"/>
 </p>
 
 ## What’s new vs stock Froststrap
 
 - **Versions Manager** — one profile per executor (WEAO / manual hash), dropdown to switch, optional picker on launch
 - **LIVE channel lock** — Player launches forced to production (toggleable)
-- **Eclipse themes** — default black/purple plus Purple Haze, Ocean, Emerald, Sunset, Mono, Blood Red
+- **Eclipse themes** — dark liquid-glass shell, abyss glow background, 30+ color presets
 - **BanAsync** (Windows) — clean Roblox traces, MAC / MachineGuid helpers
 - **Multi-instance + window tiling**
 - **VIP / Server Browser / News** tabs
@@ -21,6 +34,11 @@
 - **Stream mode** — hide account-identifying UI while streaming
 
 C# namespaces remain `Froststrap.*` for upstream compatibility; the product name, install folder, and branding are **Eclipse**.
+
+## Download
+
+Grab the latest **Eclipse.exe** from [Releases](https://github.com/lec1e/Eclipse/releases/latest).  
+Auto-update picks up new stable releases when update checks are enabled.
 
 ## Build
 

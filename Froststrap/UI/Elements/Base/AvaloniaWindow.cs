@@ -161,6 +161,8 @@ namespace Froststrap.UI.Elements.Base
                 return;
 
             var selectedBackdrop = App.Settings.Prop.SelectedBackdrop;
+            if (selectedBackdrop == Enums.WindowsBackdrops.None)
+                selectedBackdrop = Enums.WindowsBackdrops.Acrylic;
 
             foreach (var window in desktop.Windows)
             {
@@ -168,8 +170,8 @@ namespace Froststrap.UI.Elements.Base
                 {
                     window.TransparencyLevelHint = selectedBackdrop switch
                     {
-                        Enums.WindowsBackdrops.Acrylic => [WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None],
-                        Enums.WindowsBackdrops.Mica => [WindowTransparencyLevel.Mica, WindowTransparencyLevel.None],
+                        Enums.WindowsBackdrops.Acrylic => [WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.Mica, WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
+                        Enums.WindowsBackdrops.Mica => [WindowTransparencyLevel.Mica, WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None],
                         Enums.WindowsBackdrops.Aero => [WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
                         _ => [WindowTransparencyLevel.None]
                     };

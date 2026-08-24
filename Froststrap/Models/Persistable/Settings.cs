@@ -60,7 +60,7 @@ namespace Froststrap.Models.Persistable
         public int CycleCurrentIndex { get; set; }
         public DateTime CycleLastCycleTime { get; set; } = DateTime.MinValue;
         public BootstrapperIcon BootstrapperIcon { get; set; } = BootstrapperIcon.IconFroststrap;
-        public WindowsBackdrops SelectedBackdrop { get; set; } = WindowsBackdrops.None;
+        public WindowsBackdrops SelectedBackdrop { get; set; } = WindowsBackdrops.Acrylic;
         public NavigationViewPaneDisplayMode NavigationPaneDisplayMode { get; set; } = NavigationViewPaneDisplayMode.Auto;
         public string Locale { get; set; } = "nil";
         public List<GradientStops> CustomGradientStops { get; set; } =
@@ -85,6 +85,7 @@ namespace Froststrap.Models.Persistable
         public bool EnableAurora { get; set; } = true;
         public bool EnableGlass { get; set; } = true;
         public bool EnableGlow { get; set; } = true;
+        public bool EnableLiquidCursor { get; set; } = true;
 
         // Versions Manager (MrEx port)
         public bool UseCustomVersion { get; set; } = false;
