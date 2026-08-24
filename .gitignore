@@ -382,3 +382,6 @@ Eclipse-win-x64-Release.zip
 release-staging/
 logo_extract/
 
+
+# Local screenshot capture scratch
+.github/preview/raw/
