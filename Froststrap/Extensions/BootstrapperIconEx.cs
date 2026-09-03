@@ -51,12 +51,12 @@ namespace Froststrap.Extensions
                     }
                 }
 
-                return customIcon ?? LoadFromResource("IconFroststrap");
+                return customIcon ?? LoadSpectreIcon();
             }
 
             var bitmap = icon switch
             {
-                BootstrapperIcon.IconFroststrap => LoadFromResource("IconFroststrap"),
+                BootstrapperIcon.IconFroststrap => LoadSpectreIcon(),
                 BootstrapperIcon.Icon2008 => LoadFromResource("Icon2008"),
                 BootstrapperIcon.Icon2011 => LoadFromResource("Icon2011"),
                 BootstrapperIcon.IconEarly2015 => LoadFromResource("IconEarly2015"),
@@ -66,16 +66,22 @@ namespace Froststrap.Extensions
                 BootstrapperIcon.Icon2022 => LoadFromResource("Icon2022"),
                 BootstrapperIcon.Icon2025 => LoadFromResource("Icon2025"),
                 BootstrapperIcon.IconFroststrapClassic => LoadFromResource("IconFroststrapClassic"),
-                _ => LoadFromResource("IconFroststrap")
+                _ => LoadSpectreIcon()
             };
 
             _cache[icon] = bitmap;
             return bitmap;
         }
 
+        private static Bitmap LoadSpectreIcon()
+        {
+            var uri = new Uri("avares://Spectre/Spectre.ico");
+            using var stream = AssetLoader.Open(uri);
+            return LoadBestIconFromIcoStream(stream);
+        }
+
         private static Bitmap LoadFromResource(string name)
         {
-            // Load the ICO file
             var uri = new Uri($"avares://Spectre/Resources/{name}.ico");
             using var stream = AssetLoader.Open(uri);
             return LoadBestIconFromIcoStream(stream);

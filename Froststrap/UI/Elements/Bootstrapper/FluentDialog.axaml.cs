@@ -1,6 +1,8 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Froststrap.UI.Elements.Bootstrapper.Base;
 using Froststrap.UI.ViewModels.Bootstrapper;
 
@@ -25,13 +27,23 @@ namespace Froststrap.UI.Elements.Bootstrapper
 
             SetupDialog();
 
-            var iconImage = App.Settings.Prop.BootstrapperIcon.GetIcon().GetImageSource();
-            if (iconImage is Bitmap bitmap)
-                Icon = new WindowIcon(bitmap);
+            try
+            {
+                using var stream = AssetLoader.Open(new Uri("avares://Spectre/Spectre.ico"));
+                Icon = new WindowIcon(stream);
+            }
+            catch
+            {
+                var iconImage = App.Settings.Prop.BootstrapperIcon.GetIcon().GetImageSource();
+                if (iconImage is Bitmap bitmap)
+                    Icon = new WindowIcon(bitmap);
+            }
 
             void ApplyGlass()
             {
                 ShellGlass?.ApplyFromSettings();
+                AbyssBackground?.SyncFromTheme();
+                AbyssBackground?.SyncFromSettings();
                 if (aero && App.Settings.Prop.EnableGlass && ShellGlass is not null)
                 {
                     ShellGlass.TintOpacity = Math.Min(App.Settings.Prop.GlassTintOpacity + 0.08, 0.55);
@@ -41,6 +53,14 @@ namespace Froststrap.UI.Elements.Bootstrapper
 
             ApplyGlass();
             Loaded += (_, _) => ApplyGlass();
+
+            PointerMoved += (_, e) =>
+            {
+                if (AbyssBackground is null)
+                    return;
+                AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
+            };
+            PointerExited += (_, _) => AbyssBackground?.SetPointer(new Point(-40, -40), false);
         }
 
         #region UI Elements Overrides

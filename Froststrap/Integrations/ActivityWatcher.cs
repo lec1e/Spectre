@@ -14,7 +14,9 @@ namespace Froststrap.Integrations
         private const string GameTeleportingEntry = "[FLog::UgcExperienceController] UgcExperienceController: doTeleport: joinScriptUrl";
         private const string GameJoiningUniverseEntry = "[FLog::GameJoinLoadTime] Report game_join_loadtime:";
         private const string GameJoiningUDMUXEntry = "[FLog::Network] UDMUX Address = ";
-        private const string GameJoinedEntry = "[FLog::Network] serverId:";
+        // Current Roblox clients log this when replication starts. Older clients used serverId:.
+        private const string GameJoinedEntry = "[FLog::Network] Replicator created: ";
+        private const string GameJoinedEntryLegacy = "[FLog::Network] serverId:";
         private const string GameDisconnectedEntry = "[FLog::Network] Time to disconnect replication data:";
         private const string GameLeavingEntry = "[FLog::SingleSurfaceApp] leaveUGCGameInternal";
         private const string GameLeavingEntrySober = "app_interface$json: {\"type\":\"game_left\"}";
@@ -489,15 +491,13 @@ namespace Froststrap.Integrations
 
                     App.Logger.WriteLine(LOG_IDENT, $"Server is UDMUX protected ({Data})");
                 }
-                else if (logMessage.StartsWith(GameJoinedEntry))
+                else if (logMessage.StartsWith(GameJoinedEntry) || logMessage.StartsWith(GameJoinedEntryLegacy))
                 {
-                    Match match = Regex.Match(logMessage, GameJoinedEntryPattern);
-
-                    if (match.Groups.Count != 2 || match.Groups[1].Value != Data.MachineAddress)
+                    if (logMessage.StartsWith(GameJoinedEntryLegacy))
                     {
-                        App.Logger.WriteLine(LOG_IDENT, $"Failed to assert format for game joined entry");
-                        App.Logger.WriteLine(LOG_IDENT, logMessage);
-                        return;
+                        Match match = Regex.Match(logMessage, GameJoinedEntryPattern);
+                        if (match.Success && match.Groups.Count >= 2 && !string.IsNullOrEmpty(match.Groups[1].Value))
+                            Data.MachineAddress = match.Groups[1].Value;
                     }
 
                     App.Logger.WriteLine(LOG_IDENT, $"Joined Game ({Data})");
@@ -506,6 +506,9 @@ namespace Froststrap.Integrations
                     Data.TimeJoined = DateTime.Now;
 
                     OnGameJoin?.Invoke(this, EventArgs.Empty);
+
+                    if (App.Settings.Prop.ShowServerDetails)
+                        ShowNotif?.Invoke(this, EventArgs.Empty);
                 }
             }
             else if (InGame && Data.PlaceId != 0)
@@ -659,8 +662,6 @@ namespace Froststrap.Integrations
 
                     if (App.Settings.Prop.ShowServerDetails && Data.MachineAddressValid)
                         _ = Data.QueryServerLocation();
-
-                    ShowNotif?.Invoke(this, null!);
                 }
             }
         }

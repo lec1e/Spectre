@@ -1,11 +1,9 @@
-﻿using Froststrap.UI.Elements.Base;
+﻿using Avalonia;
+using Froststrap.UI.Elements.Base;
 using Froststrap.UI.ViewModels.Dialogs;
 
 namespace Froststrap.UI.Elements.Dialogs
 {
-    /// <summary>
-    /// Interaction logic for UninstallerDialog.xaml
-    /// </summary>
     public partial class UninstallerDialog : AvaloniaWindow
     {
         public bool Confirmed { get; private set; } = false;
@@ -31,6 +29,18 @@ namespace Froststrap.UI.Elements.Dialogs
             };
 
             DataContext = viewModel;
+            ShellGlass?.ApplyFromSettings();
+            AbyssBackground?.SyncFromTheme();
+            AbyssBackground?.SyncFromSettings();
+
+            PointerMoved += (_, e) =>
+            {
+                if (AbyssBackground is null)
+                    return;
+                AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
+            };
+            PointerExited += (_, _) => AbyssBackground?.SetPointer(new Point(-40, -40), false);
+
             App.FrostRPC?.SetDialog("Uninstaller");
         }
     }

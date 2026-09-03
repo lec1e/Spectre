@@ -30,6 +30,8 @@ public partial class App : Application
     public const string BrandName = "Spectre";
     /// <summary>Windows executable file name without extension.</summary>
     public const string ExecutableName = "Spectre";
+    /// <summary>Windows toast / Start Menu identity. Must match Program.WithAppNotifications.</summary>
+    public const string AppUserModelId = "Spectre.Spectre";
     public const string ProjectOwner = "lec1e";
     public const string ProjectRepository = "lec1e/Spectre";
     public const string ProjectDownloadLink = "https://github.com/lec1e/Spectre/releases";
@@ -598,11 +600,10 @@ public partial class App : Application
 
                 try
                 {
-                    const string appUserModelId = "Eclipse.Eclipse";
                     string iconPath = Program.ExtractToTemp("Spectre.ico", "SpectreNotify.ico");
                     string iconUri = new Uri(iconPath).AbsoluteUri;
 
-                    using (var key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\AppUserModelId\" + appUserModelId))
+                    using (var key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\AppUserModelId\" + AppUserModelId))
                     {
                         key.SetValue("DisplayName", App.BrandName);
                         key.SetValue("IconUri", iconUri);
