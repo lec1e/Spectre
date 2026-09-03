@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>O firmie Froststrap</value>
+    <value>O firmie Spectre</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Nie udało się sprawdzić lokalizacji serwera. Być może dołączasz do gier zbyt szybko.</value>
@@ -137,7 +137,7 @@
     <value>Kanał, na którym obecnie się znajdujesz ({0}), został zablokowany dla użytkowników publicznych. Zostaniesz teraz przeniesiony na kanał domyślny ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Nie udało się automatycznie zaktualizować programu Froststrap do wersji {0}. Proszę zaktualizować go ręcznie, pobierając i uruchamiając plik z witryny internetowej.</value>
+    <value>Nie udało się automatycznie zaktualizować programu Spectre do wersji {0}. Proszę zaktualizować go ręcznie, pobierając i uruchamiając plik z witryny internetowej.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox próbuje ustawić Twój kanał na {0}, jednak obecnie Twoim preferowanym kanałem jest {1}.
@@ -175,7 +175,7 @@ Czy chcesz przejść na kanał domyślny ({1})?</value>
     <value>Nie udało się zastosować wszystkich zmian</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap nie ma wystarczającej ilości miejsca na dysku, aby pobrać i zainstalować Roblox. Proszę zwolnić trochę miejsca na dysku i spróbować ponownie.</value>
+    <value>Spectre nie ma wystarczającej ilości miejsca na dysku, aby pobrać i zainstalować Roblox. Proszę zwolnić trochę miejsca na dysku i spróbować ponownie.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Wprowadzanie modyfikacji w Robloxie...</value>
@@ -310,10 +310,10 @@ Czy chcesz przejść na kanał domyślny ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Program Froststrap został pomyślnie odinstalowany</value>
+    <value>Program Spectre został pomyślnie odinstalowany</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox jest obecnie uruchomiony, ale przed odinstalowaniem Froststrap należy go zamknąć. Czy chcesz teraz zamknąć Roblox?</value>
+    <value>Roblox jest obecnie uruchomiony, ale przed odinstalowaniem Spectre należy go zamknąć. Czy chcesz teraz zamknąć Roblox?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox wymaga komponentów Windows Media Foundation. Wygląda na to, że ich brakuje, prawdopodobnie dlatego, że korzystasz z systemu Windows w wersji N. Zainstaluj je najpierw, a następnie uruchom Roblox.</value>
@@ -404,7 +404,7 @@ Czy chcesz przejść na kanał domyślny ({1})?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Eksport</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Pliki</value>
@@ -494,7 +494,7 @@ Czy chcesz przejść na kanał domyślny ({1})?</value>
     <value>Zmień nazwę</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Aplikacja Roblox nie została jeszcze zainstalowana. Przed skorzystaniem z tej opcji należy przynajmniej raz uruchomić aplikację Roblox za pomocą Froststrap.</value>
+    <value>Aplikacja Roblox nie została jeszcze zainstalowana. Przed skorzystaniem z tej opcji należy przynajmniej raz uruchomić aplikację Roblox za pomocą Spectre.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Zapisz i zainstaluj</value>
@@ -714,7 +714,7 @@ Czas działania: {1}</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Nie udało się skonfigurować niestandardowego programu rozruchowego: {0}.
 Zastosowano ustawienie domyślne: {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Niestandardowe sekwencje bootstrappingowe mogą zawierać maksymalnie {0} elementów, a otrzymano {1}</value>
@@ -763,17 +763,17 @@ Zastosowano ustawienie domyślne: {1}.</value>
     <value>Proszę poczekać, aż proces odinstalowywania dobiegnie końca.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap nie obsługuje już Bloxshade.
+    <value>Spectre nie obsługuje już Bloxshade.
 Aby uzyskać więcej informacji, dołącz do serwera Bloxshade na Discordzie.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Przepraszam</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Program Froststrap nie mógł utworzyć skrótów na pulpicie i w menu Start. Spróbuj utworzyć je później w ustawieniach.</value>
+    <value>Program Spectre nie mógł utworzyć skrótów na pulpicie i w menu Start. Spróbuj utworzyć je później w ustawieniach.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Nie udało się nawiązać połączenia, co prawdopodobnie oznacza słabe połączenie internetowe lub blokadę przez zaporę sieciową. Jeśli połączenie działa prawidłowo, upewnij się, że program antywirusowy nie blokuje działania Froststrap.</value>
+    <value>Nie udało się nawiązać połączenia, co prawdopodobnie oznacza słabe połączenie internetowe lub blokadę przez zaporę sieciową. Jeśli połączenie działa prawidłowo, upewnij się, że program antywirusowy nie blokuje działania Spectre.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Funkcja BetterMatchmaking zostanie wyłączona na czas tej sesji.</value>
@@ -785,7 +785,7 @@ Aby uzyskać więcej informacji, dołącz do serwera Bloxshade na Discordzie.</v
     <value>Serwis Roblox może być obecnie niedostępny. Więcej informacji znajdziesz w {0}.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Ponieważ konieczne jest zainstalowanie lub aktualizacja programu Roblox, program Froststrap nie może kontynuować działania.</value>
+    <value>Ponieważ konieczne jest zainstalowanie lub aktualizacja programu Roblox, program Spectre nie może kontynuować działania.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>W ramach tej aktualizacji nie zostanie przeprowadzona kontrola Roblox pod kątem dostępnych aktualizacji, a zmiany wprowadzone w modach nie zostaną zastosowane.</value>
@@ -797,11 +797,11 @@ Aby uzyskać więcej informacji, dołącz do serwera Bloxshade na Discordzie.</v
     <value>Spróbuj ponownie później.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap nie może połączyć się z {0}</value>
+    <value>Spectre nie może połączyć się z {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap nie może pobrać Roblox</value>
+    <value>Spectre nie może pobrać Roblox</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>W tej chwili nie można pobrać aplikacji Roblox. Aby uzyskać więcej informacji, zapoznaj się z poniższą stroną pomocy: {0}</value>
@@ -811,24 +811,24 @@ Aby uzyskać więcej informacji, dołącz do serwera Bloxshade na Discordzie.</v
     <value>Skopiuj zawartość dziennika</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Podczas uruchamiania Froststrap/Froststrap wystąpił wyjątek</value>
+    <value>Podczas uruchamiania Spectre/Spectre wystąpił wyjątek</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Najpierw sprawdź [Wiki Froststrap]({0}), aby upewnić się, czy problem ten nie został już rozwiązany.
+    <value>Najpierw sprawdź [Wiki Spectre]({0}), aby upewnić się, czy problem ten nie został już rozwiązany.
 
 Jeśli nie, zgłoś ten wyjątek poprzez [zgłoszenie na GitHubie]({1}), dołączając kopię utworzonego pliku dziennika.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Najpierw sprawdź [Wiki Froststrap]({0}), aby upewnić się, czy problem ten nie został już rozwiązany.
+    <value>Najpierw sprawdź [Wiki Spectre]({0}), aby upewnić się, czy problem ten nie został już rozwiązany.
 
-Jeśli nie, zgłoś ten błąd opiekunom tego forka. NIE zgłaszaj tego błędu w sekcji zgłoszeń na GitHubie projektu Froststrap, ponieważ jest to nieoficjalna kompilacja.</value>
+Jeśli nie, zgłoś ten błąd opiekunom tego forka. NIE zgłaszaj tego błędu w sekcji zgłoszeń na GitHubie projektu Spectre, ponieważ jest to nieoficjalna kompilacja.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Zgłoś wyjątek</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Wyjątek Froststrap</value>
+    <value>Wyjątek Spectre</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Nie udało się załadować wybranej ikony programu rozruchowego.
@@ -852,10 +852,10 @@ Niektóre fragmenty tekstu mogą nie być przetłumaczone na wybrany język.</va
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Aby dowiedzieć się, dlaczego może się tak dziać i jak można to rozwiązać, przeczytaj [ten artykuł pomocy]({0}).
 
-Sprawdź, czy Roblox działa z [oryginalnym programem uruchamiającym]({1}). Jeśli nie, to nie jest to problem związany z Froststrap. Jeśli działa, zapoznaj się z artykułem pomocy.</value>
+Sprawdź, czy Roblox działa z [oryginalnym programem uruchamiającym]({1}). Jeśli nie, to nie jest to problem związany z Spectre. Jeśli działa, zapoznaj się z artykułem pomocy.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Program Froststrap nie może zapisywać danych w rejestrze systemu Windows. Prawdopodobnie program antywirusowy zakłóca jego działanie i powoduje problemy. Proszę sprawdzić, czy nie ma żadnych czynników ograniczających działanie programu Froststrap.</value>
+    <value>Program Spectre nie może zapisywać danych w rejestrze systemu Windows. Prawdopodobnie program antywirusowy zakłóca jego działanie i powoduje problemy. Proszę sprawdzić, czy nie ma żadnych czynników ograniczających działanie programu Spectre.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Gradienty</value>
@@ -885,16 +885,16 @@ Sprawdź, czy Roblox działa z [oryginalnym programem uruchamiającym]({1}). Je�
     <value>Podróbka Byfronu (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (klasyczny)</value>
+    <value>Spectre (klasyczny)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Niestandardowe</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (szkło)</value>
+    <value>Spectre (szkło)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (nieprzezroczysty)</value>
+    <value>Spectre (nieprzezroczysty)</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>Roblox (ok. 2025 r.)</value>
@@ -1129,14 +1129,14 @@ Sprawdź, czy Roblox działa z [oryginalnym programem uruchamiającym]({1}). Je�
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap został zaktualizowany do wersji v{0}</value>
+    <value>Spectre został zaktualizowany do wersji v{0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Wersja programu Froststrap, którą uruchomiłeś, różni się od wersji, którą masz obecnie zainstalowaną.
+    <value>Wersja programu Spectre, którą uruchomiłeś, różni się od wersji, którą masz obecnie zainstalowaną.
 Czy chcesz zaktualizować obecnie zainstalowaną wersję?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Wersja programu Froststrap, którą uruchomiłeś, jest starsza od tej, którą masz obecnie zainstalowaną.
+    <value>Wersja programu Spectre, którą uruchomiłeś, jest starsza od tej, którą masz obecnie zainstalowaną.
 Mogą wystąpić problemy, a Twoje ustawienia mogą ulec zmianie. Zaleca się ponowną instalację.
 Czy na pewno chcesz kontynuować?</value>
   </data>
@@ -1153,7 +1153,7 @@ Czy na pewno chcesz kontynuować?</value>
     <value>Uruchom Roblox Studio</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>W przypadku tego uruchomienia nie zostanie utworzony żaden plik dziennika, ponieważ Froststrap nie może zapisywać danych w folderze „{0}”</value>
+    <value>W przypadku tego uruchomienia nie zostanie utworzony żaden plik dziennika, ponieważ Spectre nie może zapisywać danych w folderze „{0}”</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Informacje o kompilacji</value>
@@ -1171,13 +1171,13 @@ Czy na pewno chcesz kontynuować?</value>
     <value>Kod</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Oto wszystkie osoby, które wniosły znaczący wkład w rozwój projektów Froststrap i Froststrap, kształtując je tak, jak wyglądają dzisiaj.</value>
+    <value>Oto wszystkie osoby, które wniosły znaczący wkład w rozwój projektów Spectre i Spectre, kształtując je tak, jak wyglądają dzisiaj.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Inspiracje</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Widelec typu Fishstrap/Froststrap.</value>
+    <value>Widelec typu Fishstrap/Spectre.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Serwer Discord</value>
@@ -1240,16 +1240,16 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Należy pamiętać, że nie wszystkie wprowadzone zmiany zostaną natychmiast zastosowane, dopóki nie zamknie się wszystkich aktualnie otwartych instancji Roblox.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap już działa</value>
+    <value>Spectre już działa</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Tryb w tle:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Dostosuj program rozruchowy Froststrap, korzystając z szerokiej gamy opcji.</value>
+    <value>Dostosuj program rozruchowy Spectre, korzystając z szerokiej gamy opcji.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Z łatwością dostosuj motywy Froststrap, korzystając z gotowych ustawień, lub stwórz własny, niepowtarzalny wygląd.</value>
+    <value>Z łatwością dostosuj motywy Spectre, korzystając z gotowych ustawień, lub stwórz własny, niepowtarzalny wygląd.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Motywy aplikacji</value>
@@ -1267,13 +1267,13 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Tytuł</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Skonfiguruj wygląd Froststrap.</value>
+    <value>Skonfiguruj wygląd Spectre.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Częstotliwość</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Wybierz ikonę, której ma używać Froststrap.</value>
+    <value>Wybierz ikonę, której ma używać Spectre.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Ikona</value>
@@ -1288,7 +1288,7 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Język</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Wybierz styl ekranu startowego. Uwaga: ciemny motyw nie jest obsługiwany w systemach Legacy ani Vista. Aby uzyskać więcej niestandardowych programów uruchamiających, odwiedź oficjalny serwer Froststrap na Discordzie.</value>
+    <value>Wybierz styl ekranu startowego. Uwaga: ciemny motyw nie jest obsługiwany w systemach Legacy ani Vista. Aby uzyskać więcej niestandardowych programów uruchamiających, odwiedź oficjalny serwer Spectre na Discordzie.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Styl „bootstrapper”</value>
@@ -1321,16 +1321,16 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Tło okienne</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Zapewnia dostęp do interfejsów API serwisu Roblox przy użyciu pliku cookie uwierzytelniającego. [Do czego będzie miał dostęp Froststrap?]({0})</value>
+    <value>Zapewnia dostęp do interfejsów API serwisu Roblox przy użyciu pliku cookie uwierzytelniającego. [Do czego będzie miał dostęp Spectre?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Uprawnienia do konta Froststrap</value>
+    <value>Uprawnienia do konta Spectre</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap automatycznie sprawdzi i zaktualizuje się do stabilnej wersji podczas uruchamiania Roblox.</value>
+    <value>Spectre automatycznie sprawdzi i zaktualizuje się do stabilnej wersji podczas uruchamiania Roblox.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Automatyczna aktualizacja Froststrap</value>
+    <value>Automatyczna aktualizacja Spectre</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Zaktualizuj Roblox w tle, zamiast czekać. Nie zaleca się tej opcji w przypadku wolnych połączeń internetowych. Aby ta funkcja działała, potrzebne jest co najmniej 3 GB wolnego miejsca na dysku.</value>
@@ -1351,7 +1351,7 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Potwierdzenie uruchomienia instancji</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Skonfiguruj, jak Froststrap ma się zachowywać podczas uruchamiania Roblox.</value>
+    <value>Skonfiguruj, jak Spectre ma się zachowywać podczas uruchamiania Roblox.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Przy następnym uruchomieniu nastąpi czysta instalacja Roblox.</value>
@@ -1381,7 +1381,7 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Automatycznie usuwa stare dane, aby zwolnić miejsce. Pierwotnie stworzone przez Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Środek czyszczący do pasków Froststrap</value>
+    <value>Środek czyszczący do pasków Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Pliki starsze niż określony czas zostaną usunięte.</value>
@@ -1396,10 +1396,10 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Pamięć podręczna</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Logi Froststrap zostaną usunięte.</value>
+    <value>Logi Spectre zostaną usunięte.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Dzienniki Froststrap</value>
+    <value>Dzienniki Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Stare pliki dziennika zostaną usunięte.</value>
@@ -1408,7 +1408,7 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Menu „Dzienniki”</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Pozwól, aby Froststrap sam decydował, do których serwerów się dołączysz. Program wybiera serwer znajdujący się w najmniejszej odległości od Ciebie.</value>
+    <value>Pozwól, aby Spectre sam decydował, do których serwerów się dołączysz. Program wybiera serwer znajdujący się w najmniejszej odległości od Ciebie.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Wygląda na to, że jeden z Twoich znajomych właśnie gra w tę grę. Chcesz do niego dołączyć?</value>
@@ -1465,7 +1465,7 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Zmiana automatyczna</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox lub Froststrap mogą próbować zmienić Twój preferowany kanał.</value>
+    <value>Roblox lub Spectre mogą próbować zmienić Twój preferowany kanał.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Nigdy się nie zmieniaj</value>
@@ -1477,7 +1477,7 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Automatyczna zmiana kanału</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Zmień ustawienia wdrażania i instalacji dla Roblox i Froststrap.</value>
+    <value>Zmień ustawienia wdrażania i instalacji dla Roblox i Spectre.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Ulepszenia w Roblox</value>
@@ -1564,7 +1564,7 @@ Kliknij „Dodaj konto” powyżej, aby rozpocząć</value>
     <value>Nie znaleziono pliku cookie serwisu Roblox.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap automatycznie sprawdzi i zaktualizuje się do wersji testowej podczas uruchamiania Roblox.</value>
+    <value>Spectre automatycznie sprawdzi i zaktualizuje się do wersji testowej podczas uruchamiania Roblox.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Aktualizacja wersji przedpremierowych</value>
@@ -1701,7 +1701,7 @@ Chcesz to teraz usunąć?</value>
     <value>Wyłączenie tej opcji spowoduje, że żadne ustawienia skonfigurowane w tym miejscu nie zostaną zastosowane w serwisie Roblox.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Zezwól Froststrap na zarządzanie FastFlags</value>
+    <value>Zezwól Spectre na zarządzanie FastFlags</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox obniża jakość renderowania w zależności od tego, w jakim stopniu skalowany jest ekran w systemie Windows.</value>
@@ -2106,7 +2106,7 @@ Chcesz to teraz usunąć?</value>
     <value>Podobne do wersji na komputery stacjonarne</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Podczas uruchamiania Roblox otwiera określone okno po dwukrotnym kliknięciu ikony Froststrap w zasobniku systemowym.</value>
+    <value>Podczas uruchamiania Roblox otwiera określone okno po dwukrotnym kliknięciu ikony Spectre w zasobniku systemowym.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Działanie po dwukrotnym kliknięciu</value>
@@ -2124,13 +2124,13 @@ Chcesz to teraz usunąć?</value>
     <value>Informacje o edycji</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Umożliwia aplikacji Froststrap wykrycie, w jaką grę Roblox aktualnie grasz. Niektóre funkcje mogą tego wymagać.</value>
+    <value>Umożliwia aplikacji Spectre wykrycie, w jaką grę Roblox aktualnie grasz. Niektóre funkcje mogą tego wymagać.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Włącz śledzenie aktywności</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Włącz tę opcję, aby w Twoim profilu na Discordzie wyświetlał się niestandardowy komunikat RPC „Playing Froststrap”, gdy aplikacja jest otwarta.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Włącz tę opcję, aby w Twoim profilu na Discordzie wyświetlał się niestandardowy komunikat RPC „Playing Spectre”, gdy aplikacja jest otwarta.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Wyświetla grę, w którą grałeś podczas tej sesji, i umożliwia ponowne dołączenie do niej.</value>
@@ -2193,7 +2193,7 @@ Chcesz to teraz usunąć?</value>
     <value>Wyświetlanie aktywności w Studio</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Działa to poprzez dodanie specjalnie stworzonej wtyczki do Froststrap, która będzie rejestrować Twoje działania.
+    <value>Działa to poprzez dodanie specjalnie stworzonej wtyczki do Spectre, która będzie rejestrować Twoje działania.
 Czy chcesz zainstalować tę wtyczkę?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2757,7 +2757,7 @@ Aplikacja zamknie to okno po zakończeniu logowania.</value>
     <value>Ładowanie centrów danych...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Aby skorzystać z tej funkcji, zaloguj się za pomocą menedżera konta, włącz opcję „Uprawnienia konta Froststrap” lub zgłoś to na naszym serwerze Discord.</value>
+    <value>Aby skorzystać z tej funkcji, zaloguj się za pomocą menedżera konta, włącz opcję „Uprawnienia konta Spectre” lub zgłoś to na naszym serwerze Discord.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Nie znaleziono żadnych serwerów publicznych.</value>
@@ -2826,13 +2826,13 @@ Aplikacja zamknie to okno po zakończeniu logowania.</value>
     <value>Utwórz skrót</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Skonfiguruj sposób, w jaki można łatwo uruchomić Froststrap.</value>
+    <value>Skonfiguruj sposób, w jaki można łatwo uruchomić Spectre.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Wystąpił błąd podczas tworzenia skrótu.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Umożliwia korzystanie z zestawu ikon Roblox firmy Froststrap do tworzenia skrótów. [Zobacz, jak to zrobić.]({0})</value>
+    <value>Umożliwia korzystanie z zestawu ikon Roblox firmy Spectre do tworzenia skrótów. [Zobacz, jak to zrobić.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Wyodrębnij ikony Roblox do folderu</value>
@@ -2903,29 +2903,29 @@ Gdy tryb ten jest włączony, po zamknięciu okna Ustawień automatycznie urucha
 Czy chcesz włączyć tryb testowy?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Ustawienia Froststrap</value>
+    <value>Ustawienia Spectre</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Ikony</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Zostaną one zachowane w miejscu, w którym zainstalowano program Froststrap, i zostaną automatycznie przywrócone po ponownej instalacji.</value>
+    <value>Zostaną one zachowane w miejscu, w którym zainstalowano program Spectre, i zostaną automatycznie przywrócone po ponownej instalacji.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Zachowaj moje ustawienia i modyfikacje</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Odinstalowanie spowoduje usunięcie programu Froststrap z systemu oraz automatyczną rekonfigurację domyślnego programu uruchamiającego Roblox, o ile jest on nadal zainstalowany.
+    <value>Odinstalowanie spowoduje usunięcie programu Spectre z systemu oraz automatyczną rekonfigurację domyślnego programu uruchamiającego Roblox, o ile jest on nadal zainstalowany.
 
 Jeśli odinstalowujesz lub ponownie instalujesz program z powodu problemów z Roblox, przeczytaj najpierw [tę stronę pomocy]({0}).
 
-Proces odinstalowywania może nie usunąć wszystkich pozostałości, więc może być konieczne ręczne usunięcie pozostałych plików z lokalizacji, w której był zainstalowany Froststrap.
+Proces odinstalowywania może nie usunąć wszystkich pozostałości, więc może być konieczne ręczne usunięcie pozostałych plików z lokalizacji, w której był zainstalowany Spectre.
 
-Froststrap został zainstalowany w lokalizacji „{1}”.</value>
+Spectre został zainstalowany w lokalizacji „{1}”.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Odinstaluj Froststrap</value>
+    <value>Odinstaluj Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Odinstaluj</value>

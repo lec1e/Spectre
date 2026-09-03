@@ -29,10 +29,10 @@ public partial class App : Application
     /// <summary>Visible product name in chrome. Install/exe identity stays <see cref="ProjectName"/>.</summary>
     public const string BrandName = "Spectre";
     public const string ProjectOwner = "lec1e";
-    public const string ProjectRepository = "lec1e/Eclipse";
-    public const string ProjectDownloadLink = "https://github.com/lec1e/Eclipse/releases";
-    public const string ProjectHelpLink = "https://github.com/lec1e/Eclipse";
-    public const string ProjectSupportLink = "https://github.com/lec1e/Eclipse/issues/new";
+    public const string ProjectRepository = "lec1e/Spectre";
+    public const string ProjectDownloadLink = "https://github.com/lec1e/Spectre/releases";
+    public const string ProjectHelpLink = "https://github.com/lec1e/Spectre";
+    public const string ProjectSupportLink = "https://github.com/lec1e/Spectre/issues/new";
     public const string ProjectRemoteDataLink = "https://raw.githubusercontent.com/RealMeddsam/config/refs/heads/main/Data.json";
 
     public const string LiveBuiltInProfileId = "live-builtin";
@@ -577,15 +577,18 @@ public partial class App : Application
 
                 try
                 {
-                    var appUserModelId = "Eclipse.Eclipse";
+                    const string appUserModelId = "Eclipse.Eclipse";
+                    string iconPath = Program.ExtractToTemp("Spectre.ico", "SpectreNotify.ico");
+                    string iconUri = new Uri(iconPath).AbsoluteUri;
 
                     using (var key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\AppUserModelId\" + appUserModelId))
                     {
                         key.SetValue("DisplayName", App.BrandName);
-                        key.SetValue("IconUri", "avares://Eclipse/SpectreMark.png");
+                        key.SetValue("IconUri", iconUri);
+                        key.SetValue("IconBackgroundColor", "1A060A");
                     }
 
-                    Logger.WriteLine("App::OnFrameworkInitializationCompleted", "Registered app for notifications");
+                    Logger.WriteLine("App::OnFrameworkInitializationCompleted", $"Registered Spectre notifications with icon {iconPath}");
                 }
                 catch (Exception ex)
                 {

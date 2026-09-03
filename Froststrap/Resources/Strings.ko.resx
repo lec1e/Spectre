@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>Froststrap 소개</value>
+    <value>Spectre 소개</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>서버 위치를 조회할 수 없습니다. 게임에 너무 빠르게 참여하고 계신 것 같습니다.</value>
@@ -137,7 +137,7 @@
     <value>현재 접속 중인 채널({0})은 이제 일반 사용이 제한되었습니다. 이제 기본 채널({1})로 이동합니다.</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Froststrap이 버전 {0}으로 자동 업데이트되지 않았습니다. 웹사이트에서 프로그램을 다운로드하여 실행함으로써 수동으로 업데이트해 주십시오.</value>
+    <value>Spectre이 버전 {0}으로 자동 업데이트되지 않았습니다. 웹사이트에서 프로그램을 다운로드하여 실행함으로써 수동으로 업데이트해 주십시오.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox에서 귀하의 채널을 {0}으로 설정하려고 하지만, 현재 기본 채널은 {1}입니다.
@@ -175,7 +175,7 @@
     <value>모든 변경 사항을 적용하지 못했습니다.</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap에는 Roblox를 다운로드하고 설치할 수 있는 충분한 디스크 공간이 없습니다. 디스크 공간을 확보한 후 다시 시도해 주세요.</value>
+    <value>Spectre에는 Roblox를 다운로드하고 설치할 수 있는 충분한 디스크 공간이 없습니다. 디스크 공간을 확보한 후 다시 시도해 주세요.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Roblox 모드 적용 중...</value>
@@ -310,10 +310,10 @@
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Froststrap이 성공적으로 제거되었습니다.</value>
+    <value>Spectre이 성공적으로 제거되었습니다.</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>현재 Roblox가 실행 중이지만, Froststrap을 제거하려면 먼저 Roblox를 종료해야 합니다. 지금 Roblox를 종료하시겠습니까?</value>
+    <value>현재 Roblox가 실행 중이지만, Spectre을 제거하려면 먼저 Roblox를 종료해야 합니다. 지금 Roblox를 종료하시겠습니까?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox를 실행하려면 Windows Media Foundation 구성 요소가 필요합니다. 현재 해당 구성 요소가 설치되어 있지 않은 것으로 보이며, 이는 Windows의 N 에디션을 사용하고 계시기 때문일 가능성이 높습니다. 먼저 해당 구성 요소를 설치한 후 Roblox를 실행해 주십시오.</value>
@@ -407,7 +407,7 @@
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>내보내기</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>파일</value>
@@ -503,7 +503,7 @@
     <value>이름 변경</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox가 아직 설치되지 않았습니다. 이 옵션을 사용하기 전에 Froststrap을 통해 Roblox를 적어도 한 번은 실행해 주십시오.</value>
+    <value>Roblox가 아직 설치되지 않았습니다. 이 옵션을 사용하기 전에 Spectre을 통해 Roblox를 적어도 한 번은 실행해 주십시오.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>저장 및 설치</value>
@@ -723,7 +723,7 @@
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>사용자 지정 부트스트래퍼 {0}을(를) 설정하지 못했습니다.
 {1}을(를) 기본값으로 사용합니다.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>사용자 정의 부트스트래퍼는 최대 {0}개의 요소만 가질 수 있으며, 현재 {1}개가 있습니다.</value>
@@ -772,17 +772,17 @@
     <value>제거 작업이 완료될 때까지 잠시 기다려 주십시오.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap은 더 이상 Bloxshade를 지원하지 않습니다.
+    <value>Spectre은 더 이상 Bloxshade를 지원하지 않습니다.
 자세한 내용은 Bloxshade 디스코드 서버에 가입하여 확인해 주세요.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>죄송합니다</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap이 바탕화면과 시작 메뉴에 바로가기를 생성하지 못했습니다. 나중에 설정에서 직접 만들어 보시기 바랍니다.</value>
+    <value>Spectre이 바탕화면과 시작 메뉴에 바로가기를 생성하지 못했습니다. 나중에 설정에서 직접 만들어 보시기 바랍니다.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>연결할 수 없습니다. 이는 인터넷 연결 상태가 좋지 않거나 방화벽에 의해 차단되었기 때문일 가능성이 높습니다. 인터넷 연결에 문제가 없다면, 사용 중인 바이러스 백신 프로그램이 Froststrap을 차단하고 있지 않은지 확인해 주세요.</value>
+    <value>연결할 수 없습니다. 이는 인터넷 연결 상태가 좋지 않거나 방화벽에 의해 차단되었기 때문일 가능성이 높습니다. 인터넷 연결에 문제가 없다면, 사용 중인 바이러스 백신 프로그램이 Spectre을 차단하고 있지 않은지 확인해 주세요.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>이번 세션에서는 BetterMatchmaking 기능이 비활성화됩니다.</value>
@@ -794,7 +794,7 @@
     <value>현재 Roblox가 접속 불가 상태일 수 있습니다. 자세한 내용은 {0}을 참조하세요.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Roblox를 설치하거나 업데이트해야 하므로 Froststrap을 계속 진행할 수 없습니다.</value>
+    <value>Roblox를 설치하거나 업데이트해야 하므로 Spectre을 계속 진행할 수 없습니다.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>이번 출시에서는 Roblox의 업데이트 여부가 확인되지 않으며, 모드 변경 사항도 적용되지 않습니다.</value>
@@ -806,11 +806,11 @@
     <value>나중에 다시 시도해 주세요.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap이 {0}에 연결할 수 없습니다.</value>
+    <value>Spectre이 {0}에 연결할 수 없습니다.</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap에서 Roblox를 다운로드할 수 없습니다.</value>
+    <value>Spectre에서 Roblox를 다운로드할 수 없습니다.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>현재 Roblox를 다운로드할 수 없습니다. 자세한 내용은 다음 도움말 페이지를 확인해 주세요: {0}</value>
@@ -820,24 +820,24 @@
     <value>로그 내용 복사</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Froststrap/Froststrap 실행 중 예외가 발생했습니다.</value>
+    <value>Spectre/Spectre 실행 중 예외가 발생했습니다.</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>먼저 [Froststrap 위키]({0})를 확인하여 이 문제에 대한 수정 사항이 이미 제공되었는지 확인해 주세요.
+    <value>먼저 [Spectre 위키]({0})를 확인하여 이 문제에 대한 수정 사항이 이미 제공되었는지 확인해 주세요.
 
 아직 해결되지 않았다면, 생성된 로그 파일 사본을 첨부하여 [GitHub 이슈]({1})를 통해 이 예외를 신고해 주세요.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>먼저 [Froststrap 위키]({0})를 확인하여 이 문제가 이미 수정되었는지 확인해 주세요.
+    <value>먼저 [Spectre 위키]({0})를 확인하여 이 문제가 이미 수정되었는지 확인해 주세요.
 
-아직 수정되지 않았다면, 이 예외를 이 포크의 관리자에게 보고해 주세요. 이 빌드는 비공식 빌드이므로 Froststrap의 GitHub 이슈에 보고하지 마세요.</value>
+아직 수정되지 않았다면, 이 예외를 이 포크의 관리자에게 보고해 주세요. 이 빌드는 비공식 빌드이므로 Spectre의 GitHub 이슈에 보고하지 마세요.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>예외 보고</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Froststrap 예외</value>
+    <value>Spectre 예외</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>선택한 부트스트랩 아이콘을 불러올 수 없습니다.
@@ -861,10 +861,10 @@
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>이러한 현상이 발생하는 이유와 해결 방법에 대한 자세한 내용은 [이 도움말 문서]({0})을 참조해 주세요.
 
-[원본 런처]({1})에서 Roblox가 정상적으로 작동하는지 확인해 보세요. 작동하지 않는다면 이는 Froststrap의 문제가 아닙니다. 정상적으로 작동한다면 도움말 문서를 참조해 주세요.</value>
+[원본 런처]({1})에서 Roblox가 정상적으로 작동하는지 확인해 보세요. 작동하지 않는다면 이는 Spectre의 문제가 아닙니다. 정상적으로 작동한다면 도움말 문서를 참조해 주세요.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap이 Windows 레지스트리에 쓰기 작업을 수행할 수 없습니다. 바이러스 백신 프로그램이 간섭하여 문제를 일으키고 있을 가능성이 높습니다. Froststrap의 작동을 제한할 만한 요소가 없는지 확인해 주시기 바랍니다.</value>
+    <value>Spectre이 Windows 레지스트리에 쓰기 작업을 수행할 수 없습니다. 바이러스 백신 프로그램이 간섭하여 문제를 일으키고 있을 가능성이 높습니다. Spectre의 작동을 제한할 만한 요소가 없는지 확인해 주시기 바랍니다.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>그라디언트</value>
@@ -887,7 +887,7 @@
   <data name="Enums.BootstrapperIcon.IconEarly2015" xml:space="preserve">
     <value>2015년 초</value>
   </data>
-  <data name="Enums.BootstrapperIcon.IconFroststrapClassic" xml:space="preserve">
+  <data name="Enums.BootstrapperIcon.IconSpectreClassic" xml:space="preserve">
     <value>블록스트랩</value>
   </data>
   <data name="Enums.BootstrapperIcon.IconLate2015" xml:space="preserve">
@@ -1115,7 +1115,7 @@
   <data name="Enums.Theme.Dark" xml:space="preserve">
     <value>어둠</value>
   </data>
-  <data name="Enums.Theme.Froststrap" xml:space="preserve">
+  <data name="Enums.Theme.Spectre" xml:space="preserve">
     <value>프로스트스트랩</value>
   </data>
   <data name="Enums.Theme.Green" xml:space="preserve">
@@ -1147,14 +1147,14 @@
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap이 v{0}으로 업데이트되었습니다.</value>
+    <value>Spectre이 v{0}으로 업데이트되었습니다.</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>실행하신 Froststrap 버전이 현재 설치된 버전과 다릅니다.
+    <value>실행하신 Spectre 버전이 현재 설치된 버전과 다릅니다.
 현재 설치된 버전을 업그레이드하시겠습니까?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>실행하신 Froststrap 버전은 현재 설치된 버전보다 오래된 버전입니다.
+    <value>실행하신 Spectre 버전은 현재 설치된 버전보다 오래된 버전입니다.
 문제가 발생하거나 설정이 변경될 수 있습니다. 재설치를 권장합니다.
 정말 계속하시겠습니까?</value>
   </data>
@@ -1171,7 +1171,7 @@
     <value>Roblox Studio 실행하기</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Froststrap이 &apos;{0}&apos; 폴더에 파일을 쓸 수 없으므로, 이번 실행에 대해서는 로그 파일이 작성되지 않습니다.</value>
+    <value>Spectre이 &apos;{0}&apos; 폴더에 파일을 쓸 수 없으므로, 이번 실행에 대해서는 로그 파일이 작성되지 않습니다.</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>빌드 정보</value>
@@ -1189,7 +1189,7 @@
     <value>코드</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>다음은 Froststrap과 Froststrap에 주목할 만한 공헌을 하여, 이 프로젝트들을 오늘날의 모습으로 만들어낸 모든 분들입니다.</value>
+    <value>다음은 Spectre과 Spectre에 주목할 만한 공헌을 하여, 이 프로젝트들을 오늘날의 모습으로 만들어낸 모든 분들입니다.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>영감</value>
@@ -1258,16 +1258,16 @@
     <value>현재 열려 있는 모든 Roblox 인스턴스를 닫기 전까지는 변경 사항이 즉시 모두 적용되지 않을 수 있으니 유의해 주시기 바랍니다.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap이 이미 실행 중입니다</value>
+    <value>Spectre이 이미 실행 중입니다</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>백그라운드 모드:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>다양한 옵션을 활용하여 Froststrap의 부트스트래퍼를 사용자 정의하세요.</value>
+    <value>다양한 옵션을 활용하여 Spectre의 부트스트래퍼를 사용자 정의하세요.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>프리셋을 사용하여 Froststrap 테마를 간편하게 맞춤 설정하거나 나만의 독특한 디자인을 만들어 보세요.</value>
+    <value>프리셋을 사용하여 Spectre 테마를 간편하게 맞춤 설정하거나 나만의 독특한 디자인을 만들어 보세요.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>앱 테마</value>
@@ -1285,13 +1285,13 @@
     <value>제목</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Froststrap의 외관을 설정합니다.</value>
+    <value>Spectre의 외관을 설정합니다.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>주파수</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Froststrap에서 사용할 아이콘을 선택하세요.</value>
+    <value>Spectre에서 사용할 아이콘을 선택하세요.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>아이콘</value>
@@ -1306,7 +1306,7 @@
     <value>언어</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>시작 화면 스타일을 선택하세요. 참고: 레거시 또는 비스타에서는 다크 테마가 지원되지 않습니다. 더 많은 맞춤형 런처를 확인하려면 공식 Froststrap Discord 서버를 방문하세요.</value>
+    <value>시작 화면 스타일을 선택하세요. 참고: 레거시 또는 비스타에서는 다크 테마가 지원되지 않습니다. 더 많은 맞춤형 런처를 확인하려면 공식 Spectre Discord 서버를 방문하세요.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>부트스트래퍼 스타일</value>
@@ -1339,16 +1339,16 @@
     <value>창문 배경</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>인증 쿠키를 사용하여 Roblox API에 액세스할 수 있게 해줍니다. [Froststrap은 어떤 정보에 액세스하나요?]({0})</value>
+    <value>인증 쿠키를 사용하여 Roblox API에 액세스할 수 있게 해줍니다. [Spectre은 어떤 정보에 액세스하나요?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Froststrap 계정 권한</value>
+    <value>Spectre 계정 권한</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap은 Roblox를 실행할 때 자동으로 상태를 확인하고 안정 버전을 설치합니다.</value>
+    <value>Spectre은 Roblox를 실행할 때 자동으로 상태를 확인하고 안정 버전을 설치합니다.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Froststrap 자동 업데이트</value>
+    <value>Spectre 자동 업데이트</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>기다리지 말고 백그라운드에서 Roblox를 업데이트하세요. 네트워크 속도가 느린 경우에는 권장하지 않습니다. 이 기능을 사용하려면 최소 3GB의 여유 저장 공간이 필요합니다.</value>
@@ -1369,7 +1369,7 @@
     <value>인스턴스 시작 확인</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Roblox를 실행할 때 Froststrap이 수행할 작업을 설정합니다.</value>
+    <value>Roblox를 실행할 때 Spectre이 수행할 작업을 설정합니다.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>다음에 실행할 때 Roblox가 새로 설치됩니다.</value>
@@ -1417,10 +1417,10 @@
     <value>캐시</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Froststrap 로그가 삭제됩니다.</value>
+    <value>Spectre 로그가 삭제됩니다.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Froststrap 로그</value>
+    <value>Spectre 로그</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>오래된 로그 파일이 삭제됩니다.</value>
@@ -1429,7 +1429,7 @@
     <value>로그 메뉴</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>어떤 서버에 접속할지 Froststrap이 결정하도록 하세요. 사용자와의 거리가 가장 가까운 서버를 우선적으로 선택합니다.</value>
+    <value>어떤 서버에 접속할지 Spectre이 결정하도록 하세요. 사용자와의 거리가 가장 가까운 서버를 우선적으로 선택합니다.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>지금 친구 한 명이 이 게임을 하고 있는 것 같네요. 함께 플레이하시겠어요?</value>
@@ -1486,7 +1486,7 @@
     <value>자동으로 변경</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox나 Froststrap이 사용자가 지정한 채널을 변경하려고 할 수 있습니다.</value>
+    <value>Roblox나 Spectre이 사용자가 지정한 채널을 변경하려고 할 수 있습니다.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>절대 변하지 마세요</value>
@@ -1498,7 +1498,7 @@
     <value>자동 채널 변경 동작</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Roblox 및 Froststrap의 배포 및 설치 설정을 변경합니다.</value>
+    <value>Roblox 및 Spectre의 배포 및 설치 설정을 변경합니다.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Roblox 업데이트</value>
@@ -1585,7 +1585,7 @@
     <value>Roblox 쿠키 파일을 찾을 수 없습니다.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap은 Roblox를 실행할 때 자동으로 상태를 확인하고 테스트 버전으로 업데이트됩니다.</value>
+    <value>Spectre은 Roblox를 실행할 때 자동으로 상태를 확인하고 테스트 버전으로 업데이트됩니다.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>프리 릴리스 업데이트</value>
@@ -1722,7 +1722,7 @@
     <value>이 기능을 비활성화하면 여기에서 설정한 내용이 Roblox에 적용되지 않습니다.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Froststrap이 FastFlags를 관리하도록 허용</value>
+    <value>Spectre이 FastFlags를 관리하도록 허용</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox는 Windows에서 디스플레이의 확대/축소 비율에 따라 렌더링 품질을 낮춥니다.</value>
@@ -2133,7 +2133,7 @@
     <value>데스크톱과 비슷함</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Roblox를 실행하는 동안 시스템 트레이에 있는 Froststrap을 더블클릭하면 특정 창이 열립니다.</value>
+    <value>Roblox를 실행하는 동안 시스템 트레이에 있는 Spectre을 더블클릭하면 특정 창이 열립니다.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>더블 클릭 동작</value>
@@ -2151,13 +2151,13 @@
     <value>편집 정보</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Froststrap이 사용자가 플레이 중인 Roblox 게임을 감지할 수 있게 합니다. 일부 기능을 사용하려면 이 권한이 필요할 수 있습니다.</value>
+    <value>Spectre이 사용자가 플레이 중인 Roblox 게임을 감지할 수 있게 합니다. 일부 기능을 사용하려면 이 권한이 필요할 수 있습니다.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>활동 추적 활성화</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>이 기능을 활성화하면 앱이 실행 중일 때 디스코드 프로필에 사용자 지정 &apos;Playing Froststrap&apos; RPC가 표시됩니다.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>이 기능을 활성화하면 앱이 실행 중일 때 디스코드 프로필에 사용자 지정 &apos;Playing Spectre&apos; RPC가 표시됩니다.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>이번 세션에서 플레이한 게임을 표시하고, 해당 게임에 다시 참여할 수 있게 해줍니다.</value>
@@ -2220,7 +2220,7 @@
     <value>디스플레이 스튜디오 활동</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>이 기능은 사용자의 활동을 기록하는 맞춤형 Froststrap 플러그인을 추가하여 작동합니다.
+    <value>이 기능은 사용자의 활동을 기록하는 맞춤형 Spectre 플러그인을 추가하여 작동합니다.
 플러그인을 설치하시겠습니까?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2778,7 +2778,7 @@
     <value>데이터센터 불러오는 중...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>계정 관리자를 통해 로그인하거나 ‘Froststrap 계정 권한’을 활성화하거나, 당사 디스코드 서버에 이 문제를 신고하여 이용하시기 바랍니다.</value>
+    <value>계정 관리자를 통해 로그인하거나 ‘Spectre 계정 권한’을 활성화하거나, 당사 디스코드 서버에 이 문제를 신고하여 이용하시기 바랍니다.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>공개 서버가 없습니다.</value>
@@ -2853,13 +2853,13 @@
     <value>바로가기 만들기</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Froststrap을 손쉽게 실행할 수 있도록 설정합니다.</value>
+    <value>Spectre을 손쉽게 실행할 수 있도록 설정합니다.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>바로 가기 생성 중 오류가 발생했습니다.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>바로 가기에 Froststrap의 다양한 Roblox 아이콘을 사용할 수 있습니다. [사용 방법 보기.]({0})</value>
+    <value>바로 가기에 Spectre의 다양한 Roblox 아이콘을 사용할 수 있습니다. [사용 방법 보기.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Roblox 아이콘을 폴더로 추출하기</value>
@@ -2930,29 +2930,29 @@
 테스트 모드를 활성화하시겠습니까?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Froststrap 설정</value>
+    <value>Spectre 설정</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>아이콘</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>이 파일들은 Froststrap이 설치되었던 위치에 보관되며, 재설치 시 자동으로 복원됩니다.</value>
+    <value>이 파일들은 Spectre이 설치되었던 위치에 보관되며, 재설치 시 자동으로 복원됩니다.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>내 설정과 모드 유지하기</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>제거를 진행하면 시스템에서 Froststrap이 삭제되며, Roblox 런처가 여전히 설치되어 있는 경우 자동으로 기본 설정으로 재구성됩니다.
+    <value>제거를 진행하면 시스템에서 Spectre이 삭제되며, Roblox 런처가 여전히 설치되어 있는 경우 자동으로 기본 설정으로 재구성됩니다.
 
 Roblox 사용 중 문제가 발생하여 제거하거나 재설치하려는 경우, 먼저 [이 도움말 페이지]({0})를 읽어보시기 바랍니다.
 
-제거 과정만으로는 모든 파일이 완전히 삭제되지 않을 수 있으므로, Froststrap이 설치되었던 위치에서 남아 있는 파일을 수동으로 정리해야 할 수도 있습니다.
+제거 과정만으로는 모든 파일이 완전히 삭제되지 않을 수 있으므로, Spectre이 설치되었던 위치에서 남아 있는 파일을 수동으로 정리해야 할 수도 있습니다.
 
-Froststrap은 &quot;{1}&quot;에 설치되었습니다.</value>
+Spectre은 &quot;{1}&quot;에 설치되었습니다.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Froststrap 제거</value>
+    <value>Spectre 제거</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>제거</value>

@@ -6,8 +6,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <Version>2.0.28</Version>
-    <FileVersion>2.0.28</FileVersion>
+    <Version>2.0.29</Version>
+    <FileVersion>2.0.29</FileVersion>
     <Company>Spectre</Company>
     <Product>Spectre</Product>
     <AssemblyName>Eclipse</AssemblyName>

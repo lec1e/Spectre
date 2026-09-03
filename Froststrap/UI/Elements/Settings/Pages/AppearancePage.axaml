@@ -38,7 +38,7 @@
                         <controls:OptionControl Header="Glass surfaces" Description="Dark frosted acrylic shell.">
                             <ToggleSwitch IsChecked="{Binding EnableGlass}" />
                         </controls:OptionControl>
-                        <controls:OptionControl Header="Pointer parallax" Description="Glowing ribbons in the background follow the cursor.">
+                        <controls:OptionControl Header="Cursor ribbon" Description="A light-beam ribbon that tails the pointer.">
                             <ToggleSwitch IsChecked="{Binding EnableLiquidCursor}" />
                         </controls:OptionControl>
                         <controls:OptionControl Header="Glow accents" Description="Accent glow on highlights and abyss gleams.">

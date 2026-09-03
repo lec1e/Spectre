@@ -49,35 +49,67 @@
             <Setter Property="CornerRadius" Value="11" />
             <Setter Property="Padding" Value="10,0" />
             <Setter Property="Height" Value="32" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="ClipToBounds" Value="True" />
+            <Setter Property="UseLayoutRounding" Value="True" />
         </Style>
         <Style Selector="Border.nav-pill:pointerover">
             <Setter Property="Background" Value="Transparent" />
         </Style>
         <Style Selector="Border.nav-pill.selected">
-            <Setter Property="Background">
-                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                    <GradientStop Color="#EEC41E3A" Offset="0" />
-                    <GradientStop Color="#AA7F1D1D" Offset="1" />
+            <Setter Property="BorderBrush">
+                <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                    <GradientStop Color="#55FFFFFF" Offset="0" />
+                    <GradientStop Color="#33E11D48" Offset="0.45" />
+                    <GradientStop Color="#22000000" Offset="1" />
                 </LinearGradientBrush>
             </Setter>
+            <Setter Property="BoxShadow" Value="0 6 16 0 #40000000" />
+            <Setter Property="Background">
+                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                    <GradientStop Color="#E8E11D48" Offset="0" />
+                    <GradientStop Color="#C44A1518" Offset="0.5" />
+                    <GradientStop Color="#F2000000" Offset="1" />
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+        <Style Selector="Border.nav-pill Border.nav-gloss">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Style Selector="Border.nav-pill Border.nav-sheen">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Style Selector="Border.nav-pill.selected Border.nav-gloss">
+            <Setter Property="Opacity" Value="0.48" />
+        </Style>
+        <Style Selector="Border.nav-pill.selected Border.nav-sheen">
+            <Setter Property="Opacity" Value="0.2" />
         </Style>
         <!-- Selected stays filled; unselected hover only tints the icon via button styles below -->
         <Style Selector="Button.top-nav:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
+        <Style Selector="Button.top-nav:pointerover /template/ Border#PART_Fill">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
         <Style Selector="Button.top-nav:pointerover ic|Lucide">
-            <Setter Property="StrokeBrush" Value="#E11D48" />
+            <Setter Property="StrokeBrush" Value="White" />
         </Style>
         <Style Selector="Button.top-nav:pointerover TextBlock">
-            <Setter Property="Foreground" Value="#E11D48" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
         <Style Selector="Border.nav-pill.selected:pointerover">
             <Setter Property="Background">
-                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                    <GradientStop Color="#FEE2E2" Offset="0" />
-                    <GradientStop Color="#E11D48" Offset="1" />
+                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                    <GradientStop Color="#F43F5E" Offset="0" />
+                    <GradientStop Color="#E11D48" Offset="0.35" />
+                    <GradientStop Color="#000000" Offset="1" />
                 </LinearGradientBrush>
             </Setter>
+        </Style>
+        <Style Selector="Border.nav-pill.selected:pointerover Border.nav-gloss">
+            <Setter Property="Opacity" Value="0.82" />
         </Style>
     </base:AvaloniaWindow.Styles>
 
@@ -94,11 +126,6 @@
                 <controls:AbyssGlowBackground x:Name="AbyssBackground"
                                               ZIndex="0" />
 
-                <controls:LiquidCursorOverlay x:Name="LiquidCursor"
-                                              ZIndex="1"
-                                              IsVisible="False"
-                                              Opacity="0" />
-
                 <Grid ZIndex="2" RowDefinitions="56,*,52" IsHitTestVisible="True">
                 <Border Grid.Row="0"
                         BorderBrush="Transparent"
@@ -113,7 +140,7 @@
                                     VerticalAlignment="Center" IsHitTestVisible="False">
                             <controls:EclipseLogoMark Width="24" Height="24" />
                             <TextBlock Text="{x:Static app:App.BrandName}" FontSize="15" FontWeight="SemiBold"
-                                       VerticalAlignment="Center" Foreground="#FEE2E2" />
+                                       VerticalAlignment="Center" Foreground="White" />
                         </StackPanel>
 
                         <ItemsControl x:Name="RailItemsControl" Grid.Column="1"
@@ -133,14 +160,34 @@
                                             IsVisible="{Binding IsVisible}">
                                         <Border Classes="nav-pill"
                                                 Classes.selected="{Binding IsSelected}">
-                                            <StackPanel Orientation="Horizontal" Spacing="6"
-                                                        VerticalAlignment="Center">
-                                                <ic:Lucide Icon="{Binding Icon}" Width="14" Height="14"
-                                                           VerticalAlignment="Center" StrokeBrush="#F8FAFC" />
-                                                <TextBlock Text="{Binding Title}" FontSize="12.5"
-                                                           FontWeight="SemiBold" Foreground="#F8FAFC"
-                                                           VerticalAlignment="Center" />
-                                            </StackPanel>
+                                            <Panel>
+                                                <Border Classes="nav-sheen" IsHitTestVisible="False">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                            <GradientStop Color="#66FFFFFF" Offset="0" />
+                                                            <GradientStop Color="#14FFFFFF" Offset="0.28" />
+                                                            <GradientStop Color="#00000000" Offset="0.55" />
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+                                                <Border Classes="nav-gloss" Height="14" VerticalAlignment="Top" IsHitTestVisible="False">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                                            <GradientStop Color="#99FFFFFF" Offset="0" />
+                                                            <GradientStop Color="#33FFFFFF" Offset="0.4" />
+                                                            <GradientStop Color="#00FFFFFF" Offset="1" />
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+                                                <StackPanel Orientation="Horizontal" Spacing="6"
+                                                            VerticalAlignment="Center">
+                                                    <ic:Lucide Icon="{Binding Icon}" Width="14" Height="14"
+                                                               VerticalAlignment="Center" StrokeBrush="White" />
+                                                    <TextBlock Text="{Binding Title}" FontSize="12.5"
+                                                               FontWeight="SemiBold" Foreground="White"
+                                                               VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Panel>
                                         </Border>
                                     </Button>
                                 </DataTemplate>
@@ -166,7 +213,7 @@
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center" />
                                 <TextBlock Grid.Column="1" Text="Ctrl K" FontSize="10"
-                                           FontWeight="Medium" Foreground="#99FDA4AF"
+                                           FontWeight="Medium" Foreground="White"
                                            VerticalAlignment="Center" Opacity="0.7" />
                             </Grid>
                         </Border>
@@ -200,6 +247,7 @@
                                 <DataTemplate DataType="vm:BreadcrumbItemModel">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <Button Padding="0" Background="Transparent" BorderThickness="0"
+                                                Classes="chrome"
                                                 Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BreadcrumbItemClickedCommand}"
                                                 CommandParameter="{Binding}" Content="{Binding Content}"
                                                 FontSize="18" FontWeight="SemiBold" IsVisible="{Binding !IsLast}" />
@@ -233,7 +281,7 @@
                         <TextBlock Grid.Column="0"
                                    Text="{Binding VersionText}"
                                    FontSize="11"
-                                   Foreground="#99FDA4AF"
+                                   Foreground="White"
                                    VerticalAlignment="Center" />
                         <controls:IconButton Grid.Column="1" Height="34" Padding="18,0"
                                              Classes="DropDownButton Primary"
@@ -256,13 +304,17 @@
                                 Command="{Binding RestartAppCommand}" Content="{x:Static resources:Strings.Menu_Restart}" />
                         <Button Grid.Column="3" Height="34" Padding="18,0" Classes="accent"
                                 Command="{Binding SaveSettingsCommand}" Content="{x:Static resources:Strings.Menu_Save}" />
-                        <Button Grid.Column="4" Height="34" Padding="18,0"
+                        <Button Grid.Column="4" Height="34" Padding="18,0" Classes="eclipse-ghost"
                                 Command="{Binding CloseWindowCommand}" Content="{x:Static resources:Strings.Common_Close}" />
                     </Grid>
                 </Border>
                 </Grid>
             </Panel>
         </controls:LiquidGlassPanel>
+
+        <controls:LiquidCursorOverlay x:Name="LiquidCursor"
+                                      ZIndex="50"
+                                      IsHitTestVisible="False" />
 
         <Panel Name="NotificationPanel"
                Margin="0,0,0,20" VerticalAlignment="Bottom" ZIndex="1000" />

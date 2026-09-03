@@ -6,14 +6,14 @@ namespace Froststrap.Integrations
     public class FroststrapRichPresence : IDisposable
     {
         /// <summary>
-        /// Eclipse Discord application (name shown as "Playing Eclipse").
+        /// Spectre Discord application.
         /// Client IDs are public; manage the app at https://discord.com/developers/applications
         /// </summary>
         public const string EclipseApplicationId = "1529388012620746913";
 
-        /// <summary>Hosted Eclipse mark — Discord accepts external image URLs for LargeImageKey.</summary>
+        /// <summary>Hosted Spectre mark — Discord accepts external image URLs for LargeImageKey.</summary>
         private const string EclipseLogoUrl =
-            "https://cdn.jsdelivr.net/gh/lec1e/Eclipse@main/.resources/rpc/eclipse.png";
+            "https://raw.githubusercontent.com/lec1e/Spectre/main/Froststrap/SpectreMark.png";
 
         private readonly DiscordRpcClient? _rpcClient;
         private readonly Timestamps _startTimestamps;
@@ -114,7 +114,7 @@ namespace Froststrap.Integrations
                     : $"Page: {_currentPage}");
 
             // Fingerprint includes assets so logo/title updates aren't skipped.
-            string fingerprint = $"{state}|eclipse|{App.Version}";
+            string fingerprint = $"{state}|spectre|{App.Version}";
             if (fingerprint == _lastState)
                 return;
 
@@ -122,9 +122,8 @@ namespace Froststrap.Integrations
 
             var presence = new DiscordRPC.RichPresence
             {
-                // With StatusDisplay=Details, Discord shows "Playing Eclipse" in status.
-                // Profile card title still comes from the Discord Application name — use an
-                // application named "Eclipse" (see EclipseApplicationId).
+                // Status shows the product name (Spectre). The Discord application id is
+                // unchanged so existing rich-presence installs keep working.
                 Details = App.BrandName,
                 State = state,
                 Type = ActivityType.Playing,

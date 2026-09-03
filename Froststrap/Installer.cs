@@ -61,7 +61,7 @@ namespace Froststrap
                 using (var uninstallKey = Registry.CurrentUser.CreateSubKey(App.UninstallKey))
                 {
                     uninstallKey.SetValueSafe("DisplayIcon", $"{Paths.Application},0");
-                    uninstallKey.SetValueSafe("DisplayName", App.ProjectName);
+                    uninstallKey.SetValueSafe("DisplayName", App.BrandName);
                     uninstallKey.SetValueSafe("DisplayVersion", App.Version);
 
                     if (uninstallKey.GetValue("InstallDate") is null)

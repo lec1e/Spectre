@@ -26,14 +26,8 @@
             <Setter Property="BorderThickness" Value="0" />
         </Style>
         <Style Selector="TextBox /template/ TextBlock#PART_Watermark">
-            <Setter Property="Foreground" Value="#99FECACA" />
+            <Setter Property="Foreground" Value="#CCFFFFFF" />
             <Setter Property="Margin" Value="0" />
-        </Style>
-        <Style Selector="controls|IconButton:pointerover /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="controls|IconButton:pressed /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="Transparent" />
         </Style>
     </UserControl.Styles>
 
@@ -47,14 +41,15 @@
                  Padding="4,0,4,0"
                  MinHeight="28"
                  FontSize="12.5"
-                 Foreground="#FEE2E2"
-                 CaretBrush="#E11D48"
+                 Foreground="White"
+                 CaretBrush="White"
                  Background="Transparent"
                  BorderBrush="Transparent"
                  BorderThickness="0">
 
             <TextBox.InnerLeftContent>
                 <controls:IconButton Command="{Binding ToggleSearchListCommand}"
+                                     Classes="TitleBarButton"
                                      Icon="Search"
                                      IconSize="14"
                                      Width="22"
@@ -63,7 +58,7 @@
                                      Margin="0,0,6,0"
                                      Background="Transparent"
                                      BorderThickness="0"
-                                     Foreground="#FECACA"
+                                     Foreground="White"
                                      IsTabStop="False"
                                      VerticalAlignment="Center">
                 </controls:IconButton>
@@ -71,6 +66,7 @@
 
             <TextBox.InnerRightContent>
                 <Button Command="{Binding ClearSearchCommand}"
+                        Classes="chrome"
                         IsVisible="{Binding SearchQuery, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                         Background="Transparent"
                         BorderThickness="0"
@@ -105,7 +101,8 @@
                                     <ItemsControl ItemsSource="{Binding FilteredSearchResults}" HorizontalAlignment="Stretch">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="models:SearchBarItem">
-                                                <Button Command="{Binding $parent[UserControl].DataContext.SearchResultSelectedCommand}"
+                                                <Button Classes="chrome"
+                                                        Command="{Binding $parent[UserControl].DataContext.SearchResultSelectedCommand}"
                                                         CommandParameter="{Binding}"
                                                         HorizontalAlignment="Stretch"
                                                         Background="{DynamicResource ControlFillColorDefaultBrush}"

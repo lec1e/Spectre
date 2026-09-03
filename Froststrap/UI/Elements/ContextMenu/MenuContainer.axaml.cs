@@ -119,7 +119,7 @@ namespace Froststrap.UI.Elements.ContextMenu
                         AntiAfkMenuItem.IsVisible = OperatingSystem.IsWindows();
                     }
 
-                    VersionMenuItem?.SetValue(NativeMenuItem.HeaderProperty, $"{App.ProjectName} v{App.Version}");
+                    VersionMenuItem?.SetValue(NativeMenuItem.HeaderProperty, $"{App.BrandName} v{App.Version}");
                 });
             }
         }

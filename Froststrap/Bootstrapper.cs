@@ -1754,7 +1754,7 @@ namespace Froststrap
             {
                 bool includePreRelease = false;
 
-                // Eclipse only tracks stable releases — never auto-update to pre-release builds.
+                // Spectre only tracks stable releases — never auto-update to pre-release builds.
                 var releaseInfo = await App.GetLatestRelease(includePreRelease);
 
                 if (releaseInfo is null)
@@ -1880,7 +1880,7 @@ namespace Froststrap
             if (assets is null || assets.Count == 0)
                 return null;
 
-            // Prefer exact Eclipse.exe from lec1e/Eclipse releases
+            // Prefer portable Eclipse.exe (assembly name stays Eclipse so existing installs update).
             var exact = assets.FirstOrDefault(a =>
                 a.Name?.Equals("Eclipse.exe", StringComparison.OrdinalIgnoreCase) == true);
             if (exact is not null)

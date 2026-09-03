@@ -11,7 +11,7 @@ namespace Froststrap.Utility
 
             ShowToast(
                 title: "Channel: LIVE",
-                message: $"Roblox launched on the LIVE channel. Enforced by {App.ProjectName}.");
+                message: $"Roblox launched on the LIVE channel. Enforced by {App.BrandName}.");
         }
 
         public static void ShowChannelLockFailed(string? reason = null)

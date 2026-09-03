@@ -95,7 +95,7 @@ namespace Froststrap.Utility
             if (settings.SelectedThemePreset is "Eclipse" or "Midnight")
                 settings.SelectedThemePreset = "Crimson";
 
-            if (settings.BootstrapperTitle is "Eclipse" or "Eclipse-QA" or "Froststrap" or "Bloxstrap")
+            if (settings.BootstrapperTitle is "Eclipse" or "Eclipse-QA" or "Froststrap" or "Bloxstrap" or "FROSTBITE")
                 settings.BootstrapperTitle = App.BrandName;
 
             if (!string.IsNullOrEmpty(settings.SelectedThemePreset)
@@ -199,15 +199,25 @@ namespace Froststrap.Utility
             res["AccentFillColorDefaultBrush"] = new SolidColorBrush(accent);
             res["SubtleFillColorSecondaryBrush"] = new SolidColorBrush(Color.FromArgb(0x44, 0xC4, 0x1E, 0x3A));
 
+            // Text stays solid white so it never fades into the dark shell.
+            var textPrimary = Colors.White;
+            var textSecondary = Color.FromRgb(0xF5, 0xF5, 0xF5);
+            res["TextFillColorPrimary"] = textPrimary;
+            res["TextFillColorSecondary"] = textSecondary;
+            res["TextFillColorTertiary"] = Color.FromRgb(0xE5, 0xE5, 0xE5);
+            res["TextFillColorPrimaryBrush"] = Brushes.White;
+            res["TextFillColorSecondaryBrush"] = new SolidColorBrush(textSecondary);
+            res["TextFillColorTertiaryBrush"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE5, 0xE5));
+
             res["BrandGradientBrush"] = new LinearGradientBrush
             {
                 StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
                 EndPoint = new RelativePoint(1, 1, RelativeUnit.Relative),
                 GradientStops =
                 [
-                    new Avalonia.Media.GradientStop(gStart, 0),
-                    new Avalonia.Media.GradientStop(accent, 0.42),
-                    new Avalonia.Media.GradientStop(ink, 1)
+                    new Avalonia.Media.GradientStop(accent, 0),
+                    new Avalonia.Media.GradientStop(Color.FromRgb(0x4A, 0x15, 0x18), 0.48),
+                    new Avalonia.Media.GradientStop(Colors.Black, 1)
                 ]
             };
 

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Eclipse was unable to automatically update to version {0}. Please update it manually by downloading and running it from the website.</value>
+    <value>Spectre was unable to automatically update to version {0}. Please update it manually by downloading and running it from the website.</value>
   </data>
   <data name="Bootstrapper.ConfirmLaunch" xml:space="preserve">
     <value>Roblox is currently running, and launching another instance will close it. Are you sure you want to continue launching?</value>
@@ -127,10 +127,10 @@
     <value>Roblox may be down right now. See {0} for more information.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>A connection could not be made, which likely indicates a poor internet connection or a firewall block. If your connection is fine, please ensure that your antivirus isn't blocking Eclipse.</value>
+    <value>A connection could not be made, which likely indicates a poor internet connection or a firewall block. If your connection is fine, please ensure that your antivirus isn't blocking Spectre.</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Eclipse does not have enough disk space to download and install Roblox. Please free up some disk space and try again.</value>
+    <value>Spectre does not have enough disk space to download and install Roblox. Please free up some disk space and try again.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Applying Roblox modifications...</value>
@@ -166,10 +166,10 @@
     <comment>Text for style previews that use text button that says "Cancel"</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Eclipse has successfully uninstalled</value>
+    <value>Spectre has successfully uninstalled</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox is currently running, but must be closed before uninstalling Eclipse. Would you like to close Roblox now?</value>
+    <value>Roblox is currently running, but must be closed before uninstalling Spectre. Would you like to close Roblox now?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox requires the use of Windows Media Foundation components. You appear to be missing them, likely because you are using an N edition of Windows. Please install them first, and then launch Roblox.</value>
@@ -281,22 +281,22 @@ Uptime: {1}</value>
     <value>Connectivity error</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Eclipse is unable to connect to {0}</value>
+    <value>Spectre is unable to connect to {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Exception.CopyLogContents" xml:space="preserve">
     <value>Copy log contents</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>An exception occurred while running Eclipse/Eclipse</value>
+    <value>An exception occurred while running Spectre/Spectre</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Check the [Eclipse Wiki]({0}) first to see if this problem has already been addressed with a fix.
+    <value>Check the [Spectre Wiki]({0}) first to see if this problem has already been addressed with a fix.
 
 If not, then please report this exception through a [GitHub issue]({1}) along with a copy of the log file that was created.</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Eclipse Exception</value>
+    <value>Spectre Exception</value>
   </data>
   <data name="Common.Custom" xml:space="preserve">
     <value>Custom</value>
@@ -308,16 +308,16 @@ If not, then please report this exception through a [GitHub issue]({1}) along wi
     <value>Fake Byfron (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Eclipse (Opaque)</value>
+    <value>Spectre (Opaque)</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>Roblox (~2025)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Eclipse (Classic)</value>
+    <value>Spectre (Classic)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Eclipse (Glass)</value>
+    <value>Spectre (Glass)</value>
   </data>
   <data name="Enums.CursorType.From2006" xml:space="preserve">
     <value>~2006 (Cartoony)</value>
@@ -361,8 +361,8 @@ If not, then please report this exception through a [GitHub issue]({1}) along wi
   <data name="Enums.Theme.Light" xml:space="preserve">
     <value>Light</value>
   </data>
-  <data name="Enums.Theme.Froststrap" xml:space="preserve">
-    <value>Eclipse</value>
+  <data name="Enums.Theme.Spectre" xml:space="preserve">
+    <value>Spectre</value>
   </data>
   <data name="Enums.Theme.Pink" xml:space="preserve">
     <value>Pink</value>
@@ -534,7 +534,7 @@ If not, then please report this exception through a [GitHub issue]({1}) along wi
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Failed to setup custom bootstrapper: {0}.
 Defaulting to {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="Menu.Appearance.CustomThemes.NoneSelected" xml:space="preserve">
     <value>No custom theme selected.</value>
@@ -549,10 +549,10 @@ Defaulting to {1}.</value>
     <value>Failed to delete custom theme {0}: {1}</value>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Eclipse has been upgraded to v{0}</value>
+    <value>Spectre has been upgraded to v{0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>The version of Eclipse you've launched is different to the version you currently have installed.
+    <value>The version of Spectre you've launched is different to the version you currently have installed.
 Would you like to upgrade your currently installed version?</value>
   </data>
   <data name="Menu.About.Contributors" xml:space="preserve">
@@ -562,7 +562,7 @@ Would you like to upgrade your currently installed version?</value>
     <value>Code</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>These are all of the people who have made notable contributions to Eclipse and Eclipse, shaping them into what they are today.</value>
+    <value>These are all of the people who have made notable contributions to Spectre and Spectre, shaping them into what they are today.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Inspirations</value>
@@ -596,10 +596,10 @@ Would you like to upgrade your currently installed version?</value>
     <value>Please note that not all your changes will immediately apply until you close all currently open Roblox instances.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Eclipse is already running</value>
+    <value>Spectre is already running</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Customize Eclipse’s bootstrapper using a wide variety of options.</value>
+    <value>Customize Spectre’s bootstrapper using a wide variety of options.</value>
   </data>
   <data name="Menu.Appearance.CustomisationTitle.Description" xml:space="preserve">
     <value>The text that shows as the title of the bootstrapper.</value>
@@ -608,16 +608,16 @@ Would you like to upgrade your currently installed version?</value>
     <value>Bootstrapper Title</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Configure how Eclipse should look.</value>
+    <value>Configure how Spectre should look.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>App Themes</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Customize Eclipse themes easily with presets or create your own unique look.</value>
+    <value>Customize Spectre themes easily with presets or create your own unique look.</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Choose what icon Eclipse should use.</value>
+    <value>Choose what icon Spectre should use.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Bootstrapper Icon</value>
@@ -626,7 +626,7 @@ Would you like to upgrade your currently installed version?</value>
     <value>Preview</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Choose a launch screen style. Note: Dark theme isn’t supported for Legacy or Vista, For more custom launchers, visit the official Eclipse Discord server.</value>
+    <value>Choose a launch screen style. Note: Dark theme isn’t supported for Legacy or Vista, For more custom launchers, visit the official Spectre Discord server.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Bootstrapper Style</value>
@@ -635,10 +635,10 @@ Would you like to upgrade your currently installed version?</value>
     <value>Appearance</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Eclipse will automatically check and update itself to a stable version when launching Roblox, Will only notify users on linux.</value>
+    <value>Spectre will automatically check and update itself to a stable version when launching Roblox, Will only notify users on linux.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Automatically Update Eclipse</value>
+    <value>Automatically Update Spectre</value>
   </data>
   <data name="Menu.Behaviour.ConfirmLaunches.Description" xml:space="preserve">
     <value>Prevents closures of your existing game when accidentally launching another Roblox Instance.</value>
@@ -647,7 +647,7 @@ Would you like to upgrade your currently installed version?</value>
     <value>Instance Launch Confirmation</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Configure what Eclipse should do when launching Roblox.</value>
+    <value>Configure what Spectre should do when launching Roblox.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>A clean installation of Roblox will occur on the next launch.</value>
@@ -665,7 +665,7 @@ Would you like to upgrade your currently installed version?</value>
     <value>An entry for this flag name already exists.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Eclipse Cleaner</value>
+    <value>Spectre Cleaner</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Description" xml:space="preserve">
     <value>Automatically clears old data to free up space. Originally created by Fishstrap.</value>
@@ -818,13 +818,13 @@ More information:
     <value>Configure additional functionality to go alongside Roblox.</value>
   </data>
   <data name="Menu.Integrations.DesktopApp.Description" xml:space="preserve">
-    <value>When you leave a game, Eclipse force-closes Roblox completely so it does not stay in the system tray / background. Requires activity tracking.</value>
+    <value>When you leave a game, Spectre force-closes Roblox completely so it does not stay in the system tray / background. Requires activity tracking.</value>
   </data>
   <data name="Menu.Integrations.DesktopApp.Title" xml:space="preserve">
     <value>Close To Desktop</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Allows Eclipse to detect what Roblox game you're playing. Certain features may require this.</value>
+    <value>Allows Spectre to detect what Roblox game you're playing. Certain features may require this.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Enable Activity Tracking</value>
@@ -924,7 +924,7 @@ Some text might not be translated to preferred language.</value>
     <value>Locks the graphics quality to a selected amount. Note: With this setting enabled, the graphics slider in the Roblox menu will only affect the render distance in a game.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Allow Eclipse to Manage FastFlags</value>
+    <value>Allow Spectre to Manage FastFlags</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Description" xml:space="preserve">
     <value>Disabling this will prevent anything configured here from being applied to Roblox.</value>
@@ -954,7 +954,7 @@ Some text might not be translated to preferred language.</value>
     <value>Removes Roblox’s default grass textures. Note: This setting does not affect custom grass textures used by individual games.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Eclipse is unable to download Roblox</value>
+    <value>Spectre is unable to download Roblox</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Roblox cannot be downloaded at this time. Please read the following help page for more information: {0}</value>
@@ -964,7 +964,7 @@ Some text might not be translated to preferred language.</value>
     <value>Import from file</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>No log file will be written for this launch because Eclipse is unable to write to the folder at '{0}'</value>
+    <value>No log file will be written for this launch because Spectre is unable to write to the folder at '{0}'</value>
   </data>
   <data name="Common.Default" xml:space="preserve">
     <value>Default</value>
@@ -985,20 +985,20 @@ Some text might not be translated to preferred language.</value>
     <value>Start Menu Icon</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Uninstall Eclipse</value>
+    <value>Uninstall Spectre</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Uninstalling will remove Eclipse from your system (including Apps &amp; features, shortcuts, and the install folder), and automatically reconfigure the default Roblox launcher if it's still installed.
+    <value>Uninstalling will remove Spectre from your system (including Apps &amp; features, shortcuts, and the install folder), and automatically reconfigure the default Roblox launcher if it's still installed.
 
 If you're uninstalling or reinstalling because you are having issues with Roblox, read [this help page]({0}) first.
 
-Eclipse was installed at "{1}".</value>
+Spectre was installed at "{1}".</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Keep my settings and mods</value>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>They'll be kept where Eclipse was installed, and will automatically be restored on a reinstall.</value>
+    <value>They'll be kept where Spectre was installed, and will automatically be restored on a reinstall.</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Uninstall</value>
@@ -1010,16 +1010,16 @@ Eclipse was installed at "{1}".</value>
     <value>You currently do not have the WebView2 runtime installed. Some Roblox features will not work properly without it, such as the desktop app. Would you like to download it now?</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Eclipse was unable to create shortcut. Try creating them later through the settings.</value>
+    <value>Spectre was unable to create shortcut. Try creating them later through the settings.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Check the [Eclipse Wiki]({0}) first to see if this problem has already been addressed with a fix.
+    <value>Check the [Spectre Wiki]({0}) first to see if this problem has already been addressed with a fix.
 
-If not, then please report this exception to the maintainers of this fork. Do NOT report this to Eclipse's GitHub issues, as this is an unoffical build.</value>
+If not, then please report this exception to the maintainers of this fork. Do NOT report this to Spectre's GitHub issues, as this is an unoffical build.</value>
     <comment>"fork" in general means "a variation of" or "a different version of". You can alternatively write the first sentence as "...to the maintainers of this version."</comment>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Configure how Eclipse can be readily launched.</value>
+    <value>Configure how Spectre can be readily launched.</value>
   </data>
   <data name="Menu.Shortcuts.General.Title" xml:space="preserve">
     <value>General</value>
@@ -1053,7 +1053,7 @@ If not, then please report this exception to the maintainers of this fork. Do NO
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>The version of Eclipse you've launched is older than the version you currently have installed.
+    <value>The version of Spectre you've launched is older than the version you currently have installed.
 Issues may occur and your settings may be altered. A reinstall is recommended.
 Are you sure you want to continue?</value>
   </data>
@@ -1066,7 +1066,7 @@ Are you sure you want to continue?</value>
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>For information about why this could be happening and how this can be resolved, please read [this help article]({0}).
 
-Check if Roblox works with [the original launcher]({1}). If it doesn't, then this isn't a Eclipse issue. If it does, then refer to the help article.</value>
+Check if Roblox works with [the original launcher]({1}). If it doesn't, then this isn't a Spectre issue. If it does, then refer to the help article.</value>
   </data>
   <data name="Common.Loading" xml:space="preserve">
     <value>Loading, please wait...</value>
@@ -1096,7 +1096,7 @@ Check if Roblox works with [the original launcher]({1}). If it doesn't, then thi
     <value>For this launch, Roblox will not be checked for upgrades, and changes to mods will not be applied.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Because Roblox needs to be installed or upgraded, Eclipse cannot continue.</value>
+    <value>Because Roblox needs to be installed or upgraded, Spectre cannot continue.</value>
   </data>
   <data name="Common.NotAvailable" xml:space="preserve">
     <value>Not available</value>
@@ -1108,7 +1108,7 @@ Check if Roblox works with [the original launcher]({1}). If it doesn't, then thi
     <value>Configure application parameters such as DPI scaling behaviour and [fullscreen optimizations]({0}).</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox has not yet been installed. Please launch Roblox using Eclipse at least once before trying to use this option.</value>
+    <value>Roblox has not yet been installed. Please launch Roblox using Spectre at least once before trying to use this option.</value>
   </data>
   <data name="Bootstrapper.JsonManagerSaveFailed" xml:space="preserve">
     <value>Failed to save {0}: {1}</value>
@@ -1123,10 +1123,10 @@ Check if Roblox works with [the original launcher]({1}). If it doesn't, then thi
     <value>Extract Roblox Icons to Folder</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Allows you to use Eclipse's range of Roblox icons for your shortcuts. [See how.]({0})</value>
+    <value>Allows you to use Spectre's range of Roblox icons for your shortcuts. [See how.]({0})</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Eclipse is unable to write to the Windows Registry. An antivirus is likely interfering and causing issues. Please check to make sure there isn't anything that would restrict Eclipse's operation.</value>
+    <value>Spectre is unable to write to the Windows Registry. An antivirus is likely interfering and causing issues. Please check to make sure there isn't anything that would restrict Spectre's operation.</value>
   </data>
   <data name="Menu.FastFlags.Reset.Title" xml:space="preserve">
     <value>Reset Everything To Default</value>
@@ -1179,10 +1179,10 @@ Would you like to enable Test Mode?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Export</value>
-    <comment>Currently used under the "Froststrap" settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the "Spectre" settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Change deployment and installation settings for Roblox and Eclipse.</value>
+    <value>Change deployment and installation settings for Roblox and Spectre.</value>
   </data>
   <data name="Common.Version" xml:space="preserve">
     <value>Version</value>
@@ -1213,7 +1213,7 @@ Would you like to enable Test Mode?</value>
     <value>Sorry</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Eclipse no longer supports Bloxshade.
+    <value>Spectre no longer supports Bloxshade.
 For more information join Bloxshade discord server.</value>
   </data>
   <data name="Common.Profiles" xml:space="preserve">
@@ -1238,7 +1238,7 @@ For more information join Bloxshade discord server.</value>
     <value>Automatic Channel Change Action</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox or Eclipse may try to change your preferred channel.</value>
+    <value>Roblox or Spectre may try to change your preferred channel.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Automatic" xml:space="preserve">
     <value>Change automatically</value>
@@ -1320,10 +1320,10 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>Prevent Roblox from overriding global settings.</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Eclipse Account Permissions</value>
+    <value>Spectre Account Permissions</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Provides access to Roblox APIs using your authentication cookie. [What will Eclipse access?]({0})</value>
+    <value>Provides access to Roblox APIs using your authentication cookie. [What will Spectre access?]({0})</value>
   </data>
   <data name="Menu.Appearance.WindowsBackdrop.Title" xml:space="preserve">
     <value>Window Backdrop</value>
@@ -1395,13 +1395,13 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>Double Click Action</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Opens a specific window when you double-click Eclipse in the system tray while launching Roblox.</value>
+    <value>Opens a specific window when you double-click Spectre in the system tray while launching Roblox.</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Title" xml:space="preserve">
-    <value>Eclipse RPC</value>
+  <data name="Menu.Integrations.SpectreRPC.Title" xml:space="preserve">
+    <value>Spectre RPC</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Enable this to display a custom 'Playing Eclipse' RPC in your Discord profile while the app is open.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Enable this to display a custom 'Playing Spectre' RPC in your Discord profile while the app is open.</value>
   </data>
   <data name="Menu.Integrations.CustomStatusDisplay.Title" xml:space="preserve">
     <value>Custom Status Display</value>
@@ -1479,10 +1479,10 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>Community Mods</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Eclipse Logs</value>
+    <value>Spectre Logs</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Eclipse logs will be deleted.</value>
+    <value>Spectre logs will be deleted.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Looks like a friend is currently playing this game. Do you want to join them?</value>
@@ -1491,7 +1491,7 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>Enable BetterMatchmaking</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Let Eclipse decide which servers you join. Prioritizes the server with the shortest distance to you.</value>
+    <value>Let Spectre decide which servers you join. Prioritizes the server with the shortest distance to you.</value>
   </data>
   <data name="Menu.FastFlags.Presets.TextureQuality.Title" xml:space="preserve">
     <value>Texture Quality</value>
@@ -2076,7 +2076,7 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>Update to Pre Releases</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Eclipse will automatically check and update itself to a test version when launching Roblox, Will only notify user on linux.</value>
+    <value>Spectre will automatically check and update itself to a test version when launching Roblox, Will only notify user on linux.</value>
   </data>
   <data name="Menu.TestMode.Description" xml:space="preserve">
     <value>Automatically hide the settings window when launching Roblox and restore it when Roblox closes.</value>
@@ -2337,7 +2337,7 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>Adds a small button to join the game your working on.</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>This works by adding a custom made Eclipse plugin that will log what your doing.&#xD;&#xA;Do you want to install the plugin?</value>
+    <value>This works by adding a custom made Spectre plugin that will log what your doing.&#xD;&#xA;Do you want to install the plugin?</value>
   </data>
   <data name="Menu.PresetMods.OpenModsFolder" xml:space="preserve">
     <value>Open Preset Mods Folder</value>
@@ -2466,7 +2466,7 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>Small Servers</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Log in using account manager or turn on 'Eclipse Account Permission' or report this to our discord server to use.</value>
+    <value>Log in using account manager or turn on 'Spectre Account Permission' or report this to our discord server to use.</value>
   </data>
   <data name="Menu.RegionSelector.EnterPlaceId" xml:space="preserve">
     <value>Enter a Place ID and click Search to view servers.</value>
@@ -2758,7 +2758,7 @@ Would you like to switch your preferred channel to {0}?</value>
   <data name="Enums.BootstrapperIcon.IconEarly2015" xml:space="preserve">
     <value>Early 2015</value>
   </data>
-  <data name="Enums.BootstrapperIcon.IconFroststrapClassic" xml:space="preserve">
+  <data name="Enums.BootstrapperIcon.IconSpectreClassic" xml:space="preserve">
     <value>Bloxstrap</value>
   </data>
   <data name="Enums.CycleFrequency.EveryLaunch" xml:space="preserve">
@@ -3023,7 +3023,7 @@ Would you like to switch your preferred channel to {0}?</value>
     <value>A new {0} version {1} is available.{2}</value>
   </data>
   <data name="Update.Linux.Available" xml:space="preserve">
-    <value>A new version ({0}) of Eclipse is available for Linux.
+    <value>A new version ({0}) of Spectre is available for Linux.
 
 Linux updates cannot be installed automatically. Please download the latest version manually from GitHub.
 

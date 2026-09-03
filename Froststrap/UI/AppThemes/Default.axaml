@@ -7,10 +7,20 @@
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls">
 
     <Style Selector="Button">
-        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="CornerRadius" Value="12" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+        <Setter Property="Template" Value="{StaticResource SpectreGlassButtonTemplate}" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                <GradientStop Color="#E8E11D48" Offset="0" />
+                <GradientStop Color="#C44A1518" Offset="0.55" />
+                <GradientStop Color="#F2000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
         <Setter Property="Transitions">
             <Transitions>
                 <BrushTransition Property="Background" Duration="0:0:0.12" />
@@ -19,18 +29,25 @@
     </Style>
 
     <Style Selector="Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
 
-    <Style Selector="Button:pointerover /template/ ContentPresenter">
-        <Setter Property="BorderBrush" Value="Transparent" />
+    <Style Selector="Button:pointerover /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#AAE11D48" Offset="0" />
-                <GradientStop Color="#667F1D1D" Offset="1" />
+                <GradientStop Color="#F43F5E" Offset="0" />
+                <GradientStop Color="#E11D48" Offset="0.35" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
+    </Style>
+    <Style Selector="Button:pointerover /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0.82" />
+    </Style>
+    <Style Selector="Button:pointerover /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0.4" />
     </Style>
 
     <!-- Chrome icon buttons must not pick up the global button hover fill -->
@@ -41,35 +58,61 @@
         <Setter Property="Background" Value="Transparent" />
     </Style>
 
-    <Style Selector="Button:pressed /template/ ContentPresenter">
+    <Style Selector="Button:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.985)" />
+    </Style>
+    <Style Selector="Button:pressed /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FEE2E2" Offset="0" />
-                <GradientStop Color="#FDA4AF" Offset="0.35" />
-                <GradientStop Color="#9F1239" Offset="0.7" />
-                <GradientStop Color="#4A1518" Offset="1" />
+                <GradientStop Color="#BE123C" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
+    <Style Selector="Button:pressed /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0.28" />
+    </Style>
+    <Style Selector="Button:pressed /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0.12" />
+    </Style>
 
-    <!-- Icon stroke picks up the ice gradient on press -->
+    <!-- Icon stroke stays white on press/hover -->
     <Style Selector="Button:pressed ic|Lucide">
-        <Setter Property="StrokeBrush">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FFFFFF" Offset="0" />
-                <GradientStop Color="#FECDD3" Offset="0.4" />
-                <GradientStop Color="#E11D48" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+        <Setter Property="StrokeBrush" Value="White" />
     </Style>
 
     <Style Selector="Button:pointerover ic|Lucide">
-        <Setter Property="StrokeBrush">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FEE2E2" Offset="0" />
-                <GradientStop Color="#FDA4AF" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+        <Setter Property="StrokeBrush" Value="White" />
+    </Style>
+
+    <!-- Text/link chrome: no glass fill, no press scale -->
+    <Style Selector="Button.chrome /template/ Border#PART_Gloss, Button.top-nav /template/ Border#PART_Gloss, Button.section-link /template/ Border#PART_Gloss, Button.rail /template/ Border#PART_Gloss, Button.rail-labeled /template/ Border#PART_Gloss, Button.rail-icon /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="Button.chrome /template/ Border#PART_Sheen, Button.top-nav /template/ Border#PART_Sheen, Button.section-link /template/ Border#PART_Sheen, Button.rail /template/ Border#PART_Sheen, Button.rail-labeled /template/ Border#PART_Sheen, Button.rail-icon /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="Button.chrome /template/ Border#PART_Depth, Button.top-nav /template/ Border#PART_Depth, Button.section-link /template/ Border#PART_Depth, Button.rail /template/ Border#PART_Depth, Button.rail-labeled /template/ Border#PART_Depth, Button.rail-icon /template/ Border#PART_Depth">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="Button.chrome /template/ Border#PART_Clip, Button.top-nav /template/ Border#PART_Clip, Button.section-link /template/ Border#PART_Clip, Button.rail /template/ Border#PART_Clip, Button.rail-labeled /template/ Border#PART_Clip, Button.rail-icon /template/ Border#PART_Clip">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.chrome /template/ Border#PART_Rim, Button.top-nav /template/ Border#PART_Rim, Button.section-link /template/ Border#PART_Rim, Button.rail /template/ Border#PART_Rim, Button.rail-labeled /template/ Border#PART_Rim, Button.rail-icon /template/ Border#PART_Rim">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="Button.chrome /template/ Border#PART_Shadow, Button.top-nav /template/ Border#PART_Shadow, Button.section-link /template/ Border#PART_Shadow, Button.rail /template/ Border#PART_Shadow, Button.rail-labeled /template/ Border#PART_Shadow, Button.rail-icon /template/ Border#PART_Shadow">
+        <Setter Property="BoxShadow" Value="0 0 0 0 #00000000" />
+    </Style>
+    <Style Selector="Button.chrome:pressed, Button.top-nav:pressed, Button.section-link:pressed, Button.rail:pressed, Button.rail-labeled:pressed">
+        <Setter Property="RenderTransform" Value="none" />
+    </Style>
+    <Style Selector="Button.top-nav:pointerover /template/ Border#PART_Fill, Button.section-link:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.top-nav:pressed /template/ Border#PART_Fill, Button.section-link:pressed /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 
     <Style Selector="Button.eclipse-primary">
@@ -78,30 +121,28 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                <GradientStop Color="#FDA4AF" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.45" />
-                <GradientStop Color="#7F1D1D" Offset="1" />
+                <GradientStop Color="#E8E11D48" Offset="0" />
+                <GradientStop Color="#C44A1518" Offset="0.5" />
+                <GradientStop Color="#F2000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
 
-    <Style Selector="Button.eclipse-primary:pointerover /template/ ContentPresenter">
+    <Style Selector="Button.eclipse-primary:pointerover /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                <GradientStop Color="#FECDD3" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.45" />
-                <GradientStop Color="#9F1239" Offset="1" />
+                <GradientStop Color="#F43F5E" Offset="0" />
+                <GradientStop Color="#E11D48" Offset="0.4" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
 
-    <Style Selector="Button.eclipse-primary:pressed /template/ ContentPresenter">
+    <Style Selector="Button.eclipse-primary:pressed /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FFFFFF" Offset="0" />
-                <GradientStop Color="#FECDD3" Offset="0.25" />
-                <GradientStop Color="#E11D48" Offset="0.55" />
-                <GradientStop Color="#7F1D1D" Offset="1" />
+                <GradientStop Color="#9F1239" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
@@ -109,55 +150,53 @@
     <Style Selector="Button.eclipse-ghost">
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="#FECDD3" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#883A0A12" Offset="0" />
-                <GradientStop Color="#EE0A0406" Offset="1" />
+                <GradientStop Color="#E8E11D48" Offset="0" />
+                <GradientStop Color="#C44A1518" Offset="0.5" />
+                <GradientStop Color="#F2000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
 
-    <Style Selector="Button.eclipse-ghost:pointerover /template/ ContentPresenter">
+    <Style Selector="Button.eclipse-ghost:pointerover /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#77C41E3A" Offset="0" />
-                <GradientStop Color="#447F1D1D" Offset="1" />
+                <GradientStop Color="#F43F5E" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
-        <Setter Property="BorderBrush" Value="#FB7185" />
     </Style>
 
-    <Style Selector="Button.eclipse-ghost:pressed /template/ ContentPresenter">
+    <Style Selector="Button.eclipse-ghost:pressed /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FECDD3" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.4" />
-                <GradientStop Color="#7F1D1D" Offset="1" />
+                <GradientStop Color="#9F1239" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
-        <Setter Property="BorderBrush" Value="#FECDD3" />
     </Style>
 
     <Style Selector="Button.accent">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="CornerRadius" Value="12" />
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E11D48" Offset="0" />
-                <GradientStop Color="#7F1D1D" Offset="0.55" />
-                <GradientStop Color="#1A060A" Offset="1" />
+                <GradientStop Color="#E8E11D48" Offset="0" />
+                <GradientStop Color="#C44A1518" Offset="0.5" />
+                <GradientStop Color="#F2000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
 
-    <Style Selector="Button.accent:pressed">
+    <Style Selector="Button.accent:pressed /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FDA4AF" Offset="0" />
-                <GradientStop Color="#9F1239" Offset="1" />
+                <GradientStop Color="#E11D48" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
@@ -167,15 +206,17 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="11" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="#E2E8F0" />
-    </Style>
-
-    <Style Selector="Button.rail-labeled:pointerover">
-        <Setter Property="Background" Value="#33C41E3A" />
         <Setter Property="Foreground" Value="White" />
     </Style>
 
-    <Style Selector="Button.rail-labeled:pressed">
+    <Style Selector="Button.rail-labeled:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="#33C41E3A" />
+    </Style>
+    <Style Selector="Button.rail-labeled:pointerover">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style Selector="Button.rail-labeled:pressed /template/ Border#PART_Fill">
         <Setter Property="Background" Value="#55C41E3A" />
     </Style>
 
@@ -184,7 +225,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="14" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="#E2E8F0" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Transitions">
             <Transitions>
                 <BrushTransition Property="Background" Duration="0:0:0.16" />
@@ -192,24 +233,42 @@
         </Setter>
     </Style>
 
-    <Style Selector="Button.rail-icon:pointerover /template/ ContentPresenter">
+    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FECDD3" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.4" />
-                <GradientStop Color="#C41E3A" Offset="1" />
+                <GradientStop Color="#E8E11D48" Offset="0" />
+                <GradientStop Color="#F2000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
-        <Setter Property="Opacity" Value="0.92" />
+    </Style>
+    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0.62" />
+    </Style>
+    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0.28" />
+    </Style>
+    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Clip">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush">
+            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                <GradientStop Color="#55FFFFFF" Offset="0" />
+                <GradientStop Color="#33E11D48" Offset="0.45" />
+                <GradientStop Color="#22000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Depth">
+        <Setter Property="Opacity" Value="0.4" />
+    </Style>
+    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Shadow">
+        <Setter Property="BoxShadow" Value="0 6 18 0 #55000000" />
     </Style>
 
-    <Style Selector="Button.rail-icon:pressed /template/ ContentPresenter">
+    <Style Selector="Button.rail-icon:pressed /template/ Border#PART_Fill">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#FFFFFF" Offset="0" />
-                <GradientStop Color="#FDA4AF" Offset="0.3" />
-                <GradientStop Color="#C41E3A" Offset="0.65" />
-                <GradientStop Color="#1E40AF" Offset="1" />
+                <GradientStop Color="#E11D48" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
@@ -253,6 +312,30 @@
 
     <Style Selector="Button.rail:disabled">
         <Setter Property="Opacity" Value="0.4" />
+    </Style>
+
+    <Style Selector="ToggleButton">
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Template" Value="{StaticResource SpectreGlassButtonTemplate}" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                <GradientStop Color="#E8E11D48" Offset="0" />
+                <GradientStop Color="#C44A1518" Offset="0.55" />
+                <GradientStop Color="#F2000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+    <Style Selector="ToggleButton:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                <GradientStop Color="#F43F5E" Offset="0" />
+                <GradientStop Color="#E11D48" Offset="0.35" />
+                <GradientStop Color="#000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
     </Style>
 
     <Style Selector="TextBox">

@@ -9,32 +9,36 @@
     <Style Selector="Button.spectre-tile">
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="BorderBrush" Value="Transparent" />
-      <Setter Property="Foreground" Value="#FEE2E2" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="CornerRadius" Value="16" />
       <Setter Property="Background">
         <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-          <GradientStop Color="#CC3A0A12" Offset="0" />
-          <GradientStop Color="#EE0A0406" Offset="1" />
+          <GradientStop Color="#E8E11D48" Offset="0" />
+          <GradientStop Color="#C44A1518" Offset="0.5" />
+          <GradientStop Color="#F2000000" Offset="1" />
         </LinearGradientBrush>
       </Setter>
     </Style>
     <Style Selector="Button.spectre-tile /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="BorderBrush" Value="Transparent" />
     </Style>
-    <Style Selector="Button.spectre-tile:pointerover /template/ ContentPresenter">
+    <Style Selector="Button.spectre-tile:pointerover /template/ Border#PART_Fill">
       <Setter Property="Background">
         <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-          <GradientStop Color="#EEC41E3A" Offset="0" />
-          <GradientStop Color="#AA3A080C" Offset="1" />
+          <GradientStop Color="#F43F5E" Offset="0" />
+          <GradientStop Color="#E11D48" Offset="0.35" />
+          <GradientStop Color="#000000" Offset="1" />
         </LinearGradientBrush>
       </Setter>
     </Style>
   </UserControl.Styles>
   <ScrollViewer>
     <StackPanel Margin="24" Spacing="16">
-      <TextBlock Text="All tools" FontSize="28" FontWeight="Bold" Foreground="#FEE2E2" />
+      <TextBlock Text="All tools" FontSize="28" FontWeight="Bold" Foreground="White" />
       <TextBlock Text="Everything else lives here — pick a tool to open it."
-                 Foreground="#FECACA" Opacity="0.8" Margin="0,0,0,8" />
+                 Foreground="White" Opacity="0.8" Margin="0,0,0,8" />
       <ItemsControl ItemsSource="{Binding Items}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -49,20 +53,41 @@
                     Command="{Binding $parent[UserControl].((vm:ToolsHubViewModel)DataContext).OpenToolCommand}"
                     CommandParameter="{Binding Tag}">
               <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                <Border Width="40" Height="40" CornerRadius="12">
-                  <Border.Background>
-                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                      <GradientStop Color="#E11D48" Offset="0" />
-                      <GradientStop Color="#3A080C" Offset="1" />
-                    </LinearGradientBrush>
-                  </Border.Background>
-                  <ic:Lucide Icon="{Binding Icon}" Width="18" Height="18"
-                             StrokeBrush="#FEE2E2"
-                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Border Width="40" Height="40" CornerRadius="12" ClipToBounds="True">
+                  <Panel>
+                    <Border CornerRadius="12">
+                      <Border.Background>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                          <GradientStop Color="#E8E11D48" Offset="0" />
+                          <GradientStop Color="#F2000000" Offset="1" />
+                        </LinearGradientBrush>
+                      </Border.Background>
+                    </Border>
+                    <Border Height="14" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0.55">
+                      <Border.Background>
+                        <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                          <GradientStop Color="#88FFFFFF" Offset="0" />
+                          <GradientStop Color="#00FFFFFF" Offset="1" />
+                        </LinearGradientBrush>
+                      </Border.Background>
+                    </Border>
+                    <Border BorderThickness="1" CornerRadius="12" IsHitTestVisible="False">
+                      <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                          <GradientStop Color="#AAFFFFFF" Offset="0" />
+                          <GradientStop Color="#55E11D48" Offset="0.5" />
+                          <GradientStop Color="#22000000" Offset="1" />
+                        </LinearGradientBrush>
+                      </Border.BorderBrush>
+                    </Border>
+                    <ic:Lucide Icon="{Binding Icon}" Width="18" Height="18"
+                               StrokeBrush="White"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                  </Panel>
                 </Border>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                  <TextBlock Text="{Binding Title}" FontWeight="SemiBold" Foreground="#FEE2E2" />
-                  <TextBlock Text="{Binding Subtitle}" FontSize="12" Foreground="#FECACA" Opacity="0.75" TextWrapping="Wrap" />
+                  <TextBlock Text="{Binding Title}" FontWeight="SemiBold" Foreground="White" />
+                  <TextBlock Text="{Binding Subtitle}" FontSize="12" Foreground="White" Opacity="0.75" TextWrapping="Wrap" />
                 </StackPanel>
               </Grid>
             </Button>

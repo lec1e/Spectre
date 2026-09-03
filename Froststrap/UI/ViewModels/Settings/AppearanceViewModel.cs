@@ -706,8 +706,8 @@ namespace Froststrap.UI.ViewModels.Settings
             set
             {
                 App.Settings.Prop.EnableLiquidCursor = value;
-                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
                 OnPropertyChanged(nameof(EnableLiquidCursor));
+                Froststrap.UI.Elements.Settings.MainWindow.Instance?.SyncPointerEffects();
             }
         }
 

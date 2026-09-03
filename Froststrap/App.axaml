@@ -18,16 +18,17 @@
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/Card.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/CardExpander.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/TitleBar.axaml" />
-        <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/CardAction.axaml" />
+        <StyleInclude Source="avares://Eclipse/UI/AppThemes/GlassChrome.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/IconButton.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/LiquidGlassPanel.axaml" />
 
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 
         <StyleInclude Source="avares://Eclipse/UI/AppThemes/Default.axaml" />
+        <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/CardAction.axaml" />
 
         <Style Selector="ic|Lucide">
-            <Setter Property="StrokeBrush" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="StrokeBrush" Value="White" />
             <Setter Property="StrokeThickness" Value="1.5" />
         </Style>
         <Style Selector="Window">
@@ -35,9 +36,21 @@
         </Style>
         <Style Selector="TextBlock">
             <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="SelectableTextBlock">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
         <Style Selector="TextBox">
             <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
         <Style Selector="Button">
             <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
