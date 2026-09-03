@@ -2,9 +2,12 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using FluentAvalonia.UI.Controls;
@@ -49,22 +52,30 @@ namespace Froststrap.UI.Elements.Settings
             ];
             Background = Brushes.Transparent;
 
-            PointerMoved += OnWindowPointerMoved;
-            PointerExited += OnWindowPointerExited;
+            AddHandler(PointerMovedEvent, OnWindowPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble, handledEventsToo: true);
+            AddHandler(PointerExitedEvent, OnWindowPointerExited, RoutingStrategies.Bubble, handledEventsToo: true);
             global::Froststrap.Utility.ThemeManager.ThemeChanged += OnThemeChanged;
             Closed += (_, _) => global::Froststrap.Utility.ThemeManager.ThemeChanged -= OnThemeChanged;
 
             Dispatcher.UIThread.Post(() =>
             {
                 ShellGlass?.SyncTintFromTheme();
+                ShellGlass?.ApplyFromSettings();
                 AbyssBackground?.SyncFromTheme();
                 AbyssBackground?.SyncFromSettings();
-                if (LiquidCursor is not null)
-                {
-                    LiquidCursor.IsEffectEnabled = App.Settings?.Prop?.EnableLiquidCursor ?? true;
-                    LiquidCursor.SyncColorsFromTheme();
-                }
+                SyncPointerEffects();
             }, DispatcherPriority.Loaded);
+        }
+
+        public void SyncPointerEffects()
+        {
+            bool on = App.Settings?.Prop.EnableLiquidCursor ?? true;
+            if (LiquidCursor is null)
+                return;
+
+            LiquidCursor.IsVisible = on;
+            LiquidCursor.IsEffectEnabled = on;
+            LiquidCursor.SyncColorsFromTheme();
         }
 
         private void OnThemeChanged()
@@ -72,27 +83,22 @@ namespace Froststrap.UI.Elements.Settings
             Dispatcher.UIThread.Post(() =>
             {
                 ShellGlass?.SyncTintFromTheme();
+                ShellGlass?.ApplyFromSettings();
                 AbyssBackground?.SyncFromTheme();
                 AbyssBackground?.SyncFromSettings();
-                if (LiquidCursor is not null)
-                {
-                    LiquidCursor.IsEffectEnabled = App.Settings?.Prop?.EnableLiquidCursor ?? true;
-                    LiquidCursor.SyncColorsFromTheme();
-                }
+                SyncPointerEffects();
             });
         }
 
         private void OnWindowPointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
         {
-            if (LiquidCursor is null)
-                return;
-
-            var p = e.GetPosition(LiquidCursor);
-            LiquidCursor.SetPointer(p, true);
+            AbyssBackground?.SetPointer(e.GetPosition(AbyssBackground), true);
+            LiquidCursor?.SetPointer(e.GetPosition(LiquidCursor), true);
         }
 
         private void OnWindowPointerExited(object? sender, Avalonia.Input.PointerEventArgs e)
         {
+            AbyssBackground?.SetPointer(new Point(-40, -40), false);
             LiquidCursor?.SetPointer(new Point(-40, -40), false);
         }
 
@@ -471,10 +477,7 @@ namespace Froststrap.UI.Elements.Settings
             var notificationPanel = this.FindControl<Panel>("NotificationPanel");
             if (notificationPanel == null) return;
 
-            var accentColor = type == FAInfoBarSeverity.Success ? "#00D084" : "#FFB900";
-            var iconSymbol = customIcon ?? (type == FAInfoBarSeverity.Success
-                ? LucideIconNames.CircleCheck
-                : LucideIconNames.TriangleAlert);
+            var accentColor = type == FAInfoBarSeverity.Success ? "#E11D48" : "#9F1239";
 
             var contentGrid = new Grid
             {
@@ -482,13 +485,11 @@ namespace Froststrap.UI.Elements.Settings
                 Margin = new Thickness(0)
             };
 
-            var icon = new Lucide
+            var icon = new Image
             {
-                Icon = iconSymbol,
                 Width = 36,
                 Height = 36,
-                StrokeBrush = new SolidColorBrush(Color.Parse(accentColor)),
-                StrokeThickness = 1.5,
+                Source = new Bitmap(AssetLoader.Open(new Uri("avares://Eclipse/SpectreMark.png"))),
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(16, 0, 12, 0)
             };
@@ -497,11 +498,8 @@ namespace Froststrap.UI.Elements.Settings
 
             var textPanel = new StackPanel { VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center, Spacing = 2 };
 
-            var titleText = new TextBlock { Text = title, FontWeight = FontWeight.SemiBold, FontSize = 14 };
-            titleText.Bind(TextBlock.ForegroundProperty, new DynamicResourceExtension("TextFillColorPrimaryBrush"));
-
-            var subtitleText = new TextBlock { Text = subtitle, FontSize = 12, TextWrapping = TextWrapping.Wrap };
-            subtitleText.Bind(TextBlock.ForegroundProperty, new DynamicResourceExtension("TextFillColorSecondaryBrush"));
+            var titleText = new TextBlock { Text = title, FontWeight = FontWeight.SemiBold, FontSize = 14, Foreground = Brushes.White };
+            var subtitleText = new TextBlock { Text = subtitle, FontSize = 12, TextWrapping = TextWrapping.Wrap, Foreground = Brushes.White };
 
             textPanel.Children.Add(titleText);
             textPanel.Children.Add(subtitleText);

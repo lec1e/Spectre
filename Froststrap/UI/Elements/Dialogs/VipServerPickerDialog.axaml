@@ -11,13 +11,13 @@
         Background="Transparent"
         CanResize="False">
     <Panel>
-        <Border Background="#F205040A" />
-
-        <controls:LiquidGlassPanel Margin="14"
+        <controls:LiquidGlassPanel x:Name="ShellGlass"
+                                   Margin="0"
                                    Padding="16"
-                                   CornerRadius="22"
-                                   TintOpacity="0.95"
-                                   MaterialOpacity="0.97">
+                                   CornerRadius="0"
+                                   TintOpacity="0.58"
+                                   MaterialOpacity="0.46"
+                                   UseSettingsCornerRadius="False">
             <Grid RowDefinitions="Auto,*,Auto">
                 <TextBlock Text="{Binding GameName}"
                            FontWeight="SemiBold"

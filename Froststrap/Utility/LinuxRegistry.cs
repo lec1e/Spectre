@@ -32,7 +32,7 @@ public static class LinuxRegistry
         var sb = new StringBuilder();
         sb.AppendLine("[Desktop Entry]");
         sb.AppendLine("Type=Application");
-        sb.AppendLine($"Name={App.ProjectName}");
+        sb.AppendLine($"Name={App.BrandName}");
         sb.AppendLine($"Exec={Paths.Application} %u");
         sb.AppendLine("StartupNotify=true");
         sb.AppendLine("Terminal=false");

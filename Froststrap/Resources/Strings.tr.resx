@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>Froststrap Hakkında</value>
+    <value>Spectre Hakkında</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Sunucu konumu sorgulanamadı. Oyunlara çok hızlı bir şekilde katılıyor olabilirsiniz.</value>
@@ -137,7 +137,7 @@
     <value>Şu anda bulunduğunuz kanal ({0}) artık genel kullanıma kapatılmıştır. Artık varsayılan kanalda ({1}) olacaksınız.</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Froststrap, {0} sürümüne otomatik olarak güncellenemedi. Lütfen web sitesinden programı indirip çalıştırarak manuel olarak güncelleyin.</value>
+    <value>Spectre, {0} sürümüne otomatik olarak güncellenemedi. Lütfen web sitesinden programı indirip çalıştırarak manuel olarak güncelleyin.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox, kanalınızı {0} olarak ayarlamaya çalışıyor; ancak şu anda tercih ettiğiniz kanal {1}&apos;dir.
@@ -175,7 +175,7 @@ Varsayılan kanala ({1}) geçmek ister misiniz?</value>
     <value>Tüm değişiklikler uygulanamadı</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap&apos;ta Roblox&apos;u indirip yüklemek için yeterli disk alanı bulunmuyor. Lütfen biraz disk alanı boşaltın ve tekrar deneyin.</value>
+    <value>Spectre&apos;ta Roblox&apos;u indirip yüklemek için yeterli disk alanı bulunmuyor. Lütfen biraz disk alanı boşaltın ve tekrar deneyin.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Roblox modifikasyonları uygulanıyor...</value>
@@ -310,10 +310,10 @@ Varsayılan kanala ({1}) geçmek ister misiniz?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Froststrap başarıyla kaldırıldı</value>
+    <value>Spectre başarıyla kaldırıldı</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox şu anda çalışıyor, ancak Froststrap&apos;ı kaldırmadan önce kapatılması gerekiyor. Roblox&apos;u şimdi kapatmak ister misiniz?</value>
+    <value>Roblox şu anda çalışıyor, ancak Spectre&apos;ı kaldırmadan önce kapatılması gerekiyor. Roblox&apos;u şimdi kapatmak ister misiniz?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox, Windows Media Foundation bileşenlerinin kullanılmasını gerektirir. Görünüşe göre bu bileşenler bilgisayarınızda bulunmuyor; bunun nedeni muhtemelen Windows’un N sürümünü kullanıyor olmanızdır. Lütfen önce bu bileşenleri yükleyin, ardından Roblox’u başlatın.</value>
@@ -407,7 +407,7 @@ Varsayılan kanala ({1}) geçmek ister misiniz?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Dışa Aktar</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Dosyalar</value>
@@ -503,7 +503,7 @@ Varsayılan kanala ({1}) geçmek ister misiniz?</value>
     <value>Adını Değiştir</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox henüz yüklenmemiştir. Lütfen bu seçeneği kullanmaya çalışmadan önce Froststrap aracılığıyla Roblox’u en az bir kez başlatın.</value>
+    <value>Roblox henüz yüklenmemiştir. Lütfen bu seçeneği kullanmaya çalışmadan önce Spectre aracılığıyla Roblox’u en az bir kez başlatın.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Kaydet ve Yükle</value>
@@ -723,7 +723,7 @@ Varsayılan kanala ({1}) geçmek ister misiniz?</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Özel önyükleyici kurulamadı: {0}.
 Varsayılan olarak {1} kullanılacak.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Özel önyükleyiciler en fazla {0} öğe içerebilir; {1} öğe var</value>
@@ -772,17 +772,17 @@ Varsayılan olarak {1} kullanılacak.</value>
     <value>Lütfen kaldırma işleminin tamamlanmasını bekleyin.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap artık Bloxshade&apos;i desteklemiyor.
+    <value>Spectre artık Bloxshade&apos;i desteklemiyor.
 Daha fazla bilgi için Bloxshade Discord sunucusuna katılın.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Üzgünüm</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap, Masaüstü ve Başlat Menüsü için kısayollar oluşturamadı. Bunları daha sonra ayarlar üzerinden oluşturmayı deneyin.</value>
+    <value>Spectre, Masaüstü ve Başlat Menüsü için kısayollar oluşturamadı. Bunları daha sonra ayarlar üzerinden oluşturmayı deneyin.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Bağlantı kurulamadı; bu durum muhtemelen internet bağlantınızın zayıf olduğunu veya bir güvenlik duvarı engellemesi olduğunu gösteriyor. Bağlantınızda bir sorun yoksa, lütfen antivirüs programınızın Froststrap&apos;i engellemediğinden emin olun.</value>
+    <value>Bağlantı kurulamadı; bu durum muhtemelen internet bağlantınızın zayıf olduğunu veya bir güvenlik duvarı engellemesi olduğunu gösteriyor. Bağlantınızda bir sorun yoksa, lütfen antivirüs programınızın Spectre&apos;i engellemediğinden emin olun.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Bu oturumda BetterMatchmaking devre dışı bırakılacaktır.</value>
@@ -794,7 +794,7 @@ Daha fazla bilgi için Bloxshade Discord sunucusuna katılın.</value>
     <value>Roblox şu anda hizmet dışı olabilir. Daha fazla bilgi için {0}&apos;a bakın.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Roblox&apos;un yüklenmesi veya güncellenmesi gerektiğinden, Froststrap devam edemiyor.</value>
+    <value>Roblox&apos;un yüklenmesi veya güncellenmesi gerektiğinden, Spectre devam edemiyor.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Bu sürümde Roblox’ta güncelleme kontrolü yapılmayacak ve modlardaki değişiklikler uygulanmayacaktır.</value>
@@ -806,11 +806,11 @@ Daha fazla bilgi için Bloxshade Discord sunucusuna katılın.</value>
     <value>Lütfen daha sonra tekrar deneyin.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap, {0} ile bağlantı kuramıyor</value>
+    <value>Spectre, {0} ile bağlantı kuramıyor</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap, Roblox&apos;u indiremiyor</value>
+    <value>Spectre, Roblox&apos;u indiremiyor</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Roblox şu anda indirilemiyor. Daha fazla bilgi için lütfen aşağıdaki yardım sayfasını okuyun: {0}</value>
@@ -820,24 +820,24 @@ Daha fazla bilgi için Bloxshade Discord sunucusuna katılın.</value>
     <value>Günlük içeriğini kopyala</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Froststrap/Froststrap çalıştırılırken bir istisna oluştu</value>
+    <value>Spectre/Spectre çalıştırılırken bir istisna oluştu</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Öncelikle [Froststrap Wiki]({0}) sayfasını kontrol ederek bu sorunun daha önce bir düzeltmeyle giderilip giderilmediğine bakın.
+    <value>Öncelikle [Spectre Wiki]({0}) sayfasını kontrol ederek bu sorunun daha önce bir düzeltmeyle giderilip giderilmediğine bakın.
 
 Eğer giderilmemişse, lütfen bu istisnayı, oluşturulan günlük dosyasının bir kopyasıyla birlikte bir [GitHub sorunu]({1}) aracılığıyla bildirin.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Öncelikle [Froststrap Wiki]({0}) sayfasını kontrol ederek bu sorunun daha önce bir düzeltmeyle giderilip giderilmediğine bakın.
+    <value>Öncelikle [Spectre Wiki]({0}) sayfasını kontrol ederek bu sorunun daha önce bir düzeltmeyle giderilip giderilmediğine bakın.
 
-Eğer giderilmemişse, lütfen bu istisnayı bu fork’un bakım ekibine bildirin. Bu, resmi olmayan bir derleme olduğu için lütfen bunu Froststrap’ın GitHub sorunlarına bildirmeyin.</value>
+Eğer giderilmemişse, lütfen bu istisnayı bu fork’un bakım ekibine bildirin. Bu, resmi olmayan bir derleme olduğu için lütfen bunu Spectre’ın GitHub sorunlarına bildirmeyin.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Hata bildir</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Froststrap İstisnası</value>
+    <value>Spectre İstisnası</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Seçilen bootstrapper simgesi yüklenemedi.
@@ -861,10 +861,10 @@ Bazı metinler tercih ettiğiniz dile çevrilmemiş olabilir.</value>
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Bu sorunun neden ortaya çıkabileceği ve nasıl çözülebileceği hakkında bilgi için lütfen [bu yardım makalesini]({0}) okuyun.
 
-Roblox&apos;un [orijinal başlatıcıyla]({1}) çalışıp çalışmadığını kontrol edin. Çalışmıyorsa, bu bir Froststrap sorunu değildir. Çalışıyorsa, yardım makalesine bakın.</value>
+Roblox&apos;un [orijinal başlatıcıyla]({1}) çalışıp çalışmadığını kontrol edin. Çalışmıyorsa, bu bir Spectre sorunu değildir. Çalışıyorsa, yardım makalesine bakın.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap, Windows Kayıt Defteri&apos;ne yazamıyor. Muhtemelen bir antivirüs programı müdahale ederek sorunlara neden oluyor. Lütfen Froststrap&apos;ın çalışmasını engelleyebilecek herhangi bir şey olup olmadığını kontrol edin.</value>
+    <value>Spectre, Windows Kayıt Defteri&apos;ne yazamıyor. Muhtemelen bir antivirüs programı müdahale ederek sorunlara neden oluyor. Lütfen Spectre&apos;ın çalışmasını engelleyebilecek herhangi bir şey olup olmadığını kontrol edin.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Degrade</value>
@@ -894,16 +894,16 @@ Roblox&apos;un [orijinal başlatıcıyla]({1}) çalışıp çalışmadığını 
     <value>Sahte Byfron (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (Klasik)</value>
+    <value>Spectre (Klasik)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Özel</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (Cam)</value>
+    <value>Spectre (Cam)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (Opak)</value>
+    <value>Spectre (Opak)</value>
   </data>
   <data name="Enums.CleanerOptions.Never" xml:space="preserve">
     <value>Asla</value>
@@ -1129,14 +1129,14 @@ Roblox&apos;un [orijinal başlatıcıyla]({1}) çalışıp çalışmadığını 
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap, v{0} sürümüne yükseltildi</value>
+    <value>Spectre, v{0} sürümüne yükseltildi</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Başlattığınız Froststrap sürümü, şu anda sisteminizde kurulu olan sürümden farklıdır.
+    <value>Başlattığınız Spectre sürümü, şu anda sisteminizde kurulu olan sürümden farklıdır.
 Şu anda kurulu olan sürümü yükseltmek ister misiniz?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Başlattığınız Froststrap sürümü, şu anda kurulu olan sürümden daha eskidir.
+    <value>Başlattığınız Spectre sürümü, şu anda kurulu olan sürümden daha eskidir.
 Sorunlar ortaya çıkabilir ve ayarlarınız değişebilir. Yeniden yüklemeniz önerilir.
 Devam etmek istediğinizden emin misiniz?</value>
   </data>
@@ -1153,7 +1153,7 @@ Devam etmek istediğinizden emin misiniz?</value>
     <value>Roblox Studio&apos;yu başlat</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Froststrap, &apos;{0}&apos; konumundaki klasöre yazamadığı için bu başlatma işlemi için herhangi bir günlük dosyası oluşturulmayacaktır</value>
+    <value>Spectre, &apos;{0}&apos; konumundaki klasöre yazamadığı için bu başlatma işlemi için herhangi bir günlük dosyası oluşturulmayacaktır</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Yapım Bilgileri</value>
@@ -1168,13 +1168,13 @@ Devam etmek istediğinizden emin misiniz?</value>
     <value>Kod</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Bunlar, Froststrap ve Froststrap’a önemli katkılarda bulunarak bu projelerin bugünkü halini almalarını sağlayan tüm kişilerdir.</value>
+    <value>Bunlar, Spectre ve Spectre’a önemli katkılarda bulunarak bu projelerin bugünkü halini almalarını sağlayan tüm kişilerdir.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>İlham Kaynakları</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Bir Fishstrap/Froststrap çatalı.</value>
+    <value>Bir Fishstrap/Spectre çatalı.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Discord Sunucusu</value>
@@ -1237,16 +1237,16 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Şu anda açık olan tüm Roblox oturumlarını kapatana kadar, yaptığınız değişikliklerin tamamının hemen geçerli olmayacağını lütfen unutmayın.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap halihazırda çalışıyor</value>
+    <value>Spectre halihazırda çalışıyor</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Arka Plan Modu:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Froststrap’ın önyükleyicisini çok çeşitli seçenekler kullanarak özelleştirin.</value>
+    <value>Spectre’ın önyükleyicisini çok çeşitli seçenekler kullanarak özelleştirin.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Froststrap temalarını ön ayarlarla kolayca özelleştirin ya da kendi benzersiz görünümünüzü yaratın.</value>
+    <value>Spectre temalarını ön ayarlarla kolayca özelleştirin ya da kendi benzersiz görünümünüzü yaratın.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Uygulama Temaları</value>
@@ -1264,13 +1264,13 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Başlık</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Froststrap&apos;ın nasıl görüneceğini ayarlayın.</value>
+    <value>Spectre&apos;ın nasıl görüneceğini ayarlayın.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Frekans</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Froststrap&apos;ın hangi simgeyi kullanacağını seçin.</value>
+    <value>Spectre&apos;ın hangi simgeyi kullanacağını seçin.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Simge</value>
@@ -1285,7 +1285,7 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Dil</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Bir başlatma ekranı stili seçin. Not: Koyu tema, Legacy veya Vista sürümlerinde desteklenmemektedir. Daha fazla özelleştirilebilir başlatıcı için resmi Froststrap Discord sunucusunu ziyaret edin.</value>
+    <value>Bir başlatma ekranı stili seçin. Not: Koyu tema, Legacy veya Vista sürümlerinde desteklenmemektedir. Daha fazla özelleştirilebilir başlatıcı için resmi Spectre Discord sunucusunu ziyaret edin.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Kendi Kendine Başlayanların Tarzı</value>
@@ -1318,16 +1318,16 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Pencere Arka Planı</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Kimlik doğrulama çerezinizi kullanarak Roblox API’lerine erişim sağlar. [Froststrap nelere erişecek?]({0})</value>
+    <value>Kimlik doğrulama çerezinizi kullanarak Roblox API’lerine erişim sağlar. [Spectre nelere erişecek?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Froststrap Hesap İzinleri</value>
+    <value>Spectre Hesap İzinleri</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap, Roblox başlatıldığında kendisini otomatik olarak kontrol eder ve kararlı bir sürüme günceller.</value>
+    <value>Spectre, Roblox başlatıldığında kendisini otomatik olarak kontrol eder ve kararlı bir sürüme günceller.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Froststrap&apos;ı Otomatik Olarak Güncelle</value>
+    <value>Spectre&apos;ı Otomatik Olarak Güncelle</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Beklemek yerine Roblox&apos;u arka planda güncelleyin. Yavaş ağ bağlantıları için önerilmez. Bu özelliğin çalışması için en az 3 GB boş depolama alanı gereklidir.</value>
@@ -1348,7 +1348,7 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Örnek Başlatma Onayı</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Roblox başlatılırken Froststrap&apos;ın ne yapması gerektiğini ayarlayın.</value>
+    <value>Roblox başlatılırken Spectre&apos;ın ne yapması gerektiğini ayarlayın.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Roblox, bir sonraki başlatmada temiz bir kurulumla açılacaktır.</value>
@@ -1381,7 +1381,7 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Yer açmak için eski verileri otomatik olarak siler. İlk olarak Fishstrap tarafından geliştirilmiştir.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Froststrap Temizleyici</value>
+    <value>Spectre Temizleyici</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Belirlenen süreden daha eski dosyalar silinecektir.</value>
@@ -1396,10 +1396,10 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Önbellek</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Froststrap günlükleri silinecektir.</value>
+    <value>Spectre günlükleri silinecektir.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Froststrap Günlükleri</value>
+    <value>Spectre Günlükleri</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Eski günlük dosyaları silinecektir.</value>
@@ -1408,7 +1408,7 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Günlükler Menüsü</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Hangi sunuculara bağlanacağınızı Froststrap&apos;in belirlemesine izin verin. Size en yakın olan sunucuya öncelik verir.</value>
+    <value>Hangi sunuculara bağlanacağınızı Spectre&apos;in belirlemesine izin verin. Size en yakın olan sunucuya öncelik verir.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Görünüşe göre bir arkadaşın şu anda bu oyunu oynuyor. Ona katılmak ister misin?</value>
@@ -1465,7 +1465,7 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Otomatik olarak değiştir</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox veya Froststrap, tercih ettiğiniz kanalı değiştirmeye çalışabilir.</value>
+    <value>Roblox veya Spectre, tercih ettiğiniz kanalı değiştirmeye çalışabilir.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Asla değişme</value>
@@ -1477,7 +1477,7 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Otomatik Kanal Değiştirme İşlemi</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Roblox ve Froststrap için dağıtım ve kurulum ayarlarını değiştirin.</value>
+    <value>Roblox ve Spectre için dağıtım ve kurulum ayarlarını değiştirin.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Roblox Güncellemeleri</value>
@@ -1564,7 +1564,7 @@ Başlamak için yukarıdaki “Hesap Ekle” seçeneğine tıklayın</value>
     <value>Roblox çerez dosyası bulunamadı.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap, Roblox başlatıldığında kendisini otomatik olarak kontrol eder ve bir test sürümüne günceller.</value>
+    <value>Spectre, Roblox başlatıldığında kendisini otomatik olarak kontrol eder ve bir test sürümüne günceller.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Ön Sürümlere İlişkin Güncelleme</value>
@@ -1701,7 +1701,7 @@ Daha fazla bilgi:
     <value>Bu seçeneği devre dışı bırakmak, burada yapılandırılan hiçbir ayarın Roblox’a uygulanmamasını sağlayacaktır.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Froststrap&apos;ın FastFlags&apos;i yönetmesine izin ver</value>
+    <value>Spectre&apos;ın FastFlags&apos;i yönetmesine izin ver</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox, Windows&apos;ta ekranınızın nasıl ölçeklendirildiğine bağlı olarak görüntü kalitenizi düşürür.</value>
@@ -2109,7 +2109,7 @@ Daha fazla bilgi:
     <value>Masaüstüne Yakın</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Roblox’u başlatırken sistem tepsisindeki Froststrap simgesine çift tıkladığınızda belirli bir pencere açar.</value>
+    <value>Roblox’u başlatırken sistem tepsisindeki Spectre simgesine çift tıkladığınızda belirli bir pencere açar.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Çift Tıklama Eylemi</value>
@@ -2127,13 +2127,13 @@ Daha fazla bilgi:
     <value>Düzenleme Bilgileri</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Froststrap&apos;ın hangi Roblox oyununu oynadığınızı algılamasını sağlar. Bazı özellikler için bu gerekli olabilir.</value>
+    <value>Spectre&apos;ın hangi Roblox oyununu oynadığınızı algılamasını sağlar. Bazı özellikler için bu gerekli olabilir.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Etkinlik Takibini Etkinleştir</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Uygulama açıkken Discord profilinizde özel bir “Playing Froststrap” RPC’si görüntülemek için bu seçeneği etkinleştirin.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Uygulama açıkken Discord profilinizde özel bir “Playing Spectre” RPC’si görüntülemek için bu seçeneği etkinleştirin.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Bu oturumda oynadığınız oyunu gösterir ve oyuna yeniden katılmanıza olanak tanır.</value>
@@ -2196,7 +2196,7 @@ Daha fazla bilgi:
     <value>Studio Etkinliğini Göster</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Bu, yaptığınız işlemleri kaydedecek özel olarak geliştirilmiş bir Froststrap eklentisi ekleyerek çalışır.
+    <value>Bu, yaptığınız işlemleri kaydedecek özel olarak geliştirilmiş bir Spectre eklentisi ekleyerek çalışır.
 Eklentiyi yüklemek istiyor musunuz?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2760,7 +2760,7 @@ Oturum açma işlemi tamamlandığında uygulama bu pencereyi kapatacaktır.</va
     <value>Veri merkezleri yükleniyor...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Kullanmak için hesap yöneticisi aracılığıyla oturum açın, “Froststrap Hesap İzni”ni etkinleştirin ya da bunu Discord sunucumuza bildirin.</value>
+    <value>Kullanmak için hesap yöneticisi aracılığıyla oturum açın, “Spectre Hesap İzni”ni etkinleştirin ya da bunu Discord sunucumuza bildirin.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Herhangi bir genel sunucu bulunamadı.</value>
@@ -2832,13 +2832,13 @@ Oturum açma işlemi tamamlandığında uygulama bu pencereyi kapatacaktır.</va
     <value>Kısayol Oluştur</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Froststrap&apos;ın nasıl kolayca başlatılabileceğini ayarlayın.</value>
+    <value>Spectre&apos;ın nasıl kolayca başlatılabileceğini ayarlayın.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Kısayol oluşturulurken hata oluştu.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Kısayollarınızda Froststrap’ın Roblox simgelerini kullanmanıza olanak tanır. [Nasıl yapılacağını öğrenin.]({0})</value>
+    <value>Kısayollarınızda Spectre’ın Roblox simgelerini kullanmanıza olanak tanır. [Nasıl yapılacağını öğrenin.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Roblox Simgelerini Klasöre Çıkar</value>
@@ -2909,29 +2909,29 @@ Bu özellik etkinleştirildiğinde, Ayarlar’ı kapattıktan sonra Roblox otoma
 Test Modu’nu etkinleştirmek ister misiniz?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Froststrap Ayarları</value>
+    <value>Spectre Ayarları</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Simgeler</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Bunlar, Froststrap’ın kurulduğu yerde saklanacak ve yeniden kurulumda otomatik olarak geri yüklenecektir.</value>
+    <value>Bunlar, Spectre’ın kurulduğu yerde saklanacak ve yeniden kurulumda otomatik olarak geri yüklenecektir.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Ayarlarımı ve modlarımı koru</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Kaldırma işlemi, Froststrap’ı sisteminizden silecek ve hala yüklü ise varsayılan Roblox başlatıcısını otomatik olarak yeniden yapılandıracaktır.
+    <value>Kaldırma işlemi, Spectre’ı sisteminizden silecek ve hala yüklü ise varsayılan Roblox başlatıcısını otomatik olarak yeniden yapılandıracaktır.
 
 Roblox ile ilgili sorunlar yaşadığınız için kaldırma veya yeniden yükleme işlemi yapıyorsanız, önce [bu yardım sayfasını]({0}) okuyun.
 
-Kaldırma işlemi, tüm kalıntıları tam olarak temizleyemeyebilir; bu nedenle, Froststrap&apos;ın yüklü olduğu konumda kalan dosyaları manuel olarak temizlemeniz gerekebilir.
+Kaldırma işlemi, tüm kalıntıları tam olarak temizleyemeyebilir; bu nedenle, Spectre&apos;ın yüklü olduğu konumda kalan dosyaları manuel olarak temizlemeniz gerekebilir.
 
-Froststrap, &quot;{1}&quot; konumuna yüklenmiştir.</value>
+Spectre, &quot;{1}&quot; konumuna yüklenmiştir.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Froststrap&apos;ı kaldır</value>
+    <value>Spectre&apos;ı kaldır</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Kaldır</value>

@@ -1,6 +1,6 @@
 <Application
     x:Class="Froststrap.App"
-    Name="Eclipse"
+    Name="Spectre"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
@@ -18,17 +18,45 @@
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/Card.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/CardExpander.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/TitleBar.axaml" />
-        <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/CardAction.axaml" />
+        <StyleInclude Source="avares://Eclipse/UI/AppThemes/GlassChrome.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/IconButton.axaml" />
         <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/LiquidGlassPanel.axaml" />
 
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 
         <StyleInclude Source="avares://Eclipse/UI/AppThemes/Default.axaml" />
+        <StyleInclude Source="avares://Eclipse/UI/Elements/Controls/CardAction.axaml" />
 
         <Style Selector="ic|Lucide">
-            <Setter Property="StrokeBrush" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="StrokeBrush" Value="White" />
             <Setter Property="StrokeThickness" Value="1.5" />
+        </Style>
+        <Style Selector="Window">
+            <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="SelectableTextBlock">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+        </Style>
+        <Style Selector="ToggleSwitch">
+            <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
         </Style>
     </Application.Styles>
 
@@ -44,19 +72,20 @@
             <StaticResource x:Key="ToolTipBackground" ResourceKey="ToolTipBackgroundBrush" />
             <StaticResource x:Key="ToolTipForeground" ResourceKey="ToolTipForegroundBrush" />
 
-            <FontFamily x:Key="Rubik">avares://Eclipse/Resources/Fonts/Rubik-VariableFont_wght.ttf</FontFamily>
+            <FontFamily x:Key="Rubik">avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora</FontFamily>
+            <FontFamily x:Key="SpectreFont">avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora</FontFamily>
             <FontFamily x:Key="BuilderIconsRegular">avares://Eclipse/Resources/Fonts#BuilderIcons-Regular</FontFamily>
             <FontFamily x:Key="BuilderIconsFilled">avares://Eclipse/Resources/Fonts#BuilderIcons-Filled</FontFamily>
 
-            <SolidColorBrush x:Key="BrandInkBrush" Color="#05060C" />
-            <SolidColorBrush x:Key="BrandAccentBrush" Color="#C4B5FD" />
+            <SolidColorBrush x:Key="BrandInkBrush" Color="#0A0406" />
+            <SolidColorBrush x:Key="BrandAccentBrush" Color="#E11D48" />
             <SolidColorBrush x:Key="BrandHairlineBrush" Color="#66FFFFFF" />
-            <SolidColorBrush x:Key="GlassHeaderBrush" Color="#E007080F" />
-            <SolidColorBrush x:Key="GlassRailBrush" Color="#D006070D" />
-            <SolidColorBrush x:Key="GlassStageBrush" Color="#B8080A12" />
-            <SolidColorBrush x:Key="GlassFillBrush" Color="#C0070812" />
-            <SolidColorBrush x:Key="GlassCardBrush" Color="#C0080A12" />
-            <SolidColorBrush x:Key="GlassBorderBrush" Color="#66FFFFFF" />
+            <SolidColorBrush x:Key="GlassHeaderBrush" Color="#28C41E3A" />
+            <SolidColorBrush x:Key="GlassRailBrush" Color="#3A7F1D1D" />
+            <SolidColorBrush x:Key="GlassStageBrush" Color="#227F1D1D" />
+            <SolidColorBrush x:Key="GlassFillBrush" Color="#557F1D1D" />
+            <SolidColorBrush x:Key="GlassCardBrush" Color="#38C41E3A" />
+            <SolidColorBrush x:Key="GlassBorderBrush" Color="#88FB7185" />
 
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
             <converters:EnumNameConverter x:Key="EnumNameConverter" />

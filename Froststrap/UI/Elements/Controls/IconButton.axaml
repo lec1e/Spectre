@@ -6,12 +6,18 @@
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls">
 
     <Style Selector="controls|IconButton">
-        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                <GradientStop Color="#E11D48" Offset="0" />
+                <GradientStop Color="#4A1518" Offset="0.55" />
+                <GradientStop Color="#000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="12,6" />
-        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="CornerRadius" Value="12" />
         <Setter Property="IconSize" Value="16" />
         <Setter Property="Transitions">
             <Transitions>
@@ -20,32 +26,90 @@
         </Setter>
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="PART_LayoutRoot"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
+                <Border Name="PART_Shadow"
+                        Background="Transparent"
                         CornerRadius="{TemplateBinding CornerRadius}"
-                        Padding="{TemplateBinding Padding}">
-                    <Border.Transitions>
-                        <Transitions>
-                            <BrushTransition Property="Background" Duration="0:0:0.1" />
-                        </Transitions>
-                    </Border.Transitions>
+                        BoxShadow="0 8 22 0 #40000000">
+                    <Border Name="PART_Clip"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            ClipToBounds="True"
+                            UseLayoutRounding="True"
+                            BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                <GradientStop Color="#55FFFFFF" Offset="0" />
+                                <GradientStop Color="#33E11D48" Offset="0.45" />
+                                <GradientStop Color="#22000000" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Panel>
+                            <Border Name="PART_LayoutRoot"
+                                    Background="{TemplateBinding Background}">
+                                <Border.Transitions>
+                                    <Transitions>
+                                        <BrushTransition Property="Background" Duration="0:0:0.1" />
+                                    </Transitions>
+                                </Border.Transitions>
+                            </Border>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <ic:Lucide Icon="{TemplateBinding Icon}"
-                                   StrokeBrush="{TemplateBinding Foreground}"
-                                   Height="{TemplateBinding IconSize}"
-                                   Width="{TemplateBinding IconSize}"
-                                   VerticalAlignment="Center"
-                                   IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                            <Border Name="PART_Sheen"
+                                    IsHitTestVisible="False"
+                                    Opacity="0.2">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                        <GradientStop Color="#55FFFFFF" Offset="0" />
+                                        <GradientStop Color="#10FFFFFF" Offset="0.3" />
+                                        <GradientStop Color="#00000000" Offset="0.58" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
 
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"
-                                          Margin="8,0,0,0"
-                                          IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}"/>
-                    </StackPanel>
+                            <Border Name="PART_Gloss"
+                                    IsHitTestVisible="False"
+                                    Height="14"
+                                    VerticalAlignment="Top"
+                                    Opacity="0.48">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                        <GradientStop Color="#88FFFFFF" Offset="0" />
+                                        <GradientStop Color="#22FFFFFF" Offset="0.55" />
+                                        <GradientStop Color="#00FFFFFF" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+
+                            <Border Name="PART_Depth"
+                                    IsHitTestVisible="False"
+                                    Height="10"
+                                    VerticalAlignment="Bottom"
+                                    Opacity="0.32">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                        <GradientStop Color="#00000000" Offset="0" />
+                                        <GradientStop Color="#66000000" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="{TemplateBinding Padding}">
+                                <ic:Lucide Icon="{TemplateBinding Icon}"
+                                           StrokeBrush="{TemplateBinding Foreground}"
+                                           Height="{TemplateBinding IconSize}"
+                                           Width="{TemplateBinding IconSize}"
+                                           VerticalAlignment="Center"
+                                           IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+
+                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  Margin="8,0,0,0"
+                                                  IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                            </StackPanel>
+                        </Panel>
+                    </Border>
                 </Border>
             </ControlTemplate>
         </Setter>
@@ -54,8 +118,8 @@
     <Style Selector="controls|IconButton:pointerover /template/ Border#PART_LayoutRoot">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#668B5CF6" Offset="0" />
-                <GradientStop Color="#447C3AED" Offset="1" />
+                <GradientStop Color="#E11D48" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
@@ -63,50 +127,74 @@
     <Style Selector="controls|IconButton:pressed /template/ Border#PART_LayoutRoot">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#C4B5FD" Offset="0" />
-                <GradientStop Color="#8B5CF6" Offset="0.45" />
-                <GradientStop Color="#5B21B6" Offset="1" />
+                <GradientStop Color="#9F1239" Offset="0" />
+                <GradientStop Color="#000000" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
 
     <!-- Title-bar / chrome icons: never show a hover fill — color the icon only -->
+    <Style Selector="controls|IconButton.TitleBarButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton /template/ Border#PART_Shadow">
+        <Setter Property="BoxShadow" Value="0 0 0 0 #00000000" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton /template/ Border#PART_Depth">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton /template/ Border#PART_Clip">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton /template/ Border#PART_Rim">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
     <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ Border#PART_LayoutRoot">
         <Setter Property="Background" Value="Transparent" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ Border#PART_LayoutRoot">
         <Setter Property="Background" Value="Transparent" />
     </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ Border#PART_Gloss, controls|IconButton.TitleBarButton:pressed /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ Border#PART_Sheen, controls|IconButton.TitleBarButton:pressed /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ Border#PART_Clip, controls|IconButton.TitleBarButton:pressed /template/ Border#PART_Clip">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ Border#PART_Rim, controls|IconButton.TitleBarButton:pressed /template/ Border#PART_Rim">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
     <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#C084FC" />
+        <Setter Property="StrokeBrush" Value="White" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#E9D5FF" />
+        <Setter Property="StrokeBrush" Value="White" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton.Close:pointerover /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#FB7185" />
+        <Setter Property="StrokeBrush" Value="White" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton.Close:pressed /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#FDA4AF" />
+        <Setter Property="StrokeBrush" Value="White" />
     </Style>
 
     <Style Selector="controls|IconButton:pointerover /template/ ic|Lucide">
-        <Setter Property="StrokeBrush">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E9D5FF" Offset="0" />
-                <GradientStop Color="#A78BFA" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+        <Setter Property="StrokeBrush" Value="White" />
     </Style>
 
     <Style Selector="controls|IconButton:pressed /template/ ic|Lucide">
-        <Setter Property="StrokeBrush">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#F5E1FF" Offset="0" />
-                <GradientStop Color="#C4B5FD" Offset="0.4" />
-                <GradientStop Color="#8B5CF6" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+        <Setter Property="StrokeBrush" Value="White" />
     </Style>
 
     <Style Selector="controls|IconButton:disabled /template/ Border#PART_LayoutRoot">
@@ -128,13 +216,25 @@
     </Style>
 
     <Style Selector="controls|IconButton.Primary">
-        <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                <GradientStop Color="#E11D48" Offset="0" />
+                <GradientStop Color="#4A1518" Offset="0.5" />
+                <GradientStop Color="#000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
     </Style>
     <Style Selector="controls|IconButton.Primary:not(:disabled):pointerover /template/ Border#PART_LayoutRoot">
-        <Setter Property="Background" Value="{DynamicResource AccentButtonBackgroundPointerOver}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPointerOver}" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                <GradientStop Color="#F43F5E" Offset="0" />
+                <GradientStop Color="#E11D48" Offset="0.4" />
+                <GradientStop Color="#000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+        <Setter Property="BorderBrush" Value="Transparent" />
     </Style>
     <Style Selector="controls|IconButton.Primary:disabled /template/ Border#PART_LayoutRoot">
         <Setter Property="Background" Value="{DynamicResource AccentButtonBackgroundDisabled}" />
@@ -146,110 +246,173 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                <Border Name="PART_Shadow"
+                        Background="Transparent"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        BoxShadow="0 8 22 0 #40000000">
+                    <Border Name="PART_Clip"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            ClipToBounds="True"
+                            UseLayoutRounding="True"
+                            BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                <GradientStop Color="#55FFFFFF" Offset="0" />
+                                <GradientStop Color="#33E11D48" Offset="0.45" />
+                                <GradientStop Color="#22000000" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Panel>
+                            <Border Name="PART_LayoutRoot"
+                                    Background="{TemplateBinding Background}">
+                                <Border.Transitions>
+                                    <Transitions>
+                                        <BrushTransition Property="Background" Duration="0:0:0.1" />
+                                    </Transitions>
+                                </Border.Transitions>
+                            </Border>
 
-                    <Button Name="PART_PrimaryButton"
-                            Grid.Column="0"
-                            Background="{TemplateBinding Background}"
-                            Foreground="{TemplateBinding Foreground}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="6,0,0,6"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Command="{TemplateBinding Command}"
-                            CommandParameter="{TemplateBinding CommandParameter}">
+                            <Border Name="PART_Sheen"
+                                    IsHitTestVisible="False"
+                                    Opacity="0.2">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                        <GradientStop Color="#55FFFFFF" Offset="0" />
+                                        <GradientStop Color="#10FFFFFF" Offset="0.3" />
+                                        <GradientStop Color="#00000000" Offset="0.58" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
 
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"
-                                        Padding="{TemplateBinding Padding}">
-                                    <ContentPresenter Content="{TemplateBinding Content}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
+                            <Border Name="PART_Gloss"
+                                    IsHitTestVisible="False"
+                                    Height="14"
+                                    VerticalAlignment="Top"
+                                    Opacity="0.48">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                        <GradientStop Color="#88FFFFFF" Offset="0" />
+                                        <GradientStop Color="#22FFFFFF" Offset="0.55" />
+                                        <GradientStop Color="#00FFFFFF" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
 
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Spacing="8">
-                            <ic:Lucide Icon="{TemplateBinding Icon}"
-                                       StrokeBrush="{TemplateBinding Foreground}"
-                                       Height="{TemplateBinding IconSize}"
-                                       Width="{TemplateBinding IconSize}"
-                                       VerticalAlignment="Center"
-                                       IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"/>
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"
-                                              IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}"/>
-                        </StackPanel>
-                    </Button>
+                            <Border Name="PART_Depth"
+                                    IsHitTestVisible="False"
+                                    Height="10"
+                                    VerticalAlignment="Bottom"
+                                    Opacity="0.32">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                        <GradientStop Color="#00000000" Offset="0" />
+                                        <GradientStop Color="#66000000" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
 
-                    <Button Name="PART_SecondaryButton"
-                            Grid.Column="1"
-                            Background="{TemplateBinding Background}"
-                            Foreground="{TemplateBinding Foreground}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0,1,1,1"
-                            CornerRadius="0,6,6,0"
-                            Padding="8,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            IsVisible="{TemplateBinding Flyout, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Button Name="PART_PrimaryButton"
+                                        Classes="chrome"
+                                        Grid.Column="0"
+                                        Template="{StaticResource SpectreGlassHitTemplate}"
+                                        Background="Transparent"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        BorderThickness="0"
+                                        CornerRadius="0"
+                                        Padding="{TemplateBinding Padding}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Command="{TemplateBinding Command}"
+                                        CommandParameter="{TemplateBinding CommandParameter}">
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Spacing="8">
+                                        <ic:Lucide Icon="{TemplateBinding Icon}"
+                                                   StrokeBrush="{TemplateBinding Foreground}"
+                                                   Height="{TemplateBinding IconSize}"
+                                                   Width="{TemplateBinding IconSize}"
+                                                   VerticalAlignment="Center"
+                                                   IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                                        <ContentPresenter Content="{TemplateBinding Content}"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"
+                                                          IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                                    </StackPanel>
+                                </Button>
 
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"
-                                        Padding="{TemplateBinding Padding}">
-                                    <ContentPresenter Content="{TemplateBinding Content}"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
+                                <Border Grid.Column="1"
+                                        Width="1"
+                                        Margin="0,10"
+                                        HorizontalAlignment="Left"
+                                        Background="#33FFFFFF"
+                                        IsHitTestVisible="False"
+                                        IsVisible="{TemplateBinding Flyout, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
-                        <ic:Lucide Name="PART_Chevron"
-                                   Icon="ChevronDown"
-                                   StrokeBrush="{TemplateBinding Foreground}"
-                                   Height="12"
-                                   Width="12"
-                                   VerticalAlignment="Center">
-                            <ic:Lucide.Transitions>
-                                <Transitions>
-                                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2" Easing="CubicEaseOut" />
-                                </Transitions>
-                            </ic:Lucide.Transitions>
-                        </ic:Lucide>
-                    </Button>
-                </Grid>
+                                <Button Name="PART_SecondaryButton"
+                                        Classes="chrome"
+                                        Grid.Column="1"
+                                        Template="{StaticResource SpectreGlassHitTemplate}"
+                                        Background="Transparent"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        BorderThickness="0"
+                                        CornerRadius="0"
+                                        Padding="14,0"
+                                        MinWidth="40"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        IsVisible="{TemplateBinding Flyout, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                    <ic:Lucide Name="PART_Chevron"
+                                               Icon="ChevronDown"
+                                               StrokeBrush="{TemplateBinding Foreground}"
+                                               Height="12"
+                                               Width="12"
+                                               VerticalAlignment="Center">
+                                        <ic:Lucide.Transitions>
+                                            <Transitions>
+                                                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2" Easing="CubicEaseOut" />
+                                            </Transitions>
+                                        </ic:Lucide.Transitions>
+                                    </ic:Lucide>
+                                </Button>
+                            </Grid>
+                        </Panel>
+                    </Border>
+                </Border>
             </ControlTemplate>
         </Setter>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
     </Style>
 
-    <Style Selector="controls|IconButton.DropDownButton:pointerover /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton:pointerover /template/ Button#PART_SecondaryButton">
-        <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+    <Style Selector="controls|IconButton:pointerover /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0.82" />
     </Style>
-    <Style Selector="controls|IconButton.DropDownButton:pressed /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton:pressed /template/ Button#PART_SecondaryButton">
-        <Setter Property="RenderTransform" Value="scale(0.98)" />
+    <Style Selector="controls|IconButton:pointerover /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0.4" />
     </Style>
-    <Style Selector="controls|IconButton.DropDownButton:disabled /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton:disabled /template/ Button#PART_SecondaryButton">
+    <Style Selector="controls|IconButton:pressed /template/ Border#PART_Gloss">
+        <Setter Property="Opacity" Value="0.28" />
+    </Style>
+    <Style Selector="controls|IconButton:pressed /template/ Border#PART_Sheen">
+        <Setter Property="Opacity" Value="0.12" />
+    </Style>
+
+    <Style Selector="controls|IconButton.DropDownButton:pointerover /template/ Border#PART_LayoutRoot">
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                <GradientStop Color="#F43F5E" Offset="0" />
+                <GradientStop Color="#E11D48" Offset="0.35" />
+                <GradientStop Color="#000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
+    </Style>
+    <Style Selector="controls|IconButton.DropDownButton:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.985)" />
+    </Style>
+    <Style Selector="controls|IconButton.DropDownButton:disabled /template/ Border#PART_LayoutRoot">
         <Setter Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
@@ -258,31 +421,38 @@
         <Setter Property="RenderTransform" Value="rotate(180deg)" />
     </Style>
 
-    <Style Selector="controls|IconButton.DropDownButton.Danger /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton.Danger /template/ Button#PART_SecondaryButton">
+    <Style Selector="controls|IconButton.DropDownButton.Danger">
         <Setter Property="Background" Value="#FF3B30" />
         <Setter Property="Foreground" Value="White" />
-        <Setter Property="BorderBrush" Value="#E03026" />
     </Style>
-    <Style Selector="controls|IconButton.DropDownButton.Danger:not(:disabled):pointerover /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton.Danger:not(:disabled):pointerover /template/ Button#PART_SecondaryButton">
+    <Style Selector="controls|IconButton.DropDownButton.Danger:not(:disabled):pointerover /template/ Border#PART_LayoutRoot">
         <Setter Property="Background" Value="#FF5247" />
     </Style>
-    <Style Selector="controls|IconButton.DropDownButton.Danger:disabled /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton.Danger:disabled /template/ Button#PART_SecondaryButton">
+    <Style Selector="controls|IconButton.DropDownButton.Danger:disabled /template/ Border#PART_LayoutRoot">
         <Setter Property="Background" Value="#80FF3B30" />
-        <Setter Property="BorderBrush" Value="#80E03026" />
     </Style>
 
-    <Style Selector="controls|IconButton.DropDownButton.Primary /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton.Primary /template/ Button#PART_SecondaryButton">
-        <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
+    <Style Selector="controls|IconButton.DropDownButton.Primary">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                <GradientStop Color="#E8E11D48" Offset="0" />
+                <GradientStop Color="#C44A1518" Offset="0.5" />
+                <GradientStop Color="#F2000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
     </Style>
-    <Style Selector="controls|IconButton.DropDownButton.Primary:not(:disabled):pointerover /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton.Primary:not(:disabled):pointerover /template/ Button#PART_SecondaryButton">
-        <Setter Property="Background" Value="{DynamicResource AccentButtonBackgroundPointerOver}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPointerOver}" />
+    <Style Selector="controls|IconButton.DropDownButton.Primary:not(:disabled):pointerover /template/ Border#PART_LayoutRoot">
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                <GradientStop Color="#F43F5E" Offset="0" />
+                <GradientStop Color="#E11D48" Offset="0.4" />
+                <GradientStop Color="#000000" Offset="1" />
+            </LinearGradientBrush>
+        </Setter>
     </Style>
-    <Style Selector="controls|IconButton.DropDownButton.Primary:disabled /template/ Button#PART_PrimaryButton, controls|IconButton.DropDownButton.Primary:disabled /template/ Button#PART_SecondaryButton">
+    <Style Selector="controls|IconButton.DropDownButton.Primary:disabled /template/ Border#PART_LayoutRoot">
         <Setter Property="Background" Value="{DynamicResource AccentButtonBackgroundDisabled}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushDisabled}" />
     </Style>
 
     <Style Selector="MenuItem">

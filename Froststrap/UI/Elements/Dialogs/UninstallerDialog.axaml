@@ -8,6 +8,7 @@
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Dialogs"
     xmlns:pages="clr-namespace:Froststrap.UI.Elements.Installer.Pages"
+    xmlns:app="clr-namespace:Froststrap"
     Title="{x:Static resources:Strings.Menu_Title}"
     MinWidth="0" MinHeight="0" Width="480"
     SizeToContent="Height"
@@ -15,7 +16,7 @@
     WindowStartupLocation="CenterScreen">
 
     <Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*,Auto">
-        <controls:TitleBar Grid.Row="0" Grid.ColumnSpan="2" Title="Eclipse" ShowMinimize="False" ShowMaximize="False" Icon="avares://Eclipse/Eclipse.ico" />
+        <controls:TitleBar Grid.Row="0" Grid.ColumnSpan="2" Title="{x:Static app:App.BrandName}" ShowMinimize="False" ShowMaximize="False" Icon="avares://Eclipse/SpectreMark.png" />
 
         <StackPanel Grid.Row="1" Margin="12">
             <TextBlock FontSize="20" FontWeight="SemiBold" Text="{x:Static resources:Strings.Uninstaller_Title}" />

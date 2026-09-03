@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Security.Principal;
 using System.Windows.Input;
+using Avalonia.Media;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Froststrap.Utility.BanAsync;
@@ -16,7 +17,10 @@ namespace Froststrap.UI.ViewModels.Settings
         {
             IsElevated = CheckElevated();
             if (OperatingSystem.IsWindows())
+            {
                 RefreshAdapters();
+                RefreshIdentityStatus();
+            }
         }
 
         public bool IsElevated { get; }
@@ -168,12 +172,139 @@ namespace Froststrap.UI.ViewModels.Settings
         public ICommand RelaunchAsAdminCommand => new RelayCommand(RelaunchAsAdmin);
         public ICommand RefreshAdaptersCommand => new RelayCommand(RefreshAdapters);
         public ICommand CleanTracesCommand => new AsyncRelayCommand(CleanTracesAsync);
-        public ICommand SpoofCommand => new AsyncRelayCommand(SpoofAsync);
-        public ICommand RevertCommand => new AsyncRelayCommand(RevertAsync);
+        public ICommand SpoofMacCommand => new AsyncRelayCommand(SpoofAsync);
+        public ICommand RevertMacCommand => new AsyncRelayCommand(RevertAsync);
+        public ICommand IdentitySpoofCommand => new AsyncRelayCommand(IdentitySpoofAsync);
+        public ICommand IdentityRevertCommand => new AsyncRelayCommand(IdentityRevertAsync);
+        public ICommand RestorePointCommand => new AsyncRelayCommand(RestorePointAsync);
+        public ICommand PreflightCommand => new RelayCommand(() => IdentityUtilities.Preflight(Log));
+        public ICommand FlushDnsCommand => new RelayCommand(() => IdentityUtilities.FlushDns(Log));
+        public ICommand ClearRobloxTempCommand => new RelayCommand(() => IdentityUtilities.ClearRobloxTemp(Log));
+        public ICommand ExportBackupCommand => new AsyncRelayCommand(ExportBackupAsync);
+        public ICommand ViewOpLogCommand => new RelayCommand(ViewOpLog);
         public ICommand ShuffleMacCommand => new RelayCommand(ShuffleCustomMac);
         public ICommand RandomizeMachineGuidCommand => new AsyncRelayCommand(RandomizeMachineGuidAsync);
         public ICommand RestoreMachineGuidCommand => new AsyncRelayCommand(RestoreMachineGuidAsync);
         public ICommand ClearLogCommand => new RelayCommand(() => ActivityLog.Clear());
+
+        public bool RelaunchAfterSpoof
+        {
+            get => App.Settings.Prop.BanAsyncRelaunchAfterSpoof;
+            set { App.Settings.Prop.BanAsyncRelaunchAfterSpoof = value; OnPropertyChanged(nameof(RelaunchAfterSpoof)); }
+        }
+
+        public bool FullWipe
+        {
+            get => App.Settings.Prop.BanAsyncFullWipe;
+            set { App.Settings.Prop.BanAsyncFullWipe = value; OnPropertyChanged(nameof(FullWipe)); }
+        }
+
+        private string _identityStatusLabel = "Ready";
+        public string IdentityStatusLabel
+        {
+            get => _identityStatusLabel;
+            set
+            {
+                _identityStatusLabel = value;
+                OnPropertyChanged(nameof(IdentityStatusLabel));
+                OnPropertyChanged(nameof(IdentityStatusBrush));
+            }
+        }
+
+        public string IdentityStatusText { get; private set; } = "No identity backup yet.";
+
+        public IBrush IdentityStatusBrush => IdentityStatusLabel switch
+        {
+            "Spoofed" => new SolidColorBrush(Color.FromArgb(0x88, 0xC0, 0x84, 0xFC)),
+            "Dirty" => new SolidColorBrush(Color.FromArgb(0x88, 0xD9, 0x77, 0x06)),
+            _ => new SolidColorBrush(Color.FromArgb(0x66, 0x22, 0xC5, 0x5E)),
+        };
+
+        private void RefreshIdentityStatus()
+        {
+            try
+            {
+                var data = IdentityBackupStore.Default.LoadOrDefault();
+                IdentityStatusLabel = data.Dirty ? "Dirty" : data.AnyActive ? "Spoofed" : "Ready";
+                IdentityStatusText = IdentityPipeline.DescribeStatus(data)
+                    + (string.IsNullOrEmpty(data.DirtyReason) ? "" : $" ({data.DirtyReason})");
+            }
+            catch (Exception ex)
+            {
+                IdentityStatusLabel = "Dirty";
+                IdentityStatusText = ex.Message;
+            }
+            OnPropertyChanged(nameof(IdentityStatusText));
+        }
+
+        private async Task IdentitySpoofAsync()
+        {
+            if (!OperatingSystem.IsWindows() || !IsElevated)
+            {
+                Log("Not elevated — identity spoof is disabled.");
+                return;
+            }
+
+            var confirm = await Frontend.ShowMessageBox(
+                "This runs the full Ghost420-style pipeline:\n" +
+                "  • kill Roblox and wipe cookies / LocalAppData\\Roblox\n" +
+                "  • spoof software GUIDs + AMI firmware UUID (if AMI)\n" +
+                "  • write a local memory profile, spoof monitor EDID, and SystemReg\n" +
+                "  • clean GameConfigStore / Control trees\n\n" +
+                "Needs administrator. Continue?",
+                MessageBoxImage.Warning, MessageBoxButton.YesNo, MessageBoxResult.No);
+            if (confirm != MessageBoxResult.Yes)
+            {
+                Log("Identity spoof cancelled.");
+                return;
+            }
+
+            await Task.Run(() => IdentityPipeline.Spoof(Log, RelaunchAfterSpoof));
+            RefreshIdentityStatus();
+        }
+
+        private async Task IdentityRevertAsync()
+        {
+            if (!OperatingSystem.IsWindows() || !IsElevated)
+            {
+                Log("Not elevated — identity revert is disabled.");
+                return;
+            }
+            await Task.Run(() => IdentityPipeline.Revert(Log));
+            RefreshIdentityStatus();
+        }
+
+        private async Task RestorePointAsync()
+        {
+            if (!IsElevated)
+            {
+                Log("Not elevated — restore point needs admin.");
+                return;
+            }
+            await Task.Run(() => IdentityUtilities.CreateRestorePoint(Log));
+        }
+
+        private async Task ExportBackupAsync()
+        {
+            try
+            {
+                string dest = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                    $"eclipse-identity-backup-{DateTime.Now:yyyyMMdd-HHmmss}.json");
+                await Task.Run(() => IdentityBackupStore.Default.ExportTo(dest));
+                Log($"Exported backup to {dest}");
+            }
+            catch (Exception ex)
+            {
+                Log($"Export failed: {ex.Message}");
+            }
+        }
+
+        private void ViewOpLog()
+        {
+            foreach (string line in IdentityUtilities.ReadOperationLog(80))
+                Log(line);
+        }
 
         private void RefreshAdapters()
         {

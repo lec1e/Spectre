@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>关于Froststrap</value>
+    <value>关于Spectre</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>无法查询服务器位置。您可能加入游戏的间隔时间过短。</value>
@@ -137,7 +137,7 @@
     <value>您当前所在的频道（{0}）现已限制公众使用。您将转至默认频道（{1}）。</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Froststrap 无法自动更新至版本 {0}。请手动从网站下载并运行该程序进行更新。</value>
+    <value>Spectre 无法自动更新至版本 {0}。请手动从网站下载并运行该程序进行更新。</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox 正尝试将您的频道设置为 {0}，但您当前的首选频道是 {1}。
@@ -175,7 +175,7 @@
     <value>无法应用所有修改</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap 的磁盘空间不足，无法下载并安装 Roblox。请释放一些磁盘空间后再试一次。</value>
+    <value>Spectre 的磁盘空间不足，无法下载并安装 Roblox。请释放一些磁盘空间后再试一次。</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>正在应用 Roblox 模组……</value>
@@ -310,10 +310,10 @@
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Froststrap 已成功卸载</value>
+    <value>Spectre 已成功卸载</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox 目前正在运行，但在卸载 Froststrap 之前必须先关闭它。您现在要关闭 Roblox 吗？</value>
+    <value>Roblox 目前正在运行，但在卸载 Spectre 之前必须先关闭它。您现在要关闭 Roblox 吗？</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox 需要使用 Windows Media Foundation 组件。您似乎缺少这些组件，这很可能是因为您使用的 Windows 系统是 N 版。请先安装这些组件，然后再启动 Roblox。</value>
@@ -407,7 +407,7 @@
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>导出</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>文件</value>
@@ -503,7 +503,7 @@
     <value>重命名</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox 尚未安装。在尝试使用此选项之前，请先使用 Froststrap 至少启动一次 Roblox。</value>
+    <value>Roblox 尚未安装。在尝试使用此选项之前，请先使用 Spectre 至少启动一次 Roblox。</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>保存并安装</value>
@@ -723,7 +723,7 @@
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>无法设置自定义引导程序：{0}。
 将默认使用 {1}。</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>自定义引导程序最多只能包含 {0} 个元素，已获得 {1} 个</value>
@@ -772,17 +772,17 @@
     <value>请等待卸载完成。</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap 不再支持 Bloxshade。
+    <value>Spectre 不再支持 Bloxshade。
 如需了解更多信息，请加入 Bloxshade 的 Discord 服务器。</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>对不起</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap 无法在桌面和“开始”菜单上创建快捷方式。请稍后通过设置尝试创建。</value>
+    <value>Spectre 无法在桌面和“开始”菜单上创建快捷方式。请稍后通过设置尝试创建。</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>无法建立连接，这很可能表明网络连接不佳或被防火墙拦截。如果您的网络连接正常，请确保您的杀毒软件没有拦截 Froststrap。</value>
+    <value>无法建立连接，这很可能表明网络连接不佳或被防火墙拦截。如果您的网络连接正常，请确保您的杀毒软件没有拦截 Spectre。</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>本次会话中将禁用“BetterMatchmaking”功能。</value>
@@ -794,7 +794,7 @@
     <value>Roblox 目前可能无法访问。更多信息请参见 {0}。</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>由于需要安装或升级 Roblox，Froststrap 无法继续运行。</value>
+    <value>由于需要安装或升级 Roblox，Spectre 无法继续运行。</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>本次发布时，系统不会检查 Roblox 是否需要更新，也不会应用模组的更改。</value>
@@ -806,11 +806,11 @@
     <value>请稍后再试。</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap 无法连接到 {0}</value>
+    <value>Spectre 无法连接到 {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap 无法下载 Roblox</value>
+    <value>Spectre 无法下载 Roblox</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>目前无法下载 Roblox。请阅读以下帮助页面以获取更多信息：{0}</value>
@@ -820,24 +820,24 @@
     <value>复制日志内容</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>在运行 Froststrap/Froststrap 时发生了一个异常</value>
+    <value>在运行 Spectre/Spectre 时发生了一个异常</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>请先查看 [Froststrap Wiki]({0})，确认该问题是否已有修复方案。
+    <value>请先查看 [Spectre Wiki]({0})，确认该问题是否已有修复方案。
 
 如果没有，请通过 [GitHub 问题]({1}) 报告此异常，并附上生成的日志文件副本。</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>请先查看 [Froststrap Wiki]({0})，确认该问题是否已有修复方案。
+    <value>请先查看 [Spectre Wiki]({0})，确认该问题是否已有修复方案。
 
-如果没有，请向此分支的维护者报告此异常。请勿在 Froststrap 的 GitHub 问题跟踪中报告此问题，因为这是非官方构建版本。</value>
+如果没有，请向此分支的维护者报告此异常。请勿在 Spectre 的 GitHub 问题跟踪中报告此问题，因为这是非官方构建版本。</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>报告异常</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Froststrap 异常</value>
+    <value>Spectre 异常</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>无法加载所选的引导程序图标。
@@ -861,10 +861,10 @@
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>如需了解可能导致此问题的原因及解决方法，请阅读[这篇帮助文章]({0})。
 
-请检查 Roblox 是否能在 [原版启动器]({1}) 上正常运行。如果无法运行，则这并非 Froststrap 的问题。如果可以运行，请参考该帮助文章。</value>
+请检查 Roblox 是否能在 [原版启动器]({1}) 上正常运行。如果无法运行，则这并非 Spectre 的问题。如果可以运行，请参考该帮助文章。</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap 无法写入 Windows 注册表。这很可能是由于杀毒软件的干扰导致的。请检查并确保没有其他因素限制 Froststrap 的运行。</value>
+    <value>Spectre 无法写入 Windows 注册表。这很可能是由于杀毒软件的干扰导致的。请检查并确保没有其他因素限制 Spectre 的运行。</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>渐变</value>
@@ -894,7 +894,7 @@
     <value>假冒Byfron（约2023年）</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap（经典版）</value>
+    <value>Spectre（经典版）</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>自定义</value>
@@ -903,7 +903,7 @@
     <value>霜带（玻璃）</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap（不透明）</value>
+    <value>Spectre（不透明）</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>Roblox（约2025年）</value>
@@ -1141,14 +1141,14 @@
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap 已升级至 v{0}</value>
+    <value>Spectre 已升级至 v{0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>您启动的 Froststrap 版本与当前已安装的版本不同。
+    <value>您启动的 Spectre 版本与当前已安装的版本不同。
 您是否要升级当前已安装的版本？</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>您启动的 Froststrap 版本比当前安装的版本更旧。
+    <value>您启动的 Spectre 版本比当前安装的版本更旧。
 这可能会导致问题，并可能导致您的设置发生更改。建议重新安装。
 您确定要继续吗？</value>
   </data>
@@ -1165,7 +1165,7 @@
     <value>启动 Roblox Studio</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>本次启动不会生成日志文件，因为 Froststrap 无法向 &apos;{0}&apos; 文件夹写入数据</value>
+    <value>本次启动不会生成日志文件，因为 Spectre 无法向 &apos;{0}&apos; 文件夹写入数据</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>构建信息</value>
@@ -1183,7 +1183,7 @@
     <value>代码</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>以下是所有为 Froststrap 和 Froststrap 做出突出贡献的人士，正是他们的努力，才使它们发展成为如今的样子。</value>
+    <value>以下是所有为 Spectre 和 Spectre 做出突出贡献的人士，正是他们的努力，才使它们发展成为如今的样子。</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>灵感</value>
@@ -1252,16 +1252,16 @@
     <value>请注意，在您关闭所有当前打开的 Roblox 实例之前，并非所有更改都会立即生效。</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap 已经正在运行</value>
+    <value>Spectre 已经正在运行</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>后台模式：</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>使用多种选项自定义 Froststrap 的启动程序。</value>
+    <value>使用多种选项自定义 Spectre 的启动程序。</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>您可以使用预设轻松自定义 Froststrap 主题，或打造属于您自己的独特风格。</value>
+    <value>您可以使用预设轻松自定义 Spectre 主题，或打造属于您自己的独特风格。</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>应用主题</value>
@@ -1279,13 +1279,13 @@
     <value>标题</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>配置 Froststrap 的外观。</value>
+    <value>配置 Spectre 的外观。</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>频率</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>选择 Froststrap 应使用的图标。</value>
+    <value>选择 Spectre 应使用的图标。</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>图标</value>
@@ -1300,7 +1300,7 @@
     <value>语言</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>选择一个启动屏幕样式。注意：旧版系统或Vista不支持深色主题。如需更多自定义启动器，请访问Froststrap官方Discord服务器。</value>
+    <value>选择一个启动屏幕样式。注意：旧版系统或Vista不支持深色主题。如需更多自定义启动器，请访问Spectre官方Discord服务器。</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>自力更生风格</value>
@@ -1333,16 +1333,16 @@
     <value>窗户背景</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>使用您的身份验证 Cookie 访问 Roblox API。[Froststrap 将访问哪些内容？]({0})</value>
+    <value>使用您的身份验证 Cookie 访问 Roblox API。[Spectre 将访问哪些内容？]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Froststrap 账户权限</value>
+    <value>Spectre 账户权限</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>在启动 Roblox 时，Froststrap 会自动检查并更新至稳定版本。</value>
+    <value>在启动 Roblox 时，Spectre 会自动检查并更新至稳定版本。</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>自动更新 Froststrap</value>
+    <value>自动更新 Spectre</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>在后台更新 Roblox，无需等待。不建议在网络速度较慢时使用。此功能需要至少 3GB 的可用存储空间才能正常运行。</value>
@@ -1363,7 +1363,7 @@
     <value>实例启动确认</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>配置 Froststrap 在启动 Roblox 时应执行的操作。</value>
+    <value>配置 Spectre 在启动 Roblox 时应执行的操作。</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>下次启动时，系统将对 Roblox 进行全新安装。</value>
@@ -1396,7 +1396,7 @@
     <value>自动清除旧数据以释放空间。最初由 Fishstrap 创建。</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Froststrap 清洁剂</value>
+    <value>Spectre 清洁剂</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>超过设定时限的文件将被删除。</value>
@@ -1411,10 +1411,10 @@
     <value>缓存</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Froststrap 日志将被删除。</value>
+    <value>Spectre 日志将被删除。</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Froststrap 日志</value>
+    <value>Spectre 日志</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>旧的日志文件将被删除。</value>
@@ -1423,7 +1423,7 @@
     <value>日志菜单</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>让 Froststrap 决定您加入哪个服务器。系统会优先选择距离您最近的服务器。</value>
+    <value>让 Spectre 决定您加入哪个服务器。系统会优先选择距离您最近的服务器。</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>看起来有位朋友正在玩这款游戏。你想加入他们吗？</value>
@@ -1480,7 +1480,7 @@
     <value>自动更改</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox 或 Froststrap 可能会尝试更改您的首选频道。</value>
+    <value>Roblox 或 Spectre 可能会尝试更改您的首选频道。</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>永远不要改变</value>
@@ -1492,7 +1492,7 @@
     <value>自动换台操作</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>更改 Roblox 和 Froststrap 的部署和安装设置。</value>
+    <value>更改 Roblox 和 Spectre 的部署和安装设置。</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Roblox 升级</value>
@@ -1579,7 +1579,7 @@
     <value>未找到 Roblox Cookie 文件。</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>在启动 Roblox 时，Froststrap 会自动检查并更新为测试版本。</value>
+    <value>在启动 Roblox 时，Spectre 会自动检查并更新为测试版本。</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>预发布版本的更新</value>
@@ -1716,7 +1716,7 @@
     <value>禁用此选项将阻止此处配置的任何内容应用于 Roblox。</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>允许 Froststrap 管理 FastFlags</value>
+    <value>允许 Spectre 管理 FastFlags</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox 会根据 Windows 中显示器的缩放比例来降低渲染质量。</value>
@@ -2124,7 +2124,7 @@
     <value>“接近桌面”</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>在启动 Roblox 时，双击系统托盘中的 Froststrap 即可打开特定窗口。</value>
+    <value>在启动 Roblox 时，双击系统托盘中的 Spectre 即可打开特定窗口。</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>双击操作</value>
@@ -2142,13 +2142,13 @@
     <value>编辑信息</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>允许 Froststrap 检测您正在玩的 Roblox 游戏。某些功能可能需要此权限。</value>
+    <value>允许 Spectre 检测您正在玩的 Roblox 游戏。某些功能可能需要此权限。</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>启用活动追踪</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>启用此选项，可在应用打开时，在您的 Discord 个人资料中显示自定义的“正在游玩 Froststrap”RPC。</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>启用此选项，可在应用打开时，在您的 Discord 个人资料中显示自定义的“正在游玩 Spectre”RPC。</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>显示您在本会话中玩过的游戏，并允许您重新加入该游戏。</value>
@@ -2211,7 +2211,7 @@
     <value>显示 Studio 活动</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>该功能通过添加一个定制的 Froststrap 插件来实现，该插件会记录您的操作。
+    <value>该功能通过添加一个定制的 Spectre 插件来实现，该插件会记录您的操作。
 您要安装该插件吗？</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2769,7 +2769,7 @@
     <value>正在加载数据中心...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>请通过账户管理器登录，或开启“Froststrap 账户权限”，或向我们的 Discord 服务器报告此问题以启用该功能。</value>
+    <value>请通过账户管理器登录，或开启“Spectre 账户权限”，或向我们的 Discord 服务器报告此问题以启用该功能。</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>未找到任何公共服务器。</value>
@@ -2844,13 +2844,13 @@
     <value>创建快捷方式</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>配置如何快速启动 Froststrap。</value>
+    <value>配置如何快速启动 Spectre。</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>创建快捷方式时出错。</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>允许您在快捷方式中使用 Froststrap 提供的各种 Roblox 图标。[查看方法。]({0})</value>
+    <value>允许您在快捷方式中使用 Spectre 提供的各种 Roblox 图标。[查看方法。]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>将 Roblox 图标解压到文件夹中</value>
@@ -2921,29 +2921,29 @@
 您要启用“测试模式”吗？</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Froststrap 设置</value>
+    <value>Spectre 设置</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>图标</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>它们将保存在安装 Froststrap 的位置，并在重新安装时自动恢复。</value>
+    <value>它们将保存在安装 Spectre 的位置，并在重新安装时自动恢复。</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>保留我的设置和模组</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>卸载将从您的系统中移除 Froststrap，并自动重新配置默认的 Roblox 启动器（如果该启动器仍已安装）。
+    <value>卸载将从您的系统中移除 Spectre，并自动重新配置默认的 Roblox 启动器（如果该启动器仍已安装）。
 
 如果您是因为遇到 Roblox 相关问题而进行卸载或重新安装，请先阅读[此帮助页面]({0})。
 
-卸载过程可能无法完全清理所有残留文件，因此您可能需要手动清理 Froststrap 安装目录中的残留文件。
+卸载过程可能无法完全清理所有残留文件，因此您可能需要手动清理 Spectre 安装目录中的残留文件。
 
-Froststrap 安装在 &quot;{1}&quot; 目录下。</value>
+Spectre 安装在 &quot;{1}&quot; 目录下。</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>卸载 Froststrap</value>
+    <value>卸载 Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>卸载</value>

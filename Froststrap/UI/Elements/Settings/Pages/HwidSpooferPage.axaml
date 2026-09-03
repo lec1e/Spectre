@@ -13,7 +13,7 @@
         <StackPanel Spacing="4">
           <TextBlock FontWeight="SemiBold" Text="Machine-wide changes — proceed with caution" />
           <TextBlock TextWrapping="Wrap" FontSize="12.5" Opacity="0.85"
-                     Text="These edits touch HKLM registry keys and physical NIC MACs. They require administrator rights, can affect activation / licensing / Windows Update identity, and some values (especially ComputerName) may need a reboot before apps notice them. Eclipse stores backups in Settings so you can Revert All." />
+                     Text="These edits touch HKLM registry keys and physical NIC MACs. They require administrator rights, can affect activation / licensing / Windows Update identity, and some values (especially ComputerName) may need a reboot before apps notice them. Spectre stores backups in Settings so you can Revert All." />
         </StackPanel>
       </Border>
 

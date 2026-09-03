@@ -7,8 +7,9 @@
         xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
         xmlns:resources="clr-namespace:Froststrap.Resources"
+        xmlns:app="clr-namespace:Froststrap"
         mc:Ignorable="d"
-        Title="Eclipse"
+        Title="{x:Static app:App.BrandName}"
         MinWidth="380"
         Width="380"
         SizeToContent="Height"
@@ -17,7 +18,7 @@
 
 	<Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*">
 
-		<controls:TitleBar Grid.Row="0" Title="Bloxshade" Icon="avares://Eclipse/Eclipse.ico" />
+		<controls:TitleBar Grid.Row="0" Title="Bloxshade" Icon="avares://Eclipse/SpectreMark.png" />
 
 		<Grid Grid.Row="1" RowDefinitions="Auto,*,Auto">
 

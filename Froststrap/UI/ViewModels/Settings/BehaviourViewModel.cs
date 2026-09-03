@@ -130,6 +130,12 @@
             set => App.Settings.Prop.EnablePrivacyMode = value;
         }
 
+        public bool EnableVipServerPrompt
+        {
+            get => App.Settings.Prop.EnableVipServerPrompt;
+            set => App.Settings.Prop.EnableVipServerPrompt = value;
+        }
+
         public static bool CookieLoadingFinished => true;
 
         public bool CookieAccess

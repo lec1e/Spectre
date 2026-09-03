@@ -14,10 +14,10 @@ namespace Froststrap.Utility.Accounts
         private const string HomeNeedle = "roblox.com/home";
 
         public static Task<string?> CaptureLoginCookieAsync(CancellationToken cancellationToken = default)
-            => ShowAsync($"{App.ProjectName} — Roblox login", LoginUrl, null, monitorLogin: true, cancellationToken);
+            => ShowAsync($"{App.BrandName} — Roblox login", LoginUrl, null, monitorLogin: true, cancellationToken);
 
         public static async Task BrowseWithCookieAsync(string cookie, string url = "https://www.roblox.com/home", CancellationToken cancellationToken = default)
-            => await ShowAsync($"{App.ProjectName} — Roblox", url, cookie, monitorLogin: false, cancellationToken).ConfigureAwait(false);
+            => await ShowAsync($"{App.BrandName} — Roblox", url, cookie, monitorLogin: false, cancellationToken).ConfigureAwait(false);
 
         private static Task<string?> ShowAsync(
             string title,

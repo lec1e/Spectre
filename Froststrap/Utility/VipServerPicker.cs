@@ -61,7 +61,7 @@ namespace Froststrap.Utility
         {
             EnsureWindowClass();
 
-            string title = $"{App.ProjectName} — Pick a VIP server";
+            string title = $"{App.BrandName} — Pick a VIP server";
             IntPtr hwnd = CreateWindowExW(
                 0, WindowClassName, title,
                 WS_OVERLAPPEDWINDOW | WS_VISIBLE,

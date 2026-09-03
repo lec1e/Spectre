@@ -33,8 +33,9 @@ namespace Froststrap.Utility
 
                 try
                 {
-                    string iconPath = Path.Combine(Paths.Base, "eclipse.png");
-                    string legacyIconPath = Path.Combine(Paths.Base, "froststrap.png");
+                    string iconPath = Path.Combine(Paths.Base, "spectre.png");
+                    string legacyIconPath = Path.Combine(Paths.Base, "eclipse.png");
+                    string froststrapIconPath = Path.Combine(Paths.Base, "froststrap.png");
 
                     if (File.Exists(iconPath))
                     {
@@ -42,16 +43,16 @@ namespace Froststrap.Utility
                         return iconPath;
                     }
 
-                    var uri = new Uri("avares://Eclipse/Eclipse.png");
+                    var uri = new Uri("avares://Eclipse/SpectreMark.png");
                     using var pngStream = AssetLoader.Open(uri);
                     if (pngStream is null)
-                        throw new FileNotFoundException("Embedded Eclipse.png not found.");
+                        throw new FileNotFoundException("Embedded SpectreMark.png not found.");
 
                     using var fileStream = File.Create(iconPath);
                     pngStream.CopyTo(fileStream);
 
-                    // Keep legacy filename for older shortcuts that still point at froststrap.png
                     try { File.Copy(iconPath, legacyIconPath, overwrite: true); } catch { /* ignore */ }
+                    try { File.Copy(iconPath, froststrapIconPath, overwrite: true); } catch { /* ignore */ }
 
                     _froststrapIconPath = iconPath;
                     return iconPath;

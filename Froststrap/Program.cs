@@ -16,8 +16,7 @@ sealed class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
     {
-        // Prefer Eclipse branding for Windows toast notifications (AppName + icon).
-        string iconPath = ExtractToTemp("IconFroststrap.ico", "EclipseNotify.ico");
+        string iconPath = ExtractToTemp("Spectre.ico", "SpectreNotify.ico");
 
         var builder = AppBuilder.Configure<App>()
             .UsePlatformDetect()
@@ -27,7 +26,7 @@ sealed class Program
         {
             builder = builder.WithAppNotifications(new AppNotificationOptions
             {
-                AppName = "Eclipse",
+                AppName = "Spectre",
                 AppUserModelId = "Eclipse.Eclipse",
                 AppIcon = iconPath,
                 DisableComServer = true

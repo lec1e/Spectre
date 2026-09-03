@@ -5,8 +5,8 @@
 
     <Style Selector="controls|Card">
         <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="MinHeight" Value="64" />
         <Setter Property="Transitions">
@@ -34,7 +34,7 @@
 
     <Style Selector="controls|Card:pointerover">
         <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
     </Style>
 
     <Style Selector="controls|Card:pressed">

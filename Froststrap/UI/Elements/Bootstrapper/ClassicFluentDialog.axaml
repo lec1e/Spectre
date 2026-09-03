@@ -5,20 +5,21 @@
         xmlns:vm="using:Froststrap.UI.ViewModels.Bootstrapper"
         xmlns:base="clr-namespace:Froststrap.UI.Elements.Bootstrapper.Base"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+        xmlns:app="clr-namespace:Froststrap"
         mc:Ignorable="d"
         x:Class="Froststrap.UI.Elements.Bootstrapper.ClassicFluentDialog"
         x:DataType="vm:ClassicFluentDialogViewModel"
         Width="420" Height="190"
         CanResize="False"
-        Title="Eclipse"
+        Title="{x:Static app:App.BrandName}"
         WindowStartupLocation="CenterScreen"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaTitleBarHeightHint="-1">
 
 	<Grid RowDefinitions="Auto, *, Auto">
 		<controls:TitleBar Grid.Row="0"
-                          Icon="avares://Eclipse/Eclipse.ico"
-                          Title="Eclipse"
+                          Icon="avares://Eclipse/SpectreMark.png"
+                          Title="{x:Static app:App.BrandName}"
                           ShowMinimize="False"
                           ShowMaximize="False"
 						  ShowClose="False"/>

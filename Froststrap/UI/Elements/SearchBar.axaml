@@ -14,29 +14,59 @@
              x:Class="Froststrap.UI.Elements.SearchBar"
              x:DataType="vm:SearchBarViewModel">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="280">
+    <UserControl.Styles>
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement, TextBox:focus /template/ Border#PART_BorderElement, TextBox:focus-within /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="TextBox /template/ TextBlock#PART_Watermark">
+            <Setter Property="Foreground" Value="#CCFFFFFF" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
         <TextBox x:Name="SearchTextBox"
-                 PlaceholderText="Search games, experiences, and more..."
+                 PlaceholderText="Search games, experiences…"
                  Text="{Binding SearchQuery}"
                  VerticalAlignment="Center"
                  VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="Left"
+                 Padding="4,0,4,0"
+                 MinHeight="28"
+                 FontSize="12.5"
+                 Foreground="White"
+                 CaretBrush="White"
                  Background="Transparent"
+                 BorderBrush="Transparent"
                  BorderThickness="0">
 
             <TextBox.InnerLeftContent>
                 <controls:IconButton Command="{Binding ToggleSearchListCommand}"
+                                     Classes="TitleBarButton"
                                      Icon="Search"
-                                     IconSize="16"
+                                     IconSize="14"
+                                     Width="22"
+                                     Height="22"
+                                     Padding="0"
+                                     Margin="0,0,6,0"
                                      Background="Transparent"
                                      BorderThickness="0"
+                                     Foreground="White"
                                      IsTabStop="False"
                                      VerticalAlignment="Center">
                 </controls:IconButton>
-
             </TextBox.InnerLeftContent>
 
             <TextBox.InnerRightContent>
                 <Button Command="{Binding ClearSearchCommand}"
+                        Classes="chrome"
                         IsVisible="{Binding SearchQuery, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                         Background="Transparent"
                         BorderThickness="0"
@@ -71,7 +101,8 @@
                                     <ItemsControl ItemsSource="{Binding FilteredSearchResults}" HorizontalAlignment="Stretch">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="models:SearchBarItem">
-                                                <Button Command="{Binding $parent[UserControl].DataContext.SearchResultSelectedCommand}"
+                                                <Button Classes="chrome"
+                                                        Command="{Binding $parent[UserControl].DataContext.SearchResultSelectedCommand}"
                                                         CommandParameter="{Binding}"
                                                         HorizontalAlignment="Stretch"
                                                         Background="{DynamicResource ControlFillColorDefaultBrush}"

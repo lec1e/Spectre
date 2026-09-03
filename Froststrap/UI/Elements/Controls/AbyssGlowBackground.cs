@@ -6,36 +6,37 @@ using Avalonia.Threading;
 namespace Froststrap.UI.Elements.Controls
 {
     /// <summary>
-    /// Deep-ocean abyss backdrop: hadal ink, drifting bioluminescent gleams,
-    /// and twinkling plankton lights (inspired by abyssal / bioluminescent UI motifs).
-    /// Rendered inside the glass shell so it is actually visible.
+    /// Dark crimson-to-black wash. No ribbons, rays, or baked-in lines —
+    /// the cursor beam lives in <see cref="LiquidCursorOverlay"/>.
     /// </summary>
     public class AbyssGlowBackground : Control
     {
-        private const int PlanktonCount = 55;
-        private const int GleamCount = 7;
+        private const int EmberCount = 16;
+        private const int BlobCount = 5;
 
-        private readonly Gleam[] _gleams = new Gleam[GleamCount];
-        private readonly Plankton[] _plankton = new Plankton[PlanktonCount];
+        private readonly Blob[] _blobs = new Blob[BlobCount];
+        private readonly Ember[] _embers = new Ember[EmberCount];
         private readonly Random _rng = new(42);
 
         private DispatcherTimer? _timer;
         private float _time;
-        private bool _enabled = true;
+        private bool _aurora = true;
+        private bool _glow = true;
+        private bool _pointerInside;
 
-        // Hadal deep-ocean palette
-        private Color _void = Color.FromRgb(0x02, 0x05, 0x10);
-        private Color _deep = Color.FromRgb(0x06, 0x0E, 0x1C);
-        private Color _cyan = Color.FromRgb(0x46, 0xF0, 0xD9);
-        private Color _blue = Color.FromRgb(0x6A, 0xB8, 0xFF);
-        private Color _violet = Color.FromRgb(0x88, 0x55, 0xFF);
-        private Color _eclipse = Color.FromRgb(0xC0, 0x84, 0xFC);
+        private float _tx = 0.5f, _ty = 0.5f;
+        private float _px = 0.5f, _py = 0.5f;
+
+        private Color _void = Color.FromRgb(0x05, 0x02, 0x03);
+        private Color _ember = Color.FromRgb(0xE1, 0x1D, 0x48);
+        private Color _wine = Color.FromRgb(0x7F, 0x1D, 0x1D);
+        private Color _rose = Color.FromRgb(0xFB, 0x71, 0x85);
 
         public AbyssGlowBackground()
         {
             IsHitTestVisible = false;
             ClipToBounds = true;
-            InitParticles();
+            InitField();
 
             Loaded += (_, _) =>
             {
@@ -46,43 +47,53 @@ namespace Froststrap.UI.Elements.Controls
             Unloaded += (_, _) => Stop();
         }
 
-        private void InitParticles()
+        public void SetPointer(Point local, bool inside)
         {
-            for (int i = 0; i < GleamCount; i++)
+            _pointerInside = inside;
+            if (!inside || Bounds.Width < 2 || Bounds.Height < 2)
+                return;
+
+            _tx = (float)Math.Clamp(local.X / Bounds.Width, 0, 1);
+            _ty = (float)Math.Clamp(local.Y / Bounds.Height, 0, 1);
+        }
+
+        private void InitField()
+        {
+            for (int i = 0; i < BlobCount; i++)
             {
-                _gleams[i] = new Gleam
+                _blobs[i] = new Blob
                 {
                     X = (float)_rng.NextDouble(),
                     Y = (float)_rng.NextDouble(),
-                    Radius = 0.18f + (float)_rng.NextDouble() * 0.22f,
-                    SpeedX = 0.04f + (float)_rng.NextDouble() * 0.08f,
-                    SpeedY = 0.03f + (float)_rng.NextDouble() * 0.06f,
+                    Radius = 0.30f + (float)_rng.NextDouble() * 0.28f,
+                    Speed = 0.08f + (float)_rng.NextDouble() * 0.12f,
                     Phase = (float)_rng.NextDouble() * 6.28f,
-                    Pulse = 0.6f + (float)_rng.NextDouble() * 0.8f,
-                    Kind = i % 4
+                    Kind = i % 3,
+                    Parallax = 0.04f + (float)_rng.NextDouble() * 0.05f
                 };
             }
 
-            for (int i = 0; i < PlanktonCount; i++)
+            for (int i = 0; i < EmberCount; i++)
             {
-                _plankton[i] = new Plankton
+                _embers[i] = new Ember
                 {
                     X = (float)_rng.NextDouble(),
                     Y = (float)_rng.NextDouble(),
-                    Size = 0.8f + (float)_rng.NextDouble() * 2.2f,
-                    Twinkle = 0.8f + (float)_rng.NextDouble() * 2.5f,
+                    Size = 0.8f + (float)_rng.NextDouble() * 1.6f,
+                    Twinkle = 0.40f + (float)_rng.NextDouble() * 1.2f,
                     Phase = (float)_rng.NextDouble() * 6.28f,
-                    Drift = 0.01f + (float)_rng.NextDouble() * 0.025f,
-                    Kind = i % 3
+                    Drift = 0.004f + (float)_rng.NextDouble() * 0.010f
                 };
             }
         }
 
         public void SyncFromSettings()
         {
-            _enabled = App.Settings?.Prop?.EnableAurora ?? true;
-            if (_enabled) Start();
-            else { Stop(); InvalidateVisual(); }
+            var s = App.Settings?.Prop;
+            _aurora = s?.EnableAurora ?? true;
+            _glow = s?.EnableGlow ?? true;
+            Start();
+            InvalidateVisual();
         }
 
         public void SyncFromTheme()
@@ -92,23 +103,20 @@ namespace Froststrap.UI.Elements.Controls
 
             if (res.TryGetValue("BrandInkColor", out var ink) && ink is Color i)
             {
-                // Pull void toward theme ink but keep it oceanic-dark
                 _void = Color.FromRgb(
-                    (byte)Math.Min(i.R, (byte)0x08),
-                    (byte)Math.Min(i.G, (byte)0x0A),
-                    (byte)Math.Max(i.B, (byte)0x10));
-                _deep = Color.FromRgb(
-                    (byte)Math.Min(i.R + 4, 20),
-                    (byte)Math.Min(i.G + 8, 24),
-                    (byte)Math.Min(i.B + 18, 40));
+                    (byte)Math.Min(i.R, (byte)0x0C),
+                    (byte)Math.Min(i.G, (byte)0x08),
+                    (byte)Math.Min(i.B, (byte)0x0A));
             }
 
             if (res.TryGetValue("BrandAccentColor", out var a) && a is Color accent)
-                _eclipse = accent;
+                _ember = accent;
             if (res.TryGetValue("BrandGlowColor", out var g) && g is Color glow)
-                _violet = glow;
-            if (res.TryGetValue("BrandGradientEnd", out var e) && e is Color end)
-                _cyan = end;
+                _rose = glow;
+            if (res.TryGetValue("BrandGradientStart", out var gs) && gs is Color start)
+                _wine = start;
+            else if (res.TryGetValue("BrandHairlineColor", out var h) && h is Color hair)
+                _wine = hair;
 
             InvalidateVisual();
         }
@@ -116,7 +124,7 @@ namespace Froststrap.UI.Elements.Controls
         private void Start()
         {
             Stop();
-            if (!_enabled)
+            if (!_aurora && !_glow)
                 return;
 
             _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(33) };
@@ -124,11 +132,15 @@ namespace Froststrap.UI.Elements.Controls
             {
                 _time += 0.033f;
 
-                for (int i = 0; i < PlanktonCount; i++)
+                float follow = _pointerInside ? 0.10f : 0.04f;
+                _px += (_tx - _px) * follow;
+                _py += (_ty - _py) * follow;
+
+                for (int i = 0; i < EmberCount; i++)
                 {
-                    ref var p = ref _plankton[i];
-                    p.Y -= p.Drift * 0.015f; // rise slowly like marine snow / bubbles
-                    p.X += MathF.Sin(_time * 0.3f + p.Phase) * 0.00035f;
+                    ref var p = ref _embers[i];
+                    p.Y -= p.Drift * 0.014f;
+                    p.X += MathF.Sin(_time * 0.22f + p.Phase) * 0.00028f;
                     if (p.Y < -0.02f)
                     {
                         p.Y = 1.02f;
@@ -154,119 +166,106 @@ namespace Froststrap.UI.Elements.Controls
             if (w < 2 || h < 2)
                 return;
 
-            // Depth gradient — surface-ish dark blue to hadal black
-            var depth = new LinearGradientBrush
+            var wash = new LinearGradientBrush
             {
-                StartPoint = new RelativePoint(0.5, 0, RelativeUnit.Relative),
-                EndPoint = new RelativePoint(0.5, 1, RelativeUnit.Relative),
+                StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
+                EndPoint = new RelativePoint(1, 1, RelativeUnit.Relative),
                 GradientStops =
                 [
-                    new Avalonia.Media.GradientStop(_deep, 0),
-                    new Avalonia.Media.GradientStop(_void, 0.55),
-                    new Avalonia.Media.GradientStop(Color.FromRgb(0x01, 0x03, 0x08), 1)
+                    new Avalonia.Media.GradientStop(Color.FromArgb(0xAA, _wine.R, _wine.G, _wine.B), 0),
+                    new Avalonia.Media.GradientStop(Color.FromArgb(0x88, 0x1A, 0x06, 0x0A), 0.45),
+                    new Avalonia.Media.GradientStop(Color.FromArgb(0xBB, _void.R, _void.G, _void.B), 1)
                 ]
             };
-            context.FillRectangle(depth, new Rect(0, 0, w, h));
+            context.FillRectangle(wash, new Rect(0, 0, w, h));
 
-            if (!_enabled)
+            if (!_aurora && !_glow)
                 return;
 
-            // Large bioluminescent gleams (soft caustic-like blobs)
-            for (int i = 0; i < GleamCount; i++)
+            double ox = (_px - 0.5) * w * 0.04;
+            double oy = (_py - 0.5) * h * 0.03;
+            double idleX = Math.Sin(_time * 0.12) * w * 0.006;
+            double idleY = Math.Cos(_time * 0.09) * h * 0.005;
+
+            if (_glow)
             {
-                var g = _gleams[i];
-                double cx = (g.X + Math.Sin(_time * g.SpeedX + g.Phase) * 0.12) * w;
-                double cy = (g.Y + Math.Cos(_time * g.SpeedY + g.Phase * 1.4f) * 0.10) * h;
-                double pulse = 0.72 + 0.28 * Math.Sin(_time * g.Pulse + g.Phase);
-                double radius = Math.Min(w, h) * g.Radius * pulse;
-
-                Color c = g.Kind switch
+                var cursorBloom = new RadialGradientBrush
                 {
-                    0 => _cyan,
-                    1 => _blue,
-                    2 => _violet,
-                    _ => _eclipse
+                    Center = new RelativePoint(_px, _py, RelativeUnit.Relative),
+                    GradientOrigin = new RelativePoint(_px, _py, RelativeUnit.Relative),
+                    RadiusX = new RelativeScalar(0.22, RelativeUnit.Relative),
+                    RadiusY = new RelativeScalar(0.18, RelativeUnit.Relative),
+                    GradientStops =
+                    [
+                        new Avalonia.Media.GradientStop(Color.FromArgb(0x1A, _ember.R, _ember.G, _ember.B), 0),
+                        new Avalonia.Media.GradientStop(Color.FromArgb(0x0A, _wine.R, _wine.G, _wine.B), 0.55),
+                        new Avalonia.Media.GradientStop(Color.FromArgb(0x00, _void.R, _void.G, _void.B), 1)
+                    ]
                 };
+                context.FillRectangle(cursorBloom, new Rect(0, 0, w, h));
+            }
 
-                byte aCore = (byte)(95 * pulse);
+            for (int i = 0; i < BlobCount; i++)
+            {
+                var b = _blobs[i];
+                double bx = (b.X + Math.Sin(_time * b.Speed + b.Phase) * 0.04) * w + ox * (0.5 + b.Parallax * 4) + idleX;
+                double by = (b.Y + Math.Cos(_time * b.Speed * 0.8f + b.Phase) * 0.03) * h + oy * (0.5 + b.Parallax * 4) + idleY;
+                double radius = Math.Min(w, h) * b.Radius;
+                Color c = b.Kind switch
+                {
+                    0 => _ember,
+                    1 => _wine,
+                    _ => _rose
+                };
+                byte a = (byte)((_glow ? 36 : 22) + b.Kind * 6);
                 var brush = new RadialGradientBrush
                 {
                     GradientStops =
                     [
-                        new Avalonia.Media.GradientStop(Color.FromArgb(aCore, c.R, c.G, c.B), 0),
-                        new Avalonia.Media.GradientStop(Color.FromArgb((byte)(aCore * 0.4), c.R, c.G, c.B), 0.4),
+                        new Avalonia.Media.GradientStop(Color.FromArgb(a, c.R, c.G, c.B), 0),
+                        new Avalonia.Media.GradientStop(Color.FromArgb((byte)(a * 0.45), c.R, c.G, c.B), 0.40),
                         new Avalonia.Media.GradientStop(Color.FromArgb(0, c.R, c.G, c.B), 1)
                     ]
                 };
-                context.DrawEllipse(brush, null, new Point(cx, cy), radius, radius);
+                context.DrawEllipse(brush, null, new Point(bx, by), radius, radius * 0.78);
             }
 
-            // Twinkling plankton / bioluminescent motes
-            for (int i = 0; i < PlanktonCount; i++)
+            if (!_glow)
+                return;
+
+            for (int i = 0; i < EmberCount; i++)
             {
-                var p = _plankton[i];
-                double tw = 0.25 + 0.75 * (0.5 + 0.5 * Math.Sin(_time * p.Twinkle + p.Phase));
-                if (tw < 0.2)
+                var p = _embers[i];
+                double tw = 0.22 + 0.78 * (0.5 + 0.5 * Math.Sin(_time * p.Twinkle + p.Phase));
+                if (tw < 0.28)
                     continue;
 
-                Color c = p.Kind switch
-                {
-                    0 => _cyan,
-                    1 => _blue,
-                    _ => _eclipse
-                };
-
-                byte a = (byte)(tw * 200);
-                double px = p.X * w;
-                double py = p.Y * h;
-                double r = p.Size * (0.7 + tw * 0.6);
-
-                // Tiny glow
-                var glow = new RadialGradientBrush
+                byte a = (byte)(tw * 70);
+                double px = p.X * w + ox * 0.3;
+                double py = p.Y * h + oy * 0.3;
+                double rad = p.Size * (0.7 + tw * 0.5);
+                var spark = new RadialGradientBrush
                 {
                     GradientStops =
                     [
-                        new Avalonia.Media.GradientStop(Color.FromArgb(a, c.R, c.G, c.B), 0),
-                        new Avalonia.Media.GradientStop(Color.FromArgb((byte)(a * 0.35), c.R, c.G, c.B), 0.45),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0, c.R, c.G, c.B), 1)
+                        new Avalonia.Media.GradientStop(Color.FromArgb(a, 0xFE, 0xE2, 0xE2), 0),
+                        new Avalonia.Media.GradientStop(Color.FromArgb((byte)(a * 0.5), _ember.R, _ember.G, _ember.B), 0.32),
+                        new Avalonia.Media.GradientStop(Color.FromArgb(0, _ember.R, _ember.G, _ember.B), 1)
                     ]
                 };
-                context.DrawEllipse(glow, null, new Point(px, py), r * 3.5, r * 3.5);
-                context.DrawEllipse(new SolidColorBrush(Color.FromArgb(a, 255, 255, 255)), null, new Point(px, py), r * 0.45, r * 0.45);
-            }
-
-            // Slow horizontal caustic bands (subtle light ripples)
-            for (int b = 0; b < 3; b++)
-            {
-                double y = ((0.2 + b * 0.28) + Math.Sin(_time * 0.25 + b) * 0.04) * h;
-                double bandH = h * 0.08;
-                byte ba = (byte)(18 + b * 4);
-                var band = new LinearGradientBrush
-                {
-                    StartPoint = new RelativePoint(0, 0.5, RelativeUnit.Relative),
-                    EndPoint = new RelativePoint(1, 0.5, RelativeUnit.Relative),
-                    GradientStops =
-                    [
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0, _cyan.R, _cyan.G, _cyan.B), 0),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(ba, _cyan.R, _cyan.G, _cyan.B), 0.35 + 0.1 * Math.Sin(_time + b)),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(ba, _blue.R, _blue.G, _blue.B), 0.65),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0, _blue.R, _blue.G, _blue.B), 1)
-                    ]
-                };
-                context.FillRectangle(band, new Rect(0, y - bandH * 0.5, w, bandH));
+                context.DrawEllipse(spark, null, new Point(px, py), rad * 3.2, rad * 3.2);
             }
         }
 
-        private struct Gleam
+        private struct Blob
         {
-            public float X, Y, Radius, SpeedX, SpeedY, Phase, Pulse;
+            public float X, Y, Radius, Speed, Phase, Parallax;
             public int Kind;
         }
 
-        private struct Plankton
+        private struct Ember
         {
             public float X, Y, Size, Twinkle, Phase, Drift;
-            public int Kind;
         }
     }
 }

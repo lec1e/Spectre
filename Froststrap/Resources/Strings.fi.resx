@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>Tietoa Froststrapista</value>
+    <value>Tietoa Spectreista</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Palvelimen sijaintia ei voitu selvittää. Saatat liittyä peleihin liian nopeasti.</value>
@@ -137,7 +137,7 @@
     <value>Kanava, jolla olet tällä hetkellä ({0}), on nyt suljettu yleisöltä. Siirryt nyt oletuskanavalle ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Froststrap-ohjelmaa ei voitu päivittää automaattisesti versioon {0}. Päivitä se manuaalisesti lataamalla ja suorittamalla ohjelma verkkosivustolta.</value>
+    <value>Spectre-ohjelmaa ei voitu päivittää automaattisesti versioon {0}. Päivitä se manuaalisesti lataamalla ja suorittamalla ohjelma verkkosivustolta.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox yrittää asettaa kanavaksesi {0}, mutta nykyinen ensisijainen kanavasi on {1}.
@@ -175,7 +175,7 @@ Haluatko siirtyä oletuskanavalle ({1})?</value>
     <value>Kaikkia muutoksia ei voitu ottaa käyttöön</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrapilla ei ole tarpeeksi levytilaa Robloxin lataamiseen ja asentamiseen. Vapauta hieman levytilaa ja yritä uudelleen.</value>
+    <value>Spectreilla ei ole tarpeeksi levytilaa Robloxin lataamiseen ja asentamiseen. Vapauta hieman levytilaa ja yritä uudelleen.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Roblox-muokkausten soveltaminen...</value>
@@ -310,10 +310,10 @@ Haluatko siirtyä oletuskanavalle ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Froststrap on poistettu onnistuneesti</value>
+    <value>Spectre on poistettu onnistuneesti</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox on tällä hetkellä käynnissä, mutta se on suljettava ennen Froststrapin poistamista. Haluatko sulkea Robloxin nyt?</value>
+    <value>Roblox on tällä hetkellä käynnissä, mutta se on suljettava ennen Spectrein poistamista. Haluatko sulkea Robloxin nyt?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox edellyttää Windows Media Foundation -komponenttien käyttöä. Näyttää siltä, että ne puuttuvat järjestelmästäsi, todennäköisesti siksi, että käytät Windowsin N-versiota. Asenna ne ensin ja käynnistä sitten Roblox.</value>
@@ -401,7 +401,7 @@ Haluatko siirtyä oletuskanavalle ({1})?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Vienti</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Tiedostot</value>
@@ -494,7 +494,7 @@ Haluatko siirtyä oletuskanavalle ({1})?</value>
     <value>Nimeä uudelleen</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox-sovellusta ei ole vielä asennettu. Käynnistä Roblox Froststrapin avulla ainakin kerran ennen kuin yrität käyttää tätä vaihtoehtoa.</value>
+    <value>Roblox-sovellusta ei ole vielä asennettu. Käynnistä Roblox Spectrein avulla ainakin kerran ennen kuin yrität käyttää tätä vaihtoehtoa.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Tallenna ja asenna</value>
@@ -714,7 +714,7 @@ Käyttöaika: {1}</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Mukautetun käynnistysohjelman asennus epäonnistui: {0}.
 Käytetään oletusarvoa {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Mukautetuissa bootstrappereissa voi olla enintään {0} elementtiä, niitä on {1}</value>
@@ -763,17 +763,17 @@ Käytetään oletusarvoa {1}.</value>
     <value>Odota, kunnes asennuksen poisto on valmis.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap ei enää tue Bloxshadea.
+    <value>Spectre ei enää tue Bloxshadea.
 Lisätietoja saat liittymällä Bloxshaden Discord-palvelimeen.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Anteeksi</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap ei pystynyt luomaan pikakuvakkeita työpöydälle ja Käynnistä-valikkoon. Yritä luoda ne myöhemmin asetusten kautta.</value>
+    <value>Spectre ei pystynyt luomaan pikakuvakkeita työpöydälle ja Käynnistä-valikkoon. Yritä luoda ne myöhemmin asetusten kautta.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Yhteyttä ei voitu muodostaa, mikä viittaa todennäköisesti heikkoon internetyhteyteen tai palomuurin estoon. Jos yhteytesi toimii kunnolla, varmista, ettei virustorjuntaohjelmasi estä Froststrapin toimintaa.</value>
+    <value>Yhteyttä ei voitu muodostaa, mikä viittaa todennäköisesti heikkoon internetyhteyteen tai palomuurin estoon. Jos yhteytesi toimii kunnolla, varmista, ettei virustorjuntaohjelmasi estä Spectrein toimintaa.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>BetterMatchmaking-toiminto poistetaan käytöstä tämän istunnon ajaksi.</value>
@@ -785,7 +785,7 @@ Lisätietoja saat liittymällä Bloxshaden Discord-palvelimeen.</value>
     <value>Roblox saattaa olla tällä hetkellä poissa käytöstä. Katso lisätietoja kohdasta {0}.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Koska Roblox on asennettava tai päivitettävä, Froststrap ei voi jatkaa.</value>
+    <value>Koska Roblox on asennettava tai päivitettävä, Spectre ei voi jatkaa.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Tässä julkaisussa Roblox-sovellusta ei tarkisteta päivitysten varalta, eikä mod-muutoksia oteta käyttöön.</value>
@@ -797,11 +797,11 @@ Lisätietoja saat liittymällä Bloxshaden Discord-palvelimeen.</value>
     <value>Yritä myöhemmin uudelleen.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap ei pysty muodostamaan yhteyttä {0}:aan</value>
+    <value>Spectre ei pysty muodostamaan yhteyttä {0}:aan</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap ei pysty lataamaan Robloxia</value>
+    <value>Spectre ei pysty lataamaan Robloxia</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Robloxia ei voi ladata tällä hetkellä. Lue lisätietoja seuraavalta ohjesivulta: {0}</value>
@@ -811,24 +811,24 @@ Lisätietoja saat liittymällä Bloxshaden Discord-palvelimeen.</value>
     <value>Kopioi lokin sisältö</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Froststrap/Froststrap-ohjelman suorituksen aikana ilmeni poikkeus</value>
+    <value>Spectre/Spectre-ohjelman suorituksen aikana ilmeni poikkeus</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Tarkista ensin [Froststrap-wikistä]({0}), onko tähän ongelmaan jo löydetty ratkaisu.
+    <value>Tarkista ensin [Spectre-wikistä]({0}), onko tähän ongelmaan jo löydetty ratkaisu.
 
 Jos ei, ilmoita tästä poikkeuksesta [GitHub-ongelmailmoituksella]({1}) ja liitä mukaan kopio syntyneestä lokitiedostosta.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Tarkista ensin [Froststrap-wikistä]({0}), onko tähän ongelmaan jo löydetty ratkaisu.
+    <value>Tarkista ensin [Spectre-wikistä]({0}), onko tähän ongelmaan jo löydetty ratkaisu.
 
-Jos ei, ilmoita tästä poikkeuksesta tämän haaran ylläpitäjille. ÄLÄ ilmoita tästä Froststrapin GitHub-ongelmaraportteihin, sillä kyseessä on epävirallinen versio.</value>
+Jos ei, ilmoita tästä poikkeuksesta tämän haaran ylläpitäjille. ÄLÄ ilmoita tästä Spectrein GitHub-ongelmaraportteihin, sillä kyseessä on epävirallinen versio.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Ilmoita poikkeus</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Froststrap-poikkeus</value>
+    <value>Spectre-poikkeus</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Valittua bootstrapper-kuvaketta ei voitu ladata.
@@ -852,10 +852,10 @@ Osa teksteistä ei välttämättä ole käännetty valitsemallesi kielelle.</val
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Lisätietoja siitä, miksi näin saattaa tapahtua ja miten ongelma voidaan ratkaista, löydät [tästä ohjeartikkelista]({0}).
 
-Tarkista, toimiiko Roblox [alkuperäisen käynnistysohjelman]({1}) avulla. Jos se ei toimi, kyseessä ei ole Froststrap-ongelma. Jos se toimii, katso ohjeartikkeli.</value>
+Tarkista, toimiiko Roblox [alkuperäisen käynnistysohjelman]({1}) avulla. Jos se ei toimi, kyseessä ei ole Spectre-ongelma. Jos se toimii, katso ohjeartikkeli.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap ei pysty kirjoittamaan Windowsin rekisteriin. Virustorjuntaohjelma todennäköisesti häiritsee toimintaa ja aiheuttaa ongelmia. Tarkista, ettei mikään rajoita Froststrapin toimintaa.</value>
+    <value>Spectre ei pysty kirjoittamaan Windowsin rekisteriin. Virustorjuntaohjelma todennäköisesti häiritsee toimintaa ja aiheuttaa ongelmia. Tarkista, ettei mikään rajoita Spectrein toimintaa.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Gradientit</value>
@@ -888,10 +888,10 @@ Tarkista, toimiiko Roblox [alkuperäisen käynnistysohjelman]({1}) avulla. Jos s
     <value>Mukautettu</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (lasi)</value>
+    <value>Spectre (lasi)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (läpinäkymätön)</value>
+    <value>Spectre (läpinäkymätön)</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>Roblox (noin 2025)</value>
@@ -1123,14 +1123,14 @@ Tarkista, toimiiko Roblox [alkuperäisen käynnistysohjelman]({1}) avulla. Jos s
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap on päivitetty versioon v{0}</value>
+    <value>Spectre on päivitetty versioon v{0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Käynnistämäsi Froststrap-versio eroaa tällä hetkellä asennetusta versiosta.
+    <value>Käynnistämäsi Spectre-versio eroaa tällä hetkellä asennetusta versiosta.
 Haluatko päivittää tällä hetkellä asennetun version?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Käynnistämäsi Froststrap-versio on vanhempi kuin tällä hetkellä asennettuna oleva versio.
+    <value>Käynnistämäsi Spectre-versio on vanhempi kuin tällä hetkellä asennettuna oleva versio.
 Tämä voi aiheuttaa ongelmia, ja asetuksesi saattavat muuttua. Suosittelemme uudelleenasennusta.
 Haluatko varmasti jatkaa?</value>
   </data>
@@ -1147,7 +1147,7 @@ Haluatko varmasti jatkaa?</value>
     <value>Käynnistä Roblox Studio</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Tästä käynnistyksestä ei tallenneta lokitiedostoa, koska Froststrap ei pysty kirjoittamaan kansioon &apos;{0}&apos;</value>
+    <value>Tästä käynnistyksestä ei tallenneta lokitiedostoa, koska Spectre ei pysty kirjoittamaan kansioon &apos;{0}&apos;</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Rakennustiedot</value>
@@ -1165,13 +1165,13 @@ Haluatko varmasti jatkaa?</value>
     <value>Koodi</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Nämä ovat kaikki ne henkilöt, jotka ovat antaneet merkittävän panoksen Froststrapin ja Froststrapin kehittämiseen ja muovanneet ne sellaisiksi kuin ne ovat tänä päivänä.</value>
+    <value>Nämä ovat kaikki ne henkilöt, jotka ovat antaneet merkittävän panoksen Spectrein ja Spectrein kehittämiseen ja muovanneet ne sellaisiksi kuin ne ovat tänä päivänä.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Inspiraatioita</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Fishstrap/Froststrap-haarukka.</value>
+    <value>Fishstrap/Spectre-haarukka.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Discord-palvelin</value>
@@ -1231,16 +1231,16 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Huomaa, että kaikki tekemäsi muutokset eivät tule voimaan välittömästi, ennen kuin olet sulkenut kaikki tällä hetkellä auki olevat Roblox-istunnot.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap on jo käynnissä</value>
+    <value>Spectre on jo käynnissä</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Taustatila:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Mukauta Froststrapin käynnistysohjelmaa monipuolisten asetusten avulla.</value>
+    <value>Mukauta Spectrein käynnistysohjelmaa monipuolisten asetusten avulla.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Mukauta Froststrap-teemoja helposti valmiiden asetusten avulla tai luo oma ainutlaatuinen ulkoasusi.</value>
+    <value>Mukauta Spectre-teemoja helposti valmiiden asetusten avulla tai luo oma ainutlaatuinen ulkoasusi.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Sovellusten teemat</value>
@@ -1258,13 +1258,13 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Otsikko</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Määritä, miltä Froststrapin tulisi näyttää.</value>
+    <value>Määritä, miltä Spectrein tulisi näyttää.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Taajuus</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Valitse, mitä kuvaketta Froststrap käyttää.</value>
+    <value>Valitse, mitä kuvaketta Spectre käyttää.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Kuvake</value>
@@ -1279,7 +1279,7 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Kieli</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Valitse aloitusnäytön tyyli. Huomautus: Tummaa teemaa ei tueta Legacy- tai Vista-käyttöjärjestelmissä. Lisää mukautettavia käynnistysohjelmia löydät Froststrapin viralliselta Discord-palvelimelta.</value>
+    <value>Valitse aloitusnäytön tyyli. Huomautus: Tummaa teemaa ei tueta Legacy- tai Vista-käyttöjärjestelmissä. Lisää mukautettavia käynnistysohjelmia löydät Spectrein viralliselta Discord-palvelimelta.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Bootstrapper-tyyli</value>
@@ -1312,16 +1312,16 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Ikkunan taustakuva</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Tarjoaa pääsyn Roblox-sovellusliittymiin (API) käyttämällä todennuskeksejäsi. [Mihin Froststrap pääsee käsiksi?]({0})</value>
+    <value>Tarjoaa pääsyn Roblox-sovellusliittymiin (API) käyttämällä todennuskeksejäsi. [Mihin Spectre pääsee käsiksi?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Froststrap-tilin käyttöoikeudet</value>
+    <value>Spectre-tilin käyttöoikeudet</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap tarkistaa ja päivittää itsensä automaattisesti vakaaseen versioon, kun Roblox käynnistetään.</value>
+    <value>Spectre tarkistaa ja päivittää itsensä automaattisesti vakaaseen versioon, kun Roblox käynnistetään.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Froststrapin automaattinen päivitys</value>
+    <value>Spectrein automaattinen päivitys</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Päivitä Roblox taustalla odottamisen sijaan. Ei suositella hitailla verkoilla. Tämän ominaisuuden toimimiseen tarvitaan vähintään 3 GB vapaata tallennustilaa.</value>
@@ -1342,7 +1342,7 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Instanssin käynnistämisen vahvistus</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Määritä, mitä Froststrapin tulisi tehdä, kun Roblox käynnistetään.</value>
+    <value>Määritä, mitä Spectrein tulisi tehdä, kun Roblox käynnistetään.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Roblox asennetaan puhtaasti seuraavan käynnistyksen yhteydessä.</value>
@@ -1372,7 +1372,7 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Poistaa vanhat tiedot automaattisesti tilan vapauttamiseksi. Alkuperäinen kehittäjä: Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Froststrap-puhdistusaine</value>
+    <value>Spectre-puhdistusaine</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Määritettyä ikää vanhemmat tiedostot poistetaan.</value>
@@ -1387,10 +1387,10 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Välimuisti</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Froststrap-lokit poistetaan.</value>
+    <value>Spectre-lokit poistetaan.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Froststrap-lokit</value>
+    <value>Spectre-lokit</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Vanhat lokitiedostot poistetaan.</value>
@@ -1399,7 +1399,7 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Lokit-valikko</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Anna Froststrapin päättää, mihin palvelimiin liityt. Ohjelma valitsee ensisijaisesti sen palvelimen, joka sijaitsee lähimpänä sinua.</value>
+    <value>Anna Spectrein päättää, mihin palvelimiin liityt. Ohjelma valitsee ensisijaisesti sen palvelimen, joka sijaitsee lähimpänä sinua.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Näyttää siltä, että ystäväsi pelaa tätä peliä juuri nyt. Haluatko liittyä mukaan?</value>
@@ -1456,7 +1456,7 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Vaihda automaattisesti</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox tai Froststrap saattaa yrittää muuttaa valitsemaasi kanavaa.</value>
+    <value>Roblox tai Spectre saattaa yrittää muuttaa valitsemaasi kanavaa.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Älä koskaan muutu</value>
@@ -1468,7 +1468,7 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Automaattinen kanavanvaihto</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Muuta Robloxin ja Froststrapin käyttöönotto- ja asennusasetuksia.</value>
+    <value>Muuta Robloxin ja Spectrein käyttöönotto- ja asennusasetuksia.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Roblox-päivitykset</value>
@@ -1555,7 +1555,7 @@ Aloita napsauttamalla yläpuolella olevaa ”Lisää tili” -painiketta</value>
     <value>Roblox-evästetiedostoa ei löydy.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap tarkistaa ja päivittää itsensä automaattisesti testiversioon, kun Roblox käynnistetään.</value>
+    <value>Spectre tarkistaa ja päivittää itsensä automaattisesti testiversioon, kun Roblox käynnistetään.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Ennakkoversioiden päivitys</value>
@@ -1692,7 +1692,7 @@ Haluatko poistaa sen nyt?</value>
     <value>Jos tämä asetus poistetaan käytöstä, tässä määritettyjä asetuksia ei sovelleta Robloxiin.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Anna Froststrapin hallita FastFlags-asetuksia</value>
+    <value>Anna Spectrein hallita FastFlags-asetuksia</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox heikentää renderoinnin laatua sen mukaan, miten näytön skaalaus on määritetty Windowsissa.</value>
@@ -2097,7 +2097,7 @@ Haluatko poistaa sen nyt?</value>
     <value>Lähellä työpöytää</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Avaa tietyn ikkunan, kun kaksoisnapsautat Froststrap-kuvaketta tehtäväpalkissa Robloxin käynnistyksen yhteydessä.</value>
+    <value>Avaa tietyn ikkunan, kun kaksoisnapsautat Spectre-kuvaketta tehtäväpalkissa Robloxin käynnistyksen yhteydessä.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Kaksoisnapsautuksen toiminto</value>
@@ -2115,13 +2115,13 @@ Haluatko poistaa sen nyt?</value>
     <value>Muokkaus tiedot</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Antaa Froststrapille mahdollisuuden tunnistaa, mitä Roblox-peliä olet pelaamassa. Tietyt toiminnot saattavat edellyttää tätä.</value>
+    <value>Antaa Spectreille mahdollisuuden tunnistaa, mitä Roblox-peliä olet pelaamassa. Tietyt toiminnot saattavat edellyttää tätä.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Ota aktiivisuuden seuranta käyttöön</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Ota tämä käyttöön, jotta Discord-profiilissasi näkyy mukautettu ”Playing Froststrap” -RPC-merkintä, kun sovellus on auki.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Ota tämä käyttöön, jotta Discord-profiilissasi näkyy mukautettu ”Playing Spectre” -RPC-merkintä, kun sovellus on auki.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Näyttää tämän istunnon aikana pelatun pelin ja antaa sinun liittyä siihen uudelleen.</value>
@@ -2184,7 +2184,7 @@ Haluatko poistaa sen nyt?</value>
     <value>Näytä Studio-toiminta</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Tämä toimii lisäämällä räätälöidyn Froststrap-laajennuksen, joka kirjaa ylös tekemäsi toimet.
+    <value>Tämä toimii lisäämällä räätälöidyn Spectre-laajennuksen, joka kirjaa ylös tekemäsi toimet.
 Haluatko asentaa laajennuksen?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2748,7 +2748,7 @@ Sovellus sulkee tämän ikkunan, kun tunnistautuminen on valmis.</value>
     <value>Ladataan tietokeskuksia...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Kirjaudu sisään tilinhallinnan kautta, ota käyttöön ”Froststrap-tilin käyttöoikeudet” tai ilmoita asiasta Discord-palvelimellamme, jotta voit käyttää palvelua.</value>
+    <value>Kirjaudu sisään tilinhallinnan kautta, ota käyttöön ”Spectre-tilin käyttöoikeudet” tai ilmoita asiasta Discord-palvelimellamme, jotta voit käyttää palvelua.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Julkisia palvelimia ei löytynyt.</value>
@@ -2823,13 +2823,13 @@ Sovellus sulkee tämän ikkunan, kun tunnistautuminen on valmis.</value>
     <value>Luo pikakuvake</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Määritä, miten Froststrap voidaan käynnistää helposti.</value>
+    <value>Määritä, miten Spectre voidaan käynnistää helposti.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Pikakuvakkeen luomisessa tapahtui virhe.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Tämän avulla voit käyttää Froststrapin Roblox-kuvakkeita pikakuvakkeissasi. [Katso ohjeet.]({0})</value>
+    <value>Tämän avulla voit käyttää Spectrein Roblox-kuvakkeita pikakuvakkeissasi. [Katso ohjeet.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Pura Roblox-kuvakkeet kansioon</value>
@@ -2900,29 +2900,29 @@ Kun toiminto on käytössä, se käynnistää Robloxin automaattisesti Asetukset
 Haluatko ottaa testitilan käyttöön?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Froststrap-asetukset</value>
+    <value>Spectre-asetukset</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Kuvakkeet</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Ne säilytetään siinä paikassa, johon Froststrap asennettiin, ja ne palautetaan automaattisesti, kun ohjelma asennetaan uudelleen.</value>
+    <value>Ne säilytetään siinä paikassa, johon Spectre asennettiin, ja ne palautetaan automaattisesti, kun ohjelma asennetaan uudelleen.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Säilytä asetukseni ja modit</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Poistaminen poistaa Froststrapin järjestelmästäsi ja määrittää Roblox-käynnistysohjelman oletusasetukset uudelleen automaattisesti, jos se on edelleen asennettuna.
+    <value>Poistaminen poistaa Spectrein järjestelmästäsi ja määrittää Roblox-käynnistysohjelman oletusasetukset uudelleen automaattisesti, jos se on edelleen asennettuna.
 
 Jos poistat tai asennat ohjelman uudelleen, koska sinulla on ongelmia Robloxin kanssa, lue ensin [tämä ohjesivu]({0}).
 
-Poistoprosessi ei välttämättä puhdista järjestelmää täysin, joten saatat joutua poistamaan manuaalisesti jäljelle jääneet tiedostot Froststrapin asennuskansiosta.
+Poistoprosessi ei välttämättä puhdista järjestelmää täysin, joten saatat joutua poistamaan manuaalisesti jäljelle jääneet tiedostot Spectrein asennuskansiosta.
 
-Froststrap asennettiin kansioon &quot;{1}&quot;.</value>
+Spectre asennettiin kansioon &quot;{1}&quot;.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Poista Froststrap</value>
+    <value>Poista Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Poista asennus</value>

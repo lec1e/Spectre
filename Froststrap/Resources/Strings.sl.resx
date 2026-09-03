@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>O podjetju Froststrap</value>
+    <value>O podjetju Spectre</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Lokacije strežnika ni bilo mogoče poiskati. Morda se v igre vključujete prehitro.</value>
@@ -137,7 +137,7 @@
     <value>Kanal, na katerem ste trenutno ({0}), je zdaj omejen za javno uporabo. Zdaj boste preusmerjeni na privzeti kanal ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Program Froststrap se ni mogel samodejno posodobiti na različico {0}. Prosimo, ga posodobite ročno tako, da ga prenesete s spletne strani in zagnate.</value>
+    <value>Program Spectre se ni mogel samodejno posodobiti na različico {0}. Prosimo, ga posodobite ročno tako, da ga prenesete s spletne strani in zagnate.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox poskuša nastaviti tvoj kanal na {0}, vendar je tvoj trenutno izbrani kanal {1}.
@@ -175,7 +175,7 @@ Ali želite preklopiti na privzeti kanal ({1})?</value>
     <value>Vseh sprememb ni bilo mogoče uporabiti</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap nima dovolj prostora na disku za prenos in namestitev Robloxa. Prosimo, sprostite nekaj prostora na disku in poskusite znova.</value>
+    <value>Spectre nima dovolj prostora na disku za prenos in namestitev Robloxa. Prosimo, sprostite nekaj prostora na disku in poskusite znova.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Uporaba modifikacij za Roblox...</value>
@@ -310,10 +310,10 @@ Ali želite preklopiti na privzeti kanal ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Program Froststrap je bil uspešno odstranjen</value>
+    <value>Program Spectre je bil uspešno odstranjen</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox trenutno teče, vendar ga je treba zapreti, preden odstranite program Froststrap. Ali želite Roblox zapreti zdaj?</value>
+    <value>Roblox trenutno teče, vendar ga je treba zapreti, preden odstranite program Spectre. Ali želite Roblox zapreti zdaj?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox zahteva uporabo komponent Windows Media Foundation. Zdi se, da jih nimate nameščenih, verjetno zato, ker uporabljate različico Windows N. Najprej jih namestite, nato pa zaženite Roblox.</value>
@@ -404,7 +404,7 @@ Ali želite preklopiti na privzeti kanal ({1})?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Izvoz</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Datoteke</value>
@@ -497,7 +497,7 @@ Ali želite preklopiti na privzeti kanal ({1})?</value>
     <value>Preimenuj</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox še ni nameščen. Preden poskusite uporabiti to možnost, vsaj enkrat zaženite Roblox prek programa Froststrap.</value>
+    <value>Roblox še ni nameščen. Preden poskusite uporabiti to možnost, vsaj enkrat zaženite Roblox prek programa Spectre.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Shrani in namesti</value>
@@ -717,7 +717,7 @@ Ali želite preklopiti na privzeti kanal ({1})?</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Nastavitev prilagojenega zaganjalnika ni uspela: {0}.
 Uporablja se privzeta vrednost {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Prilagojeni bootstrapperji lahko vsebujejo največ {0} elementov, dobili smo {1}</value>
@@ -766,17 +766,17 @@ Uporablja se privzeta vrednost {1}.</value>
     <value>Prosimo, počakajte, da se odstranitev zaključi.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap ne podpira več Bloxshade.
+    <value>Spectre ne podpira več Bloxshade.
 Za več informacij se pridružite Discord strežniku Bloxshade.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Oprostite</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap ni uspel ustvariti bližnjic na namizju in v meniju »Začetek«. Poskusite jih ustvariti kasneje prek nastavitev.</value>
+    <value>Spectre ni uspel ustvariti bližnjic na namizju in v meniju »Začetek«. Poskusite jih ustvariti kasneje prek nastavitev.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Povezave ni bilo mogoče vzpostaviti, kar verjetno kaže na slabo internetno povezavo ali blokado požarnega zidu. Če je vaša povezava v redu, preverite, ali vaš protivirusni program ne blokira programa Froststrap.</value>
+    <value>Povezave ni bilo mogoče vzpostaviti, kar verjetno kaže na slabo internetno povezavo ali blokado požarnega zidu. Če je vaša povezava v redu, preverite, ali vaš protivirusni program ne blokira programa Spectre.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Funkcija BetterMatchmaking bo v tej seji onemogočena.</value>
@@ -788,7 +788,7 @@ Za več informacij se pridružite Discord strežniku Bloxshade.</value>
     <value>Roblox trenutno morda ne deluje. Za več informacij glej {0}.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Ker je treba namestiti ali posodobiti program Roblox, se program Froststrap ne more nadaljevati.</value>
+    <value>Ker je treba namestiti ali posodobiti program Roblox, se program Spectre ne more nadaljevati.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Pri tej izdaji se Roblox ne bo preverjal za nadgradnje, spremembe modov pa se ne bodo uporabile.</value>
@@ -800,11 +800,11 @@ Za več informacij se pridružite Discord strežniku Bloxshade.</value>
     <value>Prosimo, poskusite kasneje.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap se ne more povezati z {0}</value>
+    <value>Spectre se ne more povezati z {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap ne more prenesti Robloxa</value>
+    <value>Spectre ne more prenesti Robloxa</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Roblox trenutno ni na voljo za prenos. Za več informacij preberite naslednjo stran s pomočjo: {0}</value>
@@ -814,24 +814,24 @@ Za več informacij se pridružite Discord strežniku Bloxshade.</value>
     <value>Kopiraj vsebino dnevnika</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Med izvajanjem programa Froststrap/Froststrap je prišlo do izjeme</value>
+    <value>Med izvajanjem programa Spectre/Spectre je prišlo do izjeme</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Najprej preverite [Froststrap Wiki]({0}), da ugotovite, ali je bila ta težava že odpravljena.
+    <value>Najprej preverite [Spectre Wiki]({0}), da ugotovite, ali je bila ta težava že odpravljena.
 
 Če ne, prosimo, da to izjemo prijavite prek [GitHub issue]({1}) skupaj s kopijo ustvarjene dnevniške datoteke.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Najprej preverite [Froststrap Wiki]({0}), da ugotovite, ali je bila ta težava že odpravljena.
+    <value>Najprej preverite [Spectre Wiki]({0}), da ugotovite, ali je bila ta težava že odpravljena.
 
-Če ne, prosimo, da to izjemo prijavite skrbnikom tega forka. Te težave NE prijavljajte v rubriki »Issues« na GitHubu projekta Froststrap, saj gre za neuradno različico.</value>
+Če ne, prosimo, da to izjemo prijavite skrbnikom tega forka. Te težave NE prijavljajte v rubriki »Issues« na GitHubu projekta Spectre, saj gre za neuradno različico.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Prijavi izjemo</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Izjema Froststrap</value>
+    <value>Izjema Spectre</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Izbrane ikone za zagon ni bilo mogoče naložiti.
@@ -855,10 +855,10 @@ Nekateri deli besedila morda ne bodo prevedeni v izbrani jezik.</value>
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Za informacije o tem, zakaj se to lahko dogaja in kako se to lahko reši, preberite [ta članek v pomoči]({0}).
 
-Preverite, ali Roblox deluje z [izvirnim zaganjalnikom]({1}). Če ne deluje, to ni težava s programom Froststrap. Če pa deluje, si oglejte članek v pomoči.</value>
+Preverite, ali Roblox deluje z [izvirnim zaganjalnikom]({1}). Če ne deluje, to ni težava s programom Spectre. Če pa deluje, si oglejte članek v pomoči.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap ne more zapisovati v register sistema Windows. Verjetno moti protivirusni program in povzroča težave. Preverite, ali ni ničesar, kar bi omejevalo delovanje programa Froststrap.</value>
+    <value>Spectre ne more zapisovati v register sistema Windows. Verjetno moti protivirusni program in povzroča težave. Preverite, ali ni ničesar, kar bi omejevalo delovanje programa Spectre.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Prehodi</value>
@@ -888,16 +888,16 @@ Preverite, ali Roblox deluje z [izvirnim zaganjalnikom]({1}). Če ne deluje, to 
     <value>Ponaredek Byfrona (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (klasična različica)</value>
+    <value>Spectre (klasična različica)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Po meri</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (steklo)</value>
+    <value>Spectre (steklo)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (neprosojen)</value>
+    <value>Spectre (neprosojen)</value>
   </data>
   <data name="Enums.CleanerOptions.Never" xml:space="preserve">
     <value>Nikoli</value>
@@ -1126,14 +1126,14 @@ Preverite, ali Roblox deluje z [izvirnim zaganjalnikom]({1}). Če ne deluje, to 
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap je bil posodobljen na različico v{0}</value>
+    <value>Spectre je bil posodobljen na različico v{0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Različica programa Froststrap, ki ste jo zagnali, se razlikuje od različice, ki jo imate trenutno nameščeno.
+    <value>Različica programa Spectre, ki ste jo zagnali, se razlikuje od različice, ki jo imate trenutno nameščeno.
 Ali želite posodobiti trenutno nameščeno različico?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Različica programa Froststrap, ki ste jo zagnali, je starejša od različice, ki jo imate trenutno nameščeno.
+    <value>Različica programa Spectre, ki ste jo zagnali, je starejša od različice, ki jo imate trenutno nameščeno.
 Lahko pride do težav, vaše nastavitve pa se lahko spremenijo. Priporočamo ponovno namestitev.
 Ali ste prepričani, da želite nadaljevati?</value>
   </data>
@@ -1150,7 +1150,7 @@ Ali ste prepričani, da želite nadaljevati?</value>
     <value>Zaženi Roblox Studio</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Za ta zagon se dnevniška datoteka ne bo zapisala, ker Froststrap ne more zapisovati v mapo »{0}«</value>
+    <value>Za ta zagon se dnevniška datoteka ne bo zapisala, ker Spectre ne more zapisovati v mapo »{0}«</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Podatki o izdelavi</value>
@@ -1168,13 +1168,13 @@ Ali ste prepričani, da želite nadaljevati?</value>
     <value>Koda</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>To so vsi tisti, ki so pomembno prispevali k razvoju projektov Froststrap in Froststrap ter ju oblikovali v to, kar sta danes.</value>
+    <value>To so vsi tisti, ki so pomembno prispevali k razvoju projektov Spectre in Spectre ter ju oblikovali v to, kar sta danes.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Navdihi</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Vilice tipa »Fishstrap«/»Froststrap«.</value>
+    <value>Vilice tipa »Fishstrap«/»Spectre«.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Discord strežnik</value>
@@ -1237,16 +1237,16 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Upoštevajte, da se ne bodo vse vaše spremembe takoj upoštevale, dokler ne zaprete vseh trenutno odprtih primerov Roblox.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap že teče</value>
+    <value>Spectre že teče</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Način v ozadju:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Prilagodite zaganjalnik programa Froststrap z uporabo številnih možnosti.</value>
+    <value>Prilagodite zaganjalnik programa Spectre z uporabo številnih možnosti.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Preprosto prilagodite teme Froststrap s pomočjo prednastavitev ali ustvarite svoj edinstven videz.</value>
+    <value>Preprosto prilagodite teme Spectre s pomočjo prednastavitev ali ustvarite svoj edinstven videz.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Teme za aplikacije</value>
@@ -1264,13 +1264,13 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Naslov</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Nastavite videz Froststrapa.</value>
+    <value>Nastavite videz Spectrea.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Frekvenca</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Izberite, katero ikono naj uporablja Froststrap.</value>
+    <value>Izberite, katero ikono naj uporablja Spectre.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Ikona</value>
@@ -1282,7 +1282,7 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Jezik</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Izberite slog zagonskega zaslona. Opomba: Temna tema ni podprta za operacijska sistema Legacy in Vista. Za več prilagodljivih zagonskih programov obiščite uradni Discord-strežnik Froststrap.</value>
+    <value>Izberite slog zagonskega zaslona. Opomba: Temna tema ni podprta za operacijska sistema Legacy in Vista. Za več prilagodljivih zagonskih programov obiščite uradni Discord-strežnik Spectre.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Slog »bootstrapper«</value>
@@ -1315,16 +1315,16 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Ozadje okna</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Omogoča dostop do API-jev Roblox z uporabo vašega piškotka za avtentifikacijo. [Kaj bo Froststrap dostopal?]({0})</value>
+    <value>Omogoča dostop do API-jev Roblox z uporabo vašega piškotka za avtentifikacijo. [Kaj bo Spectre dostopal?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Dovoljenja za račun Froststrap</value>
+    <value>Dovoljenja za račun Spectre</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap se bo ob zagonu Robloxa samodejno preveril in posodobil na stabilno različico.</value>
+    <value>Spectre se bo ob zagonu Robloxa samodejno preveril in posodobil na stabilno različico.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Samodejna posodobitev programa Froststrap</value>
+    <value>Samodejna posodobitev programa Spectre</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Posodobite Roblox v ozadju, namesto da čakate. Ne priporoča se za počasne internetne povezave. Da bi ta funkcija delovala, je potrebnih vsaj 3 GB prostega prostora za shranjevanje.</value>
@@ -1345,7 +1345,7 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Potrditev zagona instance</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Nastavite, kaj naj Froststrap stori ob zagonu Robloxa.</value>
+    <value>Nastavite, kaj naj Spectre stori ob zagonu Robloxa.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Pri naslednjem zagonu se bo izvedla čista namestitev programa Roblox.</value>
@@ -1375,7 +1375,7 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Samodejno izbriše stare podatke, da sprosti prostor. Izvirno ga je ustvaril Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Čistilo za Froststrap</value>
+    <value>Čistilo za Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Datoteke, starejše od določene vrednosti, bodo izbrisane.</value>
@@ -1390,10 +1390,10 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Predpomnilnik</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Dnevniški zapisi Froststrap bodo izbrisani.</value>
+    <value>Dnevniški zapisi Spectre bodo izbrisani.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Dnevniki Froststrap</value>
+    <value>Dnevniki Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Stare datoteke z dnevniki bodo izbrisane.</value>
@@ -1402,7 +1402,7 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Meni »Dnevniki«</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Naj Froststrap odloči, katerim strežnikom se boste pridružili. Prednost bo dal strežniku, ki je najbližje vam.</value>
+    <value>Naj Spectre odloči, katerim strežnikom se boste pridružili. Prednost bo dal strežniku, ki je najbližje vam.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Zdi se, da ta igra trenutno igra eden od tvojih prijateljev. Želiš se mu pridružiti?</value>
@@ -1459,7 +1459,7 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Samodejna sprememba</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox ali Froststrap bosta morda poskušala spremeniti vaš izbrani kanal.</value>
+    <value>Roblox ali Spectre bosta morda poskušala spremeniti vaš izbrani kanal.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Nikoli se ne spremeni</value>
@@ -1471,7 +1471,7 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Avtomatska menjava kanala</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Spremenite nastavitve namestitve in zagon za Roblox in Froststrap.</value>
+    <value>Spremenite nastavitve namestitve in zagon za Roblox in Spectre.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Nadgradnje Roblox</value>
@@ -1558,7 +1558,7 @@ Kliknite »Dodaj račun« zgoraj, da začnete</value>
     <value>Datoteka piškotka Roblox ni bila najdena.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap se bo ob zagonu Robloxa samodejno preveril in posodobil na testno različico.</value>
+    <value>Spectre se bo ob zagonu Robloxa samodejno preveril in posodobil na testno različico.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Posodobitev predizdaj</value>
@@ -1692,7 +1692,7 @@ Več informacij:
     <value>Če to možnost onemogočite, se nastavitve, ki so tukaj določene, ne bodo uporabile v Robloxu.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Dovoli Froststrapu, da upravlja s FastFlags</value>
+    <value>Dovoli Spectreu, da upravlja s FastFlags</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox zmanjša kakovost prikazovanja glede na to, kako je vaš zaslon prilagojen v sistemu Windows.</value>
@@ -2103,7 +2103,7 @@ Več informacij:
     <value>Podobno kot na namizju</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Ob zagonu Robloxa se ob dvojnem kliku na ikono Froststrap v sistemski vrstici odpre določeno okno.</value>
+    <value>Ob zagonu Robloxa se ob dvojnem kliku na ikono Spectre v sistemski vrstici odpre določeno okno.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Dejanje z dvojnim klikom</value>
@@ -2121,13 +2121,13 @@ Več informacij:
     <value>Podatki o urejanju</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Omogoča aplikaciji Froststrap, da prepozna, katero igro Roblox trenutno igrate. To je lahko potrebno za delovanje nekaterih funkcij.</value>
+    <value>Omogoča aplikaciji Spectre, da prepozna, katero igro Roblox trenutno igrate. To je lahko potrebno za delovanje nekaterih funkcij.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Omogoči sledenje aktivnosti</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>To možnost vklopite, da se v vašem profilu na Discord-u prikaže prilagojeni RPC »Playing Froststrap«, dokler je aplikacija odprta.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>To možnost vklopite, da se v vašem profilu na Discord-u prikaže prilagojeni RPC »Playing Spectre«, dokler je aplikacija odprta.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Prikaže igro, ki ste jo igrali v tej seji, in vam omogoča, da se ji ponovno pridružite.</value>
@@ -2190,7 +2190,7 @@ Več informacij:
     <value>Prikaz dejavnosti v Studiu</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>To deluje tako, da se doda posebej izdelan vtičnik za Froststrap, ki bo beležil vaše dejavnosti.
+    <value>To deluje tako, da se doda posebej izdelan vtičnik za Spectre, ki bo beležil vaše dejavnosti.
 Ali želite namestiti vtičnik?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2754,7 +2754,7 @@ Aplikacija bo to okno zaprla, ko bo prijava zaključena.</value>
     <value>Nalaganje podatkovnih centrov...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Prijavite se prek upravitelja računa, vklopite možnost »Froststrap Account Permission« ali to sporočite na našem strežniku Discord, da boste lahko uporabljali storitev.</value>
+    <value>Prijavite se prek upravitelja računa, vklopite možnost »Spectre Account Permission« ali to sporočite na našem strežniku Discord, da boste lahko uporabljali storitev.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Javnih strežnikov ni bilo najdenih.</value>
@@ -2829,13 +2829,13 @@ Aplikacija bo to okno zaprla, ko bo prijava zaključena.</value>
     <value>Ustvari bližnjico</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Nastavite, kako se lahko Froststrap enostavno zažene.</value>
+    <value>Nastavite, kako se lahko Spectre enostavno zažene.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Napaka pri ustvarjanju bližnjice.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Omogoča vam uporabo niza ikon Froststrap za Roblox za vaše bližnjice. [Oglejte si, kako.]({0})</value>
+    <value>Omogoča vam uporabo niza ikon Spectre za Roblox za vaše bližnjice. [Oglejte si, kako.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Izpis ikone Roblox v mapo</value>
@@ -2906,29 +2906,29 @@ Ko je ta način omogočen, se bo Roblox samodejno zagnal po zaprtju nastavitev, 
 Ali želite omogočiti testni način?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Nastavitve Froststrap</value>
+    <value>Nastavitve Spectre</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Ikone</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Shranjeni bodo na mestu, kjer je bil nameščen program Froststrap, in se bodo ob ponovni namestitvi samodejno obnovili.</value>
+    <value>Shranjeni bodo na mestu, kjer je bil nameščen program Spectre, in se bodo ob ponovni namestitvi samodejno obnovili.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Ohrani moje nastavitve in modifikacije</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Z odstranitvijo boste iz sistema odstranili program Froststrap in samodejno ponovno nastavili privzeti zagon Roblox, če je ta še vedno nameščen.
+    <value>Z odstranitvijo boste iz sistema odstranili program Spectre in samodejno ponovno nastavili privzeti zagon Roblox, če je ta še vedno nameščen.
 
 Če program odstranjujete ali ponovno nameščate zaradi težav z Robloxom, najprej preberite [to stran s pomočjo]({0}).
 
-Postopek odstranitve morda ne bo uspel v celoti počistiti vseh ostankov, zato boste morda morali ročno počistiti preostale datoteke v mapi, kjer je bil nameščen Froststrap.
+Postopek odstranitve morda ne bo uspel v celoti počistiti vseh ostankov, zato boste morda morali ročno počistiti preostale datoteke v mapi, kjer je bil nameščen Spectre.
 
-Froststrap je bil nameščen v mapi »{1}«.</value>
+Spectre je bil nameščen v mapi »{1}«.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Odstranite program Froststrap</value>
+    <value>Odstranite program Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Odstrani</value>

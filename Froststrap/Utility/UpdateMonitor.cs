@@ -67,8 +67,8 @@ namespace Froststrap.Utility
 
                 App.Logger.WriteLine(LOG_IDENT, $"App update available: running v{App.Version}, latest {release.TagName}. Firing toast.");
                 LiveChannelToast.ShowToast(
-                    title: $"{App.ProjectName} update available",
-                    message: $"Version {release.TagName} is out (you're on v{App.Version}). Open {App.ProjectName} to update.");
+                    title: $"{App.BrandName} update available",
+                    message: $"Version {release.TagName} is out (you're on v{App.Version}). Open {App.BrandName} to update.");
 
                 App.State.Prop.LastNotifiedAppVersion = release.TagName;
                 App.State.Save();
@@ -177,7 +177,7 @@ namespace Froststrap.Utility
                     App.Logger.WriteLine(LOG_IDENT, $"Executor '{match.Title}' updated: {last} -> {match.RbxVersion}. Firing toast.");
                     LiveChannelToast.ShowToast(
                         title: $"{match.Title} just updated",
-                        message: $"Now on {match.RbxVersion}. {App.ProjectName} applies the new version on the profile's next launch.");
+                        message: $"Now on {match.RbxVersion}. {App.BrandName} applies the new version on the profile's next launch.");
                     profile.LastNotifiedExecutorHash = match.RbxVersion;
                     any = true;
                 }

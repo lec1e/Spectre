@@ -20,7 +20,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="models:QuickPlayGameItem">
-                            <Button Background="Transparent" BorderThickness="0" Padding="0" Margin="5" ClickMode="Press">
+                            <Button Classes="chrome" Background="Transparent" BorderThickness="0" Padding="0" Margin="5" ClickMode="Press">
                                 <Button.Styles>
                                     <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                                         <Setter Property="Background" Value="Transparent" />
@@ -193,7 +193,7 @@
                                 <TextBlock Text="{x:Static resources:Strings.Menu_QuickPlay_SessionHistory}" FontSize="12" Opacity="0.6" IsVisible="{Binding !IsCurrentGameApi}"/>
                                 <TextBlock Text="{x:Static resources:Strings.Menu_QuickPlay_RobloxServers}" FontSize="12" Opacity="0.6" IsVisible="{Binding IsCurrentGameApi}"/>
                             </StackPanel>
-                            <Button Grid.Column="2" Command="{Binding CloseOverlayCommand}" Background="Transparent" BorderThickness="0">
+                            <Button Grid.Column="2" Classes="chrome" Command="{Binding CloseOverlayCommand}" Background="Transparent" BorderThickness="0">
                                 <ic:Lucide Icon="X" Height="16" Width="16" />
                             </Button>
                         </Grid>
@@ -265,7 +265,7 @@
                                     <ic:Lucide Icon="Layers" Height="18" Width="18" />
                                     <TextBlock Text="{x:Static resources:Strings.Menu_QuickPlay_AvailableSubplaces}" FontWeight="Bold" Height="18" Width="18" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" Command="{Binding CloseSubplacesCommand}" Background="Transparent" BorderThickness="0">
+                                <Button Grid.Column="1" Classes="chrome" Command="{Binding CloseSubplacesCommand}" Background="Transparent" BorderThickness="0">
                                     <ic:Lucide Icon="X" Height="16" Width="16" />
                                 </Button>
                             </Grid>
@@ -339,7 +339,7 @@
                                     <ic:Lucide Icon="LockKeyholeOpen" Height="18" Width="18" />
                                     <TextBlock Text="{x:Static resources:Strings.Menu_QuickPlay_PrivateServers}" FontWeight="Bold" Height="18" Width="18" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" Command="{Binding ClosePrivateServersCommand}" Background="Transparent" BorderThickness="0">
+                                <Button Grid.Column="1" Classes="chrome" Command="{Binding ClosePrivateServersCommand}" Background="Transparent" BorderThickness="0">
                                     <ic:Lucide Icon="X" Height="16" Width="16" />
                                 </Button>
                             </Grid>

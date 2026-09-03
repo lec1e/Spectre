@@ -11,7 +11,7 @@
                      WindowStartupLocation="CenterScreen">
 
     <Grid RowDefinitions="Auto,*,Auto" Background="{DynamicResource ApplicationBackgroundColor}">
-        <controls:TitleBar Grid.Row="0" Title="{x:Static resources:Strings.Dialog_AddFastFlag_Title}" ShowMaximize="False" Icon="avares://Eclipse/Eclipse.ico" />
+        <controls:TitleBar Grid.Row="0" Title="{x:Static resources:Strings.Dialog_AddFastFlag_Title}" ShowMaximize="False" Icon="avares://Eclipse/SpectreMark.png" />
 
         <Border Grid.Row="1"
                 Margin="16"

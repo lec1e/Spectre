@@ -12,7 +12,7 @@ Var KeepUserData
 Var LanguageComboBox
 Var LanguageValue
 
-Name "Eclipse"
+Name "Spectre"
 
 !ifndef PUBLISH_DIR
   !define PUBLISH_DIR "..\build"
@@ -34,11 +34,11 @@ InstallDir "$LOCALAPPDATA\Eclipse"
 InstallDirRegKey HKCU "Software\Eclipse" "InstallLocation"
 RequestExecutionLevel user
 
-!define APP_NAME "Eclipse"
+!define APP_NAME "Spectre"
 !define APP_EXE "Eclipse.exe"
 !define APP_UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Eclipse"
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${APP_EXE}"
-!define MUI_FINISHPAGE_RUN_TEXT "Launch Eclipse"
+!define MUI_FINISHPAGE_RUN_TEXT "Launch Spectre"
 !define MUI_ICON "..\Froststrap\Eclipse.ico"
 !define MUI_UNICON "..\Froststrap\Eclipse.ico"
 
@@ -206,7 +206,7 @@ FunctionEnd
 ; Install section
 ; ---------------------------------------------------------------------------
 
-Section "Eclipse"
+Section "Spectre"
     SetOutPath "$INSTDIR"
     File /r "${PUBLISH_DIR}\*"
 
@@ -216,7 +216,7 @@ Section "Eclipse"
     WriteRegStr HKCU "Software\Eclipse" "Language" "$LanguageValue"
 
     ; Programs & Features / Settings → Apps uninstall entry
-    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "DisplayName"      "${APP_NAME}"
+    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "DisplayName"      "Spectre"
     WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "DisplayVersion"   "${APP_VERSION}"
     WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "InstallLocation"  "$INSTDIR"
     WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "DisplayIcon"      "$INSTDIR\${APP_EXE},0"
@@ -224,9 +224,9 @@ Section "Eclipse"
     WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "UninstallString"  '"$INSTDIR\Uninstall.exe"'
     WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "QuietUninstallString" '"$INSTDIR\Uninstall.exe" /S'
     WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "ModifyPath"       '"$INSTDIR\${APP_EXE}" -settings'
-    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "HelpLink"         "https://github.com/lec1e/Eclipse"
-    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "URLInfoAbout"     "https://github.com/lec1e/Eclipse/issues/new"
-    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "URLUpdateInfo"    "https://github.com/lec1e/Eclipse/releases"
+    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "HelpLink"         "https://github.com/lec1e/Spectre"
+    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "URLInfoAbout"     "https://github.com/lec1e/Spectre/issues/new"
+    WriteRegStr HKCU "${APP_UNINSTALL_KEY}" "URLUpdateInfo"    "https://github.com/lec1e/Spectre/releases"
     WriteRegDWORD HKCU "${APP_UNINSTALL_KEY}" "NoModify"       1
     WriteRegDWORD HKCU "${APP_UNINSTALL_KEY}" "NoRepair"       1
 
@@ -234,12 +234,12 @@ Section "Eclipse"
     DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Froststrap"
 
     ${If} $CreateStartMenuShortcut == ${BST_CHECKED}
-        CreateDirectory "$SMPROGRAMS\Eclipse"
-        CreateShortCut "$SMPROGRAMS\Eclipse\Eclipse.lnk" "$INSTDIR\${APP_EXE}"
-        CreateShortCut "$SMPROGRAMS\Eclipse\Uninstall Eclipse.lnk" "$INSTDIR\Uninstall.exe"
+        CreateDirectory "$SMPROGRAMS\Spectre"
+        CreateShortCut "$SMPROGRAMS\Spectre\Spectre.lnk" "$INSTDIR\${APP_EXE}"
+        CreateShortCut "$SMPROGRAMS\Spectre\Uninstall Spectre.lnk" "$INSTDIR\Uninstall.exe"
     ${EndIf}
     ${If} $CreateDesktopShortcut == ${BST_CHECKED}
-        CreateShortCut "$DESKTOP\Eclipse.lnk" "$INSTDIR\${APP_EXE}"
+        CreateShortCut "$DESKTOP\Spectre.lnk" "$INSTDIR\${APP_EXE}"
     ${EndIf}
 
     WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -263,8 +263,12 @@ Section "Uninstall"
     ; Step 2: NSIS cleans up what it owns
 
     ; Shortcuts
+    Delete "$DESKTOP\Spectre.lnk"
     Delete "$DESKTOP\Eclipse.lnk"
     Delete "$DESKTOP\Froststrap.lnk"
+    Delete "$SMPROGRAMS\Spectre\Spectre.lnk"
+    Delete "$SMPROGRAMS\Spectre\Uninstall Spectre.lnk"
+    RMDir  "$SMPROGRAMS\Spectre"
     Delete "$SMPROGRAMS\Eclipse\Eclipse.lnk"
     Delete "$SMPROGRAMS\Eclipse\Uninstall Eclipse.lnk"
     RMDir  "$SMPROGRAMS\Eclipse"

@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Platform;
 using Avalonia.Rendering.SceneGraph;
 using Avalonia.Skia;
 using Avalonia.Threading;
@@ -10,12 +9,12 @@ using SkiaSharp;
 namespace Froststrap.UI.Elements.Controls
 {
     /// <summary>
-    /// Glowing Eclipse gradient trail — soft spring ribbon + bright head
-    /// (gradient style of the earlier liquid trail). Drawn under UI chrome.
+    /// Crimson light-beam that pins to the pointer and trails as a ribbon tail.
+    /// Head is the cursor; the rest of the nodes catch up behind it.
     /// </summary>
     public class LiquidCursorOverlay : Control
     {
-        private const int NodeCount = 22;
+        private const int NodeCount = 18;
         private readonly Node[] _nodes = new Node[NodeCount];
         private DispatcherTimer? _timer;
 
@@ -24,9 +23,9 @@ namespace Froststrap.UI.Elements.Controls
         private bool _ready;
         private float _fade;
 
-        private SKColor _head = new(233, 213, 255);
-        private SKColor _mid = new(192, 132, 252);
-        private SKColor _tail = new(34, 211, 238);
+        private SKColor _head = new(254, 226, 226);
+        private SKColor _mid = new(225, 29, 72);
+        private SKColor _tail = new(26, 6, 10);
 
         public static readonly StyledProperty<bool> IsEffectEnabledProperty =
             AvaloniaProperty.Register<LiquidCursorOverlay, bool>(nameof(IsEffectEnabled), true);
@@ -41,7 +40,7 @@ namespace Froststrap.UI.Elements.Controls
         {
             IsHitTestVisible = false;
             ClipToBounds = true;
-            Opacity = 0.45;
+            Opacity = 1;
 
             Loaded += (_, _) =>
             {
@@ -70,17 +69,13 @@ namespace Froststrap.UI.Elements.Controls
             if (Application.Current?.Resources is not { } res)
                 return;
 
+            _head = new SKColor(254, 226, 226);
             if (res.TryGetValue("BrandAccentColor", out var a) && a is Color accent)
                 _mid = new SKColor(accent.R, accent.G, accent.B);
-            if (res.TryGetValue("BrandPurpleColor", out var p) && p is Color purple)
-                _head = new SKColor(
-                    (byte)Math.Min(255, purple.R + 35),
-                    (byte)Math.Min(255, purple.G + 35),
-                    (byte)Math.Min(255, purple.B + 25));
-            if (res.TryGetValue("BrandGradientEnd", out var g) && g is Color end)
-                _tail = new SKColor(end.R, end.G, end.B);
-            else if (res.TryGetValue("BrandGlowColor", out var glow) && glow is Color gl)
-                _tail = new SKColor(gl.R, gl.G, gl.B);
+            if (res.TryGetValue("BrandInkColor", out var ink) && ink is Color voidColor)
+                _tail = new SKColor(voidColor.R, voidColor.G, voidColor.B);
+            else if (res.TryGetValue("BrandGradientStart", out var g) && g is Color wine)
+                _tail = new SKColor(wine.R, wine.G, wine.B);
 
             InvalidateVisual();
         }
@@ -106,12 +101,12 @@ namespace Froststrap.UI.Elements.Controls
         {
             if (!IsEffectEnabled)
             {
-                _fade *= 0.85f;
+                _fade *= 0.82f;
                 InvalidateVisual();
                 return;
             }
 
-            _fade += ((_active ? 1f : 0f) - _fade) * (_active ? 0.3f : 0.1f);
+            _fade += ((_active ? 1f : 0f) - _fade) * (_active ? 0.45f : 0.14f);
             if (_fade < 0.02f && !_active)
             {
                 InvalidateVisual();
@@ -121,30 +116,19 @@ namespace Froststrap.UI.Elements.Controls
             if (!_ready)
                 return;
 
-            // Spring-style follow (from earlier liquid trail), gradient colors on draw
-            float spring = 0.45f;
-            const float friction = 0.55f;
-            ref var head = ref _nodes[0];
-            head.Vx += (_tx - head.X) * spring;
-            head.Vy += (_ty - head.Y) * spring;
-            head.Vx *= friction;
-            head.Vy *= friction;
-            head.X += head.Vx;
-            head.Y += head.Vy;
+            // Head is locked to the pointer so the beam never lags the cursor.
+            _nodes[0].X = _tx;
+            _nodes[0].Y = _ty;
+            _nodes[0].Vx = 0;
+            _nodes[0].Vy = 0;
 
             for (int i = 1; i < NodeCount; i++)
             {
-                spring *= 0.965f;
                 ref var n = ref _nodes[i];
                 ref var p = ref _nodes[i - 1];
-                n.Vx += (p.X - n.X) * spring;
-                n.Vy += (p.Y - n.Y) * spring;
-                n.Vx += p.Vx * 0.1f;
-                n.Vy += p.Vy * 0.1f;
-                n.Vx *= friction;
-                n.Vy *= friction;
-                n.X += n.Vx;
-                n.Y += n.Vy;
+                float follow = Math.Clamp(0.72f - i * 0.018f, 0.34f, 0.78f);
+                n.X += (p.X - n.X) * follow;
+                n.Y += (p.Y - n.Y) * follow;
             }
 
             InvalidateVisual();
@@ -217,22 +201,21 @@ namespace Froststrap.UI.Elements.Controls
                 float fade = Math.Clamp(_fade, 0f, 1f);
                 using var path = BuildPath(_pts);
 
-                // Outer soft glow
-                using (var blur = SKImageFilter.CreateBlur(8f, 8f))
+                using (var blur = SKImageFilter.CreateBlur(10f, 10f))
                 using (var paint = new SKPaint
                 {
                     IsAntialias = true,
                     Style = SKPaintStyle.Stroke,
                     StrokeCap = SKStrokeCap.Round,
                     StrokeJoin = SKStrokeJoin.Round,
-                    StrokeWidth = 9f,
+                    StrokeWidth = 14f,
                     ImageFilter = blur,
                     Shader = SKShader.CreateLinearGradient(
                         _pts[0], _pts[^1],
                         [
-                            WithAlpha(_head, fade * 0.18f),
-                            WithAlpha(_mid, fade * 0.22f),
-                            WithAlpha(_tail, fade * 0.12f)
+                            WithAlpha(_mid, fade * 0.42f),
+                            WithAlpha(_mid, fade * 0.28f),
+                            WithAlpha(_tail, fade * 0.08f)
                         ],
                         null,
                         SKShaderTileMode.Clamp)
@@ -241,20 +224,19 @@ namespace Froststrap.UI.Elements.Controls
                     canvas.DrawPath(path, paint);
                 }
 
-                // Bright gradient core
                 using (var paint = new SKPaint
                 {
                     IsAntialias = true,
                     Style = SKPaintStyle.Stroke,
                     StrokeCap = SKStrokeCap.Round,
                     StrokeJoin = SKStrokeJoin.Round,
-                    StrokeWidth = 2.8f,
+                    StrokeWidth = 4.2f,
                     Shader = SKShader.CreateLinearGradient(
                         _pts[0], _pts[^1],
                         [
-                            WithAlpha(_head, fade * 0.55f),
-                            WithAlpha(_mid, fade * 0.5f),
-                            WithAlpha(_tail, fade * 0.28f)
+                            WithAlpha(_head, fade * 0.95f),
+                            WithAlpha(_mid, fade * 0.85f),
+                            WithAlpha(_tail, fade * 0.20f)
                         ],
                         null,
                         SKShaderTileMode.Clamp)
@@ -263,25 +245,45 @@ namespace Froststrap.UI.Elements.Controls
                     canvas.DrawPath(path, paint);
                 }
 
-                // Specular head glow
+                using (var paint = new SKPaint
+                {
+                    IsAntialias = true,
+                    Style = SKPaintStyle.Stroke,
+                    StrokeCap = SKStrokeCap.Round,
+                    StrokeJoin = SKStrokeJoin.Round,
+                    StrokeWidth = 1.5f,
+                    Shader = SKShader.CreateLinearGradient(
+                        _pts[0], _pts[^1],
+                        [
+                            WithAlpha(new SKColor(255, 255, 255), fade * 0.70f),
+                            WithAlpha(_head, fade * 0.35f),
+                            WithAlpha(_mid, 0)
+                        ],
+                        null,
+                        SKShaderTileMode.Clamp)
+                })
+                {
+                    canvas.DrawPath(path, paint);
+                }
+
                 var tip = _pts[0];
                 using (var paint = new SKPaint
                 {
                     IsAntialias = true,
                     Shader = SKShader.CreateRadialGradient(
                         tip,
-                        12f,
+                        16f,
                         [
-                            WithAlpha(new SKColor(255, 255, 255), fade * 0.45f),
-                            WithAlpha(_head, fade * 0.3f),
-                            WithAlpha(_mid, fade * 0.1f),
+                            WithAlpha(new SKColor(255, 255, 255), fade * 0.70f),
+                            WithAlpha(_head, fade * 0.45f),
+                            WithAlpha(_mid, fade * 0.18f),
                             WithAlpha(_mid, 0)
                         ],
-                        [0f, 0.25f, 0.55f, 1f],
+                        [0f, 0.22f, 0.55f, 1f],
                         SKShaderTileMode.Clamp)
                 })
                 {
-                    canvas.DrawCircle(tip, 12f, paint);
+                    canvas.DrawCircle(tip, 16f, paint);
                 }
 
                 canvas.Restore();

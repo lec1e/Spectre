@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>Tentang Froststrap</value>
+    <value>Tentang Spectre</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Lokasi server tidak dapat diakses. Mungkin Anda bergabung ke dalam permainan terlalu cepat.</value>
@@ -137,7 +137,7 @@
     <value>Saluran yang sedang Anda gunakan saat ini ({0}) kini telah dibatasi untuk penggunaan umum. Anda akan dialihkan ke saluran default ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Froststrap tidak dapat diperbarui secara otomatis ke versi {0}. Silakan perbarui secara manual dengan mengunduh dan menjalankannya dari situs web.</value>
+    <value>Spectre tidak dapat diperbarui secara otomatis ke versi {0}. Silakan perbarui secara manual dengan mengunduh dan menjalankannya dari situs web.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox sedang mencoba mengatur saluran Anda ke {0}, namun saluran pilihan Anda saat ini adalah {1}.
@@ -175,7 +175,7 @@ Apakah Anda ingin beralih ke saluran default ({1})?</value>
     <value>Gagal menerapkan semua perubahan</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap tidak memiliki ruang disk yang cukup untuk mengunduh dan menginstal Roblox. Silakan kosongkan ruang disk dan coba lagi.</value>
+    <value>Spectre tidak memiliki ruang disk yang cukup untuk mengunduh dan menginstal Roblox. Silakan kosongkan ruang disk dan coba lagi.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Menerapkan modifikasi Roblox...</value>
@@ -310,10 +310,10 @@ Apakah Anda ingin beralih ke saluran default ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Froststrap telah berhasil dihapus</value>
+    <value>Spectre telah berhasil dihapus</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox sedang berjalan saat ini, tetapi harus ditutup terlebih dahulu sebelum menghapus instalasi Froststrap. Apakah Anda ingin menutup Roblox sekarang?</value>
+    <value>Roblox sedang berjalan saat ini, tetapi harus ditutup terlebih dahulu sebelum menghapus instalasi Spectre. Apakah Anda ingin menutup Roblox sekarang?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox memerlukan penggunaan komponen Windows Media Foundation. Sepertinya komponen tersebut belum terpasang di komputer Anda, kemungkinan karena Anda menggunakan edisi N dari Windows. Silakan pasang komponen tersebut terlebih dahulu, lalu jalankan Roblox.</value>
@@ -398,7 +398,7 @@ Apakah Anda ingin beralih ke saluran default ({1})?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Ekspor</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Berkas</value>
@@ -491,7 +491,7 @@ Apakah Anda ingin beralih ke saluran default ({1})?</value>
     <value>Ganti Nama</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox belum terpasang. Silakan jalankan Roblox menggunakan Froststrap setidaknya sekali sebelum mencoba menggunakan opsi ini.</value>
+    <value>Roblox belum terpasang. Silakan jalankan Roblox menggunakan Spectre setidaknya sekali sebelum mencoba menggunakan opsi ini.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Simpan dan Pasang</value>
@@ -705,7 +705,7 @@ Waktu operasional: {1}</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Gagal menyiapkan bootstrapper khusus: {0}.
 Akan menggunakan {1} sebagai pengganti.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Bootstrapper kustom hanya dapat memiliki maksimal {0} elemen, sudah ada {1}</value>
@@ -754,17 +754,17 @@ Akan menggunakan {1} sebagai pengganti.</value>
     <value>Mohon tunggu hingga proses penghapusan instalasi selesai.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap tidak lagi mendukung Bloxshade.
+    <value>Spectre tidak lagi mendukung Bloxshade.
 Untuk informasi lebih lanjut, bergabunglah dengan server Discord Bloxshade.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Maaf</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap tidak dapat membuat pintasan untuk Desktop dan Menu Mulai. Cobalah membuatnya nanti melalui pengaturan.</value>
+    <value>Spectre tidak dapat membuat pintasan untuk Desktop dan Menu Mulai. Cobalah membuatnya nanti melalui pengaturan.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Koneksi tidak dapat terjalin, yang kemungkinan menandakan koneksi internet yang buruk atau pemblokiran oleh firewall. Jika koneksi Anda baik-baik saja, pastikan bahwa program antivirus Anda tidak memblokir Froststrap.</value>
+    <value>Koneksi tidak dapat terjalin, yang kemungkinan menandakan koneksi internet yang buruk atau pemblokiran oleh firewall. Jika koneksi Anda baik-baik saja, pastikan bahwa program antivirus Anda tidak memblokir Spectre.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Fitur BetterMatchmaking akan dinonaktifkan untuk sesi ini.</value>
@@ -776,7 +776,7 @@ Untuk informasi lebih lanjut, bergabunglah dengan server Discord Bloxshade.</val
     <value>Roblox mungkin sedang tidak bisa diakses saat ini. Lihat {0} untuk informasi lebih lanjut.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Karena Roblox perlu diinstal atau diperbarui, Froststrap tidak dapat dilanjutkan.</value>
+    <value>Karena Roblox perlu diinstal atau diperbarui, Spectre tidak dapat dilanjutkan.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Pada peluncuran kali ini, Roblox tidak akan diperiksa untuk pembaruan, dan perubahan pada mod tidak akan diterapkan.</value>
@@ -788,11 +788,11 @@ Untuk informasi lebih lanjut, bergabunglah dengan server Discord Bloxshade.</val
     <value>Silakan coba lagi nanti.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap tidak dapat terhubung ke {0}</value>
+    <value>Spectre tidak dapat terhubung ke {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap tidak dapat mengunduh Roblox</value>
+    <value>Spectre tidak dapat mengunduh Roblox</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Roblox tidak dapat diunduh saat ini. Silakan baca halaman bantuan berikut untuk informasi lebih lanjut: {0}</value>
@@ -802,24 +802,24 @@ Untuk informasi lebih lanjut, bergabunglah dengan server Discord Bloxshade.</val
     <value>Salin isi log</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Terjadi pengecualian saat menjalankan Froststrap/Froststrap</value>
+    <value>Terjadi pengecualian saat menjalankan Spectre/Spectre</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Silakan periksa [Froststrap Wiki]({0}) terlebih dahulu untuk melihat apakah masalah ini sudah diatasi dengan solusi yang tersedia.
+    <value>Silakan periksa [Spectre Wiki]({0}) terlebih dahulu untuk melihat apakah masalah ini sudah diatasi dengan solusi yang tersedia.
 
 Jika belum, silakan laporkan pengecualian ini melalui [GitHub issue]({1}) beserta salinan berkas log yang telah dibuat.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Silakan periksa [Froststrap Wiki]({0}) terlebih dahulu untuk melihat apakah masalah ini sudah ditangani dengan solusi.
+    <value>Silakan periksa [Spectre Wiki]({0}) terlebih dahulu untuk melihat apakah masalah ini sudah ditangani dengan solusi.
 
-Jika belum, silakan laporkan pengecualian ini kepada pengelola fork ini. JANGAN laporkan hal ini ke bagian Issues di GitHub Froststrap, karena ini adalah build tidak resmi.</value>
+Jika belum, silakan laporkan pengecualian ini kepada pengelola fork ini. JANGAN laporkan hal ini ke bagian Issues di GitHub Spectre, karena ini adalah build tidak resmi.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Laporkan pengecualian</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Pengecualian Froststrap</value>
+    <value>Pengecualian Spectre</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Ikon bootstrapper yang dipilih tidak dapat dimuat.
@@ -843,10 +843,10 @@ Beberapa teks mungkin belum diterjemahkan ke dalam bahasa pilihan Anda.</value>
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Untuk informasi mengenai penyebab masalah ini dan cara mengatasinya, silakan baca [artikel bantuan ini]({0}).
 
-Coba periksa apakah Roblox dapat berjalan dengan [launcher aslinya]({1}). Jika tidak, berarti ini bukan masalah yang terkait dengan Froststrap. Jika ya, silakan lihat artikel bantuan tersebut.</value>
+Coba periksa apakah Roblox dapat berjalan dengan [launcher aslinya]({1}). Jika tidak, berarti ini bukan masalah yang terkait dengan Spectre. Jika ya, silakan lihat artikel bantuan tersebut.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap tidak dapat menulis ke Registri Windows. Kemungkinan ada program antivirus yang mengganggu dan menyebabkan masalah. Silakan periksa untuk memastikan tidak ada hal yang dapat membatasi kinerja Froststrap.</value>
+    <value>Spectre tidak dapat menulis ke Registri Windows. Kemungkinan ada program antivirus yang mengganggu dan menyebabkan masalah. Silakan periksa untuk memastikan tidak ada hal yang dapat membatasi kinerja Spectre.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Gradien</value>
@@ -876,16 +876,16 @@ Coba periksa apakah Roblox dapat berjalan dengan [launcher aslinya]({1}). Jika t
     <value>Byfron Palsu (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (Klasik)</value>
+    <value>Spectre (Klasik)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Kustom</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (Kaca)</value>
+    <value>Spectre (Kaca)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (Buram)</value>
+    <value>Spectre (Buram)</value>
   </data>
   <data name="Enums.CleanerOptions.Never" xml:space="preserve">
     <value>Tidak pernah</value>
@@ -1057,14 +1057,14 @@ Coba periksa apakah Roblox dapat berjalan dengan [launcher aslinya]({1}). Jika t
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap telah diperbarui ke versi {0}</value>
+    <value>Spectre telah diperbarui ke versi {0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Versi Froststrap yang baru saja Anda jalankan berbeda dengan versi yang saat ini terpasang.
+    <value>Versi Spectre yang baru saja Anda jalankan berbeda dengan versi yang saat ini terpasang.
 Apakah Anda ingin memperbarui versi yang saat ini terpasang?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Versi Froststrap yang baru saja Anda jalankan lebih lama daripada versi yang saat ini terpasang.
+    <value>Versi Spectre yang baru saja Anda jalankan lebih lama daripada versi yang saat ini terpasang.
 Masalah mungkin terjadi dan pengaturan Anda mungkin berubah. Disarankan untuk menginstal ulang.
 Apakah Anda yakin ingin melanjutkan?</value>
   </data>
@@ -1081,7 +1081,7 @@ Apakah Anda yakin ingin melanjutkan?</value>
     <value>Buka Roblox Studio</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Tidak akan ada berkas log yang dibuat untuk proses peluncuran ini karena Froststrap tidak dapat menulis ke folder di &apos;{0}&apos;</value>
+    <value>Tidak akan ada berkas log yang dibuat untuk proses peluncuran ini karena Spectre tidak dapat menulis ke folder di &apos;{0}&apos;</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Informasi Pembuatan</value>
@@ -1099,13 +1099,13 @@ Apakah Anda yakin ingin melanjutkan?</value>
     <value>Kode</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Inilah semua orang yang telah memberikan kontribusi penting bagi Froststrap dan Froststrap, sehingga membentuk keduanya menjadi seperti sekarang ini.</value>
+    <value>Inilah semua orang yang telah memberikan kontribusi penting bagi Spectre dan Spectre, sehingga membentuk keduanya menjadi seperti sekarang ini.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Inspirasi</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Garpu Fishstrap/Froststrap.</value>
+    <value>Garpu Fishstrap/Spectre.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Server Discord</value>
@@ -1165,16 +1165,16 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Harap diperhatikan bahwa tidak semua perubahan yang Anda lakukan akan langsung berlaku sampai Anda menutup semua sesi Roblox yang sedang terbuka.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap sudah berjalan</value>
+    <value>Spectre sudah berjalan</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Mode Latar Belakang:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Sesuaikan bootstrapper Froststrap menggunakan beragam pilihan.</value>
+    <value>Sesuaikan bootstrapper Spectre menggunakan beragam pilihan.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Sesuaikan tema Froststrap dengan mudah menggunakan preset atau buat tampilan unik Anda sendiri.</value>
+    <value>Sesuaikan tema Spectre dengan mudah menggunakan preset atau buat tampilan unik Anda sendiri.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Tema Aplikasi</value>
@@ -1192,13 +1192,13 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Judul</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Atur tampilan Froststrap.</value>
+    <value>Atur tampilan Spectre.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Frekuensi</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Pilih ikon mana yang akan digunakan oleh Froststrap.</value>
+    <value>Pilih ikon mana yang akan digunakan oleh Spectre.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Ikon</value>
@@ -1210,7 +1210,7 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Bahasa</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Pilih gaya layar awal. Catatan: Tema gelap tidak didukung untuk sistem operasi Legacy atau Vista. Untuk peluncur yang lebih dapat disesuaikan, kunjungi server Discord resmi Froststrap.</value>
+    <value>Pilih gaya layar awal. Catatan: Tema gelap tidak didukung untuk sistem operasi Legacy atau Vista. Untuk peluncur yang lebih dapat disesuaikan, kunjungi server Discord resmi Spectre.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Gaya Bootstrapper</value>
@@ -1243,16 +1243,16 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Latar Belakang Jendela</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Memberikan akses ke API Roblox menggunakan cookie otentikasi Anda. [Apa saja yang akan diakses oleh Froststrap?]({0})</value>
+    <value>Memberikan akses ke API Roblox menggunakan cookie otentikasi Anda. [Apa saja yang akan diakses oleh Spectre?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Izin Akun Froststrap</value>
+    <value>Izin Akun Spectre</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap akan secara otomatis memeriksa dan memperbarui dirinya sendiri ke versi stabil saat Roblox dijalankan.</value>
+    <value>Spectre akan secara otomatis memeriksa dan memperbarui dirinya sendiri ke versi stabil saat Roblox dijalankan.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Perbarui Froststrap Secara Otomatis</value>
+    <value>Perbarui Spectre Secara Otomatis</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Perbarui Roblox di latar belakang daripada menunggu. Tidak disarankan untuk koneksi internet yang lambat. Diperlukan setidaknya 3 GB ruang penyimpanan kosong agar fitur ini dapat berfungsi.</value>
@@ -1273,7 +1273,7 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Konfirmasi Peluncuran Instans</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Atur tindakan yang harus dilakukan Froststrap saat meluncurkan Roblox.</value>
+    <value>Atur tindakan yang harus dilakukan Spectre saat meluncurkan Roblox.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Instalasi baru Roblox akan dilakukan saat aplikasi diluncurkan berikutnya.</value>
@@ -1306,7 +1306,7 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Secara otomatis menghapus data lama untuk mengosongkan ruang penyimpanan. Awalnya dibuat oleh Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Pembersih Froststrap</value>
+    <value>Pembersih Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Berkas yang usianya melebihi batas waktu yang ditetapkan akan dihapus.</value>
@@ -1318,10 +1318,10 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Unduhan lama akan dihapus.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Log Froststrap akan dihapus.</value>
+    <value>Log Spectre akan dihapus.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Catatan Froststrap</value>
+    <value>Catatan Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>File log lama akan dihapus.</value>
@@ -1330,7 +1330,7 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Menu Log</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Biarkan Froststrap yang menentukan server mana yang akan Anda masuki. Froststrap akan memprioritaskan server yang jaraknya paling dekat dengan Anda.</value>
+    <value>Biarkan Spectre yang menentukan server mana yang akan Anda masuki. Spectre akan memprioritaskan server yang jaraknya paling dekat dengan Anda.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Sepertinya ada teman yang sedang memainkan game ini. Mau ikut main bareng mereka?</value>
@@ -1387,7 +1387,7 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Berubah secara otomatis</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox atau Froststrap mungkin akan mencoba mengubah saluran pilihan Anda.</value>
+    <value>Roblox atau Spectre mungkin akan mencoba mengubah saluran pilihan Anda.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Jangan pernah berubah</value>
@@ -1399,7 +1399,7 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Tindakan Pergantian Saluran Otomatis</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Ubah pengaturan penerapan dan pemasangan untuk Roblox dan Froststrap.</value>
+    <value>Ubah pengaturan penerapan dan pemasangan untuk Roblox dan Spectre.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Peningkatan Roblox</value>
@@ -1486,7 +1486,7 @@ Klik &apos;Tambahkan Akun&apos; di atas untuk memulai</value>
     <value>Berkas cookie Roblox tidak ditemukan.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap akan secara otomatis memeriksa dan memperbarui dirinya sendiri ke versi uji coba saat Roblox diluncurkan.</value>
+    <value>Spectre akan secara otomatis memeriksa dan memperbarui dirinya sendiri ke versi uji coba saat Roblox diluncurkan.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Pembaruan untuk Versi Pra-Rilis</value>
@@ -1623,7 +1623,7 @@ Mau menghapusnya sekarang?</value>
     <value>Menonaktifkan opsi ini akan mencegah agar pengaturan apa pun yang ditentukan di sini diterapkan ke Roblox.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Izinkan Froststrap untuk Mengelola FastFlags</value>
+    <value>Izinkan Spectre untuk Mengelola FastFlags</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox menurunkan kualitas rendering Anda tergantung pada skala tampilan Anda di Windows.</value>
@@ -2031,7 +2031,7 @@ Mau menghapusnya sekarang?</value>
     <value>Mirip dengan Desktop</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Membuka jendela tertentu saat Anda mengklik dua kali ikon Froststrap di baki sistem saat meluncurkan Roblox.</value>
+    <value>Membuka jendela tertentu saat Anda mengklik dua kali ikon Spectre di baki sistem saat meluncurkan Roblox.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Tindakan Klik Ganda</value>
@@ -2049,13 +2049,13 @@ Mau menghapusnya sekarang?</value>
     <value>Info Pengeditan</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Memungkinkan Froststrap untuk mendeteksi game Roblox apa yang sedang Anda mainkan. Beberapa fitur mungkin memerlukan hal ini.</value>
+    <value>Memungkinkan Spectre untuk mendeteksi game Roblox apa yang sedang Anda mainkan. Beberapa fitur mungkin memerlukan hal ini.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Aktifkan Pelacakan Aktivitas</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Aktifkan opsi ini untuk menampilkan RPC khusus &apos;Playing Froststrap&apos; di profil Discord Anda saat aplikasi sedang terbuka.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Aktifkan opsi ini untuk menampilkan RPC khusus &apos;Playing Spectre&apos; di profil Discord Anda saat aplikasi sedang terbuka.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Menampilkan permainan yang telah Anda mainkan dalam sesi ini dan memungkinkan Anda untuk bergabung kembali ke permainan tersebut.</value>
@@ -2118,7 +2118,7 @@ Mau menghapusnya sekarang?</value>
     <value>Menampilkan Aktivitas Studio</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Cara kerjanya adalah dengan menambahkan plugin Froststrap yang dibuat khusus untuk mencatat aktivitas Anda.
+    <value>Cara kerjanya adalah dengan menambahkan plugin Spectre yang dibuat khusus untuk mencatat aktivitas Anda.
 Apakah Anda ingin menginstal plugin ini?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2676,7 +2676,7 @@ Aplikasi akan menutup jendela ini setelah proses masuk selesai.</value>
     <value>Memuat pusat data...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Masuk menggunakan Account Manager atau aktifkan &apos;Izin Akun Froststrap&apos;, atau laporkan hal ini ke server Discord kami agar dapat menggunakannya.</value>
+    <value>Masuk menggunakan Account Manager atau aktifkan &apos;Izin Akun Spectre&apos;, atau laporkan hal ini ke server Discord kami agar dapat menggunakannya.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Tidak ditemukan server publik.</value>
@@ -2751,13 +2751,13 @@ Aplikasi akan menutup jendela ini setelah proses masuk selesai.</value>
     <value>Buat Pintasan</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Atur agar Froststrap dapat dijalankan dengan mudah.</value>
+    <value>Atur agar Spectre dapat dijalankan dengan mudah.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Terjadi kesalahan saat membuat pintasan.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Memungkinkan Anda menggunakan berbagai ikon Roblox dari Froststrap untuk pintasan Anda. [Lihat caranya.]({0})</value>
+    <value>Memungkinkan Anda menggunakan berbagai ikon Roblox dari Spectre untuk pintasan Anda. [Lihat caranya.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Ekstrak Ikon Roblox ke Folder</value>
@@ -2825,29 +2825,29 @@ Selama mode ini diaktifkan, Roblox akan secara otomatis dibuka setelah Pengatura
 Apakah Anda ingin mengaktifkan Mode Uji?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Pengaturan Froststrap</value>
+    <value>Pengaturan Spectre</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Ikon</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>File-file tersebut akan disimpan di tempat di mana Froststrap diinstal, dan akan dipulihkan secara otomatis saat diinstal ulang.</value>
+    <value>File-file tersebut akan disimpan di tempat di mana Spectre diinstal, dan akan dipulihkan secara otomatis saat diinstal ulang.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Pertahankan pengaturan dan modifikasi saya</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Proses penghapusan instalasi akan menghapus Froststrap dari sistem Anda, serta secara otomatis mengonfigurasi ulang peluncur Roblox bawaan jika masih terpasang.
+    <value>Proses penghapusan instalasi akan menghapus Spectre dari sistem Anda, serta secara otomatis mengonfigurasi ulang peluncur Roblox bawaan jika masih terpasang.
 
 Jika Anda menghapus atau menginstal ulang karena mengalami masalah dengan Roblox, bacalah [halaman bantuan ini]({0}) terlebih dahulu.
 
-Proses penghapusan mungkin tidak dapat membersihkan sisa-sisa file secara menyeluruh, sehingga Anda mungkin perlu membersihkan file-file sisa di lokasi tempat Froststrap diinstal secara manual.
+Proses penghapusan mungkin tidak dapat membersihkan sisa-sisa file secara menyeluruh, sehingga Anda mungkin perlu membersihkan file-file sisa di lokasi tempat Spectre diinstal secara manual.
 
-Froststrap diinstal di &quot;{1}&quot;.</value>
+Spectre diinstal di &quot;{1}&quot;.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Hapus Instalasi Froststrap</value>
+    <value>Hapus Instalasi Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Hapus Instalasi</value>

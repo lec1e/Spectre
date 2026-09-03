@@ -74,6 +74,7 @@ namespace Froststrap
             if (App.Settings.Prop.EnableActivityTracking)
             {
                 ActivityWatcher = new(_watcherData.LogFile, _watcherData.LaunchMode, _watcherData.ProcessId);
+                ActivityWatcher.SeedLaunchJoin(_watcherData.LaunchCommandLine, _watcherData.AccessCode);
 
                 if (App.Settings.Prop.UseDisableAppPatch || App.Settings.Prop.FullyCloseRobloxOnExit)
                 {

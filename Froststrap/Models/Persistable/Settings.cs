@@ -74,14 +74,14 @@ namespace Froststrap.Models.Persistable
         public string? BackgroundImagePath { get; set; } = "";
         public BackgroundStretch BackgroundStretch { get; set; } = BackgroundStretch.UniformToFill;
         public double BackgroundOpacity { get; set; } = 1.0;
-        public string BootstrapperTitle { get; set; } = App.ProjectName;
+        public string BootstrapperTitle { get; set; } = App.BrandName;
         public string BootstrapperIconCustomLocation { get; set; } = "";
         public int MaxThreadDownload { get; set; } = 3;
         public Theme Theme { get; set; } = Theme.Dark;
 
         // Eclipse brand theming (ported from MrEx ThemeManager)
         public ThemePalette Palette { get; set; } = new();
-        public string SelectedThemePreset { get; set; } = "Eclipse";
+        public string SelectedThemePreset { get; set; } = "Crimson";
         public bool EnableAurora { get; set; } = true;
         public bool EnableGlass { get; set; } = true;
         public bool EnableGlow { get; set; } = true;
@@ -107,6 +107,13 @@ namespace Froststrap.Models.Persistable
         public bool ForceLiveChannel { get; set; } = true;
         public bool ShowVipPickerOnLaunch { get; set; } = false;
         public bool EnableVipServerPrompt { get; set; } = false;
+        public bool BanAsyncRelaunchAfterSpoof { get; set; } = false;
+        public bool BanAsyncFullWipe { get; set; } = false;
+
+        // Liquid glass customizability
+        public double GlassTintOpacity { get; set; } = 0.58;
+        public double GlassMaterialOpacity { get; set; } = 0.46;
+        public double GlassCornerRadius { get; set; } = 0;
 
         // BanAsync (Windows-only)
         public bool BanAsyncPersistent { get; set; } = true;

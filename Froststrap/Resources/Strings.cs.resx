@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>O společnosti Froststrap</value>
+    <value>O společnosti Spectre</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Nepodařilo se zjistit umístění serveru. Možná se připojujete ke hrám příliš rychle.</value>
@@ -137,7 +137,7 @@
     <value>Kanál, na kterém se právě nacházíte ({0}), byl nyní omezen pro veřejné použití. Nyní budete přesměrováni na výchozí kanál ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Aplikaci Froststrap se nepodařilo automaticky aktualizovat na verzi {0}. Aktualizujte ji prosím ručně stažením a spuštěním souboru z webových stránek.</value>
+    <value>Aplikaci Spectre se nepodařilo automaticky aktualizovat na verzi {0}. Aktualizujte ji prosím ručně stažením a spuštěním souboru z webových stránek.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox se pokouší nastavit váš kanál na {0}, avšak váš aktuální preferovaný kanál je {1}.
@@ -175,7 +175,7 @@ Chcete přepnout na výchozí kanál ({1})?</value>
     <value>Nepodařilo se použít všechny změny</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap nemá dostatek místa na disku pro stažení a instalaci Robloxu. Uvolněte prosím místo na disku a zkuste to znovu.</value>
+    <value>Spectre nemá dostatek místa na disku pro stažení a instalaci Robloxu. Uvolněte prosím místo na disku a zkuste to znovu.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Používání modifikací pro Roblox...</value>
@@ -310,10 +310,10 @@ Chcete přepnout na výchozí kanál ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Program Froststrap byl úspěšně odinstalován</value>
+    <value>Program Spectre byl úspěšně odinstalován</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox je právě spuštěn, ale před odinstalací Froststrapu je nutné jej zavřít. Chcete Roblox zavřít nyní?</value>
+    <value>Roblox je právě spuštěn, ale před odinstalací Spectreu je nutné jej zavřít. Chcete Roblox zavřít nyní?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox vyžaduje použití komponent Windows Media Foundation. Zdá se, že vám tyto komponenty chybí, pravděpodobně proto, že používáte edici Windows N. Nejprve je prosím nainstalujte a teprve poté spusťte Roblox.</value>
@@ -404,7 +404,7 @@ Chcete přepnout na výchozí kanál ({1})?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Exportovat</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Soubory</value>
@@ -491,7 +491,7 @@ Chcete přepnout na výchozí kanál ({1})?</value>
     <value>Přejmenovat</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox ještě není nainstalován. Než se pokusíte tuto možnost použít, spusťte prosím alespoň jednou aplikaci Roblox pomocí Froststrap.</value>
+    <value>Roblox ještě není nainstalován. Než se pokusíte tuto možnost použít, spusťte prosím alespoň jednou aplikaci Roblox pomocí Spectre.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Uložit a nainstalovat</value>
@@ -711,7 +711,7 @@ Doba provozu: {1}</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Nastavení vlastního bootstrapperu se nezdařilo: {0}.
 Použije se výchozí nastavení {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Vlastní bootstrappery mohou obsahovat maximálně {0} prvků, bylo nalezeno {1}</value>
@@ -760,17 +760,17 @@ Použije se výchozí nastavení {1}.</value>
     <value>Počkejte prosím, až se odinstalace dokončí.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap již nepodporuje Bloxshade.
+    <value>Spectre již nepodporuje Bloxshade.
 Další informace najdete na serveru Bloxshade na Discordu.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Promiň</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap se nepodařilo vytvořit zástupce na ploše a v nabídce Start. Zkuste je vytvořit později v nastavení.</value>
+    <value>Spectre se nepodařilo vytvořit zástupce na ploše a v nabídce Start. Zkuste je vytvořit později v nastavení.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Nepodařilo se navázat spojení, což pravděpodobně znamená, že máte špatné připojení k internetu nebo že vás blokuje firewall. Pokud je vaše připojení v pořádku, zkontrolujte prosím, zda váš antivirový program neblokuje Froststrap.</value>
+    <value>Nepodařilo se navázat spojení, což pravděpodobně znamená, že máte špatné připojení k internetu nebo že vás blokuje firewall. Pokud je vaše připojení v pořádku, zkontrolujte prosím, zda váš antivirový program neblokuje Spectre.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Funkce BetterMatchmaking bude v této relaci deaktivována.</value>
@@ -782,7 +782,7 @@ Další informace najdete na serveru Bloxshade na Discordu.</value>
     <value>Roblox je momentálně možná mimo provoz. Další informace najdete na {0}.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Vzhledem k tomu, že je třeba nainstalovat nebo aktualizovat Roblox, nelze v aplikaci Froststrap pokračovat.</value>
+    <value>Vzhledem k tomu, že je třeba nainstalovat nebo aktualizovat Roblox, nelze v aplikaci Spectre pokračovat.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Při tomto spuštění nebude Roblox kontrolován z hlediska aktualizací a změny v modech nebudou aplikovány.</value>
@@ -794,11 +794,11 @@ Další informace najdete na serveru Bloxshade na Discordu.</value>
     <value>Zkuste to prosím později.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap se nemůže připojit k {0}</value>
+    <value>Spectre se nemůže připojit k {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap nemůže stáhnout Roblox</value>
+    <value>Spectre nemůže stáhnout Roblox</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Hru Roblox nelze v tuto chvíli stáhnout. Další informace najdete na následující stránce nápovědy: {0}</value>
@@ -808,24 +808,24 @@ Další informace najdete na serveru Bloxshade na Discordu.</value>
     <value>Zkopírovat obsah protokolu</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Při spuštění Froststrap/Froststrap došlo k výjimce</value>
+    <value>Při spuštění Spectre/Spectre došlo k výjimce</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Nejprve se podívejte na [Froststrap Wiki]({0}), zda již nebyl tento problém vyřešen.
+    <value>Nejprve se podívejte na [Spectre Wiki]({0}), zda již nebyl tento problém vyřešen.
 
 Pokud ne, nahlaste prosím tuto výjimku prostřednictvím [GitHub issue]({1}) spolu s kopií vytvořeného souboru protokolu.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Nejprve se podívejte na [Froststrap Wiki]({0}), zda již nebyl tento problém vyřešen.
+    <value>Nejprve se podívejte na [Spectre Wiki]({0}), zda již nebyl tento problém vyřešen.
 
-Pokud ne, nahlaste prosím tuto výjimku správcům tohoto forku. NEHLASTE to prosím v sekci „Issues“ na GitHubu projektu Froststrap, jelikož se jedná o neoficiální sestavení.</value>
+Pokud ne, nahlaste prosím tuto výjimku správcům tohoto forku. NEHLASTE to prosím v sekci „Issues“ na GitHubu projektu Spectre, jelikož se jedná o neoficiální sestavení.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Nahlásit výjimku</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Výjimka Froststrap</value>
+    <value>Výjimka Spectre</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Vybranou ikonu bootstrapperu se nepodařilo načíst.
@@ -849,10 +849,10 @@ Některé texty nemusí být přeloženy do zvoleného jazyka.</value>
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Informace o tom, proč k tomu může docházet a jak tento problém vyřešit, najdete v [tomto článku nápovědy]({0}).
 
-Zkuste, zda Roblox funguje s [původním spouštěčem]({1}). Pokud ne, nejedná se o problém související s Froststrapem. Pokud ano, postupujte podle pokynů v článku nápovědy.</value>
+Zkuste, zda Roblox funguje s [původním spouštěčem]({1}). Pokud ne, nejedná se o problém související s Spectreem. Pokud ano, postupujte podle pokynů v článku nápovědy.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap nemůže zapisovat do registru systému Windows. Pravděpodobně dochází k rušení ze strany antivirového programu, což způsobuje potíže. Zkontrolujte prosím, zda neexistuje nic, co by omezovalo fungování aplikace Froststrap.</value>
+    <value>Spectre nemůže zapisovat do registru systému Windows. Pravděpodobně dochází k rušení ze strany antivirového programu, což způsobuje potíže. Zkontrolujte prosím, zda neexistuje nic, co by omezovalo fungování aplikace Spectre.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Přechody</value>
@@ -882,16 +882,16 @@ Zkuste, zda Roblox funguje s [původním spouštěčem]({1}). Pokud ne, nejedná
     <value>Padělek Byfronu (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (klasická verze)</value>
+    <value>Spectre (klasická verze)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Na míru</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (sklo)</value>
+    <value>Spectre (sklo)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (neprůhledný)</value>
+    <value>Spectre (neprůhledný)</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>Roblox (cca 2025)</value>
@@ -1126,14 +1126,14 @@ Zkuste, zda Roblox funguje s [původním spouštěčem]({1}). Pokud ne, nejedná
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap byl aktualizován na verzi {0}</value>
+    <value>Spectre byl aktualizován na verzi {0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Verze Froststrapu, kterou jste spustili, se liší od verze, kterou máte aktuálně nainstalovanou.
+    <value>Verze Spectreu, kterou jste spustili, se liší od verze, kterou máte aktuálně nainstalovanou.
 Chcete aktualizovat aktuálně nainstalovanou verzi?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Verze Froststrapu, kterou jste spustili, je starší než verze, kterou máte aktuálně nainstalovanou.
+    <value>Verze Spectreu, kterou jste spustili, je starší než verze, kterou máte aktuálně nainstalovanou.
 Mohou nastat problémy a vaše nastavení se může změnit. Doporučujeme provést přeinstalaci.
 Opravdu chcete pokračovat?</value>
   </data>
@@ -1150,7 +1150,7 @@ Opravdu chcete pokračovat?</value>
     <value>Spustit Roblox Studio</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Pro tento spuštěný proces nebude vytvořen žádný soubor protokolu, protože Froststrap nemůže zapisovat do složky „{0}“</value>
+    <value>Pro tento spuštěný proces nebude vytvořen žádný soubor protokolu, protože Spectre nemůže zapisovat do složky „{0}“</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Informace o sestavení</value>
@@ -1168,13 +1168,13 @@ Opravdu chcete pokračovat?</value>
     <value>Kód</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Toto jsou všichni lidé, kteří významně přispěli k vývoji projektů Froststrap a Froststrap a pomohli je utvářet do podoby, jakou mají dnes.</value>
+    <value>Toto jsou všichni lidé, kteří významně přispěli k vývoji projektů Spectre a Spectre a pomohli je utvářet do podoby, jakou mají dnes.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Inspirace</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Vidlice typu Fishstrap/Froststrap.</value>
+    <value>Vidlice typu Fishstrap/Spectre.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Server Discord</value>
@@ -1234,16 +1234,16 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Vezměte prosím na vědomí, že ne všechny vaše změny se projeví okamžitě, dokud neukončíte všechny aktuálně spuštěné instance Robloxu.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap již běží</value>
+    <value>Spectre již běží</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Režim na pozadí:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Přizpůsobte si bootstrapper projektu Froststrap pomocí celé řady možností.</value>
+    <value>Přizpůsobte si bootstrapper projektu Spectre pomocí celé řady možností.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Šablony Froststrap můžete snadno přizpůsobit pomocí přednastavených variant nebo si vytvořit svůj vlastní jedinečný vzhled.</value>
+    <value>Šablony Spectre můžete snadno přizpůsobit pomocí přednastavených variant nebo si vytvořit svůj vlastní jedinečný vzhled.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Motivy aplikací</value>
@@ -1261,13 +1261,13 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Název</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Nastavte, jak má Froststrap vypadat.</value>
+    <value>Nastavte, jak má Spectre vypadat.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Frekvence</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Vyberte, jakou ikonu má Froststrap používat.</value>
+    <value>Vyberte, jakou ikonu má Spectre používat.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Ikona</value>
@@ -1282,7 +1282,7 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Jazyk</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Vyberte styl úvodní obrazovky. Poznámka: Tmavý motiv není podporován v systémech Legacy ani Vista. Další přizpůsobitelné spouštěče najdete na oficiálním serveru Froststrap na Discord.</value>
+    <value>Vyberte styl úvodní obrazovky. Poznámka: Tmavý motiv není podporován v systémech Legacy ani Vista. Další přizpůsobitelné spouštěče najdete na oficiálním serveru Spectre na Discord.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Styl „bootstrapper“</value>
@@ -1315,16 +1315,16 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Okenní pozadí</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Umožňuje přístup k rozhraním API služby Roblox pomocí vašeho ověřovacího souboru cookie. [K čemu bude mít Froststrap přístup?]({0})</value>
+    <value>Umožňuje přístup k rozhraním API služby Roblox pomocí vašeho ověřovacího souboru cookie. [K čemu bude mít Spectre přístup?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Oprávnění k účtu Froststrap</value>
+    <value>Oprávnění k účtu Spectre</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap se při spuštění Robloxu automaticky zkontroluje a aktualizuje na stabilní verzi.</value>
+    <value>Spectre se při spuštění Robloxu automaticky zkontroluje a aktualizuje na stabilní verzi.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Automatická aktualizace Froststrap</value>
+    <value>Automatická aktualizace Spectre</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Aktualizujte Roblox na pozadí, místo abyste čekali. Nedoporučuje se při pomalém připojení. Aby tato funkce fungovala, je zapotřebí alespoň 3 GB volného úložného prostoru.</value>
@@ -1345,7 +1345,7 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Potvrzení spuštění instance</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Nastavte, jak se má Froststrap chovat při spuštění Robloxu.</value>
+    <value>Nastavte, jak se má Spectre chovat při spuštění Robloxu.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Při příštím spuštění dojde k čisté instalaci aplikace Roblox.</value>
@@ -1375,7 +1375,7 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Automaticky maže stará data, aby uvolnilo místo. Původně vytvořil Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Čistič Froststrap</value>
+    <value>Čistič Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Soubory starší než stanovená doba budou smazány.</value>
@@ -1387,10 +1387,10 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Staré soubory ke stažení budou smazány.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Protokoly Froststrap budou smazány.</value>
+    <value>Protokoly Spectre budou smazány.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Záznamy Froststrap</value>
+    <value>Záznamy Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Staré soubory protokolů budou smazány.</value>
@@ -1399,7 +1399,7 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Nabídka protokolů</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Nechte Froststrap, aby rozhodl, ke kterým serverům se připojíte. Upřednostňuje server, který je od vás nejblíže.</value>
+    <value>Nechte Spectre, aby rozhodl, ke kterým serverům se připojíte. Upřednostňuje server, který je od vás nejblíže.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Vypadá to, že jeden z tvých přátel právě hraje tuto hru. Chceš se k němu přidat?</value>
@@ -1456,7 +1456,7 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Změnit automaticky</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox nebo Froststrap se mohou pokusit změnit váš preferovaný kanál.</value>
+    <value>Roblox nebo Spectre se mohou pokusit změnit váš preferovaný kanál.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Nikdy se neměň</value>
@@ -1468,7 +1468,7 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Akce automatického přepnutí kanálu</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Změňte nastavení nasazení a instalace pro Roblox a Froststrap.</value>
+    <value>Změňte nastavení nasazení a instalace pro Roblox a Spectre.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Vylepšení Robloxu</value>
@@ -1555,7 +1555,7 @@ Klikněte nahoře na „Přidat účet“ a můžete začít</value>
     <value>Soubor cookie Roblox nebyl nalezen.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap při spuštění Robloxu automaticky provede kontrolu a aktualizuje se na testovací verzi.</value>
+    <value>Spectre při spuštění Robloxu automaticky provede kontrolu a aktualizuje se na testovací verzi.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Aktualizace předběžných verzí</value>
@@ -1686,7 +1686,7 @@ Chcete jej nyní odstranit?</value>
     <value>Pokud tuto možnost deaktivujete, nic z toho, co je zde nastaveno, se v Robloxu neuplatní.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Povolit Froststrap spravovat FastFlags</value>
+    <value>Povolit Spectre spravovat FastFlags</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox snižuje kvalitu vykreslování v závislosti na tom, jak je ve Windows nastaveno měřítko obrazovky.</value>
@@ -2091,7 +2091,7 @@ Chcete jej nyní odstranit?</value>
     <value>Podobné jako na počítači</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Při spuštění Robloxu se otevře konkrétní okno, pokud dvakrát kliknete na ikonu Froststrap v systémové liště.</value>
+    <value>Při spuštění Robloxu se otevře konkrétní okno, pokud dvakrát kliknete na ikonu Spectre v systémové liště.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Akce při dvojitém kliknutí</value>
@@ -2109,13 +2109,13 @@ Chcete jej nyní odstranit?</value>
     <value>Informace o úpravách</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Umožňuje aplikaci Froststrap rozpoznat, kterou hru na Robloxu právě hrajete. Některé funkce to mohou vyžadovat.</value>
+    <value>Umožňuje aplikaci Spectre rozpoznat, kterou hru na Robloxu právě hrajete. Některé funkce to mohou vyžadovat.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Zapnout sledování aktivity</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Tuto možnost zapněte, aby se ve vašem profilu na Discord zobrazoval vlastní RPC „Playing Froststrap“, dokud je aplikace spuštěná.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Tuto možnost zapněte, aby se ve vašem profilu na Discord zobrazoval vlastní RPC „Playing Spectre“, dokud je aplikace spuštěná.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Zobrazuje hru, kterou jste v této relaci hráli, a umožňuje vám se k ní znovu připojit.</value>
@@ -2178,7 +2178,7 @@ Chcete jej nyní odstranit?</value>
     <value>Zobrazit aktivitu ve Studiu</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Funguje to tak, že se přidá na míru vytvořený plugin pro Froststrap, který bude zaznamenávat vaše aktivity.
+    <value>Funguje to tak, že se přidá na míru vytvořený plugin pro Spectre, který bude zaznamenávat vaše aktivity.
 Chcete plugin nainstalovat?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2742,7 +2742,7 @@ Aplikace toto okno zavře, jakmile bude přihlášení dokončeno.</value>
     <value>Načítání datových center...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Chcete-li tuto funkci používat, přihlaste se pomocí správce účtů, zapněte „Froststrap Account Permission“ nebo to nahlaste na našem serveru Discord.</value>
+    <value>Chcete-li tuto funkci používat, přihlaste se pomocí správce účtů, zapněte „Spectre Account Permission“ nebo to nahlaste na našem serveru Discord.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Nebyly nalezeny žádné veřejné servery.</value>
@@ -2811,13 +2811,13 @@ Aplikace toto okno zavře, jakmile bude přihlášení dokončeno.</value>
     <value>Vytvořit zástupce</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Nastavte, jak lze Froststrap snadno spustit.</value>
+    <value>Nastavte, jak lze Spectre snadno spustit.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Došlo k chybě při vytváření zástupce.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Umožňuje vám používat sadu ikon Froststrap pro Roblox jako zkratky. [Jak na to.]({0})</value>
+    <value>Umožňuje vám používat sadu ikon Spectre pro Roblox jako zkratky. [Jak na to.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Extrahovat ikony Robloxu do složky</value>
@@ -2888,29 +2888,29 @@ Pokud je tato funkce zapnutá, po zavření Nastavení se automaticky spustí Ro
 Chcete zapnout testovací režim?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Nastavení Froststrap</value>
+    <value>Nastavení Spectre</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Ikony</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Budou uloženy na místě, kde byl nainstalován Froststrap, a při opětovné instalaci se automaticky obnoví.</value>
+    <value>Budou uloženy na místě, kde byl nainstalován Spectre, a při opětovné instalaci se automaticky obnoví.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Zachovat moje nastavení a modifikace</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Odinstalací se z vašeho systému odstraní Froststrap a automaticky se znovu nakonfiguruje výchozí spouštěč Roblox, pokud je stále nainstalován.
+    <value>Odinstalací se z vašeho systému odstraní Spectre a automaticky se znovu nakonfiguruje výchozí spouštěč Roblox, pokud je stále nainstalován.
 
 Pokud odinstalováváte nebo přeinstalováváte kvůli problémům s Robloxem, přečtěte si nejprve [tuto stránku nápovědy]({0}).
 
-Proces odinstalace nemusí být schopen zcela odstranit všechny zbytky, takže možná budete muset ručně odstranit zbývající soubory z místa, kde byl Froststrap nainstalován.
+Proces odinstalace nemusí být schopen zcela odstranit všechny zbytky, takže možná budete muset ručně odstranit zbývající soubory z místa, kde byl Spectre nainstalován.
 
-Froststrap byl nainstalován do složky „{1}“.</value>
+Spectre byl nainstalován do složky „{1}“.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Odinstalovat Froststrap</value>
+    <value>Odinstalovat Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Odinstalovat</value>

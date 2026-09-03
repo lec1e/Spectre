@@ -93,10 +93,10 @@
     </Style>
 
     <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#C084FC" />
+        <Setter Property="StrokeBrush" Value="#E11D48" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#E9D5FF" />
+        <Setter Property="StrokeBrush" Value="#FECDD3" />
     </Style>
 
     <!-- Close: red icon tint on hover, still no box -->

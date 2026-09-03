@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Froststrap.UI.Elements.Bootstrapper.Base;
 using Froststrap.UI.ViewModels.Bootstrapper;
@@ -19,12 +20,27 @@ namespace Froststrap.UI.Elements.Bootstrapper
             string version = Utilities.GetRobloxVersionStr(Bootstrapper?.IsStudioLaunch ?? false);
             _viewModel = new FluentDialogViewModel(this, aero, version);
             DataContext = _viewModel;
+            TransparencyLevelHint = _viewModel.WindowBackdropType;
+            Background = Brushes.Transparent;
 
             SetupDialog();
 
             var iconImage = App.Settings.Prop.BootstrapperIcon.GetIcon().GetImageSource();
             if (iconImage is Bitmap bitmap)
                 Icon = new WindowIcon(bitmap);
+
+            void ApplyGlass()
+            {
+                ShellGlass?.ApplyFromSettings();
+                if (aero && App.Settings.Prop.EnableGlass && ShellGlass is not null)
+                {
+                    ShellGlass.TintOpacity = Math.Min(App.Settings.Prop.GlassTintOpacity + 0.08, 0.55);
+                    ShellGlass.MaterialOpacity = Math.Min(App.Settings.Prop.GlassMaterialOpacity + 0.12, 0.65);
+                }
+            }
+
+            ApplyGlass();
+            Loaded += (_, _) => ApplyGlass();
         }
 
         #region UI Elements Overrides

@@ -15,7 +15,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto" Background="{DynamicResource ApplicationBackgroundColor}">
         <controls:TitleBar Grid.Row="0"
-                           Icon="avares://Eclipse/Eclipse.ico"
+                           Icon="avares://Eclipse/SpectreMark.png"
                            Title="{x:Static resources:Strings.Menu_FlagProfiles_Title}"
                            ShowMaximize="False" />
 

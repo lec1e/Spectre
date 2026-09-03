@@ -8,6 +8,7 @@
     xmlns:gv="using:Froststrap.UI.ViewModels"
     xmlns:resources="using:Froststrap.Resources"
     xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+    xmlns:app="clr-namespace:Froststrap"
     mc:Ignorable="d"
     x:Class="Froststrap.UI.Elements.Bootstrapper.FluentDialog"
     x:DataType="vm:FluentDialogViewModel"
@@ -15,23 +16,23 @@
     Height="300"
     MinHeight="0"
     CanResize="False"
-    Title="Eclipse"
+    Title="{x:Static app:App.BrandName}"
     WindowStartupLocation="CenterScreen"
     ExtendClientAreaToDecorationsHint="True"
     TransparencyLevelHint="{Binding WindowBackdropType}"
     Background="Transparent">
 
     <Panel>
-        <Border Background="#F205040A" />
-
-        <controls:LiquidGlassPanel Margin="14"
-                                   CornerRadius="24"
-                                   TintOpacity="0.95"
-                                   MaterialOpacity="0.97"
+        <controls:LiquidGlassPanel x:Name="ShellGlass"
+                                   Margin="0"
+                                   CornerRadius="0"
+                                   TintOpacity="0.58"
+                                   MaterialOpacity="0.46"
+                                   UseSettingsCornerRadius="False"
                                    Padding="12">
             <Grid>
-                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding VersionText}" Foreground="#99E9D5FF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
-                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding ChannelText}" Foreground="#99E9D5FF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
+                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding VersionText}" Foreground="#99FDA4AF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
+                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding ChannelText}" Foreground="#99FDA4AF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
                 <controls:TitleBar
                     VerticalAlignment="Top"
                     ShowClose="False"
@@ -43,7 +44,7 @@
                 <StackPanel>
                     <Border Width="84" Height="84" CornerRadius="22" ClipToBounds="True"
                             Margin="0,34,0,0" HorizontalAlignment="Center"
-                            BorderBrush="#88C4B5FD" BorderThickness="1">
+                            BorderBrush="Transparent" BorderThickness="0">
                         <Image Width="84" Height="84"
                                Source="{Binding Icon}"
                                RenderOptions.BitmapInterpolationMode="HighQuality"/>

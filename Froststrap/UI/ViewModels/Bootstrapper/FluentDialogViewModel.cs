@@ -10,16 +10,12 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
         public IBrush BackgroundColourBrush { get; set; } = Brushes.Transparent;
         public string VersionText { get; set; }
         public string ChannelText { get; set; }
+        public bool IsAero { get; }
 
         public FluentDialogViewModel(IBootstrapperDialog dialog, bool aero, string version) : base(dialog)
         {
-            WindowBackdropType =
-            [
-                WindowTransparencyLevel.AcrylicBlur,
-                WindowTransparencyLevel.Mica,
-                WindowTransparencyLevel.Blur,
-                WindowTransparencyLevel.None
-            ];
+            IsAero = aero;
+            WindowBackdropType = ResolveBackdrop(aero);
 
             // Keep bootstrapper backdrop transparent so LiquidGlassPanel acrylic can show through.
             BackgroundColourBrush = Brushes.Transparent;
@@ -31,6 +27,46 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
             {
                 ChannelText = $"Channel: {newChannel}";
                 OnPropertyChanged(nameof(ChannelText));
+            };
+        }
+
+        public static List<WindowTransparencyLevel> ResolveBackdrop(bool aero)
+        {
+            if (aero)
+            {
+                return
+                [
+                    WindowTransparencyLevel.Blur,
+                    WindowTransparencyLevel.AcrylicBlur,
+                    WindowTransparencyLevel.None
+                ];
+            }
+
+            var selected = App.Settings.Prop.SelectedBackdrop;
+            return selected switch
+            {
+                Enums.WindowsBackdrops.Mica =>
+                [
+                    WindowTransparencyLevel.Mica,
+                    WindowTransparencyLevel.AcrylicBlur,
+                    WindowTransparencyLevel.None
+                ],
+                Enums.WindowsBackdrops.Aero =>
+                [
+                    WindowTransparencyLevel.Blur,
+                    WindowTransparencyLevel.None
+                ],
+                Enums.WindowsBackdrops.None =>
+                [
+                    WindowTransparencyLevel.None
+                ],
+                _ =>
+                [
+                    WindowTransparencyLevel.AcrylicBlur,
+                    WindowTransparencyLevel.Mica,
+                    WindowTransparencyLevel.Blur,
+                    WindowTransparencyLevel.None
+                ]
             };
         }
 

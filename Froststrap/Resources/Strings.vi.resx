@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>Giới thiệu về Froststrap</value>
+    <value>Giới thiệu về Spectre</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Không thể tra cứu vị trí máy chủ. Có thể bạn đang tham gia các trận đấu quá nhanh.</value>
@@ -137,7 +137,7 @@
     <value>Kênh mà bạn đang ở ({0}) hiện đã bị hạn chế sử dụng công khai. Bạn sẽ được chuyển sang kênh mặc định ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Froststrap không thể tự động cập nhật lên phiên bản {0}. Vui lòng cập nhật thủ công bằng cách tải xuống và chạy chương trình từ trang web.</value>
+    <value>Spectre không thể tự động cập nhật lên phiên bản {0}. Vui lòng cập nhật thủ công bằng cách tải xuống và chạy chương trình từ trang web.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>Roblox đang cố gắng đặt kênh của bạn thành {0}, tuy nhiên kênh ưa thích hiện tại của bạn là {1}.
@@ -175,7 +175,7 @@ Bạn có muốn chuyển sang kênh mặc định ({1}) không?</value>
     <value>Không thể áp dụng tất cả các thay đổi</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap không có đủ dung lượng đĩa để tải xuống và cài đặt Roblox. Vui lòng giải phóng một ít dung lượng đĩa rồi thử lại.</value>
+    <value>Spectre không có đủ dung lượng đĩa để tải xuống và cài đặt Roblox. Vui lòng giải phóng một ít dung lượng đĩa rồi thử lại.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Đang áp dụng các bản sửa đổi của Roblox...</value>
@@ -310,10 +310,10 @@ Bạn có muốn chuyển sang kênh mặc định ({1}) không?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Froststrap đã được gỡ cài đặt thành công</value>
+    <value>Spectre đã được gỡ cài đặt thành công</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Roblox hiện đang chạy, nhưng cần phải đóng ứng dụng này trước khi gỡ cài đặt Froststrap. Bạn có muốn đóng Roblox ngay bây giờ không?</value>
+    <value>Roblox hiện đang chạy, nhưng cần phải đóng ứng dụng này trước khi gỡ cài đặt Spectre. Bạn có muốn đóng Roblox ngay bây giờ không?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Roblox yêu cầu phải sử dụng các thành phần của Windows Media Foundation. Có vẻ như bạn chưa cài đặt các thành phần này, có thể là do bạn đang sử dụng phiên bản Windows N. Vui lòng cài đặt chúng trước, sau đó hãy khởi chạy Roblox.</value>
@@ -407,7 +407,7 @@ Bạn có muốn chuyển sang kênh mặc định ({1}) không?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Xuất khẩu</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Tệp tin</value>
@@ -503,7 +503,7 @@ Bạn có muốn chuyển sang kênh mặc định ({1}) không?</value>
     <value>Đổi tên</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox chưa được cài đặt. Vui lòng khởi chạy Roblox bằng Froststrap ít nhất một lần trước khi thử sử dụng tùy chọn này.</value>
+    <value>Roblox chưa được cài đặt. Vui lòng khởi chạy Roblox bằng Spectre ít nhất một lần trước khi thử sử dụng tùy chọn này.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Lưu và cài đặt</value>
@@ -723,7 +723,7 @@ Thời gian hoạt động: {1}</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Không thể thiết lập trình khởi động tùy chỉnh: {0}.
 Sẽ sử dụng mặc định là {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Các trình khởi tạo tùy chỉnh chỉ có thể chứa tối đa {0} phần tử, đã có {1}</value>
@@ -772,17 +772,17 @@ Sẽ sử dụng mặc định là {1}.</value>
     <value>Vui lòng đợi cho đến khi quá trình gỡ cài đặt hoàn tất.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap hiện không còn hỗ trợ Bloxshade nữa.
+    <value>Spectre hiện không còn hỗ trợ Bloxshade nữa.
 Để biết thêm thông tin, hãy tham gia máy chủ Discord của Bloxshade.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Xin lỗi</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap không thể tạo lối tắt trên Màn hình nền và Menu Bắt đầu. Hãy thử tạo chúng sau thông qua phần cài đặt.</value>
+    <value>Spectre không thể tạo lối tắt trên Màn hình nền và Menu Bắt đầu. Hãy thử tạo chúng sau thông qua phần cài đặt.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Không thể thiết lập kết nối, điều này có thể do kết nối Internet kém hoặc bị tường lửa chặn. Nếu kết nối của bạn bình thường, vui lòng kiểm tra xem phần mềm diệt virus có đang chặn Froststrap hay không.</value>
+    <value>Không thể thiết lập kết nối, điều này có thể do kết nối Internet kém hoặc bị tường lửa chặn. Nếu kết nối của bạn bình thường, vui lòng kiểm tra xem phần mềm diệt virus có đang chặn Spectre hay không.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Tính năng BetterMatchmaking sẽ bị tắt trong phiên này.</value>
@@ -794,7 +794,7 @@ Sẽ sử dụng mặc định là {1}.</value>
     <value>Roblox có thể đang gặp sự cố vào lúc này. Vui lòng xem {0} để biết thêm thông tin.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Vì Roblox cần được cài đặt hoặc cập nhật, nên Froststrap không thể tiếp tục.</value>
+    <value>Vì Roblox cần được cài đặt hoặc cập nhật, nên Spectre không thể tiếp tục.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Trong đợt ra mắt này, Roblox sẽ không được kiểm tra các bản cập nhật và các thay đổi đối với các mod sẽ không được áp dụng.</value>
@@ -806,11 +806,11 @@ Sẽ sử dụng mặc định là {1}.</value>
     <value>Vui lòng thử lại sau.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap không thể kết nối với {0}</value>
+    <value>Spectre không thể kết nối với {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap không thể tải xuống Roblox</value>
+    <value>Spectre không thể tải xuống Roblox</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Hiện tại không thể tải xuống Roblox. Vui lòng tham khảo trang trợ giúp sau đây để biết thêm thông tin: {0}</value>
@@ -820,24 +820,24 @@ Sẽ sử dụng mặc định là {1}.</value>
     <value>Sao chép nội dung nhật ký</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Đã xảy ra một lỗi ngoại lệ trong khi chạy Froststrap/Froststrap</value>
+    <value>Đã xảy ra một lỗi ngoại lệ trong khi chạy Spectre/Spectre</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Hãy kiểm tra [Froststrap Wiki]({0}) trước để xem liệu vấn đề này đã được khắc phục chưa.
+    <value>Hãy kiểm tra [Spectre Wiki]({0}) trước để xem liệu vấn đề này đã được khắc phục chưa.
 
 Nếu chưa, vui lòng báo cáo lỗi này qua một [vấn đề trên GitHub]({1}) kèm theo bản sao của tệp nhật ký đã được tạo ra.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Hãy kiểm tra [Froststrap Wiki]({0}) trước để xem liệu vấn đề này đã được khắc phục chưa.
+    <value>Hãy kiểm tra [Spectre Wiki]({0}) trước để xem liệu vấn đề này đã được khắc phục chưa.
 
-Nếu chưa, vui lòng báo cáo lỗi này cho nhóm quản trị của nhánh này. KHÔNG báo cáo vấn đề này lên các vấn đề trên GitHub của Froststrap, vì đây là bản dựng không chính thức.</value>
+Nếu chưa, vui lòng báo cáo lỗi này cho nhóm quản trị của nhánh này. KHÔNG báo cáo vấn đề này lên các vấn đề trên GitHub của Spectre, vì đây là bản dựng không chính thức.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Báo cáo sự cố ngoại lệ</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Lỗi Froststrap</value>
+    <value>Lỗi Spectre</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Không thể tải biểu tượng bootstrapper đã chọn.
@@ -861,10 +861,10 @@ Một số nội dung có thể chưa được dịch sang ngôn ngữ bạn ch�
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Để biết thêm thông tin về nguyên nhân dẫn đến tình trạng này và cách khắc phục, vui lòng đọc [bài viết trợ giúp này]({0}).
 
-Hãy kiểm tra xem Roblox có hoạt động với [trình khởi chạy gốc]({1}) hay không. Nếu không, thì đây không phải là sự cố liên quan đến Froststrap. Nếu có, hãy tham khảo bài viết trợ giúp.</value>
+Hãy kiểm tra xem Roblox có hoạt động với [trình khởi chạy gốc]({1}) hay không. Nếu không, thì đây không phải là sự cố liên quan đến Spectre. Nếu có, hãy tham khảo bài viết trợ giúp.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap không thể ghi vào Sổ đăng ký Windows. Có khả năng phần mềm diệt virus đang can thiệp và gây ra sự cố. Vui lòng kiểm tra để đảm bảo không có yếu tố nào hạn chế hoạt động của Froststrap.</value>
+    <value>Spectre không thể ghi vào Sổ đăng ký Windows. Có khả năng phần mềm diệt virus đang can thiệp và gây ra sự cố. Vui lòng kiểm tra để đảm bảo không có yếu tố nào hạn chế hoạt động của Spectre.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Độ dốc</value>
@@ -894,16 +894,16 @@ Hãy kiểm tra xem Roblox có hoạt động với [trình khởi chạy gốc]
     <value>Byfron giả (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (Phiên bản cổ điển)</value>
+    <value>Spectre (Phiên bản cổ điển)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Tùy chỉnh</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (Kính)</value>
+    <value>Spectre (Kính)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (Mờ)</value>
+    <value>Spectre (Mờ)</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>Roblox (~năm 2025)</value>
@@ -1135,14 +1135,14 @@ Hãy kiểm tra xem Roblox có hoạt động với [trình khởi chạy gốc]
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap đã được nâng cấp lên phiên bản v{0}</value>
+    <value>Spectre đã được nâng cấp lên phiên bản v{0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Phiên bản Froststrap mà bạn vừa khởi chạy khác với phiên bản hiện đang được cài đặt.
+    <value>Phiên bản Spectre mà bạn vừa khởi chạy khác với phiên bản hiện đang được cài đặt.
 Bạn có muốn nâng cấp phiên bản hiện đang được cài đặt không?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Phiên bản Froststrap mà bạn vừa khởi chạy cũ hơn phiên bản hiện đang được cài đặt.
+    <value>Phiên bản Spectre mà bạn vừa khởi chạy cũ hơn phiên bản hiện đang được cài đặt.
 Có thể xảy ra sự cố và các thiết lập của bạn có thể bị thay đổi. Bạn nên cài đặt lại.
 Bạn có chắc chắn muốn tiếp tục không?</value>
   </data>
@@ -1159,7 +1159,7 @@ Bạn có chắc chắn muốn tiếp tục không?</value>
     <value>Khởi chạy Roblox Studio</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Sẽ không có tệp nhật ký nào được ghi lại cho lần khởi chạy này vì Froststrap không thể ghi vào thư mục tại &apos;{0}&apos;</value>
+    <value>Sẽ không có tệp nhật ký nào được ghi lại cho lần khởi chạy này vì Spectre không thể ghi vào thư mục tại &apos;{0}&apos;</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Thông tin về bản dựng</value>
@@ -1177,13 +1177,13 @@ Bạn có chắc chắn muốn tiếp tục không?</value>
     <value>Mã</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Đây là tất cả những người đã có những đóng góp đáng kể cho Froststrap và Froststrap, góp phần định hình nên diện mạo của chúng như ngày nay.</value>
+    <value>Đây là tất cả những người đã có những đóng góp đáng kể cho Spectre và Spectre, góp phần định hình nên diện mạo của chúng như ngày nay.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Nguồn cảm hứng</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Một chiếc nĩa Fishstrap/Froststrap.</value>
+    <value>Một chiếc nĩa Fishstrap/Spectre.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Máy chủ Discord</value>
@@ -1246,16 +1246,16 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Xin lưu ý rằng không phải tất cả các thay đổi của bạn sẽ được áp dụng ngay lập tức cho đến khi bạn đóng tất cả các phiên Roblox đang mở.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap hiện đang chạy</value>
+    <value>Spectre hiện đang chạy</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Chế độ nền:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Tùy chỉnh trình khởi động của Froststrap bằng cách sử dụng nhiều tùy chọn đa dạng.</value>
+    <value>Tùy chỉnh trình khởi động của Spectre bằng cách sử dụng nhiều tùy chọn đa dạng.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Dễ dàng tùy chỉnh các chủ đề Froststrap bằng các cài đặt sẵn hoặc tạo phong cách độc đáo của riêng bạn.</value>
+    <value>Dễ dàng tùy chỉnh các chủ đề Spectre bằng các cài đặt sẵn hoặc tạo phong cách độc đáo của riêng bạn.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Chủ đề ứng dụng</value>
@@ -1273,13 +1273,13 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Tiêu đề</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Cấu hình giao diện của Froststrap.</value>
+    <value>Cấu hình giao diện của Spectre.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Tần số</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Chọn biểu tượng mà Froststrap sẽ sử dụng.</value>
+    <value>Chọn biểu tượng mà Spectre sẽ sử dụng.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Biểu tượng</value>
@@ -1294,7 +1294,7 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Ngôn ngữ</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Chọn kiểu màn hình khởi động. Lưu ý: Chế độ màu tối không được hỗ trợ trên các phiên bản Legacy hoặc Vista. Để tìm thêm các trình khởi động tùy chỉnh, hãy truy cập máy chủ Discord chính thức của Froststrap.</value>
+    <value>Chọn kiểu màn hình khởi động. Lưu ý: Chế độ màu tối không được hỗ trợ trên các phiên bản Legacy hoặc Vista. Để tìm thêm các trình khởi động tùy chỉnh, hãy truy cập máy chủ Discord chính thức của Spectre.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Phong cách tự lực cánh sinh</value>
@@ -1327,16 +1327,16 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Phông nền cửa sổ</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Cho phép truy cập các API của Roblox bằng cookie xác thực của bạn. [Froststrap sẽ truy cập những gì?]({0})</value>
+    <value>Cho phép truy cập các API của Roblox bằng cookie xác thực của bạn. [Spectre sẽ truy cập những gì?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Quyền truy cập tài khoản Froststrap</value>
+    <value>Quyền truy cập tài khoản Spectre</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap sẽ tự động kiểm tra và cập nhật lên phiên bản ổn định khi khởi chạy Roblox.</value>
+    <value>Spectre sẽ tự động kiểm tra và cập nhật lên phiên bản ổn định khi khởi chạy Roblox.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Tự động cập nhật Froststrap</value>
+    <value>Tự động cập nhật Spectre</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Cập nhật Roblox ở chế độ nền thay vì phải chờ đợi. Không khuyến nghị sử dụng khi mạng chậm. Cần có ít nhất 3GB dung lượng trống để tính năng này hoạt động.</value>
@@ -1357,7 +1357,7 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Xác nhận khởi chạy phiên bản</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Cấu hình các thao tác mà Froststrap sẽ thực hiện khi khởi chạy Roblox.</value>
+    <value>Cấu hình các thao tác mà Spectre sẽ thực hiện khi khởi chạy Roblox.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Roblox sẽ được cài đặt lại hoàn toàn vào lần khởi động tiếp theo.</value>
@@ -1390,7 +1390,7 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Tự động xóa dữ liệu cũ để giải phóng dung lượng. Ban đầu được phát triển bởi Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Chất tẩy rửa Froststrap</value>
+    <value>Chất tẩy rửa Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Các tệp có tuổi đời vượt quá thời hạn quy định sẽ bị xóa.</value>
@@ -1405,10 +1405,10 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Bộ nhớ đệm</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Các bản ghi của Froststrap sẽ bị xóa.</value>
+    <value>Các bản ghi của Spectre sẽ bị xóa.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Nhật ký Froststrap</value>
+    <value>Nhật ký Spectre</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Các tệp nhật ký cũ sẽ bị xóa.</value>
@@ -1417,7 +1417,7 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Menu Nhật ký</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Hãy để Froststrap quyết định bạn sẽ tham gia máy chủ nào. Chương trình sẽ ưu tiên máy chủ có khoảng cách gần nhất với bạn.</value>
+    <value>Hãy để Spectre quyết định bạn sẽ tham gia máy chủ nào. Chương trình sẽ ưu tiên máy chủ có khoảng cách gần nhất với bạn.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Có vẻ như một người bạn đang chơi trò chơi này. Bạn có muốn tham gia cùng họ không?</value>
@@ -1474,7 +1474,7 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Tự động thay đổi</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Roblox hoặc Froststrap có thể sẽ cố gắng thay đổi kênh ưa thích của bạn.</value>
+    <value>Roblox hoặc Spectre có thể sẽ cố gắng thay đổi kênh ưa thích của bạn.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Đừng bao giờ thay đổi</value>
@@ -1486,7 +1486,7 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Hành động chuyển kênh tự động</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Thay đổi cài đặt triển khai và cài đặt cho Roblox và Froststrap.</value>
+    <value>Thay đổi cài đặt triển khai và cài đặt cho Roblox và Spectre.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Các bản cập nhật của Roblox</value>
@@ -1573,7 +1573,7 @@ Nhấp vào &apos;Thêm tài khoản&apos; ở trên để bắt đầu</value>
     <value>Không tìm thấy tệp cookie của Roblox.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap sẽ tự động kiểm tra và cập nhật lên phiên bản thử nghiệm khi khởi chạy Roblox.</value>
+    <value>Spectre sẽ tự động kiểm tra và cập nhật lên phiên bản thử nghiệm khi khởi chạy Roblox.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Cập nhật các phiên bản thử nghiệm</value>
@@ -1710,7 +1710,7 @@ Bạn có muốn xóa nó ngay bây giờ không?</value>
     <value>Việc tắt tùy chọn này sẽ ngăn không cho bất kỳ thiết lập nào được cấu hình tại đây được áp dụng cho Roblox.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Cho phép Froststrap quản lý FastFlags</value>
+    <value>Cho phép Spectre quản lý FastFlags</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>Roblox sẽ giảm chất lượng hiển thị tùy thuộc vào mức độ thu phóng của màn hình trong Windows.</value>
@@ -2118,7 +2118,7 @@ Bạn có muốn xóa nó ngay bây giờ không?</value>
     <value>Gần như trên máy tính để bàn</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Mở một cửa sổ cụ thể khi bạn nhấp đúp vào biểu tượng Froststrap trên khay hệ thống trong khi khởi chạy Roblox.</value>
+    <value>Mở một cửa sổ cụ thể khi bạn nhấp đúp vào biểu tượng Spectre trên khay hệ thống trong khi khởi chạy Roblox.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Hành động nhấp đúp</value>
@@ -2136,13 +2136,13 @@ Bạn có muốn xóa nó ngay bây giờ không?</value>
     <value>Thông tin chỉnh sửa</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Cho phép Froststrap nhận diện trò chơi Roblox mà bạn đang chơi. Một số tính năng có thể yêu cầu điều này.</value>
+    <value>Cho phép Spectre nhận diện trò chơi Roblox mà bạn đang chơi. Một số tính năng có thể yêu cầu điều này.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Bật tính năng theo dõi hoạt động</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Bật tính năng này để hiển thị thông báo RPC tùy chỉnh “Playing Froststrap” trên hồ sơ Discord của bạn khi ứng dụng đang mở.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Bật tính năng này để hiển thị thông báo RPC tùy chỉnh “Playing Spectre” trên hồ sơ Discord của bạn khi ứng dụng đang mở.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Hiển thị trò chơi mà bạn đã chơi trong phiên này và cho phép bạn tham gia lại trò chơi đó.</value>
@@ -2205,7 +2205,7 @@ Bạn có muốn xóa nó ngay bây giờ không?</value>
     <value>Hiển thị hoạt động của Studio</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Cách thức hoạt động của tính năng này là cài đặt một plugin Froststrap được tùy chỉnh để ghi lại các thao tác của bạn.
+    <value>Cách thức hoạt động của tính năng này là cài đặt một plugin Spectre được tùy chỉnh để ghi lại các thao tác của bạn.
 Bạn có muốn cài đặt plugin này không?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2769,7 +2769,7 @@ Nó phải chứa ít nhất một trong các thư mục sau: content, ExtraCont
     <value>Đang tải các trung tâm dữ liệu...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Hãy đăng nhập bằng Trình quản lý tài khoản, bật tính năng “Quyền truy cập tài khoản Froststrap” hoặc báo cáo vấn đề này lên máy chủ Discord của chúng tôi để sử dụng.</value>
+    <value>Hãy đăng nhập bằng Trình quản lý tài khoản, bật tính năng “Quyền truy cập tài khoản Spectre” hoặc báo cáo vấn đề này lên máy chủ Discord của chúng tôi để sử dụng.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Không tìm thấy máy chủ công cộng nào.</value>
@@ -2844,13 +2844,13 @@ Nó phải chứa ít nhất một trong các thư mục sau: content, ExtraCont
     <value>Tạo lối tắt</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Cấu hình để có thể khởi chạy Froststrap một cách dễ dàng.</value>
+    <value>Cấu hình để có thể khởi chạy Spectre một cách dễ dàng.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Lỗi khi tạo lối tắt.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Cho phép bạn sử dụng bộ biểu tượng Roblox của Froststrap cho các phím tắt của mình. [Xem cách thực hiện.]({0})</value>
+    <value>Cho phép bạn sử dụng bộ biểu tượng Roblox của Spectre cho các phím tắt của mình. [Xem cách thực hiện.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Trích xuất các biểu tượng Roblox vào thư mục</value>
@@ -2921,29 +2921,29 @@ Khi được bật, chế độ này sẽ tự động khởi chạy Roblox sau 
 Bạn có muốn bật Chế độ Thử nghiệm không?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Cài đặt Froststrap</value>
+    <value>Cài đặt Spectre</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Biểu tượng</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Chúng sẽ được lưu giữ tại vị trí đã cài đặt Froststrap và sẽ tự động được khôi phục khi cài đặt lại.</value>
+    <value>Chúng sẽ được lưu giữ tại vị trí đã cài đặt Spectre và sẽ tự động được khôi phục khi cài đặt lại.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Giữ nguyên cài đặt và các bản mod của tôi</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Việc gỡ cài đặt sẽ xóa Froststrap khỏi hệ thống của bạn và tự động cấu hình lại trình khởi chạy Roblox mặc định nếu nó vẫn còn được cài đặt.
+    <value>Việc gỡ cài đặt sẽ xóa Spectre khỏi hệ thống của bạn và tự động cấu hình lại trình khởi chạy Roblox mặc định nếu nó vẫn còn được cài đặt.
 
 Nếu bạn đang gỡ cài đặt hoặc cài đặt lại vì gặp sự cố với Roblox, hãy đọc [trang trợ giúp này]({0}) trước.
 
-Quá trình gỡ cài đặt có thể không dọn dẹp hoàn toàn các tệp còn sót lại, do đó bạn có thể cần phải dọn dẹp thủ công các tệp còn sót lại tại vị trí đã cài đặt Froststrap.
+Quá trình gỡ cài đặt có thể không dọn dẹp hoàn toàn các tệp còn sót lại, do đó bạn có thể cần phải dọn dẹp thủ công các tệp còn sót lại tại vị trí đã cài đặt Spectre.
 
-Froststrap đã được cài đặt tại &quot;{1}&quot;.</value>
+Spectre đã được cài đặt tại &quot;{1}&quot;.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Gỡ cài đặt Froststrap</value>
+    <value>Gỡ cài đặt Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Gỡ cài đặt</value>

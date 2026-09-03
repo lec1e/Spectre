@@ -1,0 +1,97 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Styles.Resources>
+        <!--
+            Liquid glass: one clipped round-rect, fill inside, overlays with NO extra
+            corner radii (avoids double-AA / fuzzy rims). Rim is the clip border itself.
+        -->
+        <ControlTemplate x:Key="SpectreGlassButtonTemplate" TargetType="Button">
+            <Border x:Name="PART_Shadow"
+                    Background="Transparent"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    BoxShadow="0 8 22 0 #40000000">
+                <Border x:Name="PART_Clip"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        ClipToBounds="True"
+                        UseLayoutRounding="True"
+                        BorderThickness="1">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                            <GradientStop Color="#55FFFFFF" Offset="0" />
+                            <GradientStop Color="#33E11D48" Offset="0.45" />
+                            <GradientStop Color="#22000000" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Panel>
+                        <Border x:Name="PART_Fill"
+                                Background="{TemplateBinding Background}" />
+
+                        <Border x:Name="PART_Sheen"
+                                IsHitTestVisible="False"
+                                Opacity="0.2">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                    <GradientStop Color="#55FFFFFF" Offset="0" />
+                                    <GradientStop Color="#10FFFFFF" Offset="0.3" />
+                                    <GradientStop Color="#00000000" Offset="0.58" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Border x:Name="PART_Gloss"
+                                IsHitTestVisible="False"
+                                Height="14"
+                                VerticalAlignment="Top"
+                                Opacity="0.48">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                    <GradientStop Color="#88FFFFFF" Offset="0" />
+                                    <GradientStop Color="#22FFFFFF" Offset="0.55" />
+                                    <GradientStop Color="#00FFFFFF" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Border x:Name="PART_Depth"
+                                IsHitTestVisible="False"
+                                Height="10"
+                                VerticalAlignment="Bottom"
+                                Opacity="0.32">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                    <GradientStop Color="#00000000" Offset="0" />
+                                    <GradientStop Color="#66000000" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Background="Transparent"
+                                          BorderBrush="Transparent"
+                                          BorderThickness="0"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </Panel>
+                </Border>
+            </Border>
+        </ControlTemplate>
+
+        <!-- Transparent hit target for split-button halves (no second glass shell). -->
+        <ControlTemplate x:Key="SpectreGlassHitTemplate" TargetType="Button">
+            <ContentPresenter x:Name="PART_ContentPresenter"
+                              Background="Transparent"
+                              BorderBrush="Transparent"
+                              BorderThickness="0"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Padding="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              RecognizesAccessKey="True" />
+        </ControlTemplate>
+    </Styles.Resources>
+</Styles>

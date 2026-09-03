@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>A Froststrapról</value>
+    <value>A Spectreról</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>A szerver helyét nem sikerült lekérdezni. Lehet, hogy túl gyorsan csatlakozol a játékokhoz.</value>
@@ -137,7 +137,7 @@
     <value>Az a csatorna, amelyen jelenleg tartózkodsz ({0}), már nem elérhető a nyilvánosság számára. Mostantól az alapértelmezett csatornán ({1}) leszel.</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>A Froststrap nem tudott automatikusan frissülni a {0} verzióra. Kérjük, frissítse kézzel úgy, hogy letölti és elindítja a programot a weboldalról.</value>
+    <value>A Spectre nem tudott automatikusan frissülni a {0} verzióra. Kérjük, frissítse kézzel úgy, hogy letölti és elindítja a programot a weboldalról.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>A Roblox megpróbálja a csatornádat {0}-ra állítani, azonban a jelenlegi preferált csatornád {1}.
@@ -175,7 +175,7 @@ Szeretnél átváltani az alapértelmezett csatornára ({1})?</value>
     <value>Nem sikerült az összes módosítást alkalmazni</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>A Froststrap-on nincs elegendő lemezterület a Roblox letöltéséhez és telepítéséhez. Kérjük, szabadítson fel némi lemezterületet, majd próbálja meg újra.</value>
+    <value>A Spectre-on nincs elegendő lemezterület a Roblox letöltéséhez és telepítéséhez. Kérjük, szabadítson fel némi lemezterületet, majd próbálja meg újra.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>A Roblox-módosítások alkalmazása...</value>
@@ -310,10 +310,10 @@ Szeretnél átváltani az alapértelmezett csatornára ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>A Froststrap eltávolítása sikeresen befejeződött</value>
+    <value>A Spectre eltávolítása sikeresen befejeződött</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>A Roblox jelenleg fut, de a Froststrap eltávolítása előtt be kell zárni. Szeretnéd most bezárni a Robloxot?</value>
+    <value>A Roblox jelenleg fut, de a Spectre eltávolítása előtt be kell zárni. Szeretnéd most bezárni a Robloxot?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>A Robloxhoz a Windows Media Foundation összetevőinek használata szükséges. Úgy tűnik, ezek hiányoznak a rendszeréből, valószínűleg azért, mert a Windows N kiadását használja. Kérjük, először telepítse őket, majd indítsa el a Robloxot.</value>
@@ -496,7 +496,7 @@ Szeretnél átváltani az alapértelmezett csatornára ({1})?</value>
     <value>Átnevezés</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>A Roblox még nincs telepítve. Kérjük, mielőtt ezt az opciót használná, indítsa el a Robloxot a Froststrap segítségével legalább egyszer.</value>
+    <value>A Roblox még nincs telepítve. Kérjük, mielőtt ezt az opciót használná, indítsa el a Robloxot a Spectre segítségével legalább egyszer.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Mentés és telepítés</value>
@@ -716,7 +716,7 @@ Szeretnél átváltani az alapértelmezett csatornára ({1})?</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Az egyéni bootstrapper beállítása nem sikerült: {0}.
 Alapértelmezésként a {1} kerül beállításra.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Az egyéni bootstrapperek legfeljebb {0} elemet tartalmazhatnak, jelenleg {1} van</value>
@@ -765,17 +765,17 @@ Alapértelmezésként a {1} kerül beállításra.</value>
     <value>Kérjük, várja meg, amíg az eltávolítás befejeződik.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>A Froststrap már nem támogatja a Bloxshade-et.
+    <value>A Spectre már nem támogatja a Bloxshade-et.
 További információkért csatlakozz a Bloxshade Discord-szerveréhez.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Elnézést</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>A Froststrap nem tudott parancsikonokat létrehozni az asztalra és a Start menübe. Próbáld meg később létrehozni őket a beállítások segítségével.</value>
+    <value>A Spectre nem tudott parancsikonokat létrehozni az asztalra és a Start menübe. Próbáld meg később létrehozni őket a beállítások segítségével.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Nem sikerült létrehozni a kapcsolatot, ami valószínűleg gyenge internetkapcsolatra vagy tűzfal általi blokkolásra utal. Ha az internetkapcsolatod rendben van, kérjük, ellenőrizd, hogy a víruskereső programod nem blokkolja-e a Froststrap alkalmazást.</value>
+    <value>Nem sikerült létrehozni a kapcsolatot, ami valószínűleg gyenge internetkapcsolatra vagy tűzfal általi blokkolásra utal. Ha az internetkapcsolatod rendben van, kérjük, ellenőrizd, hogy a víruskereső programod nem blokkolja-e a Spectre alkalmazást.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>A BetterMatchmaking funkció ebben a munkamenetben le lesz tiltva.</value>
@@ -787,7 +787,7 @@ További információkért csatlakozz a Bloxshade Discord-szerveréhez.</value>
     <value>Lehet, hogy a Roblox jelenleg nem elérhető. További információkért lásd a {0} részt.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Mivel a Roblox telepítésére vagy frissítésére van szükség, a Froststrap nem tud tovább futni.</value>
+    <value>Mivel a Roblox telepítésére vagy frissítésére van szükség, a Spectre nem tud tovább futni.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Ebben a kiadásban a Roblox nem fogja ellenőrizni a frissítéseket, és a modokhoz tartozó módosítások sem kerülnek alkalmazásra.</value>
@@ -799,11 +799,11 @@ További információkért csatlakozz a Bloxshade Discord-szerveréhez.</value>
     <value>Kérjük, próbálja meg később újra.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>A Froststrap nem tud csatlakozni a {0}-hoz</value>
+    <value>A Spectre nem tud csatlakozni a {0}-hoz</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>A Froststrap nem tudja letölteni a Robloxot</value>
+    <value>A Spectre nem tudja letölteni a Robloxot</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>A Roblox jelenleg nem tölthető le. További információkért kérjük, olvassa el az alábbi súgóoldalt: {0}</value>
@@ -813,24 +813,24 @@ További információkért csatlakozz a Bloxshade Discord-szerveréhez.</value>
     <value>A napló tartalmának másolása</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>A Froststrap/Froststrap futtatása közben kivétel történt</value>
+    <value>A Spectre/Spectre futtatása közben kivétel történt</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Először nézd meg a [Froststrap Wiki]({0}) oldalt, hogy megnézd, megoldották-e már ezt a problémát.
+    <value>Először nézd meg a [Spectre Wiki]({0}) oldalt, hogy megnézd, megoldották-e már ezt a problémát.
 
 Ha nem, akkor kérjük, jelentsd be ezt a kivételt egy [GitHub-problémajelentés]({1}) formájában, mellékelve a létrehozott naplófájl másolatát.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Először nézd meg a [Froststrap Wiki]({0}) oldalt, hogy megnézd, megoldották-e már ezt a problémát.
+    <value>Először nézd meg a [Spectre Wiki]({0}) oldalt, hogy megnézd, megoldották-e már ezt a problémát.
 
-Ha nem, akkor kérjük, jelentsd ezt a kivételt a fork karbantartóinak. NE jelentsd ezt a Froststrap GitHub-problémajegyzékében, mivel ez egy nem hivatalos kiadás.</value>
+Ha nem, akkor kérjük, jelentsd ezt a kivételt a fork karbantartóinak. NE jelentsd ezt a Spectre GitHub-problémajegyzékében, mivel ez egy nem hivatalos kiadás.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Kivétel jelentése</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Froststrap kivétel</value>
+    <value>Spectre kivétel</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>A kiválasztott bootstrapper ikon betöltése nem sikerült.
@@ -854,10 +854,10 @@ Előfordulhat, hogy egyes szövegrészek nem lesznek lefordítva a kiválasztott
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Ha többet szeretnél megtudni arról, hogy miért fordulhat elő ez a probléma, és hogyan lehet megoldani, kérjük, olvasd el [ezt a súgócikket]({0}).
 
-Ellenőrizd, hogy a Roblox működik-e [az eredeti indítóprogrammal]({1}). Ha nem, akkor ez nem a Froststrap hibája. Ha igen, akkor olvass el a súgócikket.</value>
+Ellenőrizd, hogy a Roblox működik-e [az eredeti indítóprogrammal]({1}). Ha nem, akkor ez nem a Spectre hibája. Ha igen, akkor olvass el a súgócikket.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>A Froststrap nem tud írni a Windows rendszerleíró adatbázisába. Valószínűleg egy vírusirtó program zavarja a működését, és ez okozza a problémát. Kérjük, ellenőrizze, hogy nincs-e valami, ami korlátozná a Froststrap működését.</value>
+    <value>A Spectre nem tud írni a Windows rendszerleíró adatbázisába. Valószínűleg egy vírusirtó program zavarja a működését, és ez okozza a problémát. Kérjük, ellenőrizze, hogy nincs-e valami, ami korlátozná a Spectre működését.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Gradiensek</value>
@@ -887,16 +887,16 @@ Ellenőrizd, hogy a Roblox működik-e [az eredeti indítóprogrammal]({1}). Ha 
     <value>Hamis Byfron (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (klasszikus)</value>
+    <value>Spectre (klasszikus)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Egyedi</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (üveg)</value>
+    <value>Spectre (üveg)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (átlátszatlan)</value>
+    <value>Spectre (átlátszatlan)</value>
   </data>
   <data name="Enums.CleanerOptions.Never" xml:space="preserve">
     <value>Soha</value>
@@ -1125,14 +1125,14 @@ Ellenőrizd, hogy a Roblox működik-e [az eredeti indítóprogrammal]({1}). Ha 
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>A Froststrap frissült a v{0} verzióra</value>
+    <value>A Spectre frissült a v{0} verzióra</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Az Ön által elindított Froststrap-verzió eltér a jelenleg telepített verziótól.
+    <value>Az Ön által elindított Spectre-verzió eltér a jelenleg telepített verziótól.
 Szeretné frissíteni a jelenleg telepített verziót?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Az Ön által elindított Froststrap-verzió régebbi, mint a jelenleg telepített verzió.
+    <value>Az Ön által elindított Spectre-verzió régebbi, mint a jelenleg telepített verzió.
 Problémák léphetnek fel, és a beállításai megváltozhatnak. Javasoljuk az újratelepítést.
 Biztosan folytatni szeretné?</value>
   </data>
@@ -1149,7 +1149,7 @@ Biztosan folytatni szeretné?</value>
     <value>Indítsd el a Roblox Studiót</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Erre az indításra nem készül naplófájl, mivel a Froststrap nem tud írni a „{0}” mappába.</value>
+    <value>Erre az indításra nem készül naplófájl, mivel a Spectre nem tud írni a „{0}” mappába.</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Építési adatok</value>
@@ -1167,13 +1167,13 @@ Biztosan folytatni szeretné?</value>
     <value>Kód</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Ők azok, akik jelentős hozzájárulást nyújtottak a Froststrap és a Froststrap fejlesztéséhez, és akiknek köszönhetően a projekt a mai formáját nyerte el.</value>
+    <value>Ők azok, akik jelentős hozzájárulást nyújtottak a Spectre és a Spectre fejlesztéséhez, és akiknek köszönhetően a projekt a mai formáját nyerte el.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Inspirációk</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>Egy Fishstrap/Froststrap villás rögzítés.</value>
+    <value>Egy Fishstrap/Spectre villás rögzítés.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Discord-szerver</value>
@@ -1233,16 +1233,16 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Felhívjuk figyelmét, hogy a módosítások nem mindegyike lép azonnal hatályba, amíg az összes jelenleg megnyitott Roblox-példányt be nem zárja.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>A Froststrap már fut</value>
+    <value>A Spectre már fut</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Háttér üzemmód:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>A Froststrap bootstrapperjét számos beállítási lehetőség segítségével testreszabhatja.</value>
+    <value>A Spectre bootstrapperjét számos beállítási lehetőség segítségével testreszabhatja.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>A Froststrap témáit egyszerűen testreszabhatja az előre beállított sablonok segítségével, vagy létrehozhat saját, egyedi megjelenést.</value>
+    <value>A Spectre témáit egyszerűen testreszabhatja az előre beállított sablonok segítségével, vagy létrehozhat saját, egyedi megjelenést.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Alkalmazás-témák</value>
@@ -1260,13 +1260,13 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Cím</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Állítsd be, hogyan jelenjen meg a Froststrap.</value>
+    <value>Állítsd be, hogyan jelenjen meg a Spectre.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Frekvencia</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Válaszd ki, melyik ikont használja a Froststrap.</value>
+    <value>Válaszd ki, melyik ikont használja a Spectre.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Ikon</value>
@@ -1281,7 +1281,7 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Nyelv</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Válasszon ki egy indítóképernyő-stílust! Megjegyzés: A sötét téma nem támogatott a Legacy és a Vista rendszereken. További testreszabható indítókért látogasson el a Froststrap hivatalos Discord-szerverére.</value>
+    <value>Válasszon ki egy indítóképernyő-stílust! Megjegyzés: A sötét téma nem támogatott a Legacy és a Vista rendszereken. További testreszabható indítókért látogasson el a Spectre hivatalos Discord-szerverére.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>Bootstrapper-stílus</value>
@@ -1314,16 +1314,16 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Ablakháttér</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>A hitelesítési cookie-d segítségével hozzáférést biztosít a Roblox API-khoz. [Mire fog a Froststrap hozzáférni?]({0})</value>
+    <value>A hitelesítési cookie-d segítségével hozzáférést biztosít a Roblox API-khoz. [Mire fog a Spectre hozzáférni?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Froststrap-fiók jogosultságai</value>
+    <value>Spectre-fiók jogosultságai</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>A Froststrap a Roblox indításakor automatikusan ellenőrzi és frissíti magát egy stabil verzióra.</value>
+    <value>A Spectre a Roblox indításakor automatikusan ellenőrzi és frissíti magát egy stabil verzióra.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>A Froststrap automatikus frissítése</value>
+    <value>A Spectre automatikus frissítése</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>A várakozás helyett frissítsd a Robloxot a háttérben. Lassú internetkapcsolat esetén nem ajánlott. A funkció működéséhez legalább 3 GB szabad tárhelyre van szükség.</value>
@@ -1344,7 +1344,7 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Az példány elindításának visszaigazolása</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Állítsd be, hogy a Froststrap mit tegyen a Roblox indításakor.</value>
+    <value>Állítsd be, hogy a Spectre mit tegyen a Roblox indításakor.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>A Roblox következő indításakor a program tiszta telepítése fog megtörténni.</value>
@@ -1374,7 +1374,7 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>A régi adatokat automatikusan törli, hogy helyet szabadítson fel. Eredetileg Fishstrap készítette.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>Froststrap tisztítószer</value>
+    <value>Spectre tisztítószer</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>A beállított időtartamnál régebbi fájlok törlésre kerülnek.</value>
@@ -1389,10 +1389,10 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Gyorsítótár</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>A Froststrap naplófájlok törlésre kerülnek.</value>
+    <value>A Spectre naplófájlok törlésre kerülnek.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Froststrap naplófájlok</value>
+    <value>Spectre naplófájlok</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>A régi naplófájlok törlésre kerülnek.</value>
@@ -1401,7 +1401,7 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Naplók menü</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Hagyd, hogy a Froststrap döntse el, melyik szerverhez csatlakozz. Elsőbbséget ad annak a szervernek, amelyik a legközelebb van hozzád.</value>
+    <value>Hagyd, hogy a Spectre döntse el, melyik szerverhez csatlakozz. Elsőbbséget ad annak a szervernek, amelyik a legközelebb van hozzád.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Úgy tűnik, egy barátod éppen ezt a játékot játszik. Csatlakozni szeretnél hozzá?</value>
@@ -1458,7 +1458,7 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Automatikus módosítás</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>Előfordulhat, hogy a Roblox vagy a Froststrap megpróbálja megváltoztatni a beállított csatornádat.</value>
+    <value>Előfordulhat, hogy a Roblox vagy a Spectre megpróbálja megváltoztatni a beállított csatornádat.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Soha ne változz!</value>
@@ -1470,7 +1470,7 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>Automatikus csatornaváltás</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>A Roblox és a Froststrap telepítési és beállítási paramétereinek módosítása.</value>
+    <value>A Roblox és a Spectre telepítési és beállítási paramétereinek módosítása.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>Roblox-frissítések</value>
@@ -1557,7 +1557,7 @@ Kattintson a fenti „Fiók hozzáadása” gombra a kezdéshez</value>
     <value>A Roblox cookie-fájl nem található.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>A Froststrap a Roblox indításakor automatikusan ellenőrzi a rendszert, és tesztverzióra frissíti magát.</value>
+    <value>A Spectre a Roblox indításakor automatikusan ellenőrzi a rendszert, és tesztverzióra frissíti magát.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Előzetes kiadások frissítése</value>
@@ -1694,7 +1694,7 @@ Most törölni szeretnéd?</value>
     <value>Ha ezt letiltod, az itt beállítottak nem kerülnek alkalmazásra a Robloxban.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Engedélyezze a Froststrap számára a FastFlags kezelését</value>
+    <value>Engedélyezze a Spectre számára a FastFlags kezelését</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>A Roblox a Windows rendszerben a kijelző méretezésétől függően csökkenti a megjelenítési minőséget.</value>
@@ -2105,7 +2105,7 @@ Most törölni szeretnéd?</value>
     <value>Az asztalhoz közel</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>A Roblox indításakor egy adott ablak nyílik meg, ha duplán rákattintasz a tálcán található Froststrap ikonra.</value>
+    <value>A Roblox indításakor egy adott ablak nyílik meg, ha duplán rákattintasz a tálcán található Spectre ikonra.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Kettős kattintás művelete</value>
@@ -2123,13 +2123,13 @@ Most törölni szeretnéd?</value>
     <value>Szerkesztési információk</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Lehetővé teszi a Froststrap számára, hogy felismerje, melyik Roblox-játékot játszod éppen. Bizonyos funkciókhoz ez szükséges lehet.</value>
+    <value>Lehetővé teszi a Spectre számára, hogy felismerje, melyik Roblox-játékot játszod éppen. Bizonyos funkciókhoz ez szükséges lehet.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>A tevékenységkövetés engedélyezése</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Ha ezt engedélyezed, az alkalmazás megnyitása közben egy egyedi „Playing Froststrap” RPC jelenik meg a Discord-profilodban.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Ha ezt engedélyezed, az alkalmazás megnyitása közben egy egyedi „Playing Spectre” RPC jelenik meg a Discord-profilodban.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Megjeleníti az adott munkamenet során játszott játékot, és lehetővé teszi, hogy újra csatlakozz hozzá.</value>
@@ -2192,7 +2192,7 @@ Most törölni szeretnéd?</value>
     <value>Display Studio tevékenység</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Ez úgy működik, hogy hozzáad egy egyedi Froststrap-bővítményt, amely naplózza a tevékenységeidet.
+    <value>Ez úgy működik, hogy hozzáad egy egyedi Spectre-bővítményt, amely naplózza a tevékenységeidet.
 Szeretnéd telepíteni a bővítményt?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2753,7 +2753,7 @@ Az alkalmazás bezárja ezt az ablakot, amint a bejelentkezés befejeződött.</
     <value>Adatközpontok betöltése...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>A használathoz jelentkezz be a fiókkezelőn keresztül, kapcsold be a „Froststrap fiókhozzáférés” opciót, vagy jelezd ezt a Discord-szerverünkön.</value>
+    <value>A használathoz jelentkezz be a fiókkezelőn keresztül, kapcsold be a „Spectre fiókhozzáférés” opciót, vagy jelezd ezt a Discord-szerverünkön.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Nem találtak nyilvános szervereket.</value>
@@ -2828,13 +2828,13 @@ Az alkalmazás bezárja ezt az ablakot, amint a bejelentkezés befejeződött.</
     <value>Parancsikon létrehozása</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Állítsd be, hogyan lehet a Froststrap-ot könnyedén elindítani.</value>
+    <value>Állítsd be, hogyan lehet a Spectre-ot könnyedén elindítani.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Hiba történt a parancsikon létrehozásakor.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Lehetővé teszi, hogy a Froststrap Roblox-ikonjait használd a gyorsbillentyűidhez. [Nézd meg, hogyan.]({0})</value>
+    <value>Lehetővé teszi, hogy a Spectre Roblox-ikonjait használd a gyorsbillentyűidhez. [Nézd meg, hogyan.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Roblox-ikonok kibontása egy mappába</value>
@@ -2905,28 +2905,28 @@ Ha engedélyezve van, a Beállítások bezárása után automatikusan elindítja
 Szeretnéd engedélyezni a Tesztmódot?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Froststrap beállítások</value>
+    <value>Spectre beállítások</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Ikonok</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Ezeket a Froststrap telepítésének helyén tárolják, és újratelepítéskor automatikusan visszaállnak.</value>
+    <value>Ezeket a Spectre telepítésének helyén tárolják, és újratelepítéskor automatikusan visszaállnak.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>A beállításaimat és a módosításaimat megőrizni</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Az eltávolítás során a Froststrap eltávolításra kerül a rendszeredből, és automatikusan újrakonfigurálja az alapértelmezett Roblox indítót, ha az még telepítve van.
+    <value>Az eltávolítás során a Spectre eltávolításra kerül a rendszeredből, és automatikusan újrakonfigurálja az alapértelmezett Roblox indítót, ha az még telepítve van.
 
 Ha a Roblox-szal kapcsolatos problémák miatt távolítod el vagy telepíted újra a programot, először olvasd el [ezt a súgóoldalt]({0}).
 
-Előfordulhat, hogy az eltávolítási folyamat nem tudja teljesen megtisztítani a rendszert, ezért előfordulhat, hogy manuálisan kell eltávolítanod a Froststrap telepítési helyén maradt fájlokat.
+Előfordulhat, hogy az eltávolítási folyamat nem tudja teljesen megtisztítani a rendszert, ezért előfordulhat, hogy manuálisan kell eltávolítanod a Spectre telepítési helyén maradt fájlokat.
 
-A Froststrap a „{1}” mappába volt telepítve.</value>
+A Spectre a „{1}” mappába volt telepítve.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>A Froststrap eltávolítása</value>
+    <value>A Spectre eltávolítása</value>
   </data>
 </root>

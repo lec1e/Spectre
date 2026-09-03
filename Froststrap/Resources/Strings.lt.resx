@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>Apie „Froststrap“</value>
+    <value>Apie „Spectre“</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Nepavyko nustatyti serverio vietos. Galbūt prisijungiate prie žaidimų per greitai.</value>
@@ -137,7 +137,7 @@
     <value>Kanalas, kuriame šiuo metu esate ({0}), dabar yra užblokuotas viešam naudojimui. Dabar būsite numatytame kanale ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>„Froststrap“ nepavyko automatiškai atnaujinti iki versijos {0}. Atnaujinkite jį rankiniu būdu – atsisiųskite ir paleiskite programą iš svetainės.</value>
+    <value>„Spectre“ nepavyko automatiškai atnaujinti iki versijos {0}. Atnaujinkite jį rankiniu būdu – atsisiųskite ir paleiskite programą iš svetainės.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>„Roblox“ bando nustatyti jūsų kanalą kaip {0}, tačiau šiuo metu jūsų numatytasis kanalas yra {1}.
@@ -175,7 +175,7 @@ Ar norite pereiti prie numatytojo kanalo ({1})?</value>
     <value>Nepavyko pritaikyti visų pakeitimų</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>„Froststrap“ neturi pakankamai vietos diske, kad būtų galima atsisiųsti ir įdiegti „Roblox“. Prašome atlaisvinti šiek tiek vietos diske ir pabandyti dar kartą.</value>
+    <value>„Spectre“ neturi pakankamai vietos diske, kad būtų galima atsisiųsti ir įdiegti „Roblox“. Prašome atlaisvinti šiek tiek vietos diske ir pabandyti dar kartą.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Taikomos „Roblox“ modifikacijos...</value>
@@ -310,10 +310,10 @@ Ar norite pereiti prie numatytojo kanalo ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>„Froststrap“ buvo sėkmingai pašalinta</value>
+    <value>„Spectre“ buvo sėkmingai pašalinta</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Šiuo metu veikia „Roblox“, tačiau prieš pašalinant „Froststrap“ jį reikia uždaryti. Ar norite uždaryti „Roblox“ dabar?</value>
+    <value>Šiuo metu veikia „Roblox“, tačiau prieš pašalinant „Spectre“ jį reikia uždaryti. Ar norite uždaryti „Roblox“ dabar?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>„Roblox“ veikimui reikalingi „Windows Media Foundation“ komponentai. Atrodo, kad jų trūksta, greičiausiai dėl to, kad naudojate „Windows“ N versiją. Pirmiausia juos įdiekite, o tada paleiskite „Roblox“.</value>
@@ -404,7 +404,7 @@ Ar norite pereiti prie numatytojo kanalo ({1})?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Eksportas</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Failai</value>
@@ -500,7 +500,7 @@ Ar norite pereiti prie numatytojo kanalo ({1})?</value>
     <value>Pervardyti</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>„Roblox“ dar nėra įdiegtas. Prieš bandydami naudotis šia parinktimi, bent kartą paleiskite „Roblox“ naudodami „Froststrap“.</value>
+    <value>„Roblox“ dar nėra įdiegtas. Prieš bandydami naudotis šia parinktimi, bent kartą paleiskite „Roblox“ naudodami „Spectre“.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Išsaugoti ir įdiegti</value>
@@ -720,7 +720,7 @@ Veikimo laikas: {1}</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Nepavyko nustatyti pasirinktinio paleidimo modulio: {0}.
 Naudojamas numatytasis: {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Pasirinktiniai „bootstrapper“ gali turėti ne daugiau kaip {0} elementų, gauta {1}</value>
@@ -769,17 +769,17 @@ Naudojamas numatytasis: {1}.</value>
     <value>Prašome palaukti, kol bus baigtas programos pašalinimas.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>„Froststrap“ nebepralaiko „Bloxshade“.
+    <value>„Spectre“ nebepralaiko „Bloxshade“.
 Norėdami gauti daugiau informacijos, prisijunkite prie „Bloxshade“ „Discord“ serverio.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Atsiprašau</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>„Froststrap“ nepavyko sukurti nuorodų darbalaukyje ir „Pradžios“ meniu. Pabandykite jas sukurti vėliau per nustatymus.</value>
+    <value>„Spectre“ nepavyko sukurti nuorodų darbalaukyje ir „Pradžios“ meniu. Pabandykite jas sukurti vėliau per nustatymus.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Nepavyko užmegzti ryšio, o tai greičiausiai reiškia, kad interneto ryšys yra prastas arba jį blokuoja ugniasienė. Jei jūsų interneto ryšys veikia tinkamai, įsitikinkite, kad jūsų antivirusinė programa neblokuoja „Froststrap“.</value>
+    <value>Nepavyko užmegzti ryšio, o tai greičiausiai reiškia, kad interneto ryšys yra prastas arba jį blokuoja ugniasienė. Jei jūsų interneto ryšys veikia tinkamai, įsitikinkite, kad jūsų antivirusinė programa neblokuoja „Spectre“.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Šioje sesijoje funkcija „BetterMatchmaking“ bus išjungta.</value>
@@ -791,7 +791,7 @@ Norėdami gauti daugiau informacijos, prisijunkite prie „Bloxshade“ „Disco
     <value>Šiuo metu „Roblox“ gali neveikti. Daugiau informacijos rasite {0}.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Kadangi reikia įdiegti arba atnaujinti „Roblox“, „Froststrap“ negali tęsti veikimo.</value>
+    <value>Kadangi reikia įdiegti arba atnaujinti „Roblox“, „Spectre“ negali tęsti veikimo.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Šio paleidimo metu „Roblox“ nebus tikrinama, ar yra atnaujinimų, o modifikacijų pakeitimai nebus pritaikyti.</value>
@@ -803,11 +803,11 @@ Norėdami gauti daugiau informacijos, prisijunkite prie „Bloxshade“ „Disco
     <value>Prašome pabandyti vėliau.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>„Froststrap“ negali prisijungti prie {0}</value>
+    <value>„Spectre“ negali prisijungti prie {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>„Froststrap“ negali atsisiųsti „Roblox“</value>
+    <value>„Spectre“ negali atsisiųsti „Roblox“</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Šiuo metu „Roblox“ atsisiųsti negalima. Daugiau informacijos rasite šiame pagalbos puslapyje: {0}</value>
@@ -817,24 +817,24 @@ Norėdami gauti daugiau informacijos, prisijunkite prie „Bloxshade“ „Disco
     <value>Kopijuoti žurnalo turinį</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Vykdant „Froststrap/Froststrap“ įvyko išimtis</value>
+    <value>Vykdant „Spectre/Spectre“ įvyko išimtis</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Pirmiausia patikrinkite [„Froststrap“ Vikį]({0}), ar ši problema jau buvo išspręsta.
+    <value>Pirmiausia patikrinkite [„Spectre“ Vikį]({0}), ar ši problema jau buvo išspręsta.
 
 Jei ne, prašome pranešti apie šią išimtį per [„GitHub“ užklausą]({1}) kartu su sukurtos žurnalo failo kopija.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Pirmiausia patikrinkite [„Froststrap Wiki“]({0}), ar ši problema jau buvo išspręsta.
+    <value>Pirmiausia patikrinkite [„Spectre Wiki“]({0}), ar ši problema jau buvo išspręsta.
 
-Jei ne, prašome apie šią išimtį pranešti šio „forko“ prižiūrėtojams. NEPRANEŠKITE apie tai „Froststrap“ „GitHub“ problemų sąraše, nes tai yra neoficiali versija.</value>
+Jei ne, prašome apie šią išimtį pranešti šio „forko“ prižiūrėtojams. NEPRANEŠKITE apie tai „Spectre“ „GitHub“ problemų sąraše, nes tai yra neoficiali versija.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Pranešti apie išimtį</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>„Froststrap“ išimtis</value>
+    <value>„Spectre“ išimtis</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Nepavyko įkelti pasirinktos „bootstrapper“ piktogramos.
@@ -858,10 +858,10 @@ Kai kurie tekstai gali būti neišversti į pasirinktą kalbą.</value>
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Norėdami sužinoti, kodėl taip gali nutikti ir kaip šią problemą išspręsti, perskaitykite [šį pagalbos straipsnį]({0}).
 
-Patikrinkite, ar „Roblox“ veikia naudojant [originalią paleidimo programą]({1}). Jei neveikia, tai nėra „Froststrap“ problema. Jei veikia, kreipkitės į pagalbos straipsnį.</value>
+Patikrinkite, ar „Roblox“ veikia naudojant [originalią paleidimo programą]({1}). Jei neveikia, tai nėra „Spectre“ problema. Jei veikia, kreipkitės į pagalbos straipsnį.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>„Froststrap“ negali įrašyti duomenų į „Windows“ registrą. Tikėtina, kad tai trukdo antivirusinė programa ir sukelia problemų. Prašome patikrinti, ar nėra nieko, kas galėtų riboti „Froststrap“ veikimą.</value>
+    <value>„Spectre“ negali įrašyti duomenų į „Windows“ registrą. Tikėtina, kad tai trukdo antivirusinė programa ir sukelia problemų. Prašome patikrinti, ar nėra nieko, kas galėtų riboti „Spectre“ veikimą.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Gradientai</value>
@@ -891,16 +891,16 @@ Patikrinkite, ar „Roblox“ veikia naudojant [originalią paleidimo programą]
     <value>Padirbtas „Byfron“ (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>„Froststrap“ (klasikinė versija)</value>
+    <value>„Spectre“ (klasikinė versija)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Pasirinktinis</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>„Froststrap“ (stiklas)</value>
+    <value>„Spectre“ (stiklas)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>„Froststrap“ (nepermatomas)</value>
+    <value>„Spectre“ (nepermatomas)</value>
   </data>
   <data name="Enums.BootstrapperStyle.TwentyFiveDialog" xml:space="preserve">
     <value>„Roblox“ (~2025 m.)</value>
@@ -1115,8 +1115,8 @@ Patikrinkite, ar „Roblox“ veikia naudojant [originalią paleidimo programą]
   <data name="Enums.Theme.Dark" xml:space="preserve">
     <value>Tamsus</value>
   </data>
-  <data name="Enums.Theme.Froststrap" xml:space="preserve">
-    <value>„Froststrap“</value>
+  <data name="Enums.Theme.Spectre" xml:space="preserve">
+    <value>„Spectre“</value>
   </data>
   <data name="Enums.Theme.Green" xml:space="preserve">
     <value>Žalia</value>
@@ -1147,14 +1147,14 @@ Patikrinkite, ar „Roblox“ veikia naudojant [originalią paleidimo programą]
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>„Froststrap“ buvo atnaujintas iki v{0} versijos</value>
+    <value>„Spectre“ buvo atnaujintas iki v{0} versijos</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Jūsų paleista „Froststrap“ versija skiriasi nuo šiuo metu įdiegtos versijos.
+    <value>Jūsų paleista „Spectre“ versija skiriasi nuo šiuo metu įdiegtos versijos.
 Ar norite atnaujinti šiuo metu įdiegtą versiją?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Jūsų paleista „Froststrap“ versija yra senesnė už šiuo metu įdiegtą versiją.
+    <value>Jūsų paleista „Spectre“ versija yra senesnė už šiuo metu įdiegtą versiją.
 Gali kilti problemų, o jūsų nustatymai gali būti pakeisti. Rekomenduojama iš naujo įdiegti programą.
 Ar tikrai norite tęsti?</value>
   </data>
@@ -1171,7 +1171,7 @@ Ar tikrai norite tęsti?</value>
     <value>Paleiskite „Roblox Studio“</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Šio paleidimo metu žurnalo failas nebus įrašytas, nes „Froststrap“ negali įrašyti į aplanką „{0}“</value>
+    <value>Šio paleidimo metu žurnalo failas nebus įrašytas, nes „Spectre“ negali įrašyti į aplanką „{0}“</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Informacija apie versiją</value>
@@ -1189,13 +1189,13 @@ Ar tikrai norite tęsti?</value>
     <value>Kodas</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Tai visi žmonės, kurie įnešė reikšmingą indėlį į „Froststrap“ ir „Froststrap“, padėdami jiems tapti tokiais, kokie jie yra šiandien.</value>
+    <value>Tai visi žmonės, kurie įnešė reikšmingą indėlį į „Spectre“ ir „Spectre“, padėdami jiems tapti tokiais, kokie jie yra šiandien.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Įkvėpimo šaltiniai</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>„Fishstrap“/„Froststrap“ šakutė.</value>
+    <value>„Fishstrap“/„Spectre“ šakutė.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>„Discord“ serveris</value>
@@ -1258,16 +1258,16 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Atkreipkite dėmesį, kad ne visi jūsų pakeitimai bus iškart pritaikyti, kol neuždarysite visų šiuo metu atidarytų „Roblox“ sesijų.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>„Froststrap“ jau veikia</value>
+    <value>„Spectre“ jau veikia</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Fono režimas:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Pritaikyti „Froststrap“ paleidimo programą naudodami įvairias parinktis.</value>
+    <value>Pritaikyti „Spectre“ paleidimo programą naudodami įvairias parinktis.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Lengvai pritaikykite „Froststrap“ temas naudodami iš anksto nustatytus šablonus arba sukurkite savo unikalų stilių.</value>
+    <value>Lengvai pritaikykite „Spectre“ temas naudodami iš anksto nustatytus šablonus arba sukurkite savo unikalų stilių.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Programėlių temos</value>
@@ -1285,13 +1285,13 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Pavadinimas</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Nustatykite, kaip turėtų atrodyti „Froststrap“.</value>
+    <value>Nustatykite, kaip turėtų atrodyti „Spectre“.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Dažnis</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Pasirinkite, kokią piktogramą turėtų naudoti „Froststrap“.</value>
+    <value>Pasirinkite, kokią piktogramą turėtų naudoti „Spectre“.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Piktograma</value>
@@ -1306,7 +1306,7 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Kalba</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Pasirinkite paleidimo ekrano stilių. Pastaba: tamsioji tema nepalaikoma „Legacy“ ar „Vista“ sistemose. Norėdami rasti daugiau individualizuotų paleidimo programų, apsilankykite oficialiame „Froststrap“ „Discord“ serveryje.</value>
+    <value>Pasirinkite paleidimo ekrano stilių. Pastaba: tamsioji tema nepalaikoma „Legacy“ ar „Vista“ sistemose. Norėdami rasti daugiau individualizuotų paleidimo programų, apsilankykite oficialiame „Spectre“ „Discord“ serveryje.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>„Bootstrapper“ stilius</value>
@@ -1339,16 +1339,16 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Langų fonas</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Suteikia prieigą prie „Roblox“ API naudodamas jūsų autentifikavimo slapuką. [Prie ko „Froststrap“ turės prieigą?]({0})</value>
+    <value>Suteikia prieigą prie „Roblox“ API naudodamas jūsų autentifikavimo slapuką. [Prie ko „Spectre“ turės prieigą?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>„Froststrap“ paskyros leidimai</value>
+    <value>„Spectre“ paskyros leidimai</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>„Froststrap“ paleidus „Roblox“ automatiškai patikrins ir atnaujins save iki stabilios versijos.</value>
+    <value>„Spectre“ paleidus „Roblox“ automatiškai patikrins ir atnaujins save iki stabilios versijos.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Automatiškai atnaujinti „Froststrap“</value>
+    <value>Automatiškai atnaujinti „Spectre“</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Atnaujinkite „Roblox“ fone, o ne laukite. Nerekomenduojama naudoti esant lėtai interneto ryšio spartai. Kad ši funkcija veiktų, reikia mažiausiai 3 GB laisvos saugyklos vietos.</value>
@@ -1369,7 +1369,7 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Instancijos paleidimo patvirtinimas</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Nustatykite, ką „Froststrap“ turėtų daryti paleidžiant „Roblox“.</value>
+    <value>Nustatykite, ką „Spectre“ turėtų daryti paleidžiant „Roblox“.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Kitas paleidimas bus susijęs su „Roblox“ švariu įdiegimu.</value>
@@ -1402,7 +1402,7 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Automatiškai ištrina senus duomenis, kad atlaisvintų vietos. Sukūrė Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>„Froststrap“ valiklis</value>
+    <value>„Spectre“ valiklis</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Failai, kurių amžius viršija nustatytą laikotarpį, bus ištrinti.</value>
@@ -1417,10 +1417,10 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Tarpinė atmintis</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>„Froststrap“ žurnalai bus ištrinti.</value>
+    <value>„Spectre“ žurnalai bus ištrinti.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>„Froststrap“ žurnalai</value>
+    <value>„Spectre“ žurnalai</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Senosios žurnalo failai bus ištrinti.</value>
@@ -1429,7 +1429,7 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Žurnalų meniu</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Leiskite „Froststrap“ nuspręsti, prie kokių serverių prisijungsite. Programa teikia pirmenybę serveriui, kuris yra arčiausiai jūsų.</value>
+    <value>Leiskite „Spectre“ nuspręsti, prie kokių serverių prisijungsite. Programa teikia pirmenybę serveriui, kuris yra arčiausiai jūsų.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Atrodo, kad vienas iš draugų šiuo metu žaidžia šį žaidimą. Ar nori prisijungti prie jo?</value>
@@ -1486,7 +1486,7 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Keisti automatiškai</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>„Roblox“ arba „Froststrap“ gali bandyti pakeisti jūsų pasirinktą kanalą.</value>
+    <value>„Roblox“ arba „Spectre“ gali bandyti pakeisti jūsų pasirinktą kanalą.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Niekada nesikeisk</value>
@@ -1498,7 +1498,7 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Automatinis kanalų perjungimas</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Pakeiskite „Roblox“ ir „Froststrap“ diegimo ir įdiegimo nustatymus.</value>
+    <value>Pakeiskite „Roblox“ ir „Spectre“ diegimo ir įdiegimo nustatymus.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>„Roblox“ atnaujinimai</value>
@@ -1585,7 +1585,7 @@ Norėdami pradėti, spustelėkite „Pridėti paskyrą“ viršuje</value>
     <value>Nerastas „Roblox“ slapuko failas.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Paleidus „Roblox“, „Froststrap“ automatiškai patikrins ir atnaujins save į bandomąją versiją.</value>
+    <value>Paleidus „Roblox“, „Spectre“ automatiškai patikrins ir atnaujins save į bandomąją versiją.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Išankstinių versijų atnaujinimas</value>
@@ -1722,7 +1722,7 @@ Ar norite jį pašalinti dabar?</value>
     <value>Išjungus šią parinktį, čia nustatyti parametrai nebus pritaikyti „Roblox“ sistemoje.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Leisti „Froststrap“ valdyti „FastFlags“</value>
+    <value>Leisti „Spectre“ valdyti „FastFlags“</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>„Roblox“ sumažina vaizdo atkūrimo kokybę priklausomai nuo to, kaip jūsų ekranas yra mastelio keičiamas „Windows“ sistemoje.</value>
@@ -2130,7 +2130,7 @@ Ar norite jį pašalinti dabar?</value>
     <value>Panašu į darbalaukį</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Paleidžiant „Roblox“, dvigubai spustelėjus „Froststrap“ piktogramą sisteminiame dėkle, atidaromas tam tikras langas.</value>
+    <value>Paleidžiant „Roblox“, dvigubai spustelėjus „Spectre“ piktogramą sisteminiame dėkle, atidaromas tam tikras langas.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Veiksmas dvigubai spustelėjus</value>
@@ -2148,16 +2148,16 @@ Ar norite jį pašalinti dabar?</value>
     <value>Redagavimo informacija</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Leidžia „Froststrap“ nustatyti, kokį „Roblox“ žaidimą žaidžiate. Tam tikroms funkcijoms tai gali būti būtina.</value>
+    <value>Leidžia „Spectre“ nustatyti, kokį „Roblox“ žaidimą žaidžiate. Tam tikroms funkcijoms tai gali būti būtina.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Įjungti veiklos stebėjimą</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Įjunkite šią funkciją, kad, kol programa yra atidaryta, jūsų „Discord“ profilyje būtų rodomas pasirinktinis RPC „Playing Froststrap“.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Įjunkite šią funkciją, kad, kol programa yra atidaryta, jūsų „Discord“ profilyje būtų rodomas pasirinktinis RPC „Playing Spectre“.</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Title" xml:space="preserve">
-    <value>„Froststrap“ RPC</value>
+  <data name="Menu.Integrations.SpectreRPC.Title" xml:space="preserve">
+    <value>„Spectre“ RPC</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Rodo žaidimą, kurį žaidėte per šią sesiją, ir leidžia vėl prisijungti prie jo.</value>
@@ -2220,7 +2220,7 @@ Ar norite jį pašalinti dabar?</value>
     <value>„Display Studio“ veikla</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Tai veikia įdiegus specialiai sukurtą „Froststrap“ įskiepį, kuris registruos jūsų veiksmus.
+    <value>Tai veikia įdiegus specialiai sukurtą „Spectre“ įskiepį, kuris registruos jūsų veiksmus.
 Ar norite įdiegti šį įskiepį?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2781,7 +2781,7 @@ Programėlė uždarys šį langą, kai prisijungimas bus baigtas.</value>
     <value>Įkeliami duomenų centrai...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Prisijunkite naudodami paskyros tvarkyklę, įjunkite „Froststrap Account Permission“ arba apie tai praneškite mūsų „Discord“ serveryje, kad galėtumėte naudotis šia funkcija.</value>
+    <value>Prisijunkite naudodami paskyros tvarkyklę, įjunkite „Spectre Account Permission“ arba apie tai praneškite mūsų „Discord“ serveryje, kad galėtumėte naudotis šia funkcija.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Nerasta jokių viešųjų serverių.</value>
@@ -2856,13 +2856,13 @@ Programėlė uždarys šį langą, kai prisijungimas bus baigtas.</value>
     <value>Sukurti nuorodą</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Nustatykite, kaip „Froststrap“ galima lengvai paleisti.</value>
+    <value>Nustatykite, kaip „Spectre“ galima lengvai paleisti.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Kilo klaida kuriant nuorodą.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Leidžia naudoti „Froststrap“ siūlomą „Roblox“ piktogramų rinkinį savo nuorodoms. [Sužinokite, kaip.]({0})</value>
+    <value>Leidžia naudoti „Spectre“ siūlomą „Roblox“ piktogramų rinkinį savo nuorodoms. [Sužinokite, kaip.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Išgauti „Roblox“ piktogramas į aplanką</value>
@@ -2933,29 +2933,29 @@ Kai šis režimas įjungtas, uždarius „Nustatymus“ automatiškai paleidžia
 Ar norite įjungti bandymo režimą?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>„Froststrap“ nustatymai</value>
+    <value>„Spectre“ nustatymai</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Piktogramos</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Jie bus išsaugoti toje vietoje, kurioje buvo įdiegta „Froststrap“, ir bus automatiškai atkurti ją įdiegus iš naujo.</value>
+    <value>Jie bus išsaugoti toje vietoje, kurioje buvo įdiegta „Spectre“, ir bus automatiškai atkurti ją įdiegus iš naujo.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Išsaugoti mano nustatymus ir modifikacijas</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Pašalinus programą, „Froststrap“ bus pašalinta iš jūsų sistemos, o numatytasis „Roblox“ paleidimo programa bus automatiškai perkonfigūruota, jei ji vis dar yra įdiegta.
+    <value>Pašalinus programą, „Spectre“ bus pašalinta iš jūsų sistemos, o numatytasis „Roblox“ paleidimo programa bus automatiškai perkonfigūruota, jei ji vis dar yra įdiegta.
 
 Jei pašalinate ar iš naujo diegiate programą dėl problemų su „Roblox“, pirmiausia perskaitykite [šį pagalbos puslapį]({0}).
 
-Pašalinimo procesas gali nepašalinti visų likusių failų, todėl gali tekti rankiniu būdu išvalyti likusius failus iš vietos, kurioje buvo įdiegta „Froststrap“.
+Pašalinimo procesas gali nepašalinti visų likusių failų, todėl gali tekti rankiniu būdu išvalyti likusius failus iš vietos, kurioje buvo įdiegta „Spectre“.
 
-„Froststrap“ buvo įdiegta „{1}“.</value>
+„Spectre“ buvo įdiegta „{1}“.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Pašalinti „Froststrap“</value>
+    <value>Pašalinti „Spectre“</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Pašalinti</value>

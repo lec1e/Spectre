@@ -114,10 +114,11 @@ namespace Froststrap.UI.ViewModels.Settings
             {
                 App.Settings.Prop.BootstrapperIcon = value;
                 OnPropertyChanged(nameof(IsCustomIconSelected));
+                OnPropertyChanged(nameof(Icon));
             }
         }
 
-        public static bool IsCustomIconSelected => App.Settings.Prop.BootstrapperIcon == BootstrapperIcon.IconCustom;
+        public bool IsCustomIconSelected => App.Settings.Prop.BootstrapperIcon == BootstrapperIcon.IconCustom;
 
         public static IEnumerable<WindowsBackdrops> BackdropOptions => Enum.GetValues<WindowsBackdrops>();
 
@@ -612,9 +613,9 @@ namespace Froststrap.UI.ViewModels.Settings
             {
                 App.Settings.Prop.EnableGlass = value;
                 global::Froststrap.Utility.ThemeManager.ApplyFromSettings();
-                // Force notify even if signature matched earlier
                 global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
                 OnPropertyChanged(nameof(EnableGlass));
+                ApplyLiveGlass();
             }
         }
 
@@ -626,6 +627,54 @@ namespace Froststrap.UI.ViewModels.Settings
                 App.Settings.Prop.EnableGlow = value;
                 global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
                 OnPropertyChanged(nameof(EnableGlow));
+                ApplyLiveGlass();
+            }
+        }
+
+        public double GlassTintOpacity
+        {
+            get => App.Settings.Prop.GlassTintOpacity;
+            set
+            {
+                App.Settings.Prop.GlassTintOpacity = Math.Clamp(value, 0.05, 0.85);
+                OnPropertyChanged(nameof(GlassTintOpacity));
+                ApplyLiveGlass();
+            }
+        }
+
+        public double GlassMaterialOpacity
+        {
+            get => App.Settings.Prop.GlassMaterialOpacity;
+            set
+            {
+                App.Settings.Prop.GlassMaterialOpacity = Math.Clamp(value, 0.10, 0.90);
+                OnPropertyChanged(nameof(GlassMaterialOpacity));
+                ApplyLiveGlass();
+            }
+        }
+
+        public double GlassCornerRadius
+        {
+            get => App.Settings.Prop.GlassCornerRadius;
+            set
+            {
+                App.Settings.Prop.GlassCornerRadius = Math.Clamp(value, 0, 40);
+                OnPropertyChanged(nameof(GlassCornerRadius));
+                ApplyLiveGlass();
+            }
+        }
+
+        private static void ApplyLiveGlass()
+        {
+            if (Avalonia.Application.Current?.ApplicationLifetime is not Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+                return;
+
+            foreach (var window in desktop.Windows)
+            {
+                foreach (var glass in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.LiquidGlassPanel>())
+                    glass.ApplyFromSettings();
+                foreach (var abyss in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.AbyssGlowBackground>())
+                    abyss.SyncFromSettings();
             }
         }
 
@@ -657,8 +706,8 @@ namespace Froststrap.UI.ViewModels.Settings
             set
             {
                 App.Settings.Prop.EnableLiquidCursor = value;
-                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
                 OnPropertyChanged(nameof(EnableLiquidCursor));
+                Froststrap.UI.Elements.Settings.MainWindow.Instance?.SyncPointerEffects();
             }
         }
 
@@ -934,6 +983,7 @@ namespace Froststrap.UI.ViewModels.Settings
             App.Settings.Prop.GradientAngle = GradientAngle;
 
             AvaloniaWindow.ApplyTheme();
+            ApplyLiveGlass();
         }
 
         private void InitializeGradientStops()

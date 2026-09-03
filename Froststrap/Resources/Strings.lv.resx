@@ -122,7 +122,7 @@
     <comment>Referring to code licenses; see https://opensource.org/licenses for example</comment>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>Par „Froststrap“</value>
+    <value>Par „Spectre“</value>
   </data>
   <data name="ActivityWatcher.LocationQueryFailed" xml:space="preserve">
     <value>Neizdevās noskaidrot servera atrašanās vietu. Iespējams, jūs pievienojaties spēlēm pārāk ātri.</value>
@@ -137,7 +137,7 @@
     <value>Kanāls, kurā jūs pašlaik atrodaties ({0}), tagad ir bloķēts publiskai lietošanai. Tagad jūs atradīsieties noklusējuma kanālā ({1}).</value>
   </data>
   <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Froststrap nevarēja automātiski atjaunināties līdz versijai {0}. Lūdzu, atjauniniet to manuāli, lejupielādējot un palaistot programmu no tīmekļa vietnes.</value>
+    <value>Spectre nevarēja automātiski atjaunināties līdz versijai {0}. Lūdzu, atjauniniet to manuāli, lejupielādējot un palaistot programmu no tīmekļa vietnes.</value>
   </data>
   <data name="Bootstrapper.Bootstrapper.Dialog.PromptChannelChange" xml:space="preserve">
     <value>„Roblox“ mēģina iestatīt tavu kanālu uz {0}, taču tavs pašreizējais izvēlētais kanāls ir {1}.
@@ -175,7 +175,7 @@ Vai vēlaties pāriet uz noklusējuma kanālu ({1})?</value>
     <value>Neizdevās piemērot visas izmaiņas</value>
   </data>
   <data name="Bootstrapper.NotEnoughSpace" xml:space="preserve">
-    <value>Froststrap rīkam nav pietiekami daudz diska vietas, lai lejupielādētu un instalētu Roblox. Lūdzu, atbrīvojiet nedaudz diska vietas un mēģiniet vēlreiz.</value>
+    <value>Spectre rīkam nav pietiekami daudz diska vietas, lai lejupielādētu un instalētu Roblox. Lūdzu, atbrīvojiet nedaudz diska vietas un mēģiniet vēlreiz.</value>
   </data>
   <data name="Bootstrapper.Status.ApplyingModifications" xml:space="preserve">
     <value>Roblox modifikāciju piemērošana...</value>
@@ -310,10 +310,10 @@ Vai vēlaties pāriet uz noklusējuma kanālu ({1})?</value>
     <comment>Text for style previews that use text button that says &quot;Cancel&quot;</comment>
   </data>
   <data name="Bootstrapper.SuccessfullyUninstalled" xml:space="preserve">
-    <value>Froststrap ir veiksmīgi atinstalēts</value>
+    <value>Spectre ir veiksmīgi atinstalēts</value>
   </data>
   <data name="Bootstrapper.Uninstall.RobloxRunning" xml:space="preserve">
-    <value>Šobrīd darbojas „Roblox“, taču pirms „Froststrap“ atinstalēšanas tas ir jāaizver. Vai vēlaties aizvērt „Roblox“ tagad?</value>
+    <value>Šobrīd darbojas „Roblox“, taču pirms „Spectre“ atinstalēšanas tas ir jāaizver. Vai vēlaties aizvērt „Roblox“ tagad?</value>
   </data>
   <data name="Bootstrapper.WMFNotFound" xml:space="preserve">
     <value>Lai darbinātu Roblox, ir nepieciešami Windows Media Foundation komponenti. Šķiet, ka tie jums trūkst, visticamāk tāpēc, ka izmantojat Windows N versiju. Lūdzu, vispirms instalējiet šos komponentus un tikai tad palaidiet Roblox.</value>
@@ -404,7 +404,7 @@ Vai vēlaties pāriet uz noklusējuma kanālu ({1})?</value>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Eksports</value>
-    <comment>Currently used under the &quot;Froststrap&quot; settings tab for the button to export diagnostic data</comment>
+    <comment>Currently used under the &quot;Spectre&quot; settings tab for the button to export diagnostic data</comment>
   </data>
   <data name="Common.Files" xml:space="preserve">
     <value>Faili</value>
@@ -500,7 +500,7 @@ Vai vēlaties pāriet uz noklusējuma kanālu ({1})?</value>
     <value>Pārdēvēt</value>
   </data>
   <data name="Common.RobloxNotInstalled" xml:space="preserve">
-    <value>Roblox vēl nav instalēts. Lūdzu, vismaz vienu reizi palaidiet Roblox, izmantojot Froststrap, pirms mēģināt izmantot šo opciju.</value>
+    <value>Roblox vēl nav instalēts. Lūdzu, vismaz vienu reizi palaidiet Roblox, izmantojot Spectre, pirms mēģināt izmantot šo opciju.</value>
   </data>
   <data name="Common.SaveAndInstall" xml:space="preserve">
     <value>Saglabāt un instalēt</value>
@@ -720,7 +720,7 @@ Darbības laiks: {1}</value>
   <data name="CustomTheme.Errors.SetupFailed" xml:space="preserve">
     <value>Neizdevās konfigurēt pielāgoto sākotnējo programmu: {0}.
 Tiek izmantota noklusējuma vērtība {1}.</value>
-    <comment>{0} is the error reason, {1} is the theme name (e.g. Froststrap (Classic))</comment>
+    <comment>{0} is the error reason, {1} is the theme name (e.g. Spectre (Classic))</comment>
   </data>
   <data name="CustomTheme.Errors.TooManyElements" xml:space="preserve">
     <value>Pielāgotajiem bootstrapperiem var būt ne vairāk kā {0} elementi, ir {1}</value>
@@ -769,17 +769,17 @@ Tiek izmantota noklusējuma vērtība {1}.</value>
     <value>Lūdzu, pagaidiet, kamēr tiks pabeigta programmas atinstalēšana.</value>
   </data>
   <data name="Dialog.Bloxshade.Setting" xml:space="preserve">
-    <value>Froststrap vairs neatbalsta Bloxshade.
+    <value>Spectre vairs neatbalsta Bloxshade.
 Lai uzzinātu vairāk, pievienojies Bloxshade Discord serverim.</value>
   </data>
   <data name="Dialog.Bloxshade.ThankYou" xml:space="preserve">
     <value>Atvainojiet</value>
   </data>
   <data name="Dialog.CannotCreateShortcuts" xml:space="preserve">
-    <value>Froststrap nevarēja izveidot saīsnes uz darbvirsmas un sākuma izvēlnē. Mēģiniet tās izveidot vēlāk, izmantojot iestatījumus.</value>
+    <value>Spectre nevarēja izveidot saīsnes uz darbvirsmas un sākuma izvēlnē. Mēģiniet tās izveidot vēlāk, izmantojot iestatījumus.</value>
   </data>
   <data name="Dialog.Connectivity.BadConnection" xml:space="preserve">
-    <value>Neizdevās izveidot savienojumu, kas, visticamāk, liecina par vāju interneta savienojumu vai ugunsmūra bloķējumu. Ja savienojums darbojas pareizi, lūdzu, pārliecinieties, ka jūsu antivīruss neblokē Froststrap.</value>
+    <value>Neizdevās izveidot savienojumu, kas, visticamāk, liecina par vāju interneta savienojumu vai ugunsmūra bloķējumu. Ja savienojums darbojas pareizi, lūdzu, pārliecinieties, ka jūsu antivīruss neblokē Spectre.</value>
   </data>
   <data name="Dialog.Connectivity.MatchmakingFailed" xml:space="preserve">
     <value>Šajā sesijā funkcija „BetterMatchmaking“ tiks atspējota.</value>
@@ -791,7 +791,7 @@ Lai uzzinātu vairāk, pievienojies Bloxshade Discord serverim.</value>
     <value>Šobrīd „Roblox“ var būt nedarbīgs. Sīkāku informāciju skatiet {0}.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeNeeded" xml:space="preserve">
-    <value>Tā kā ir jāinstalē vai jāatjaunina Roblox, Froststrap nevar turpināt darbu.</value>
+    <value>Tā kā ir jāinstalē vai jāatjaunina Roblox, Spectre nevar turpināt darbu.</value>
   </data>
   <data name="Dialog.Connectivity.RobloxUpgradeSkip" xml:space="preserve">
     <value>Šajā versijā Roblox netiks pārbaudīts, vai ir pieejami atjauninājumi, un izmaiņas modifikācijās netiks piemērotas.</value>
@@ -803,11 +803,11 @@ Lai uzzinātu vairāk, pievienojies Bloxshade Discord serverim.</value>
     <value>Lūdzu, mēģiniet vēlāk.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToConnect" xml:space="preserve">
-    <value>Froststrap nevar izveidot savienojumu ar {0}</value>
+    <value>Spectre nevar izveidot savienojumu ar {0}</value>
     <comment>{0} is the name of a service (i.e. Roblox, GitHub)</comment>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
-    <value>Froststrap nevar lejupielādēt Roblox</value>
+    <value>Spectre nevar lejupielādēt Roblox</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Šobrīd „Roblox“ nav iespējams lejupielādēt. Lūdzu, izlasiet šo palīdzības lapu, lai iegūtu vairāk informācijas: {0}</value>
@@ -817,24 +817,24 @@ Lai uzzinātu vairāk, pievienojies Bloxshade Discord serverim.</value>
     <value>Kopēt žurnāla saturu</value>
   </data>
   <data name="Dialog.Exception.Info.1" xml:space="preserve">
-    <value>Froststrap/Froststrap izpildes laikā radās izņēmums</value>
+    <value>Spectre/Spectre izpildes laikā radās izņēmums</value>
   </data>
   <data name="Dialog.Exception.Info.2" xml:space="preserve">
-    <value>Vispirms pārbaudiet [Froststrap Wiki]({0}), lai noskaidrotu, vai šī problēma jau ir atrisināta.
+    <value>Vispirms pārbaudiet [Spectre Wiki]({0}), lai noskaidrotu, vai šī problēma jau ir atrisināta.
 
 Ja nē, lūdzu, ziņojiet par šo izņēmumu, izveidojot [GitHub problēmu]({1}) un pievienojot izveidotā žurnāla faila kopiju.</value>
   </data>
   <data name="Dialog.Exception.Info.2.Alt" xml:space="preserve">
-    <value>Vispirms pārbaudiet [Froststrap Wiki]({0}), lai redzētu, vai šī problēma jau ir atrisināta.
+    <value>Vispirms pārbaudiet [Spectre Wiki]({0}), lai redzētu, vai šī problēma jau ir atrisināta.
 
-Ja nē, lūdzu, ziņojiet par šo izņēmumu šī atzara uzturētājiem. NEziņojiet par to Froststrap GitHub problēmu sarakstā, jo šī ir neoficiāla versija.</value>
+Ja nē, lūdzu, ziņojiet par šo izņēmumu šī atzara uzturētājiem. NEziņojiet par to Spectre GitHub problēmu sarakstā, jo šī ir neoficiāla versija.</value>
     <comment>&quot;fork&quot; in general means &quot;a variation of&quot; or &quot;a different version of&quot;. You can alternatively write the first sentence as &quot;...to the maintainers of this version.&quot;</comment>
   </data>
   <data name="Dialog.Exception.Report" xml:space="preserve">
     <value>Ziņot par izņēmumu</value>
   </data>
   <data name="Dialog.Exception.Title" xml:space="preserve">
-    <value>Froststrap izņēmums</value>
+    <value>Spectre izņēmums</value>
   </data>
   <data name="Dialog.IconLoadFailed" xml:space="preserve">
     <value>Izvēlēto „bootstrapper” ikonu neizdevās ielādēt.
@@ -858,10 +858,10 @@ Daļa teksta var būt netulkota vēlamajā valodā.</value>
   <data name="Dialog.PlayerError.HelpInformation" xml:space="preserve">
     <value>Lai uzzinātu, kāpēc tas varētu notikt un kā šo problēmu atrisināt, lūdzu, izlasiet [šo palīdzības rakstu]({0}).
 
-Pārbaudiet, vai Roblox darbojas ar [oriģinālo palaišanas programmu]({1}). Ja nedarbojas, tad šī nav Froststrap problēma. Ja darbojas, skatieties palīdzības rakstu.</value>
+Pārbaudiet, vai Roblox darbojas ar [oriģinālo palaišanas programmu]({1}). Ja nedarbojas, tad šī nav Spectre problēma. Ja darbojas, skatieties palīdzības rakstu.</value>
   </data>
   <data name="Dialog.RegistryWriteError" xml:space="preserve">
-    <value>Froststrap nevar veikt ierakstus Windows reģistrā. Iespējams, ka antivīruss traucē darbību un rada problēmas. Lūdzu, pārbaudiet, vai nav kaut kas, kas varētu ierobežot Froststrap darbību.</value>
+    <value>Spectre nevar veikt ierakstus Windows reģistrā. Iespējams, ka antivīruss traucē darbību un rada problēmas. Lūdzu, pārbaudiet, vai nav kaut kas, kas varētu ierobežot Spectre darbību.</value>
   </data>
   <data name="Enums.BackgroundMode.Gradient" xml:space="preserve">
     <value>Gradienti</value>
@@ -891,16 +891,16 @@ Pārbaudiet, vai Roblox darbojas ar [oriģinālo palaišanas programmu]({1}). Ja
     <value>Viltots „Byfron“ (~2023)</value>
   </data>
   <data name="Enums.BootstrapperStyle.ClassicFluentDialog" xml:space="preserve">
-    <value>Froststrap (klasiskais)</value>
+    <value>Spectre (klasiskais)</value>
   </data>
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Pēc pasūtījuma</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentAeroDialog" xml:space="preserve">
-    <value>Froststrap (stikls)</value>
+    <value>Spectre (stikls)</value>
   </data>
   <data name="Enums.BootstrapperStyle.FluentDialog" xml:space="preserve">
-    <value>Froststrap (necaurspīdīgs)</value>
+    <value>Spectre (necaurspīdīgs)</value>
   </data>
   <data name="Enums.CleanerOptions.Never" xml:space="preserve">
     <value>Nekad</value>
@@ -1132,14 +1132,14 @@ Pārbaudiet, vai Roblox darbojas ar [oriģinālo palaišanas programmu]({1}). Ja
     <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. &quot;Zip archive (*.zip)&quot;</comment>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Froststrap ir atjaunināts līdz versijai v{0}</value>
+    <value>Spectre ir atjaunināts līdz versijai v{0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
-    <value>Froststrap versija, kuru esat palaidis, atšķiras no versijas, kas pašlaik ir instalēta.
+    <value>Spectre versija, kuru esat palaidis, atšķiras no versijas, kas pašlaik ir instalēta.
 Vai vēlaties atjaunināt pašlaik instalēto versiju?</value>
   </data>
   <data name="InstallChecker.VersionLessThanInstalled" xml:space="preserve">
-    <value>Froststrap versija, kuru esat palaidis, ir vecāka par versiju, kas pašlaik ir instalēta.
+    <value>Spectre versija, kuru esat palaidis, ir vecāka par versiju, kas pašlaik ir instalēta.
 Var rasties problēmas, un jūsu iestatījumi var tikt mainīti. Ieteicams veikt atkārtotu instalēšanu.
 Vai esat pārliecināts, ka vēlaties turpināt?</value>
   </data>
@@ -1156,7 +1156,7 @@ Vai esat pārliecināts, ka vēlaties turpināt?</value>
     <value>Palaižiet „Roblox Studio“</value>
   </data>
   <data name="Logger.NoWriteMode" xml:space="preserve">
-    <value>Par šo palaišanu netiks izveidots nekāds žurnāla fails, jo Froststrap nevar veikt ierakstīšanu mapē „{0}“</value>
+    <value>Par šo palaišanu netiks izveidots nekāds žurnāla fails, jo Spectre nevar veikt ierakstīšanu mapē „{0}“</value>
   </data>
   <data name="Menu.About.BuildInfo" xml:space="preserve">
     <value>Informācija par būvniecību</value>
@@ -1174,13 +1174,13 @@ Vai esat pārliecināts, ka vēlaties turpināt?</value>
     <value>Kods</value>
   </data>
   <data name="Menu.About.Contributors.Description" xml:space="preserve">
-    <value>Šie ir visi cilvēki, kas devuši ievērojamu ieguldījumu „Froststrap” un „Froststrap” attīstībā, veidojot tos tādiem, kādi tie ir šodien.</value>
+    <value>Šie ir visi cilvēki, kas devuši ievērojamu ieguldījumu „Spectre” un „Spectre” attīstībā, veidojot tos tādiem, kādi tie ir šodien.</value>
   </data>
   <data name="Menu.About.Contributors.Insipirations" xml:space="preserve">
     <value>Iedvesmas avoti</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>„Fishstrap”/„Froststrap” dakša.</value>
+    <value>„Fishstrap”/„Spectre” dakša.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>„Discord“ serveris</value>
@@ -1243,16 +1243,16 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Lūdzu, ņemiet vērā, ka ne visas jūsu izmaiņas stāsies spēkā uzreiz, kamēr neaizvērsiet visas pašlaik atvērtās „Roblox“ instances.</value>
   </data>
   <data name="Menu.AlreadyRunning.Title" xml:space="preserve">
-    <value>Froststrap jau darbojas</value>
+    <value>Spectre jau darbojas</value>
   </data>
   <data name="Menu.Appearance.BackgroundMode" xml:space="preserve">
     <value>Fona režīms:</value>
   </data>
   <data name="Menu.Appearance.Bootstrapper.Description" xml:space="preserve">
-    <value>Pielāgojiet „Froststrap“ sākotnējo konfiguratoru, izmantojot plašu opciju klāstu.</value>
+    <value>Pielāgojiet „Spectre“ sākotnējo konfiguratoru, izmantojot plašu opciju klāstu.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Description" xml:space="preserve">
-    <value>Viegli pielāgojiet „Froststrap“ tēmas, izmantojot iepriekš iestatītos variantus, vai izveidojiet savu unikālo izskatu.</value>
+    <value>Viegli pielāgojiet „Spectre“ tēmas, izmantojot iepriekš iestatītos variantus, vai izveidojiet savu unikālo izskatu.</value>
   </data>
   <data name="Menu.Appearance.Custom.Theme.Title" xml:space="preserve">
     <value>Lietotņu tēmas</value>
@@ -1270,13 +1270,13 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Nosaukums</value>
   </data>
   <data name="Menu.Appearance.Description" xml:space="preserve">
-    <value>Iestatiet, kādam jāizskatās Froststrap.</value>
+    <value>Iestatiet, kādam jāizskatās Spectre.</value>
   </data>
   <data name="Menu.Appearance.Frequency" xml:space="preserve">
     <value>Frekvence</value>
   </data>
   <data name="Menu.Appearance.Icon.Description" xml:space="preserve">
-    <value>Izvēlieties, kādu ikonu „Froststrap” vajadzētu izmantot.</value>
+    <value>Izvēlieties, kādu ikonu „Spectre” vajadzētu izmantot.</value>
   </data>
   <data name="Menu.Appearance.Icon.Title" xml:space="preserve">
     <value>Ikona</value>
@@ -1291,7 +1291,7 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Valoda</value>
   </data>
   <data name="Menu.Appearance.Launcher.Description" xml:space="preserve">
-    <value>Izvēlieties sākuma ekrāna stilu. Piezīme: tumšā tēma netiek atbalstīta operētājsistēmās „Legacy“ vai „Vista“. Lai uzzinātu vairāk par pielāgojamajiem sākuma ekrāniem, apmeklējiet oficiālo „Froststrap“ Discord serveri.</value>
+    <value>Izvēlieties sākuma ekrāna stilu. Piezīme: tumšā tēma netiek atbalstīta operētājsistēmās „Legacy“ vai „Vista“. Lai uzzinātu vairāk par pielāgojamajiem sākuma ekrāniem, apmeklējiet oficiālo „Spectre“ Discord serveri.</value>
   </data>
   <data name="Menu.Appearance.Launcher.Title" xml:space="preserve">
     <value>„Bootstrapper“ stils</value>
@@ -1324,16 +1324,16 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Logu fons</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Description" xml:space="preserve">
-    <value>Nodrošina piekļuvi Roblox API, izmantojot jūsu autentifikācijas sīkfailu. [Kam Froststrap piekļūs?]({0})</value>
+    <value>Nodrošina piekļuvi Roblox API, izmantojot jūsu autentifikācijas sīkfailu. [Kam Spectre piekļūs?]({0})</value>
   </data>
   <data name="Menu.Behaviour.AllowCookieAccess.Title" xml:space="preserve">
-    <value>Froststrap konta atļaujas</value>
+    <value>Spectre konta atļaujas</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Froststrap, uzsākot Roblox, automātiski pārbaudīs un atjaunināsies līdz stabilai versijai.</value>
+    <value>Spectre, uzsākot Roblox, automātiski pārbaudīs un atjaunināsies līdz stabilai versijai.</value>
   </data>
   <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Froststrap automātiskā atjaunināšana</value>
+    <value>Spectre automātiskā atjaunināšana</value>
   </data>
   <data name="Menu.Behaviour.BackgroundUpdates.Description" xml:space="preserve">
     <value>Atjauniniet „Roblox“ fonā, nevis gaidot. Nav ieteicams lēniem tīkliem. Lai šī funkcija darbotos, ir nepieciešami vismaz 3 GB brīvas vietas.</value>
@@ -1354,7 +1354,7 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Instances palaišanas apstiprinājums</value>
   </data>
   <data name="Menu.Behaviour.Description" xml:space="preserve">
-    <value>Iestatiet, kā Froststrap rīkosies, palaižot Roblox.</value>
+    <value>Iestatiet, kā Spectre rīkosies, palaižot Roblox.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxReinstall.Description" xml:space="preserve">
     <value>Nākamajā palaišanas reizē tiks veikta Roblox tīrā instalācija.</value>
@@ -1384,7 +1384,7 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Automātiski dzēš vecos datus, lai atbrīvotu vietu. Sākotnēji izstrādājis Fishstrap.</value>
   </data>
   <data name="Menu.Bootstrapper.CleanUp.Title" xml:space="preserve">
-    <value>„Froststrap“ tīrīšanas līdzeklis</value>
+    <value>„Spectre“ tīrīšanas līdzeklis</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Age.Description" xml:space="preserve">
     <value>Faili, kas ir vecāki par norādīto laiku, tiks dzēsti.</value>
@@ -1399,10 +1399,10 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Kešatmiņa</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Description" xml:space="preserve">
-    <value>Froststrap žurnāli tiks dzēsti.</value>
+    <value>Spectre žurnāli tiks dzēsti.</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.IncludeBloxstrap.Title" xml:space="preserve">
-    <value>Froststrap žurnāli</value>
+    <value>Spectre žurnāli</value>
   </data>
   <data name="Menu.Bootstrapper.Cleaner.Logs.Description" xml:space="preserve">
     <value>Vecās žurnālu faili tiks dzēsti.</value>
@@ -1411,7 +1411,7 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Žurnālu izvēlne</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.Description" xml:space="preserve">
-    <value>Ļaujiet Froststrap izlemt, kuriem serveriem pievienoties. Tiks dota priekšroka serverim, kas atrodas vistuvāk jums.</value>
+    <value>Ļaujiet Spectre izlemt, kuriem serveriem pievienoties. Tiks dota priekšroka serverim, kas atrodas vistuvāk jums.</value>
   </data>
   <data name="Menu.Bootstrapper.Experimental.BetterMatchmaking.FollowUser" xml:space="preserve">
     <value>Izskatās, ka kāds draugs šobrīd spēlē šo spēli. Vai vēlies pievienoties?</value>
@@ -1468,7 +1468,7 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Mainīt automātiski</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Description" xml:space="preserve">
-    <value>„Roblox“ vai „Froststrap“ var mēģināt mainīt jūsu izvēlēto kanālu.</value>
+    <value>„Roblox“ vai „Spectre“ var mēģināt mainīt jūsu izvēlēto kanālu.</value>
   </data>
   <data name="Menu.Channel.ChangeAction.Ignore" xml:space="preserve">
     <value>Nekad nemainies</value>
@@ -1480,7 +1480,7 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Automātiskā kanāla maiņa</value>
   </data>
   <data name="Menu.Channel.Description" xml:space="preserve">
-    <value>Mainiet Roblox un Froststrap izvietošanas un instalēšanas iestatījumus.</value>
+    <value>Mainiet Roblox un Spectre izvietošanas un instalēšanas iestatījumus.</value>
   </data>
   <data name="Menu.Channel.RobloxUpgrades" xml:space="preserve">
     <value>„Roblox“ uzlabojumi</value>
@@ -1567,7 +1567,7 @@ Lai sāktu, noklikšķiniet uz „Pievienot kontu” augšā</value>
     <value>Roblox sīkdatnes fails nav atrasts.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Description" xml:space="preserve">
-    <value>Froststrap, uzsākot Roblox, automātiski pārbaudīs un atjaunināsies uz testa versiju.</value>
+    <value>Spectre, uzsākot Roblox, automātiski pārbaudīs un atjaunināsies uz testa versiju.</value>
   </data>
   <data name="Menu.Deployment.AutoPreReleaseUpdate.Title" xml:space="preserve">
     <value>Priekšizlaides atjauninājums</value>
@@ -1704,7 +1704,7 @@ Vai to izdzēst tagad?</value>
     <value>Ja šo opciju atspējosiet, šeit konfigurētie iestatījumi netiks piemēroti Roblox.</value>
   </data>
   <data name="Menu.FastFlags.ManagerEnabled.Title" xml:space="preserve">
-    <value>Atļaut „Froststrap” pārvaldīt „FastFlags”</value>
+    <value>Atļaut „Spectre” pārvaldīt „FastFlags”</value>
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Description" xml:space="preserve">
     <value>„Roblox“ samazina attēla renderēšanas kvalitāti atkarībā no tā, kā ekrāns ir mērogots operētājsistēmā „Windows“.</value>
@@ -2112,7 +2112,7 @@ Vai to izdzēst tagad?</value>
     <value>Līdzīgi kā datorā</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Description" xml:space="preserve">
-    <value>Atver konkrētu logu, ja, palaižot Roblox, divreiz noklikšķina uz Froststrap sistēmas panelī.</value>
+    <value>Atver konkrētu logu, ja, palaižot Roblox, divreiz noklikšķina uz Spectre sistēmas panelī.</value>
   </data>
   <data name="Menu.Integrations.DoubleClickAction.Title" xml:space="preserve">
     <value>Dubultklikšķa darbība</value>
@@ -2130,13 +2130,13 @@ Vai to izdzēst tagad?</value>
     <value>Informācija par rediģēšanu</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Description" xml:space="preserve">
-    <value>Ļauj Froststrap noteikt, kuru Roblox spēli tu spēlē. Dažām funkcijām tas var būt nepieciešams.</value>
+    <value>Ļauj Spectre noteikt, kuru Roblox spēli tu spēlē. Dažām funkcijām tas var būt nepieciešams.</value>
   </data>
   <data name="Menu.Integrations.EnableActivityTracking.Title" xml:space="preserve">
     <value>Ieslēgt darbību uzraudzību</value>
   </data>
-  <data name="Menu.Integrations.FroststrapRPC.Description" xml:space="preserve">
-    <value>Ieslēdziet šo opciju, lai Discord profilā tiktu parādīts pielāgots RPC „Playing Froststrap”, kamēr lietotne ir atvērta.</value>
+  <data name="Menu.Integrations.SpectreRPC.Description" xml:space="preserve">
+    <value>Ieslēdziet šo opciju, lai Discord profilā tiktu parādīts pielāgots RPC „Playing Spectre”, kamēr lietotne ir atvērta.</value>
   </data>
   <data name="Menu.Integrations.GameHistory.Description" xml:space="preserve">
     <value>Parāda spēli, kuru esat spēlējuši šajā sesijā, un ļauj jums atkal pievienoties tai.</value>
@@ -2199,7 +2199,7 @@ Vai to izdzēst tagad?</value>
     <value>„Display Studio“ darbības</value>
   </data>
   <data name="Menu.Integrations.StudioRPC.PluginConfirmation" xml:space="preserve">
-    <value>Tas darbojas, pievienojot īpaši izstrādātu „Froststrap“ spraudni, kas reģistrēs jūsu darbības.
+    <value>Tas darbojas, pievienojot īpaši izstrādātu „Spectre“ spraudni, kas reģistrēs jūsu darbības.
 Vai vēlaties instalēt šo spraudni?</value>
   </data>
   <data name="Menu.Integrations.Title" xml:space="preserve">
@@ -2760,7 +2760,7 @@ Lietotne aizvērs šo logu, kad pieteikšanās būs pabeigta.</value>
     <value>Tiek ielādēti datu centri...</value>
   </data>
   <data name="Menu.RegionSelector.LoginRequired" xml:space="preserve">
-    <value>Lai izmantotu šo funkciju, piesakieties, izmantojot konta pārvaldnieku, vai ieslēdziet „Froststrap konta atļaujas”, vai arī ziņojiet par to mūsu Discord serverī.</value>
+    <value>Lai izmantotu šo funkciju, piesakieties, izmantojot konta pārvaldnieku, vai ieslēdziet „Spectre konta atļaujas”, vai arī ziņojiet par to mūsu Discord serverī.</value>
   </data>
   <data name="Menu.RegionSelector.NoPublicServers" xml:space="preserve">
     <value>Netika atrasti publiski pieejami serveri.</value>
@@ -2835,13 +2835,13 @@ Lietotne aizvērs šo logu, kad pieteikšanās būs pabeigta.</value>
     <value>Izveidot saīsni</value>
   </data>
   <data name="Menu.Shortcuts.Description" xml:space="preserve">
-    <value>Iestatiet, kā Froststrap var viegli palaist.</value>
+    <value>Iestatiet, kā Spectre var viegli palaist.</value>
   </data>
   <data name="Menu.Shortcuts.ErrorCreatingShortcut" xml:space="preserve">
     <value>Radās kļūda, izveidojot saīsni.</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Description" xml:space="preserve">
-    <value>Ļauj izmantot Froststrap piedāvātās Roblox ikonas savām saīsnēm. [Uzzini, kā.]({0})</value>
+    <value>Ļauj izmantot Spectre piedāvātās Roblox ikonas savām saīsnēm. [Uzzini, kā.]({0})</value>
   </data>
   <data name="Menu.Shortcuts.ExtractIcons.Title" xml:space="preserve">
     <value>Izgūt Roblox ikonas uz mapi</value>
@@ -2912,29 +2912,29 @@ Kamēr šis režīms ir ieslēgts, pēc iestatījumu loga aizvēršanas automāt
 Vai vēlaties ieslēgt testa režīmu?</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Froststrap iestatījumi</value>
+    <value>Spectre iestatījumi</value>
   </data>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Ikonas</value>
     <comment>Name of the folder that gets created according to the &quot;create shortcut icons&quot; option. Ensure that it is a valid folder name.</comment>
   </data>
   <data name="Uninstaller.KeepData.Description" xml:space="preserve">
-    <value>Tie tiks saglabāti tajā vietā, kur bija instalēts „Froststrap”, un tiks automātiski atjaunoti, veicot atkārtotu instalēšanu.</value>
+    <value>Tie tiks saglabāti tajā vietā, kur bija instalēts „Spectre”, un tiks automātiski atjaunoti, veicot atkārtotu instalēšanu.</value>
   </data>
   <data name="Uninstaller.KeepData.Label" xml:space="preserve">
     <value>Saglabāt manus iestatījumus un modifikācijas</value>
   </data>
   <data name="Uninstaller.Text" xml:space="preserve">
-    <value>Atinstalēšana no jūsu sistēmas izdzēsīs programmu „Froststrap“ un automātiski pārkonfigurēs standarta „Roblox“ palaišanas programmu, ja tā joprojām ir instalēta.
+    <value>Atinstalēšana no jūsu sistēmas izdzēsīs programmu „Spectre“ un automātiski pārkonfigurēs standarta „Roblox“ palaišanas programmu, ja tā joprojām ir instalēta.
 
 Ja veicat atinstalēšanu vai pārinstalēšanu, jo rodas problēmas ar Roblox, vispirms izlasiet [šo palīdzības lapu]({0}).
 
-Atinstalēšanas process var nebūt spējīgs pilnībā iztīrīt sistēmu, tāpēc, iespējams, būs nepieciešams manuāli izdzēst atlikušos failus no vietas, kur bija instalēts Froststrap.
+Atinstalēšanas process var nebūt spējīgs pilnībā iztīrīt sistēmu, tāpēc, iespējams, būs nepieciešams manuāli izdzēst atlikušos failus no vietas, kur bija instalēts Spectre.
 
-Froststrap tika instalēts vietā &quot;{1}&quot;.</value>
+Spectre tika instalēts vietā &quot;{1}&quot;.</value>
   </data>
   <data name="Uninstaller.Title" xml:space="preserve">
-    <value>Atinstalēt Froststrap</value>
+    <value>Atinstalēt Spectre</value>
   </data>
   <data name="Uninstaller.Uninstall" xml:space="preserve">
     <value>Atinstalēt</value>

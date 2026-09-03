@@ -8,6 +8,7 @@
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
         xmlns:resources="clr-namespace:Froststrap.Resources"
         xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Dialogs"
+        xmlns:app="clr-namespace:Froststrap"
         x:DataType="vm:LanguageSelectorViewModel"
         mc:Ignorable="d"
         Width="380"
@@ -16,7 +17,7 @@
         WindowStartupLocation="CenterScreen">
         
     <Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*,Auto">
-        <controls:TitleBar Grid.Row="0" Title="Eclipse" Icon="avares://Eclipse/Eclipse.ico" />
+        <controls:TitleBar Grid.Row="0" Title="{x:Static app:App.BrandName}" Icon="avares://Eclipse/SpectreMark.png" />
 
         <StackPanel Grid.Row="1" Margin="12">
             <TextBlock Text="{x:Static resources:Strings.Dialog_LanguageSelector_Header}" 

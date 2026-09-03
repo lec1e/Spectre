@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Media;
 using Froststrap.UI.ViewModels.Dialogs;
 
@@ -33,6 +34,17 @@ namespace Froststrap.UI.Elements.Dialogs
             };
 
             DataContext = viewModel;
+            ShellGlass?.ApplyFromSettings();
+            AbyssBackground?.SyncFromTheme();
+            AbyssBackground?.SyncFromSettings();
+
+            PointerMoved += (_, e) =>
+            {
+                if (AbyssBackground is null)
+                    return;
+                AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
+            };
+            PointerExited += (_, _) => AbyssBackground?.SetPointer(new Point(-40, -40), false);
 
             Random Chance = new();
             if (Chance.Next(0, 10000) == 1)
