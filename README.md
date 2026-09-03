@@ -3,11 +3,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/lec1e/Eclipse/releases/latest">
-    <img src="https://img.shields.io/github/v/release/lec1e/Eclipse?label=latest&color=e11d48" alt="Latest release"/>
+  <a href="https://github.com/lec1e/Spectre/releases/latest">
+    <img src="https://img.shields.io/github/v/release/lec1e/Spectre?label=latest&color=e11d48" alt="Latest release"/>
   </a>
-  <a href="https://github.com/lec1e/Eclipse/releases/latest">
-    <img src="https://img.shields.io/github/downloads/lec1e/Eclipse/total?color=7f1d1d" alt="Downloads"/>
+  <a href="https://github.com/lec1e/Spectre/releases/latest">
+    <img src="https://img.shields.io/github/downloads/lec1e/Spectre/total?color=7f1d1d" alt="Downloads"/>
   </a>
 </p>
 
@@ -35,7 +35,7 @@ C# namespaces remain `Froststrap.*` and the assembly name stays `Eclipse` so exi
 
 ## Download
 
-Grab the latest **Eclipse.exe** from [Releases](https://github.com/lec1e/Eclipse/releases/latest).  
+Grab the latest **Eclipse.exe** from [Releases](https://github.com/lec1e/Spectre/releases/latest).  
 Auto-update picks up new stable releases when update checks are enabled.
 
 ## Build
