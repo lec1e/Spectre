@@ -17,22 +17,8 @@
 </p>
 
 <p align="center">
-  <img src="./.github/preview/app-preview.png" width="920" alt="Spectre Home"/>
+  <img src="./.github/preview/app-preview.png" width="920" alt="Spectre application preview — Home, Games, Library, Mods, Settings"/>
 </p>
-
-<p align="center">
-  <img src="./.github/preview/games.png" width="450" alt="Games"/>
-  &nbsp;
-  <img src="./.github/preview/library.png" width="450" alt="Library"/>
-</p>
-<p align="center"><sub>Games · Library</sub></p>
-
-<p align="center">
-  <img src="./.github/preview/mods.png" width="450" alt="Mods"/>
-  &nbsp;
-  <img src="./.github/preview/settings.png" width="450" alt="Settings"/>
-</p>
-<p align="center"><sub>Mods · Settings</sub></p>
 
 ## What’s new in 2.0.31
 
