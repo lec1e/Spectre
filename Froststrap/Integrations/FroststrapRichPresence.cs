@@ -9,11 +9,13 @@ namespace Froststrap.Integrations
         /// Spectre Discord application.
         /// Client IDs are public; manage the app at https://discord.com/developers/applications
         /// </summary>
-        public const string EclipseApplicationId = "1529388012620746913";
+        public const string SpectreApplicationId = "1529388012620746913";
+        public const string EclipseApplicationId = SpectreApplicationId;
 
         /// <summary>Hosted Spectre mark — Discord accepts external image URLs for LargeImageKey.</summary>
-        private const string EclipseLogoUrl =
-            "https://raw.githubusercontent.com/lec1e/Spectre/main/Froststrap/SpectreMark.png";
+        public const string SpectreLogoUrl =
+            "https://cdn.jsdelivr.net/gh/lec1e/Spectre@main/Froststrap/SpectreMark.png";
+        private const string EclipseLogoUrl = SpectreLogoUrl;
 
         private readonly DiscordRpcClient? _rpcClient;
         private readonly Timestamps _startTimestamps;
@@ -41,12 +43,15 @@ namespace Froststrap.Integrations
                 return;
             }
 
-            _rpcClient = new DiscordRpcClient(EclipseApplicationId)
+            _rpcClient = new DiscordRpcClient(SpectreApplicationId)
             {
-                SkipIdenticalPresence = true
+                SkipIdenticalPresence = false
             };
 
             _rpcClient.OnReady += OnReady;
+            _rpcClient.OnConnectionEstablished += OnConnectionEstablished;
+            _rpcClient.OnError += OnError;
+            _rpcClient.OnClose += OnClose;
 
             _startTimestamps = new Timestamps
             {
@@ -70,9 +75,27 @@ namespace Froststrap.Integrations
             if (_disposed || _isMacOS) return;
 
             App.Logger.WriteLine("FroststrapRichPresence", $"Connected as {args.User.Username}");
+            _lastState = "";
+            UpdatePresence();
+        }
 
-            if (!_disposed)
-                UpdatePresence();
+        private void OnConnectionEstablished(object sender, DiscordRPC.Message.ConnectionEstablishedMessage args)
+        {
+            if (_disposed || _isMacOS) return;
+
+            App.Logger.WriteLine("FroststrapRichPresence", "Established connection with Discord RPC");
+            _lastState = "";
+            UpdatePresence();
+        }
+
+        private void OnError(object sender, DiscordRPC.Message.ErrorMessage args)
+        {
+            App.Logger.WriteLine("FroststrapRichPresence", $"An RPC error occurred - {args.Message}");
+        }
+
+        private void OnClose(object sender, DiscordRPC.Message.CloseMessage args)
+        {
+            App.Logger.WriteLine("FroststrapRichPresence", $"Lost connection to Discord RPC - {args.Reason} ({args.Code})");
         }
 
         public void SetPage(string pageName)
@@ -152,6 +175,15 @@ namespace Froststrap.Integrations
             catch (Exception ex)
             {
                 App.Logger.WriteException(LOG_IDENT, ex);
+                try
+                {
+                    presence.Assets = null;
+                    _rpcClient.SetPresence(presence);
+                }
+                catch (Exception retryEx)
+                {
+                    App.Logger.WriteLine(LOG_IDENT, $"Presence retry without assets failed: {retryEx.Message}");
+                }
             }
         }
 
@@ -167,6 +199,9 @@ namespace Froststrap.Integrations
                 try
                 {
                     _rpcClient.OnReady -= OnReady;
+                    _rpcClient.OnConnectionEstablished -= OnConnectionEstablished;
+                    _rpcClient.OnError -= OnError;
+                    _rpcClient.OnClose -= OnClose;
 
                     if (_rpcClient.IsInitialized)
                     {

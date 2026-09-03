@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre application preview — Home, Games, Library, Mods, Settings"/>
 </p>
 
+## What’s new in 2.0.33
+
+- Toasts sit above the tray, next to the clock, without covering the taskbar
+- Discord Rich Presence uses the Spectre application and shows while Roblox is open
+
 ## What’s new in 2.0.32
 
 - Loader, server info, toasts, and other popups use the same glass + nebula chrome as the launch menu
