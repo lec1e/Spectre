@@ -12,11 +12,11 @@
     x:Class="Froststrap.UI.Elements.Bootstrapper.FluentDialog"
     x:DataType="vm:FluentDialogViewModel"
     Width="440"
-    Height="380"
+    Height="300"
     MinWidth="440"
     MaxWidth="440"
-    MinHeight="380"
-    MaxHeight="380"
+    MinHeight="300"
+    MaxHeight="300"
     CanResize="False"
     Title="{x:Static app:App.BrandName}"
     WindowStartupLocation="CenterScreen"
@@ -40,41 +40,40 @@
                                        ShowMinimize="False"
                                        Title=""
                                        Icon="{x:Null}" />
-                    <TextBlock Grid.Row="0" Margin="12,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                    <TextBlock Grid.Row="0" Margin="12,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
                                FontSize="11" Text="{Binding VersionText}" Foreground="#99FDA4AF"
                                IsHitTestVisible="False"
                                IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
-                    <TextBlock Grid.Row="0" Margin="0,10,40,0" VerticalAlignment="Top" HorizontalAlignment="Right"
+                    <TextBlock Grid.Row="0" Margin="0,8,40,0" VerticalAlignment="Top" HorizontalAlignment="Right"
                                FontSize="11" Text="{Binding ChannelText}" Foreground="#99FDA4AF"
                                IsHitTestVisible="False"
                                IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
 
-                    <StackPanel Grid.Row="1" Margin="28,4,28,24">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="14" Margin="0,0,0,18">
-                            <Border Width="64" Height="64" CornerRadius="18" ClipToBounds="True"
-                                    BorderBrush="Transparent" BorderThickness="0">
-                                <Image Width="64" Height="64" Source="avares://Spectre/SpectreMark.png"
+                    <StackPanel Grid.Row="1" Margin="28,0,28,20" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12" Margin="0,0,0,12">
+                            <Border Width="52" Height="52" CornerRadius="16" ClipToBounds="True">
+                                <Image Width="52" Height="52" Source="avares://Spectre/SpectreMark.png"
                                        RenderOptions.BitmapInterpolationMode="HighQuality" />
                             </Border>
-                            <StackPanel VerticalAlignment="Center" Spacing="3">
-                                <TextBlock Text="{x:Static app:App.BrandName}" FontSize="28" FontWeight="Bold"
+                            <StackPanel VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Text="{x:Static app:App.BrandName}" FontSize="24" FontWeight="Bold"
                                            Foreground="White" />
-                                <TextBlock Text="{Binding ProductVersion}" FontSize="12.5" Foreground="White" />
+                                <TextBlock Text="{Binding ProductVersion}" FontSize="12" Foreground="White" />
                             </StackPanel>
                         </StackPanel>
 
                         <TextBlock
                             HorizontalAlignment="Center"
                             TextAlignment="Center"
-                            FontSize="16"
+                            FontSize="15"
                             Foreground="White"
                             TextTrimming="CharacterEllipsis"
                             Text="{Binding Message}"/>
 
                         <ProgressBar
                             Width="360"
-                            Height="8"
-                            Margin="0,16,0,16"
+                            Height="7"
+                            Margin="0,12,0,12"
                             CornerRadius="50"
                             Foreground="#E11D48"
                             Background="#33FFFFFF"
@@ -83,8 +82,8 @@
                             Value="{Binding ProgressValue}"/>
 
                         <controls:IconButton Classes="Primary"
-                                             Width="160"
-                                             Height="40"
+                                             Width="148"
+                                             Height="38"
                                              HorizontalAlignment="Center"
                                              CornerRadius="14"
                                              Icon="X"

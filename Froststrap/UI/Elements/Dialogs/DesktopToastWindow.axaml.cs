@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using Froststrap.UI.Elements.Base;
+using Froststrap.UI.Utility;
 
 namespace Froststrap.UI.Elements.Dialogs
 {
@@ -15,14 +16,14 @@ namespace Froststrap.UI.Elements.Dialogs
             InitializeComponent();
             ShowInTaskbar = false;
             Topmost = true;
-            ShellGlass?.ApplyFromSettings();
-            AbyssBackground?.SyncFromTheme();
-            AbyssBackground?.SyncFromSettings();
+            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
+            if (ShellGlass is not null)
+                ShellGlass.CornerRadius = new CornerRadius(18);
         }
 
         public static void ShowToast(string title, string message, int durationSeconds = 8)
         {
-            Dispatcher.UIThread.Post(() =>
+            void ShowCore()
             {
                 try
                 {
@@ -50,7 +51,12 @@ namespace Froststrap.UI.Elements.Dialogs
                     toast.Close();
                 };
                 toast._closeTimer.Start();
-            });
+            }
+
+            if (Dispatcher.UIThread.CheckAccess())
+                ShowCore();
+            else
+                Dispatcher.UIThread.Post(ShowCore);
         }
 
         private void PositionOnPrimaryScreen()
@@ -61,8 +67,8 @@ namespace Froststrap.UI.Elements.Dialogs
 
             var area = screen.WorkingArea;
             double scale = DesktopScaling > 0 ? DesktopScaling : screen.Scaling;
-            int width = (int)(Width * scale);
-            int height = (int)(Height * scale);
+            int width = (int)(Bounds.Width > 1 ? Bounds.Width * scale : Width * scale);
+            int height = (int)(Bounds.Height > 1 ? Bounds.Height * scale : 100 * scale);
             int margin = (int)(16 * scale);
 
             Position = new PixelPoint(

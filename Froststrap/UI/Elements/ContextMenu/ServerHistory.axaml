@@ -12,8 +12,10 @@
                      x:DataType="vm:ServerHistoryViewModel"
                      Title="{x:Static resources:Strings.ContextMenu_GameHistory_Title}"
                      Width="580" Height="420"
-                     MinWidth="420" MinHeight="420"
+                     MinWidth="480" MinHeight="380"
+                     MaxWidth="720" MaxHeight="560"
                      WindowStartupLocation="CenterScreen"
+                     Background="Transparent"
                      mc:Ignorable="d">
 
     <base:AvaloniaWindow.Styles>
@@ -39,7 +41,17 @@
         </Style>
     </base:AvaloniaWindow.Styles>
 
-    <Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,Auto,*,Auto">
+    <Panel>
+        <controls:LiquidGlassPanel x:Name="ShellGlass"
+                                   Margin="0"
+                                   CornerRadius="0"
+                                   TintOpacity="0.58"
+                                   MaterialOpacity="0.46"
+                                   UseSettingsCornerRadius="False"
+                                   ClipToBounds="True">
+            <Panel>
+                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
+                <Grid RowDefinitions="Auto,Auto,*,Auto">
         <controls:TitleBar x:Name="RootTitleBar"
                            Title="{x:Static resources:Strings.ContextMenu_GameHistory_Title}"
                            Grid.Row="0"
@@ -122,5 +134,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </Grid>
+            </Grid>
+            </Panel>
+        </controls:LiquidGlassPanel>
+    </Panel>
 </base:AvaloniaWindow>

@@ -13,12 +13,15 @@
     <Panel>
         <controls:LiquidGlassPanel x:Name="ShellGlass"
                                    Margin="0"
-                                   Padding="16"
+                                   Padding="0"
                                    CornerRadius="0"
                                    TintOpacity="0.58"
                                    MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False">
-            <Grid RowDefinitions="Auto,*,Auto">
+                                   UseSettingsCornerRadius="False"
+                                   ClipToBounds="True">
+            <Panel>
+                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
+                <Grid Margin="22,16,22,18" RowDefinitions="Auto,*,Auto">
                 <TextBlock Text="{Binding GameName}"
                            FontWeight="SemiBold"
                            FontSize="16" />
@@ -53,11 +56,16 @@
                                IsVisible="{Binding ShowEmptyState}" />
                 </Grid>
 
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-                    <Button Content="Skip" Click="Skip_Click" />
-                    <Button Content="Join" Classes="accent" Click="Join_Click" />
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                    <controls:IconButton Content="Skip" MinWidth="100" Height="38" CornerRadius="14"
+                                         Classes="Primary" Icon="X" IconSize="16" Padding="16,0"
+                                         Click="Skip_Click" />
+                    <controls:IconButton Content="Join" MinWidth="100" Height="38" CornerRadius="14"
+                                         Classes="Primary" Icon="Play" IconSize="16" Padding="16,0"
+                                         Click="Join_Click" />
                 </StackPanel>
             </Grid>
+            </Panel>
         </controls:LiquidGlassPanel>
     </Panel>
 </base:AvaloniaWindow>

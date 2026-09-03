@@ -1,7 +1,6 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using Froststrap.UI.Elements.Base;
+using Froststrap.UI.Utility;
 using Froststrap.UI.ViewModels.Dialogs;
 
 namespace Froststrap.UI.Elements.Dialogs
@@ -18,18 +17,10 @@ namespace Froststrap.UI.Elements.Dialogs
         {
             InitializeComponent();
 
-            TransparencyLevelHint =
-            [
-                WindowTransparencyLevel.AcrylicBlur,
-                WindowTransparencyLevel.Mica,
-                WindowTransparencyLevel.Blur,
-                WindowTransparencyLevel.None
-            ];
-            Background = Brushes.Transparent;
-
             _vm = new VipServerPickerViewModel(placeId);
             DataContext = _vm;
-            ShellGlass?.ApplyFromSettings();
+            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
+            SpectreChrome.AttachPointer(this, AbyssBackground);
         }
 
         public string? PickedAccessCode => _vm.SelectedServer?.AccessCode;

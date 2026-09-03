@@ -1,5 +1,5 @@
-﻿using Avalonia;
-using Froststrap.UI.Elements.Base;
+﻿using Froststrap.UI.Elements.Base;
+using Froststrap.UI.Utility;
 using Froststrap.UI.ViewModels.Dialogs;
 
 namespace Froststrap.UI.Elements.Dialogs
@@ -29,17 +29,8 @@ namespace Froststrap.UI.Elements.Dialogs
             };
 
             DataContext = viewModel;
-            ShellGlass?.ApplyFromSettings();
-            AbyssBackground?.SyncFromTheme();
-            AbyssBackground?.SyncFromSettings();
-
-            PointerMoved += (_, e) =>
-            {
-                if (AbyssBackground is null)
-                    return;
-                AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
-            };
-            PointerExited += (_, _) => AbyssBackground?.SetPointer(new Point(-40, -40), false);
+            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
+            SpectreChrome.AttachPointer(this, AbyssBackground);
 
             App.FrostRPC?.SetDialog("Uninstaller");
         }

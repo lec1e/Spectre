@@ -1,13 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
-using Avalonia.Labs.Notifications;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using Froststrap.Integrations;
 using Froststrap.UI.Elements.ContextMenu;
 using Froststrap.UI.Elements.Dialogs;
-using Froststrap.UI.Utility;
 
 namespace Froststrap.UI
 {
@@ -161,43 +159,7 @@ namespace Froststrap.UI
         public void ShowAlert(string title, string message, int duration = 8, NotificationType category = NotificationType.Information)
         {
             if (_isDisposed) return;
-
-            // Always show a Spectre toast so server info is visible over Roblox.
             DesktopToastWindow.ShowToast(title, message, duration);
-
-            var manager = NativeNotificationManager.Current;
-            if (manager == null)
-            {
-                App.Logger.WriteLine("NotifyIconWrapper::ShowAlert", "NativeNotificationManager.Current is null; using Spectre toast only.");
-                return;
-            }
-
-            string categoryString = category switch
-            {
-                NotificationType.Success => "success",
-                NotificationType.Warning => "warning",
-                NotificationType.Error => "error",
-                _ => "info"
-            };
-
-            var notification = manager.CreateNotification(categoryString) ?? manager.CreateNotification(null);
-            if (notification == null)
-            {
-                App.Logger.WriteLine("NotifyIconWrapper::ShowAlert", "CreateNotification returned null.");
-                return;
-            }
-
-            notification.Title = title;
-            notification.Message = message;
-            notification.Expiration = TimeSpan.FromSeconds(duration);
-
-            NotificationTracker.Track(notification, TimeSpan.FromSeconds(duration));
-
-            Dispatcher.UIThread.Post(() =>
-            {
-                if (_isDisposed) return;
-                notification.Show();
-            }, DispatcherPriority.ApplicationIdle);
         }
 
         public void Dispose()

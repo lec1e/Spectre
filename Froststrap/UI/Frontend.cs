@@ -2,11 +2,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
-using Avalonia.Labs.Notifications;
 using Avalonia.Threading;
 using Froststrap.UI.Elements.Bootstrapper;
 using Froststrap.UI.Elements.Dialogs;
-using Froststrap.UI.Utility;
 
 namespace Froststrap.UI
 {
@@ -164,32 +162,9 @@ namespace Froststrap.UI
             });
         }
 
-        public static void ShowBalloonTip(string title, string message, NotificationType category = NotificationType.Information, int timeoutSeconds = 5)
+        public static void ShowBalloonTip(string title, string message, NotificationType category = NotificationType.Information, int timeoutSeconds = 8)
         {
-            var manager = NativeNotificationManager.Current;
-            if (manager == null || OperatingSystem.IsMacOS()) return;
-
-            string categoryString = category switch
-            {
-                NotificationType.Success => "success",
-                NotificationType.Warning => "warning",
-                NotificationType.Error => "error",
-                _ => "info"
-            };
-
-            var notification = manager.CreateNotification(categoryString);
-            if (notification == null) return;
-
-            notification.Title = title;
-            notification.Message = message;
-            notification.Expiration = TimeSpan.FromSeconds(timeoutSeconds);
-
-            NotificationTracker.Track(notification, TimeSpan.FromSeconds(timeoutSeconds));
-
-            Dispatcher.UIThread.Post(() =>
-            {
-                notification.Show();
-            }, DispatcherPriority.ApplicationIdle);
+            DesktopToastWindow.ShowToast(title, message, timeoutSeconds);
         }
     }
 }

@@ -1,11 +1,12 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Froststrap.Models.Persistable;
+using Froststrap.UI.Elements.Base;
+using Froststrap.UI.Utility;
 using Froststrap.UI.ViewModels.Dialogs;
 
 namespace Froststrap.UI.Elements.Dialogs;
 
-public partial class VersionPickerDialog : Window
+public partial class VersionPickerDialog : AvaloniaWindow
 {
     private readonly VersionPickerViewModel _vm = new();
 
@@ -15,6 +16,8 @@ public partial class VersionPickerDialog : Window
     {
         InitializeComponent();
         DataContext = _vm;
+        SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
+        SpectreChrome.AttachPointer(this, AbyssBackground);
     }
 
     private void Cancel_Click(object? sender, RoutedEventArgs e) => Close(false);

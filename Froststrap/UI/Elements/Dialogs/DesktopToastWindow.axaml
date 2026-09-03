@@ -5,8 +5,11 @@
                      xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
                      xmlns:app="clr-namespace:Froststrap"
                      Title="{x:Static app:App.BrandName}"
-                     Width="360"
-                     Height="118"
+                     Width="380"
+                     MinWidth="380"
+                     MaxWidth="380"
+                     MinHeight="92"
+                     SizeToContent="Height"
                      CanResize="False"
                      ShowInTaskbar="False"
                      Topmost="True"
@@ -16,24 +19,24 @@
     <Panel>
         <controls:LiquidGlassPanel x:Name="ShellGlass"
                                    Margin="0"
-                                   CornerRadius="0"
-                                   TintOpacity="0.62"
-                                   MaterialOpacity="0.5"
+                                   CornerRadius="18"
+                                   TintOpacity="0.58"
+                                   MaterialOpacity="0.46"
                                    UseSettingsCornerRadius="False"
                                    ClipToBounds="True">
             <Panel>
                 <controls:AbyssGlowBackground x:Name="AbyssBackground" />
-                <Grid Margin="16,14,16,14" ColumnDefinitions="Auto,*">
-                    <Border Width="48" Height="48" CornerRadius="14" ClipToBounds="True"
+                <Grid Margin="16,14,18,14" ColumnDefinitions="Auto,*">
+                    <Border Width="52" Height="52" CornerRadius="16" ClipToBounds="True"
                             VerticalAlignment="Center" Margin="0,0,14,0">
-                        <Image Width="48" Height="48" Source="avares://Spectre/SpectreMark.png"
+                        <Image Width="52" Height="52" Source="avares://Spectre/SpectreMark.png"
                                RenderOptions.BitmapInterpolationMode="HighQuality" />
                     </Border>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
-                        <TextBlock x:Name="TitleText" FontSize="15" FontWeight="SemiBold"
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
+                        <TextBlock x:Name="TitleText" FontSize="14.5" FontWeight="SemiBold"
                                    Foreground="White" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                         <TextBlock x:Name="MessageText" FontSize="12.5" Foreground="#E6FFFFFF"
-                                   TextWrapping="Wrap" MaxLines="3" />
+                                   TextWrapping="Wrap" LineHeight="18" />
                     </StackPanel>
                 </Grid>
             </Panel>

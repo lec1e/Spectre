@@ -3,7 +3,6 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:fa="using:FluentAvalonia.UI.Controls"
                      xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
                      xmlns:md="clr-namespace:Froststrap.UI.Elements.Controls"
                      xmlns:resources="clr-namespace:Froststrap.Resources"
@@ -11,44 +10,56 @@
                      Width="480"
                      SizeToContent="Height"
                      Title="{x:Static resources:Strings.Dialog_Connectivity_Title}"
-                     WindowStartupLocation="CenterScreen">
+                     WindowStartupLocation="CenterScreen"
+                     Background="Transparent">
 
-    <Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*,Auto">
-        <md:TitleBar Grid.Row="0" ShowMinimize="False" ShowMaximize="False" Title="{x:Static resources:Strings.Dialog_Connectivity_Title}" Icon="avares://Spectre/SpectreMark.png" />
+    <Panel>
+        <md:LiquidGlassPanel x:Name="ShellGlass"
+                             Margin="0"
+                             CornerRadius="0"
+                             TintOpacity="0.58"
+                             MaterialOpacity="0.46"
+                             UseSettingsCornerRadius="False"
+                             ClipToBounds="True">
+            <Panel>
+                <md:AbyssGlowBackground x:Name="AbyssBackground" />
+                <Grid RowDefinitions="Auto,*,Auto">
+                    <md:TitleBar Grid.Row="0" ShowMinimize="False" ShowMaximize="False"
+                                 Title="{x:Static resources:Strings.Dialog_Connectivity_Title}"
+                                 Icon="avares://Spectre/SpectreMark.png" />
 
-        <Grid Grid.Row="1" Margin="16" ColumnDefinitions="Auto,*">
-            <Image x:Name="IconImage" Grid.Column="0" Width="32" Height="32"
-                   Margin="0,0,15,0" VerticalAlignment="Top" RenderOptions.BitmapInterpolationMode="HighQuality" />
+                    <Grid Grid.Row="1" Margin="22,12,22,8" ColumnDefinitions="Auto,*">
+                        <Image x:Name="IconImage" Grid.Column="0" Width="32" Height="32"
+                               Margin="0,0,15,0" VerticalAlignment="Top"
+                               RenderOptions.BitmapInterpolationMode="HighQuality" />
 
-            <StackPanel Grid.Column="1">
-                <TextBlock x:Name="TitleTextBlock" Text="? is unable to connect to ?"
-                           FontSize="18" TextWrapping="Wrap" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock x:Name="TitleTextBlock" Text="? is unable to connect to ?"
+                                       FontSize="18" TextWrapping="Wrap" Foreground="White" />
 
-                <md:MarkdownTextBlock x:Name="DescriptionMarkdownTextBlock"
-                                      MarkdownText="?" Margin="0,16,0,0"
-                                      TextWrapping="Wrap" />
+                            <md:MarkdownTextBlock x:Name="DescriptionMarkdownTextBlock"
+                                                  MarkdownText="?" Margin="0,16,0,0"
+                                                  TextWrapping="Wrap" Foreground="White" />
 
-                <TextBlock Text="{x:Static resources:Strings.Dialog_Connectivity_MoreInfo}"
-                           Margin="0,16,0,0" TextWrapping="Wrap" />
+                            <TextBlock Text="{x:Static resources:Strings.Dialog_Connectivity_MoreInfo}"
+                                       Margin="0,16,0,0" TextWrapping="Wrap" Foreground="White" />
 
-                <TextBox x:Name="ErrorTextBox" Padding="8" Margin="0,8,0,0"
-                         FontFamily="Courier New" IsReadOnly="True"
-                         AcceptsReturn="True" TextWrapping="Wrap"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                         Height="120" />
-            </StackPanel>
-        </Grid>
+                            <TextBox x:Name="ErrorTextBox" Padding="8" Margin="0,8,0,0"
+                                     FontFamily="Courier New" IsReadOnly="True"
+                                     AcceptsReturn="True" TextWrapping="Wrap"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     Height="120" />
+                        </StackPanel>
+                    </Grid>
 
-        <Border Grid.Row="2" Padding="15"
-                Background="{DynamicResource PrimaryBackgroundColor}">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock x:Name="VersionText"
-                           Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                           Margin="0,0,280,0" Height="24" FontSize="14" />
-                <Button x:Name="CloseButton" MinWidth="100"
-                        Content="{x:Static resources:Strings.Common_Close}"
-                        Margin="12,0,0,0" />
-            </StackPanel>
-        </Border>
-    </Grid>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"
+                                Margin="22,8,22,18">
+                        <md:IconButton x:Name="CloseButton" MinWidth="100" Height="38" CornerRadius="14"
+                                       Classes="Primary" Icon="X" IconSize="16" Padding="16,0"
+                                       Content="{x:Static resources:Strings.Common_Close}" />
+                    </StackPanel>
+                </Grid>
+            </Panel>
+        </md:LiquidGlassPanel>
+    </Panel>
 </base:AvaloniaWindow>
