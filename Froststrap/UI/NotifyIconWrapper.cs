@@ -32,7 +32,7 @@ namespace Froststrap.UI
 
             _trayIcon = new TrayIcon
             {
-                Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://Eclipse/SpectreMark.png"))),
+                Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://Spectre/SpectreMark.png"))),
                 ToolTipText = App.BrandName,
                 Menu = nativeMenu
             };

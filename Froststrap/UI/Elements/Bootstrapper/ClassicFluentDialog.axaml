@@ -18,7 +18,7 @@
 
 	<Grid RowDefinitions="Auto, *, Auto">
 		<controls:TitleBar Grid.Row="0"
-                          Icon="avares://Eclipse/SpectreMark.png"
+                          Icon="avares://Spectre/SpectreMark.png"
                           Title="{x:Static app:App.BrandName}"
                           ShowMinimize="False"
                           ShowMaximize="False"

@@ -25,7 +25,15 @@ namespace Froststrap.UI.ViewModels.Settings
         private readonly string _historyPath = Path.Combine(Paths.Cache, "GameHistory.json");
 
         public string Greeting => "Welcome back";
-        public string DisplayName => App.BrandName;
+        public string DisplayName => GetComputerDisplayName();
+
+        private static string GetComputerDisplayName()
+        {
+            string name = Environment.MachineName;
+            if (string.IsNullOrWhiteSpace(name))
+                name = Environment.UserName;
+            return string.IsNullOrWhiteSpace(name) ? App.BrandName : name;
+        }
 
         public ObservableCollection<HomeGameCard> RecentGames { get; } = [];
         public ObservableCollection<HomeFeaturedItem> FeaturedGames { get; } = [];

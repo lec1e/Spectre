@@ -16,8 +16,8 @@ namespace Froststrap.UI.Elements.Controls
         /// <summary>Playback speed — under 1 = slower, video-like drift.</summary>
         private const double PlaybackSpeed = 0.42;
 
-        private static readonly Uri GifUri = new("avares://Eclipse/Assets/aurora-dark.gif");
-        private static readonly Uri StillUri = new("avares://Eclipse/Assets/aurora-dark-still.png");
+        private static readonly Uri GifUri = new("avares://Spectre/Assets/aurora-dark.gif");
+        private static readonly Uri StillUri = new("avares://Spectre/Assets/aurora-dark-still.png");
 
         private readonly Image _image = new()
         {

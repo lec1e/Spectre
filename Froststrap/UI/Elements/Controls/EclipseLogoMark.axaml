@@ -4,6 +4,6 @@
              Width="28" Height="28">
   <!-- Spectre S mark -->
   <Image Width="28" Height="28"
-         Source="avares://Eclipse/SpectreMark.png"
+         Source="avares://Spectre/SpectreMark.png"
          RenderOptions.BitmapInterpolationMode="HighQuality" />
 </UserControl>

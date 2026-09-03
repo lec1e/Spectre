@@ -17,15 +17,29 @@
 </p>
 
 <p align="center">
-  <img src="./.github/preview/app-preview.png" width="920" alt="Spectre application preview"/>
+  <img src="./.github/preview/app-preview.png" width="920" alt="Spectre Home"/>
 </p>
 
-## What’s new in 2.0.29
+<p align="center">
+  <img src="./.github/preview/games.png" width="450" alt="Games"/>
+  &nbsp;
+  <img src="./.github/preview/library.png" width="450" alt="Library"/>
+</p>
+<p align="center"><sub>Games · Library</sub></p>
 
-- Liquid-glass buttons across Home, Settings tiles, launch menu, and selected tabs
-- Unified Launch Player split-button (no chevron seam)
-- Crimson-to-black gradient with white text
-- Auto-update now reads releases from **lec1e/Spectre**
+<p align="center">
+  <img src="./.github/preview/mods.png" width="450" alt="Mods"/>
+  &nbsp;
+  <img src="./.github/preview/settings.png" width="450" alt="Settings"/>
+</p>
+<p align="center"><sub>Mods · Settings</sub></p>
+
+## What’s new in 2.0.30
+
+- Download is **Spectre.exe** (Eclipse.exe still accepted for existing installs)
+- Home greeting uses your computer name
+- Animated crimson nebula background from the Spectre banner
+- Tab previews for Home, Games, Library, Mods, and Settings
 
 ## Features
 
@@ -40,10 +54,9 @@
 
 ## Download
 
-Grab the latest **Eclipse.exe** from [Releases](https://github.com/lec1e/Spectre/releases/latest).  
-The file is still named `Eclipse.exe` so existing installs keep updating. The product name in the UI is **Spectre**.
+Grab the latest **Spectre.exe** from [Releases](https://github.com/lec1e/Spectre/releases/latest).
 
-Auto-update picks up new stable releases when update checks are enabled.
+Auto-update picks up new stable releases when update checks are enabled. Older **Eclipse.exe** installs still update from the same release.
 
 ## Build
 

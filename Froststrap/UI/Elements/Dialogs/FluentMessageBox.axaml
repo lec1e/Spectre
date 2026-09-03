@@ -26,7 +26,7 @@
                         BorderBrush="Transparent"
                         BorderThickness="0">
                     <md:TitleBar x:Name="RootTitleBar"
-                                 Icon="avares://Eclipse/SpectreMark.png"
+                                 Icon="avares://Spectre/SpectreMark.png"
                                  Title="{x:Static app:App.BrandName}"
                                  ShowMaximize="False"
                                  ShowMinimize="False" />

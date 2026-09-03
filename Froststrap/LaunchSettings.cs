@@ -22,11 +22,12 @@ namespace Froststrap
         public LaunchFlag BloxshadeFlag { get; } = new("bloxshade");
         public LaunchFlag GameShortcutFlag { get; } = new("gameshortcut");
         public LaunchFlag NsisFlag { get; } = new("nsis");
+        public LaunchFlag PageFlag { get; } = new("page");
 
 #if DEBUG
         public static bool BypassUpdateCheck => true;
 #else
-        public bool BypassUpdateCheck => UninstallFlag.Active || WatcherFlag.Active || BackgroundUpdaterFlag.Active || NsisFlag.Active;
+        public bool BypassUpdateCheck => UninstallFlag.Active || WatcherFlag.Active || BackgroundUpdaterFlag.Active || NsisFlag.Active || PageFlag.Active;
 #endif
 
         public LaunchMode RobloxLaunchMode { get; set; } = LaunchMode.None;

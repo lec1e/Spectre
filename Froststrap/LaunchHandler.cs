@@ -44,7 +44,7 @@ namespace Froststrap
                 App.Logger.WriteLine(LOG_IDENT, "Opening uninstaller");
                 await LaunchUninstaller();
             }
-            else if (App.LaunchSettings.MenuFlag.Active)
+            else if (App.LaunchSettings.MenuFlag.Active || App.LaunchSettings.PageFlag.Active)
             {
                 App.Logger.WriteLine(LOG_IDENT, "Opening settings");
                 LaunchSettings();
@@ -150,7 +150,7 @@ namespace Froststrap
 
             if (interlock.IsAcquired)
             {
-                bool showAlreadyRunningWarning = Process.GetProcessesByName(App.ProjectName).Length > 1;
+                bool showAlreadyRunningWarning = App.CountOwnProcesses() > 1;
 
                 // before we open the window, force load the distribution states
                 // some menu viewmodels require the distribution states, which will result in a short freeze once the page is opened

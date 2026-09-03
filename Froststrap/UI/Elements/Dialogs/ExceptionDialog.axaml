@@ -14,12 +14,12 @@
         WindowStartupLocation="CenterScreen">
 
 	<Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*,Auto">
-		<md:TitleBar Grid.Row="0" ShowMinimize="False" ShowMaximize="False" Title="{x:Static resources:Strings.Dialog_Exception_Title}" Icon="avares://Eclipse/SpectreMark.png" />
+		<md:TitleBar Grid.Row="0" ShowMinimize="False" ShowMaximize="False" Title="{x:Static resources:Strings.Dialog_Exception_Title}" Icon="avares://Spectre/SpectreMark.png" />
 
 		<Grid Grid.Row="1" Margin="16" ColumnDefinitions="Auto,*">
 			<Image Grid.Column="0" Width="32" Height="32"
                    Margin="0,0,15,0" VerticalAlignment="Top"
-                   Source="avares://Eclipse/Resources/MessageBox/Error.png" RenderOptions.BitmapInterpolationMode="HighQuality" />
+                   Source="avares://Spectre/Resources/MessageBox/Error.png" RenderOptions.BitmapInterpolationMode="HighQuality" />
 
 			<StackPanel Grid.Column="1">
 				<TextBlock Text="{x:Static resources:Strings.Dialog_Exception_Info_1}"

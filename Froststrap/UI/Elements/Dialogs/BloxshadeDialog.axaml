@@ -18,7 +18,7 @@
 
 	<Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*">
 
-		<controls:TitleBar Grid.Row="0" Title="Bloxshade" Icon="avares://Eclipse/SpectreMark.png" />
+		<controls:TitleBar Grid.Row="0" Title="Bloxshade" Icon="avares://Spectre/SpectreMark.png" />
 
 		<Grid Grid.Row="1" RowDefinitions="Auto,*,Auto">
 

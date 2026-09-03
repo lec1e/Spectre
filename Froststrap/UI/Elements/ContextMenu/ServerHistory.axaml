@@ -44,7 +44,7 @@
                            Title="{x:Static resources:Strings.ContextMenu_GameHistory_Title}"
                            Grid.Row="0"
                            Padding="8"
-                           Icon="avares://Eclipse/SpectreMark.png"/>
+                           Icon="avares://Spectre/SpectreMark.png"/>
 
         <TextBlock Grid.Row="1"
                    Margin="16,8,16,0"

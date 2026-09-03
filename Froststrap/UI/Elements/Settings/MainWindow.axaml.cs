@@ -140,7 +140,26 @@ namespace Froststrap.UI.Elements.Settings
                 UpdateSelectedRailItem(_viewModel.SelectedPage);
                 AttachTitleBarButtons();
                 BuildSearchIndex();
+                ApplyLaunchPage();
             }, DispatcherPriority.Loaded);
+        }
+
+        private void ApplyLaunchPage()
+        {
+            string? page = App.LaunchSettings?.PageFlag.Data;
+            if (string.IsNullOrWhiteSpace(page))
+                return;
+
+            string tag = page.Trim().ToLowerInvariant() switch
+            {
+                "games" or "quickplay" => "quickplay",
+                "library" or "mods" or "presets" => "mods",
+                "custommods" or "mymods" => "custommods",
+                "settings" or "tools" => "tools",
+                _ => "home"
+            };
+
+            GetNavigationAction(tag)?.Invoke();
         }
 
         private void BuildRailItems()
@@ -489,7 +508,7 @@ namespace Froststrap.UI.Elements.Settings
             {
                 Width = 36,
                 Height = 36,
-                Source = new Bitmap(AssetLoader.Open(new Uri("avares://Eclipse/SpectreMark.png"))),
+                Source = new Bitmap(AssetLoader.Open(new Uri("avares://Spectre/SpectreMark.png"))),
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(16, 0, 12, 0)
             };

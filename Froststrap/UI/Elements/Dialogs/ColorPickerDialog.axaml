@@ -14,7 +14,7 @@
 
     <Grid RowDefinitions="Auto, *, Auto" Background="{DynamicResource ApplicationBackgroundColor}">
         <controls:TitleBar Grid.Row="0"
-                           Icon="avares://Eclipse/SpectreMark.png"
+                           Icon="avares://Spectre/SpectreMark.png"
                            Title="{x:Static resources:Strings.Menu_ColorPicker_SelectColor}" />
 
         <StackPanel Grid.Row="1" Margin="20" Spacing="20">

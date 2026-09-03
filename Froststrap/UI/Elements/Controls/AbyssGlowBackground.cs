@@ -1,42 +1,44 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 
 namespace Froststrap.UI.Elements.Controls
 {
     /// <summary>
-    /// Dark crimson-to-black wash. No ribbons, rays, or baked-in lines —
-    /// the cursor beam lives in <see cref="LiquidCursorOverlay"/>.
+    /// Spectre banner nebula: black void in the center, drifting crimson
+    /// galactic dust at the edges, ember specks. No scales.
     /// </summary>
     public class AbyssGlowBackground : Control
     {
-        private const int EmberCount = 16;
-        private const int BlobCount = 5;
+        private const int EmberCount = 56;
+        private static readonly Uri FieldUri = new("avares://Spectre/Assets/spectre-nebula-field.png");
+        private static readonly Uri DustUri = new("avares://Spectre/Assets/spectre-nebula-dust.png");
 
-        private readonly Blob[] _blobs = new Blob[BlobCount];
+        private static Bitmap? _field;
+        private static Bitmap? _dust;
+
         private readonly Ember[] _embers = new Ember[EmberCount];
-        private readonly Random _rng = new(42);
+        private readonly Random _rng = new(7);
 
         private DispatcherTimer? _timer;
         private float _time;
         private bool _aurora = true;
         private bool _glow = true;
         private bool _pointerInside;
-
         private float _tx = 0.5f, _ty = 0.5f;
         private float _px = 0.5f, _py = 0.5f;
 
-        private Color _void = Color.FromRgb(0x05, 0x02, 0x03);
-        private Color _ember = Color.FromRgb(0xE1, 0x1D, 0x48);
-        private Color _wine = Color.FromRgb(0x7F, 0x1D, 0x1D);
-        private Color _rose = Color.FromRgb(0xFB, 0x71, 0x85);
+        private Color _ember = Color.FromRgb(0xE8, 0x11, 0x2D);
 
         public AbyssGlowBackground()
         {
             IsHitTestVisible = false;
             ClipToBounds = true;
-            InitField();
+            EnsureBitmaps();
+            InitEmbers();
 
             Loaded += (_, _) =>
             {
@@ -57,36 +59,6 @@ namespace Froststrap.UI.Elements.Controls
             _ty = (float)Math.Clamp(local.Y / Bounds.Height, 0, 1);
         }
 
-        private void InitField()
-        {
-            for (int i = 0; i < BlobCount; i++)
-            {
-                _blobs[i] = new Blob
-                {
-                    X = (float)_rng.NextDouble(),
-                    Y = (float)_rng.NextDouble(),
-                    Radius = 0.30f + (float)_rng.NextDouble() * 0.28f,
-                    Speed = 0.08f + (float)_rng.NextDouble() * 0.12f,
-                    Phase = (float)_rng.NextDouble() * 6.28f,
-                    Kind = i % 3,
-                    Parallax = 0.04f + (float)_rng.NextDouble() * 0.05f
-                };
-            }
-
-            for (int i = 0; i < EmberCount; i++)
-            {
-                _embers[i] = new Ember
-                {
-                    X = (float)_rng.NextDouble(),
-                    Y = (float)_rng.NextDouble(),
-                    Size = 0.8f + (float)_rng.NextDouble() * 1.6f,
-                    Twinkle = 0.40f + (float)_rng.NextDouble() * 1.2f,
-                    Phase = (float)_rng.NextDouble() * 6.28f,
-                    Drift = 0.004f + (float)_rng.NextDouble() * 0.010f
-                };
-            }
-        }
-
         public void SyncFromSettings()
         {
             var s = App.Settings?.Prop;
@@ -101,53 +73,74 @@ namespace Froststrap.UI.Elements.Controls
             if (Application.Current?.Resources is not { } res)
                 return;
 
-            if (res.TryGetValue("BrandInkColor", out var ink) && ink is Color i)
-            {
-                _void = Color.FromRgb(
-                    (byte)Math.Min(i.R, (byte)0x0C),
-                    (byte)Math.Min(i.G, (byte)0x08),
-                    (byte)Math.Min(i.B, (byte)0x0A));
-            }
-
             if (res.TryGetValue("BrandAccentColor", out var a) && a is Color accent)
                 _ember = accent;
-            if (res.TryGetValue("BrandGlowColor", out var g) && g is Color glow)
-                _rose = glow;
-            if (res.TryGetValue("BrandGradientStart", out var gs) && gs is Color start)
-                _wine = start;
-            else if (res.TryGetValue("BrandHairlineColor", out var h) && h is Color hair)
-                _wine = hair;
 
             InvalidateVisual();
+        }
+
+        private static void EnsureBitmaps()
+        {
+            _field ??= Load(FieldUri);
+            _dust ??= Load(DustUri);
+        }
+
+        private static Bitmap? Load(Uri uri)
+        {
+            try
+            {
+                using var stream = AssetLoader.Open(uri);
+                return new Bitmap(stream);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private void InitEmbers()
+        {
+            for (int i = 0; i < EmberCount; i++)
+            {
+                _embers[i] = new Ember
+                {
+                    X = (float)_rng.NextDouble(),
+                    Y = (float)_rng.NextDouble(),
+                    Size = 0.6f + (float)_rng.NextDouble() * 1.8f,
+                    Speed = 0.006f + (float)_rng.NextDouble() * 0.018f,
+                    Phase = (float)_rng.NextDouble() * 6.28f,
+                    Drift = ((float)_rng.NextDouble() - 0.5f) * 0.012f
+                };
+            }
         }
 
         private void Start()
         {
             Stop();
-            if (!_aurora && !_glow)
-                return;
-
             _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(33) };
             _timer.Tick += (_, _) =>
             {
-                _time += 0.033f;
-
-                float follow = _pointerInside ? 0.10f : 0.04f;
-                _px += (_tx - _px) * follow;
-                _py += (_ty - _py) * follow;
-
-                for (int i = 0; i < EmberCount; i++)
+                if (_aurora)
                 {
-                    ref var p = ref _embers[i];
-                    p.Y -= p.Drift * 0.014f;
-                    p.X += MathF.Sin(_time * 0.22f + p.Phase) * 0.00028f;
-                    if (p.Y < -0.02f)
+                    _time += 0.033f;
+                    for (int i = 0; i < EmberCount; i++)
                     {
-                        p.Y = 1.02f;
-                        p.X = (float)_rng.NextDouble();
+                        ref var p = ref _embers[i];
+                        p.Y -= p.Speed * 0.018f;
+                        p.X += p.Drift * 0.02f + MathF.Sin(_time * 0.35f + p.Phase) * 0.00022f;
+                        if (p.Y < -0.03f)
+                        {
+                            p.Y = 1.03f;
+                            p.X = (float)_rng.NextDouble();
+                        }
+                        if (p.X < -0.04f) p.X = 1.04f;
+                        if (p.X > 1.04f) p.X = -0.04f;
                     }
                 }
 
+                float follow = _pointerInside ? 0.10f : 0.028f;
+                _px += (_tx - _px) * follow;
+                _py += (_ty - _py) * follow;
                 InvalidateVisual();
             };
             _timer.Start();
@@ -166,106 +159,79 @@ namespace Froststrap.UI.Elements.Controls
             if (w < 2 || h < 2)
                 return;
 
-            var wash = new LinearGradientBrush
-            {
-                StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
-                EndPoint = new RelativePoint(1, 1, RelativeUnit.Relative),
-                GradientStops =
-                [
-                    new Avalonia.Media.GradientStop(Color.FromArgb(0xAA, _wine.R, _wine.G, _wine.B), 0),
-                    new Avalonia.Media.GradientStop(Color.FromArgb(0x88, 0x1A, 0x06, 0x0A), 0.45),
-                    new Avalonia.Media.GradientStop(Color.FromArgb(0xBB, _void.R, _void.G, _void.B), 1)
-                ]
-            };
-            context.FillRectangle(wash, new Rect(0, 0, w, h));
+            context.FillRectangle(Brushes.Black, new Rect(0, 0, w, h));
 
-            if (!_aurora && !_glow)
-                return;
+            double px = (_px - 0.5) * w * 0.04;
+            double py = (_py - 0.5) * h * 0.03;
+            double t = _aurora ? _time : 0;
 
-            double ox = (_px - 0.5) * w * 0.04;
-            double oy = (_py - 0.5) * h * 0.03;
-            double idleX = Math.Sin(_time * 0.12) * w * 0.006;
-            double idleY = Math.Cos(_time * 0.09) * h * 0.005;
+            DrawLayer(context, _field, w, h, 1.28,
+                Math.Sin(t * 0.11) * w * 0.035 + px,
+                Math.Cos(t * 0.09) * h * 0.028 + py,
+                1.0);
+
+            DrawLayer(context, _dust, w, h, 1.36,
+                -Math.Sin(t * 0.07) * w * 0.05 + px * 1.4,
+                Math.Sin(t * 0.085) * h * 0.04 + py * 1.3,
+                0.52 + 0.10 * Math.Sin(t * 0.22));
 
             if (_glow)
-            {
-                var cursorBloom = new RadialGradientBrush
-                {
-                    Center = new RelativePoint(_px, _py, RelativeUnit.Relative),
-                    GradientOrigin = new RelativePoint(_px, _py, RelativeUnit.Relative),
-                    RadiusX = new RelativeScalar(0.22, RelativeUnit.Relative),
-                    RadiusY = new RelativeScalar(0.18, RelativeUnit.Relative),
-                    GradientStops =
-                    [
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0x1A, _ember.R, _ember.G, _ember.B), 0),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0x0A, _wine.R, _wine.G, _wine.B), 0.55),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0x00, _void.R, _void.G, _void.B), 1)
-                    ]
-                };
-                context.FillRectangle(cursorBloom, new Rect(0, 0, w, h));
-            }
+                DrawEmbers(context, w, h);
+        }
 
-            for (int i = 0; i < BlobCount; i++)
-            {
-                var b = _blobs[i];
-                double bx = (b.X + Math.Sin(_time * b.Speed + b.Phase) * 0.04) * w + ox * (0.5 + b.Parallax * 4) + idleX;
-                double by = (b.Y + Math.Cos(_time * b.Speed * 0.8f + b.Phase) * 0.03) * h + oy * (0.5 + b.Parallax * 4) + idleY;
-                double radius = Math.Min(w, h) * b.Radius;
-                Color c = b.Kind switch
-                {
-                    0 => _ember,
-                    1 => _wine,
-                    _ => _rose
-                };
-                byte a = (byte)((_glow ? 36 : 22) + b.Kind * 6);
-                var brush = new RadialGradientBrush
-                {
-                    GradientStops =
-                    [
-                        new Avalonia.Media.GradientStop(Color.FromArgb(a, c.R, c.G, c.B), 0),
-                        new Avalonia.Media.GradientStop(Color.FromArgb((byte)(a * 0.45), c.R, c.G, c.B), 0.40),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0, c.R, c.G, c.B), 1)
-                    ]
-                };
-                context.DrawEllipse(brush, null, new Point(bx, by), radius, radius * 0.78);
-            }
-
-            if (!_glow)
+        private static void DrawLayer(
+            DrawingContext context,
+            Bitmap? bitmap,
+            double w,
+            double h,
+            double scale,
+            double ox,
+            double oy,
+            double opacity)
+        {
+            if (bitmap is null || opacity <= 0.01)
                 return;
 
+            double dw = w * scale;
+            double dh = h * scale;
+            var dest = new Rect((w - dw) * 0.5 + ox, (h - dh) * 0.5 + oy, dw, dh);
+            if (opacity >= 0.999)
+            {
+                context.DrawImage(bitmap, dest);
+                return;
+            }
+
+            using (context.PushOpacity(Math.Clamp(opacity, 0, 1)))
+                context.DrawImage(bitmap, dest);
+        }
+
+        private void DrawEmbers(DrawingContext context, double w, double h)
+        {
             for (int i = 0; i < EmberCount; i++)
             {
                 var p = _embers[i];
-                double tw = 0.22 + 0.78 * (0.5 + 0.5 * Math.Sin(_time * p.Twinkle + p.Phase));
-                if (tw < 0.28)
+                double tw = 0.25 + 0.75 * (0.5 + 0.5 * Math.Sin(_time * (0.7f + p.Phase * 0.15f) + p.Phase));
+                if (tw < 0.32)
                     continue;
 
-                byte a = (byte)(tw * 70);
-                double px = p.X * w + ox * 0.3;
-                double py = p.Y * h + oy * 0.3;
-                double rad = p.Size * (0.7 + tw * 0.5);
+                byte a = (byte)(tw * 140);
+                double rad = p.Size * (0.7 + tw * 0.8);
                 var spark = new RadialGradientBrush
                 {
                     GradientStops =
                     [
-                        new Avalonia.Media.GradientStop(Color.FromArgb(a, 0xFE, 0xE2, 0xE2), 0),
-                        new Avalonia.Media.GradientStop(Color.FromArgb((byte)(a * 0.5), _ember.R, _ember.G, _ember.B), 0.32),
+                        new Avalonia.Media.GradientStop(Color.FromArgb(a, 0xFF, 0x6B, 0x6B), 0),
+                        new Avalonia.Media.GradientStop(Color.FromArgb((byte)(a * 0.55), _ember.R, _ember.G, _ember.B), 0.35),
                         new Avalonia.Media.GradientStop(Color.FromArgb(0, _ember.R, _ember.G, _ember.B), 1)
                     ]
                 };
-                context.DrawEllipse(spark, null, new Point(px, py), rad * 3.2, rad * 3.2);
+                context.DrawEllipse(spark, null, new Point(p.X * w, p.Y * h), rad * 2.8, rad * 2.8);
             }
-        }
-
-        private struct Blob
-        {
-            public float X, Y, Radius, Speed, Phase, Parallax;
-            public int Kind;
         }
 
         private struct Ember
         {
-            public float X, Y, Size, Twinkle, Phase, Drift;
+            public float X, Y, Size, Speed, Phase, Drift;
         }
     }
 }

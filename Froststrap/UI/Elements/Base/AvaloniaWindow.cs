@@ -72,7 +72,7 @@ namespace Froststrap.UI.Elements.Base
                 {
                     Application.Current.Resources.Remove("ApplicationBackgroundColor");
 
-                    var themeUri = new Uri($"avares://Eclipse/UI/AppThemes/ResourceDictionarys/{themeName}.axaml");
+                    var themeUri = new Uri($"avares://Spectre/UI/AppThemes/ResourceDictionarys/{themeName}.axaml");
                     var loadedTheme = AvaloniaXamlLoader.Load(themeUri);
                     if (loadedTheme is ResourceDictionary dict)
                     {
@@ -80,7 +80,7 @@ namespace Froststrap.UI.Elements.Base
                         Application.Current.Resources.MergedDictionaries.Add(dict);
                     }
 
-                    var styleUri = new Uri($"avares://Eclipse/UI/AppThemes/Styles/{themeName}.axaml");
+                    var styleUri = new Uri($"avares://Spectre/UI/AppThemes/Styles/{themeName}.axaml");
                     var loadedStyle = AvaloniaXamlLoader.Load(styleUri);
                     if (loadedStyle is Styles loadedStyles)
                     {
