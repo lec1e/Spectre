@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:fa="using:FluentAvalonia.UI.Controls"
         xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
         xmlns:md="clr-namespace:Froststrap.UI.Elements.Controls"
         xmlns:resources="clr-namespace:Froststrap.Resources"
@@ -11,47 +10,63 @@
         Title="{x:Static resources:Strings.Dialog_Exception_Title}"
         Width="555"
         SizeToContent="Height"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent">
 
-	<Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*,Auto">
-		<md:TitleBar Grid.Row="0" ShowMinimize="False" ShowMaximize="False" Title="{x:Static resources:Strings.Dialog_Exception_Title}" Icon="avares://Spectre/SpectreMark.png" />
+    <Panel>
+        <md:LiquidGlassPanel x:Name="ShellGlass"
+                             Margin="0"
+                             CornerRadius="0"
+                             TintOpacity="0.58"
+                             MaterialOpacity="0.46"
+                             UseSettingsCornerRadius="False"
+                             ClipToBounds="True">
+            <Panel>
+                <md:AbyssGlowBackground x:Name="AbyssBackground" />
+                <Grid RowDefinitions="Auto,*,Auto">
+                    <md:TitleBar Grid.Row="0" ShowMinimize="False" ShowMaximize="False"
+                                 Title="{x:Static resources:Strings.Dialog_Exception_Title}"
+                                 Icon="avares://Spectre/SpectreMark.png" />
 
-		<Grid Grid.Row="1" Margin="16" ColumnDefinitions="Auto,*">
-			<Image Grid.Column="0" Width="32" Height="32"
-                   Margin="0,0,15,0" VerticalAlignment="Top"
-                   Source="avares://Spectre/Resources/MessageBox/Error.png" RenderOptions.BitmapInterpolationMode="HighQuality" />
+                    <Grid Grid.Row="1" Margin="22,12,22,8" ColumnDefinitions="Auto,*">
+                        <Image Grid.Column="0" Width="32" Height="32"
+                               Margin="0,0,15,0" VerticalAlignment="Top"
+                               Source="avares://Spectre/Resources/MessageBox/Error.png"
+                               RenderOptions.BitmapInterpolationMode="HighQuality" />
 
-			<StackPanel Grid.Column="1">
-				<TextBlock Text="{x:Static resources:Strings.Dialog_Exception_Info_1}"
-                           FontSize="18" TextWrapping="Wrap" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{x:Static resources:Strings.Dialog_Exception_Info_1}"
+                                       FontSize="18" TextWrapping="Wrap" Foreground="White" />
 
-				<TextBox x:Name="ErrorTextBox" Padding="8" Margin="0,16,0,0"
-                         FontFamily="Courier New" IsReadOnly="True"
-                         AcceptsReturn="True" TextWrapping="Wrap"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                         Height="150" />
+                            <TextBox x:Name="ErrorTextBox" Padding="8" Margin="0,16,0,0"
+                                     FontFamily="Courier New" IsReadOnly="True"
+                                     AcceptsReturn="True" TextWrapping="Wrap"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     Height="150" />
 
-				<md:MarkdownTextBlock x:Name="HelpMessageMarkdown"
-                                         Margin="0,16,0,0"
-                                         TextWrapping="Wrap" />
-			</StackPanel>
-		</Grid>
+                            <md:MarkdownTextBlock x:Name="HelpMessageMarkdown"
+                                                  Margin="0,16,0,0"
+                                                  TextWrapping="Wrap" Foreground="White" />
+                        </StackPanel>
+                    </Grid>
 
-		<Border Grid.Row="2" Padding="15"
-                Background="{DynamicResource PrimaryBackgroundColor}">
-			<Grid>
-				<TextBlock x:Name="VersionText" VerticalAlignment="Center"
-                           HorizontalAlignment="Left"
-                           Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
+                    <Grid Grid.Row="2" Margin="22,8,22,18">
+                        <TextBlock x:Name="VersionText" VerticalAlignment="Center"
+                                   HorizontalAlignment="Left" Foreground="#CCFFFFFF" />
 
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<Button x:Name="ReportExceptionButton"
-                            Content="{x:Static resources:Strings.Dialog_Exception_Report}" />
-					<Button x:Name="LocateLogFileButton"
-                            Content="{x:Static resources:Strings.Common_OpenLogFile}"
-                            Margin="12,0,0,0" />
-				</StackPanel>
-			</Grid>
-		</Border>
-	</Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                            <md:IconButton x:Name="ReportExceptionButton"
+                                           MinWidth="100" Height="38" CornerRadius="14"
+                                           Classes="Primary" Icon="Flag" IconSize="16" Padding="16,0"
+                                           Content="{x:Static resources:Strings.Dialog_Exception_Report}" />
+                            <md:IconButton x:Name="LocateLogFileButton"
+                                           MinWidth="100" Height="38" CornerRadius="14"
+                                           Classes="Primary" Icon="FileText" IconSize="16" Padding="16,0"
+                                           Content="{x:Static resources:Strings.Common_OpenLogFile}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Panel>
+        </md:LiquidGlassPanel>
+    </Panel>
 </base:AvaloniaWindow>

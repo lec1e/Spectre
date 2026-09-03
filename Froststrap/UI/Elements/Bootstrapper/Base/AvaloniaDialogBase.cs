@@ -84,11 +84,14 @@ namespace Froststrap.UI.Elements.Bootstrapper.Base
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             CanResize = false;
+            Background = Brushes.Transparent;
+            TransparencyLevelHint = SpectreChrome.Acrylic;
 
             this.WindowDecorations = WindowDecorations.None;
 
             TextOptions.SetTextRenderingMode(this, TextRenderingMode.Antialias);
             this.Closing += Dialog_Closing;
+            this.Opened += (_, _) => SpectreChrome.RoundCorners(this);
         }
 
         private void ApplyTaskbarState()

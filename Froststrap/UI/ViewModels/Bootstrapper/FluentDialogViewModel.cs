@@ -33,42 +33,14 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
 
         public static List<WindowTransparencyLevel> ResolveBackdrop(bool aero)
         {
-            if (aero)
-            {
-                return
-                [
-                    WindowTransparencyLevel.Blur,
-                    WindowTransparencyLevel.AcrylicBlur,
-                    WindowTransparencyLevel.None
-                ];
-            }
-
-            var selected = App.Settings.Prop.SelectedBackdrop;
-            return selected switch
-            {
-                Enums.WindowsBackdrops.Mica =>
-                [
-                    WindowTransparencyLevel.Mica,
-                    WindowTransparencyLevel.AcrylicBlur,
-                    WindowTransparencyLevel.None
-                ],
-                Enums.WindowsBackdrops.Aero =>
-                [
-                    WindowTransparencyLevel.Blur,
-                    WindowTransparencyLevel.None
-                ],
-                Enums.WindowsBackdrops.None =>
-                [
-                    WindowTransparencyLevel.None
-                ],
-                _ =>
-                [
-                    WindowTransparencyLevel.AcrylicBlur,
-                    WindowTransparencyLevel.Mica,
-                    WindowTransparencyLevel.Blur,
-                    WindowTransparencyLevel.None
-                ]
-            };
+            // Same acrylic stack as the launch menu so the loader is glass, not a solid blur plate.
+            return
+            [
+                WindowTransparencyLevel.AcrylicBlur,
+                WindowTransparencyLevel.Mica,
+                WindowTransparencyLevel.Blur,
+                WindowTransparencyLevel.None
+            ];
         }
 
         private static string ExtractMajorVersion(string versionStr)

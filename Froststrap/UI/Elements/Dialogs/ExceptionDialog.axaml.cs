@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input.Platform;
+using Froststrap.UI.Utility;
 
 namespace Froststrap.UI.Elements.Dialogs
 {
@@ -8,6 +9,8 @@ namespace Froststrap.UI.Elements.Dialogs
         public ExceptionDialog()
         {
             InitializeComponent();
+            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
+            SpectreChrome.AttachPointer(this, AbyssBackground);
         }
 
         public ExceptionDialog(Exception exception) : this()

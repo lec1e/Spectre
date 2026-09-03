@@ -1,5 +1,6 @@
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using Froststrap.UI.Utility;
 
 namespace Froststrap.UI.Elements.Dialogs
 {
@@ -8,6 +9,8 @@ namespace Froststrap.UI.Elements.Dialogs
         public ConnectivityDialog()
         {
             InitializeComponent();
+            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
+            SpectreChrome.AttachPointer(this, AbyssBackground);
         }
 
         public ConnectivityDialog(string title, string description, MessageBoxImage image, Exception exception) : this()

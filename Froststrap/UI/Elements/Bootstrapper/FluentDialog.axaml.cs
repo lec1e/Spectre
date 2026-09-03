@@ -22,9 +22,6 @@ namespace Froststrap.UI.Elements.Bootstrapper
             string version = Utilities.GetRobloxVersionStr(Bootstrapper?.IsStudioLaunch ?? false);
             _viewModel = new FluentDialogViewModel(this, aero, version);
             DataContext = _viewModel;
-            TransparencyLevelHint = _viewModel.WindowBackdropType;
-            Background = Brushes.Transparent;
-
             SetupDialog();
 
             try
@@ -41,26 +38,12 @@ namespace Froststrap.UI.Elements.Bootstrapper
 
             void ApplyGlass()
             {
-                ShellGlass?.ApplyFromSettings();
-                AbyssBackground?.SyncFromTheme();
-                AbyssBackground?.SyncFromSettings();
-                if (aero && App.Settings.Prop.EnableGlass && ShellGlass is not null)
-                {
-                    ShellGlass.TintOpacity = Math.Min(App.Settings.Prop.GlassTintOpacity + 0.08, 0.55);
-                    ShellGlass.MaterialOpacity = Math.Min(App.Settings.Prop.GlassMaterialOpacity + 0.12, 0.65);
-                }
+                Froststrap.UI.Utility.SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
             }
 
             ApplyGlass();
             Loaded += (_, _) => ApplyGlass();
-
-            PointerMoved += (_, e) =>
-            {
-                if (AbyssBackground is null)
-                    return;
-                AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
-            };
-            PointerExited += (_, _) => AbyssBackground?.SetPointer(new Point(-40, -40), false);
+            Froststrap.UI.Utility.SpectreChrome.AttachPointer(this, AbyssBackground);
         }
 
         #region UI Elements Overrides

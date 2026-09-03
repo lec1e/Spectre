@@ -20,6 +20,12 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre application preview — Home, Games, Library, Mods, Settings"/>
 </p>
 
+## What’s new in 2.0.32
+
+- Loader, server info, toasts, and other popups use the same glass + nebula chrome as the launch menu
+- Starting Roblox window is smaller and rounded
+- Notifications are Spectre toasts, not Windows notifications
+
 ## What’s new in 2.0.31
 
 - Loader, uninstall, and server-info toast use the same nebula + Spectre mark as the launch menu
