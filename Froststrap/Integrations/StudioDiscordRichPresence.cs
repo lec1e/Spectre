@@ -44,7 +44,10 @@ namespace Froststrap.Integrations
                 return;
             }
 
-            _rpcClient = new DiscordRpcClient("1454451301130960896");
+            _rpcClient = new DiscordRpcClient(FroststrapRichPresence.SpectreApplicationId)
+            {
+                SkipIdenticalPresence = false
+            };
             _activityWatcher = activityWatcher;
 
             _activityWatcher.OnStudioRPCMessage += (_, message) => ProcessRPCMessage(message);
@@ -120,8 +123,8 @@ namespace Froststrap.Integrations
                 Timestamps = new Timestamps { Start = DateTime.UtcNow },
                 Assets = new Assets
                 {
-                    LargeImageKey = "roblox_studio",
-                    LargeImageText = "Roblox Studio",
+                    LargeImageKey = FroststrapRichPresence.SpectreLogoUrl,
+                    LargeImageText = App.BrandName,
                     SmallImageKey = null,
                     SmallImageText = null
                 },
@@ -152,8 +155,8 @@ namespace Froststrap.Integrations
                     : new Timestamps { Start = DateTime.UtcNow },
                 Assets = new Assets
                 {
-                    LargeImageKey = "roblox_studio",
-                    LargeImageText = "Roblox Studio",
+                    LargeImageKey = FroststrapRichPresence.SpectreLogoUrl,
+                    LargeImageText = App.BrandName,
                     SmallImageKey = null,
                     SmallImageText = null
                 },

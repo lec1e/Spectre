@@ -10,11 +10,14 @@ namespace Froststrap.UI.Elements.Dialogs
     {
         private static DesktopToastWindow? _current;
         private DispatcherTimer? _closeTimer;
+        private PixelPoint _anchoredPosition;
+        private bool _layoutHooked;
 
         public DesktopToastWindow()
         {
             InitializeComponent();
             ShowInTaskbar = false;
+            ShowActivated = false;
             Topmost = true;
             SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
             if (ShellGlass is not null)
@@ -37,12 +40,15 @@ namespace Froststrap.UI.Elements.Dialogs
                 _current = toast;
                 toast.Closed += (_, _) =>
                 {
+                    toast.LayoutUpdated -= toast.OnLayoutUpdated;
                     if (ReferenceEquals(_current, toast))
                         _current = null;
                 };
 
+                toast.PositionAboveTray();
                 toast.Show();
-                toast.PositionOnPrimaryScreen();
+                toast.PositionAboveTray();
+                toast.HookLayout();
 
                 toast._closeTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(Math.Max(3, durationSeconds)) };
                 toast._closeTimer.Tick += (_, _) =>
@@ -59,21 +65,64 @@ namespace Froststrap.UI.Elements.Dialogs
                 Dispatcher.UIThread.Post(ShowCore);
         }
 
-        private void PositionOnPrimaryScreen()
+        protected override void OnOpened(EventArgs e)
         {
-            var screen = Screens.Primary ?? Screens.All.FirstOrDefault();
+            base.OnOpened(e);
+            PositionAboveTray();
+            HookLayout();
+        }
+
+        private void HookLayout()
+        {
+            if (_layoutHooked)
+                return;
+
+            _layoutHooked = true;
+            LayoutUpdated += OnLayoutUpdated;
+        }
+
+        private void OnLayoutUpdated(object? sender, EventArgs e) => PositionAboveTray();
+
+        private void PositionAboveTray()
+        {
+            var screen = Screens.ScreenFromWindow(this) ?? Screens.Primary ?? Screens.All.FirstOrDefault();
             if (screen is null)
                 return;
 
-            var area = screen.WorkingArea;
-            double scale = DesktopScaling > 0 ? DesktopScaling : screen.Scaling;
-            int width = (int)(Bounds.Width > 1 ? Bounds.Width * scale : Width * scale);
-            int height = (int)(Bounds.Height > 1 ? Bounds.Height * scale : 100 * scale);
-            int margin = (int)(16 * scale);
+            double scale = RenderScaling > 0 ? RenderScaling : (DesktopScaling > 0 ? DesktopScaling : screen.Scaling);
+            if (scale <= 0)
+                scale = 1;
 
-            Position = new PixelPoint(
-                area.X + area.Width - width - margin,
-                area.Y + area.Height - height - margin);
+            var work = screen.WorkingArea;
+            var bounds = screen.Bounds;
+
+            double dipWidth = Bounds.Width > 1 ? Bounds.Width : Width;
+            double dipHeight = Bounds.Height > 1 ? Bounds.Height : Math.Max(MinHeight, 92);
+
+            int width = Math.Max(1, (int)Math.Ceiling(dipWidth * scale));
+            int height = Math.Max(1, (int)Math.Ceiling(dipHeight * scale));
+            int gapX = (int)Math.Round(16 * scale);
+            int gapY = (int)Math.Round(16 * scale);
+
+            // WorkingArea already excludes the taskbar. If it doesn't (auto-hide / overlay),
+            // keep a tray-sized reserve so the toast never sits on the bar.
+            int workBottom = work.Y + work.Height;
+            int screenBottom = bounds.Y + bounds.Height;
+            if (screenBottom - workBottom < (int)(8 * scale))
+                gapY += (int)Math.Round(48 * scale);
+
+            int x = work.X + work.Width - width - gapX;
+            int y = workBottom - height - gapY;
+
+            x = Math.Clamp(x, work.X + gapX, Math.Max(work.X + gapX, work.X + work.Width - width - gapX));
+            y = Math.Max(work.Y + gapY, y);
+
+            var next = new PixelPoint(x, y);
+            if (next == _anchoredPosition && next == Position)
+                return;
+
+            _anchoredPosition = next;
+            Position = next;
         }
     }
 }

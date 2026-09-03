@@ -36,14 +36,21 @@ namespace Froststrap.Integrations
                 return;
             }
 
-            _rpcClient = new DiscordRpcClient("363445589247131668");
+            _rpcClient = new DiscordRpcClient(FroststrapRichPresence.SpectreApplicationId)
+            {
+                SkipIdenticalPresence = false
+            };
             _activityWatcher = activityWatcher;
 
             _activityWatcher.OnGameJoin += (_, _) => Task.Run(() => SetCurrentGame());
             _activityWatcher.OnGameLeave += (_, _) => Task.Run(() => SetCurrentGame());
             _activityWatcher.OnRPCMessage += (_, message) => ProcessRPCMessage(message);
 
-            _rpcClient.OnReady += (_, e) => App.Logger.WriteLine(LOG_IDENT, $"Received ready from user {e.User} ({e.User.ID})");
+            _rpcClient.OnReady += (_, e) =>
+            {
+                App.Logger.WriteLine(LOG_IDENT, $"Received ready from user {e.User} ({e.User.ID})");
+                Task.Run(() => SetCurrentGame());
+            };
 
             _rpcClient.OnPresenceUpdate += (_, e) =>
                 App.Logger.WriteLine(LOG_IDENT, "Presence updated");
@@ -343,10 +350,9 @@ namespace Froststrap.Integrations
 
             if (!_activityWatcher.InGame)
             {
-                App.Logger.WriteLine(LOG_IDENT, "Not in game, clearing presence");
-                _currentPresence = _originalPresence = null;
+                App.Logger.WriteLine(LOG_IDENT, "Not in game, showing Spectre idle presence");
                 _messageQueue.Clear();
-                UpdatePresence();
+                SetIdlePresence();
                 return true;
             }
 
@@ -369,8 +375,8 @@ namespace Froststrap.Integrations
             var universeDetails = activity.UniverseDetails!;
 
             string icon = universeDetails.Thumbnail.ImageUrl!;
-            string smallImage = "roblox";
-            string smallImageText = "Roblox";
+            string smallImage = FroststrapRichPresence.SpectreLogoUrl;
+            string smallImageText = App.BrandName;
 
             if (App.Settings.Prop.ShowAccountOnRichPresence)
             {
@@ -395,6 +401,7 @@ namespace Froststrap.Integrations
             _currentPresence = new DiscordRPC.RichPresence
             {
                 Details = universeName,
+                Type = ActivityType.Playing,
                 StatusDisplay = App.Settings.Prop.EnableCustomStatusDisplay ? StatusDisplayType.Details : (StatusDisplayType)0,
                 State = status,
                 Timestamps = new Timestamps { Start = timeStarted.ToUniversalTime() },
@@ -454,6 +461,31 @@ namespace Froststrap.Integrations
             return [.. buttons];
         }
 
+        private void SetIdlePresence()
+        {
+            if (_isMacOS || _disposed) return;
+
+            _currentPresence = new DiscordRPC.RichPresence
+            {
+                Details = App.BrandName,
+                State = "In Roblox",
+                Type = ActivityType.Playing,
+                StatusDisplay = StatusDisplayType.Details,
+                Timestamps = new Timestamps { Start = DateTime.UtcNow },
+                Assets = new Assets
+                {
+                    LargeImageKey = FroststrapRichPresence.SpectreLogoUrl,
+                    LargeImageText = App.BrandName
+                },
+                Buttons =
+                [
+                    new Button { Label = "GitHub", Url = $"https://github.com/{App.ProjectRepository}" }
+                ]
+            };
+            _originalPresence = _currentPresence.Clone();
+            UpdatePresence();
+        }
+
         public void UpdatePresence()
         {
             if (_isMacOS || _disposed || _rpcClient == null) return;
@@ -471,7 +503,21 @@ namespace Froststrap.Integrations
                     {
                         _currentPresence.Assets ??= new Assets();
                         App.Logger.WriteLine(LOG_IDENT, "Updating presence");
-                        _rpcClient.SetPresence(_currentPresence);
+                        try
+                        {
+                            _rpcClient.SetPresence(_currentPresence);
+                        }
+                        catch (Exception setEx)
+                        {
+                            App.Logger.WriteLine(LOG_IDENT, $"SetPresence with assets failed: {setEx.Message}");
+                            var fallback = _currentPresence.Clone();
+                            fallback.Assets = new Assets
+                            {
+                                LargeImageKey = FroststrapRichPresence.SpectreLogoUrl,
+                                LargeImageText = App.BrandName
+                            };
+                            _rpcClient.SetPresence(fallback);
+                        }
                     }
                     else
                     {
