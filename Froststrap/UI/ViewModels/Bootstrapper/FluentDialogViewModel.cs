@@ -10,6 +10,7 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
         public IBrush BackgroundColourBrush { get; set; } = Brushes.Transparent;
         public string VersionText { get; set; }
         public string ChannelText { get; set; }
+        public string ProductVersion => $"Version {App.Version}";
         public bool IsAero { get; }
 
         public FluentDialogViewModel(IBootstrapperDialog dialog, bool aero, string version) : base(dialog)

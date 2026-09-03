@@ -6,8 +6,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <Version>2.0.30</Version>
-    <FileVersion>2.0.30</FileVersion>
+    <Version>2.0.31</Version>
+    <FileVersion>2.0.31</FileVersion>
     <Company>Spectre</Company>
     <Product>Spectre</Product>
     <AssemblyName>Spectre</AssemblyName>
@@ -128,7 +128,4 @@
     </Compile>
   </ItemGroup>
 
-  <Target Name="CopyLegacyEclipseExe" AfterTargets="Publish">
-    <Copy SourceFiles="$(PublishDir)Spectre.exe" DestinationFiles="$(PublishDir)Eclipse.exe" Condition="Exists('$(PublishDir)Spectre.exe')" />
-  </Target>
 </Project>

@@ -6,6 +6,7 @@ using Avalonia.Platform;
 using Avalonia.Threading;
 using Froststrap.Integrations;
 using Froststrap.UI.Elements.ContextMenu;
+using Froststrap.UI.Elements.Dialogs;
 using Froststrap.UI.Utility;
 
 namespace Froststrap.UI
@@ -113,21 +114,20 @@ namespace Froststrap.UI
                 ServerType.Public => Strings.ContextMenu_ServerInformation_Notification_Title_Public,
                 ServerType.Private => Strings.ContextMenu_ServerInformation_Notification_Title_Private,
                 ServerType.Reserved => Strings.ContextMenu_ServerInformation_Notification_Title_Reserved,
-                _ => ""
+                _ => "Connected to server"
             };
 
-            string? serverLocation = await ActivityWatcher.Data.QueryServerLocation();
-            if (string.IsNullOrEmpty(serverLocation))
+            string? serverLocation = null;
+            try
             {
-                ShowAlert(
-                    string.Format(Strings.Dialog_Connectivity_UnableToConnect, "ipinfo.io"),
-                    Strings.ActivityWatcher_LocationQueryFailed,
-                    5,
-                    NotificationType.Warning
-                );
-
-                return;
+                if (ActivityWatcher.Data.MachineAddressValid)
+                    serverLocation = await ActivityWatcher.Data.QueryServerLocation();
             }
+            catch (Exception ex)
+            {
+                App.Logger.WriteLine("NotifyIconWrapper::ShowNotif", $"Location query failed: {ex.Message}");
+            }
+
             string? serverUptime;
             DateTime? serverTime = ActivityWatcher.Data.StartTime;
 
@@ -145,16 +145,32 @@ namespace Froststrap.UI
                 serverUptime = "0 minutes";
             }
 
+            if (string.IsNullOrEmpty(serverLocation))
+            {
+                ShowAlert(
+                    title,
+                    $"Location unavailable · uptime {serverUptime}");
+                return;
+            }
+
             ShowAlert(
                 title,
                 string.Format(Strings.ContextMenu_ServerDetails_Notification_Text, serverLocation, serverUptime));
         }
 
-        public void ShowAlert(string title, string message, int duration = 5, NotificationType category = NotificationType.Information)
+        public void ShowAlert(string title, string message, int duration = 8, NotificationType category = NotificationType.Information)
         {
             if (_isDisposed) return;
+
+            // Always show a Spectre toast so server info is visible over Roblox.
+            DesktopToastWindow.ShowToast(title, message, duration);
+
             var manager = NativeNotificationManager.Current;
-            if (manager == null) return;
+            if (manager == null)
+            {
+                App.Logger.WriteLine("NotifyIconWrapper::ShowAlert", "NativeNotificationManager.Current is null; using Spectre toast only.");
+                return;
+            }
 
             string categoryString = category switch
             {
@@ -164,8 +180,12 @@ namespace Froststrap.UI
                 _ => "info"
             };
 
-            var notification = manager.CreateNotification(categoryString);
-            if (notification == null) return;
+            var notification = manager.CreateNotification(categoryString) ?? manager.CreateNotification(null);
+            if (notification == null)
+            {
+                App.Logger.WriteLine("NotifyIconWrapper::ShowAlert", "CreateNotification returned null.");
+                return;
+            }
 
             notification.Title = title;
             notification.Message = message;

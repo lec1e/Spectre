@@ -84,17 +84,18 @@ namespace Froststrap.UI.Elements.ContextMenu
                 Dispatcher.UIThread.Post(() => {
                     if (ActivityWatcher.InRobloxStudio)
                     {
-                        InviteDeeplinkMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                        ServerDetailsMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                        RejoinServerMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                        GameHistoryMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                        AutoJoinRegionMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                        CloseRobloxMenuItem?.SetValue(MenuItem.HeaderProperty, Strings.Menu_ContextMenu_CloseStudio);
+                        SetNativeVisible(InviteDeeplinkMenuItem, false);
+                        SetNativeVisible(ServerDetailsMenuItem, false);
+                        SetNativeVisible(RejoinServerMenuItem, false);
+                        SetNativeVisible(GameHistoryMenuItem, false);
+                        SetNativeVisible(AutoJoinRegionMenuItem, false);
+                        if (CloseRobloxMenuItem is not null)
+                            CloseRobloxMenuItem.Header = Strings.Menu_ContextMenu_CloseStudio;
 
                         if (App.Settings.Prop.PlaytimeCounter)
                         {
                             StartTotalPlaytimeTimer();
-                            PlaytimeMenuItem?.SetValue(MenuItem.IsVisibleProperty, true);
+                            SetNativeVisible(PlaytimeMenuItem, true);
                             if (ActivityWatcher.InStudioPlace) _studioPlaceJoinTime = DateTime.Now;
                         }
                     }
@@ -102,7 +103,10 @@ namespace Froststrap.UI.Elements.ContextMenu
                     {
                         if (App.Settings.Prop.PlaytimeCounter) StartTotalPlaytimeTimer();
 
-                        GameHistoryMenuItem?.SetValue(MenuItem.IsVisibleProperty, App.Settings.Prop.ShowGameHistoryMenu);
+                        SetNativeVisible(GameHistoryMenuItem, App.Settings.Prop.ShowGameHistoryMenu);
+
+                        if (ActivityWatcher.InGame)
+                            SetInGameMenuVisible(true);
                     }
 
                     if (RichPresenceMenuItem != null)
@@ -119,7 +123,8 @@ namespace Froststrap.UI.Elements.ContextMenu
                         AntiAfkMenuItem.IsVisible = OperatingSystem.IsWindows();
                     }
 
-                    VersionMenuItem?.SetValue(NativeMenuItem.HeaderProperty, $"{App.BrandName} v{App.Version}");
+                    if (VersionMenuItem is not null)
+                        VersionMenuItem.Header = $"{App.BrandName} v{App.Version}";
                 });
             }
         }
@@ -150,6 +155,22 @@ namespace Froststrap.UI.Elements.ContextMenu
         private static string FormatTimeSpan(TimeSpan ts) =>
             ts.TotalHours >= 1 ? $"{(int)ts.TotalHours}:{ts.Minutes:D2}:{ts.Seconds:D2}" : $"{ts.Minutes}:{ts.Seconds:D2}";
 
+        private static void SetNativeVisible(NativeMenuItem? item, bool visible)
+        {
+            if (item is null)
+                return;
+            item.IsVisible = visible;
+        }
+
+        private void SetInGameMenuVisible(bool visible)
+        {
+            bool showInvite = visible && ActivityWatcher?.Data.ServerType == ServerType.Public;
+            SetNativeVisible(InviteDeeplinkMenuItem, showInvite);
+            SetNativeVisible(ServerDetailsMenuItem, visible);
+            SetNativeVisible(RejoinServerMenuItem, visible);
+            SetNativeVisible(AutoJoinRegionMenuItem, visible);
+        }
+
         public async void ShowServerInformationWindow()
         {
             if (_serverInformationWindow is null)
@@ -163,20 +184,12 @@ namespace Froststrap.UI.Elements.ContextMenu
         }
 
         private void ActivityWatcher_OnGameJoin(object? sender, EventArgs e) =>
-            Dispatcher.UIThread.Invoke(() => {
-                if (ActivityWatcher?.Data.ServerType == ServerType.Public && InviteDeeplinkMenuItem != null)
-                    InviteDeeplinkMenuItem.IsVisible = true;
-                ServerDetailsMenuItem?.SetValue(MenuItem.IsVisibleProperty, true);
-                RejoinServerMenuItem?.SetValue(MenuItem.IsVisibleProperty, true);
-                AutoJoinRegionMenuItem?.SetValue(MenuItem.IsVisibleProperty, true);
-            });
+            Dispatcher.UIThread.Invoke(() => SetInGameMenuVisible(true));
 
         private void ActivityWatcher_OnGameLeave(object? sender, EventArgs e) =>
-            Dispatcher.UIThread.Invoke(() => {
-                InviteDeeplinkMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                ServerDetailsMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                RejoinServerMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
-                AutoJoinRegionMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                SetInGameMenuVisible(false);
                 _serverInformationWindow?.Close();
             });
 

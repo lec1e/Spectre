@@ -1880,11 +1880,8 @@ namespace Froststrap
             if (assets is null || assets.Count == 0)
                 return null;
 
-            // Prefer portable Spectre.exe; keep Eclipse.exe so 2.0.29 installs still update.
             var exact = assets.FirstOrDefault(a =>
-                a.Name?.Equals("Spectre.exe", StringComparison.OrdinalIgnoreCase) == true)
-                ?? assets.FirstOrDefault(a =>
-                a.Name?.Equals("Eclipse.exe", StringComparison.OrdinalIgnoreCase) == true);
+                a.Name?.Equals("Spectre.exe", StringComparison.OrdinalIgnoreCase) == true);
             if (exact is not null)
                 return exact;
 
@@ -1909,9 +1906,7 @@ namespace Froststrap
                 return
                 [
                     "Spectre.exe",
-                    "Eclipse.exe",
                     "Spectre-Setup.exe",
-                    "Eclipse-Setup.exe",
                     "-Setup.exe",
                     "Froststrap-SelfContained-Setup.exe",
                     "Froststrap-Setup.exe"

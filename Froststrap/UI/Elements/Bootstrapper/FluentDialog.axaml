@@ -6,15 +6,17 @@
     xmlns:vm="using:Froststrap.UI.ViewModels.Bootstrapper"
     xmlns:base="clr-namespace:Froststrap.UI.Elements.Bootstrapper.Base"
     xmlns:gv="using:Froststrap.UI.ViewModels"
-    xmlns:resources="using:Froststrap.Resources"
     xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
     xmlns:app="clr-namespace:Froststrap"
     mc:Ignorable="d"
     x:Class="Froststrap.UI.Elements.Bootstrapper.FluentDialog"
     x:DataType="vm:FluentDialogViewModel"
-    Width="520"
-    Height="300"
-    MinHeight="0"
+    Width="440"
+    Height="380"
+    MinWidth="440"
+    MaxWidth="440"
+    MinHeight="380"
+    MaxHeight="380"
     CanResize="False"
     Title="{x:Static app:App.BrandName}"
     WindowStartupLocation="CenterScreen"
@@ -29,54 +31,71 @@
                                    TintOpacity="0.58"
                                    MaterialOpacity="0.46"
                                    UseSettingsCornerRadius="False"
-                                   Padding="12">
-            <Grid>
-                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding VersionText}" Foreground="#99FDA4AF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
-                <TextBlock Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="11" FontFamily="{StaticResource Rubik}" Text="{Binding ChannelText}" Foreground="#99FDA4AF" IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
-                <controls:TitleBar
-                    VerticalAlignment="Top"
-                    ShowClose="False"
-                    Title=""
-                    Icon="{x:Null}"
-                    ShowMaximize="False"
-                    ShowMinimize="False" />
+                                   ClipToBounds="True">
+            <Panel>
+                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
+                <Grid RowDefinitions="Auto,*">
+                    <controls:TitleBar VerticalAlignment="Top"
+                                       ShowMaximize="False"
+                                       ShowMinimize="False"
+                                       Title=""
+                                       Icon="{x:Null}" />
+                    <TextBlock Grid.Row="0" Margin="12,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                               FontSize="11" Text="{Binding VersionText}" Foreground="#99FDA4AF"
+                               IsHitTestVisible="False"
+                               IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
+                    <TextBlock Grid.Row="0" Margin="0,10,40,0" VerticalAlignment="Top" HorizontalAlignment="Right"
+                               FontSize="11" Text="{Binding ChannelText}" Foreground="#99FDA4AF"
+                               IsHitTestVisible="False"
+                               IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
 
-                <StackPanel>
-                    <Border Width="84" Height="84" CornerRadius="22" ClipToBounds="True"
-                            Margin="0,34,0,0" HorizontalAlignment="Center"
-                            BorderBrush="Transparent" BorderThickness="0">
-                        <Image Width="84" Height="84"
-                               Source="{Binding Icon}"
-                               RenderOptions.BitmapInterpolationMode="HighQuality"/>
-                    </Border>
+                    <StackPanel Grid.Row="1" Margin="28,4,28,24">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="14" Margin="0,0,0,18">
+                            <Border Width="64" Height="64" CornerRadius="18" ClipToBounds="True"
+                                    BorderBrush="Transparent" BorderThickness="0">
+                                <Image Width="64" Height="64" Source="avares://Spectre/SpectreMark.png"
+                                       RenderOptions.BitmapInterpolationMode="HighQuality" />
+                            </Border>
+                            <StackPanel VerticalAlignment="Center" Spacing="3">
+                                <TextBlock Text="{x:Static app:App.BrandName}" FontSize="28" FontWeight="Bold"
+                                           Foreground="White" />
+                                <TextBlock Text="{Binding ProductVersion}" FontSize="12.5" Foreground="White" />
+                            </StackPanel>
+                        </StackPanel>
 
-                    <TextBlock
-                        Margin="0,28,0,0"
-                        HorizontalAlignment="Center"
-                        TextAlignment="Center"
-                        FontSize="18"
-                        TextTrimming="CharacterEllipsis"
-                        Text="{Binding Message}"/>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            TextAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            TextTrimming="CharacterEllipsis"
+                            Text="{Binding Message}"/>
 
-                    <ProgressBar
-                        Width="420"
-                        Height="10"
-                        Margin="0,14,0,14"
-                        CornerRadius="50"
-                        IsIndeterminate="{Binding ProgressIndeterminate}"
-                        Maximum="{Binding ProgressMaximum}"
-                        Value="{Binding ProgressValue}"/>
+                        <ProgressBar
+                            Width="360"
+                            Height="8"
+                            Margin="0,16,0,16"
+                            CornerRadius="50"
+                            Foreground="#E11D48"
+                            Background="#33FFFFFF"
+                            IsIndeterminate="{Binding ProgressIndeterminate}"
+                            Maximum="{Binding ProgressMaximum}"
+                            Value="{Binding ProgressValue}"/>
 
-                    <Button
-                        Width="120"
-                        Height="32"
-                        HorizontalAlignment="Center"
-                        Command="{Binding CancelInstallCommand}"
-                        Content="{Binding CancelButtonText}"
-                        FontSize="14"
-                        IsEnabled="{Binding CancelEnabled}"/>
-                </StackPanel>
-            </Grid>
+                        <controls:IconButton Classes="Primary"
+                                             Width="160"
+                                             Height="40"
+                                             HorizontalAlignment="Center"
+                                             CornerRadius="14"
+                                             Icon="X"
+                                             IconSize="16"
+                                             Content="{Binding CancelButtonText}"
+                                             Padding="16,0"
+                                             IsEnabled="{Binding CancelEnabled}"
+                                             Command="{Binding CancelInstallCommand}" />
+                    </StackPanel>
+                </Grid>
+            </Panel>
         </controls:LiquidGlassPanel>
     </Panel>
 </base:AvaloniaDialogBase>

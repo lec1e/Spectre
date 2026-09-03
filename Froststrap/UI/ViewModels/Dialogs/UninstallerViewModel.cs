@@ -11,6 +11,8 @@ namespace Froststrap.UI.ViewModels.Dialogs
             Paths.Base
         );
 
+        public static string Version => $"Version {App.Version}";
+
         private bool _keepData = false;
         public bool KeepData
         {

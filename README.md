@@ -34,9 +34,16 @@
 </p>
 <p align="center"><sub>Mods · Settings</sub></p>
 
+## What’s new in 2.0.31
+
+- Loader, uninstall, and server-info toast use the same nebula + Spectre mark as the launch menu
+- Rejoin / server details show in the tray while you are in a game
+- Server info pops up when you join
+- Releases ship **Spectre.exe** only
+
 ## What’s new in 2.0.30
 
-- Download is **Spectre.exe** (Eclipse.exe still accepted for existing installs)
+- Download is **Spectre.exe**
 - Home greeting uses your computer name
 - Animated crimson nebula background from the Spectre banner
 - Tab previews for Home, Games, Library, Mods, and Settings
@@ -56,7 +63,7 @@
 
 Grab the latest **Spectre.exe** from [Releases](https://github.com/lec1e/Spectre/releases/latest).
 
-Auto-update picks up new stable releases when update checks are enabled. Older **Eclipse.exe** installs still update from the same release.
+Auto-update picks up new stable releases when update checks are enabled.
 
 ## Build
 
