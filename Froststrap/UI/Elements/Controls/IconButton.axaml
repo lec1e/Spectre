@@ -6,10 +6,10 @@
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls">
 
     <Style Selector="controls|IconButton">
-        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+        <Setter Property="Background" Value="#881A060A" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="12,6" />
         <Setter Property="CornerRadius" Value="6" />
         <Setter Property="IconSize" Value="16" />
@@ -54,8 +54,8 @@
     <Style Selector="controls|IconButton:pointerover /template/ Border#PART_LayoutRoot">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#668B5CF6" Offset="0" />
-                <GradientStop Color="#447C3AED" Offset="1" />
+                <GradientStop Color="#66C41E3A" Offset="0" />
+                <GradientStop Color="#443A080C" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
@@ -63,9 +63,9 @@
     <Style Selector="controls|IconButton:pressed /template/ Border#PART_LayoutRoot">
         <Setter Property="Background">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#C4B5FD" Offset="0" />
-                <GradientStop Color="#8B5CF6" Offset="0.45" />
-                <GradientStop Color="#5B21B6" Offset="1" />
+                <GradientStop Color="#FDA4AF" Offset="0" />
+                <GradientStop Color="#C41E3A" Offset="0.45" />
+                <GradientStop Color="#4A1518" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
@@ -78,10 +78,10 @@
         <Setter Property="Background" Value="Transparent" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#C084FC" />
+        <Setter Property="StrokeBrush" Value="#E11D48" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#E9D5FF" />
+        <Setter Property="StrokeBrush" Value="#FECDD3" />
     </Style>
     <Style Selector="controls|IconButton.TitleBarButton.Close:pointerover /template/ ic|Lucide">
         <Setter Property="StrokeBrush" Value="#FB7185" />
@@ -93,8 +93,8 @@
     <Style Selector="controls|IconButton:pointerover /template/ ic|Lucide">
         <Setter Property="StrokeBrush">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E9D5FF" Offset="0" />
-                <GradientStop Color="#A78BFA" Offset="1" />
+                <GradientStop Color="#FECDD3" Offset="0" />
+                <GradientStop Color="#E11D48" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>
@@ -102,9 +102,9 @@
     <Style Selector="controls|IconButton:pressed /template/ ic|Lucide">
         <Setter Property="StrokeBrush">
             <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#F5E1FF" Offset="0" />
-                <GradientStop Color="#C4B5FD" Offset="0.4" />
-                <GradientStop Color="#8B5CF6" Offset="1" />
+                <GradientStop Color="#FEE2E2" Offset="0" />
+                <GradientStop Color="#FDA4AF" Offset="0.4" />
+                <GradientStop Color="#C41E3A" Offset="1" />
             </LinearGradientBrush>
         </Setter>
     </Style>

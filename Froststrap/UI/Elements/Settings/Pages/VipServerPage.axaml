@@ -11,7 +11,7 @@
     <StackPanel Margin="14" Spacing="12">
       <TextBlock Text="VIP Server" FontSize="18" FontWeight="SemiBold" />
       <TextBlock TextWrapping="Wrap" Opacity="0.7" FontSize="13"
-                 Text="Browse and search VIP-enabled games from RBXServers. Open a game to pick a shared VIP server and join it directly from Eclipse." />
+                 Text="Browse and search VIP-enabled games from RBXServers. Open a game to pick a shared VIP server and join it directly from Spectre." />
 
       <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
         <TextBox x:Name="SearchTextBox"

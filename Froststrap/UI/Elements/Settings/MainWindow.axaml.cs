@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
@@ -49,21 +50,19 @@ namespace Froststrap.UI.Elements.Settings
             ];
             Background = Brushes.Transparent;
 
-            PointerMoved += OnWindowPointerMoved;
-            PointerExited += OnWindowPointerExited;
+            AddHandler(PointerMovedEvent, OnWindowPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble, handledEventsToo: true);
+            AddHandler(PointerExitedEvent, OnWindowPointerExited, RoutingStrategies.Bubble, handledEventsToo: true);
             global::Froststrap.Utility.ThemeManager.ThemeChanged += OnThemeChanged;
             Closed += (_, _) => global::Froststrap.Utility.ThemeManager.ThemeChanged -= OnThemeChanged;
 
             Dispatcher.UIThread.Post(() =>
             {
                 ShellGlass?.SyncTintFromTheme();
+                ShellGlass?.ApplyFromSettings();
                 AbyssBackground?.SyncFromTheme();
                 AbyssBackground?.SyncFromSettings();
                 if (LiquidCursor is not null)
-                {
-                    LiquidCursor.IsEffectEnabled = App.Settings?.Prop?.EnableLiquidCursor ?? true;
-                    LiquidCursor.SyncColorsFromTheme();
-                }
+                    LiquidCursor.IsEffectEnabled = false;
             }, DispatcherPriority.Loaded);
         }
 
@@ -72,28 +71,25 @@ namespace Froststrap.UI.Elements.Settings
             Dispatcher.UIThread.Post(() =>
             {
                 ShellGlass?.SyncTintFromTheme();
+                ShellGlass?.ApplyFromSettings();
                 AbyssBackground?.SyncFromTheme();
                 AbyssBackground?.SyncFromSettings();
                 if (LiquidCursor is not null)
-                {
-                    LiquidCursor.IsEffectEnabled = App.Settings?.Prop?.EnableLiquidCursor ?? true;
-                    LiquidCursor.SyncColorsFromTheme();
-                }
+                    LiquidCursor.IsEffectEnabled = false;
             });
         }
 
         private void OnWindowPointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
         {
-            if (LiquidCursor is null)
+            if (AbyssBackground is null)
                 return;
 
-            var p = e.GetPosition(LiquidCursor);
-            LiquidCursor.SetPointer(p, true);
+            AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
         }
 
         private void OnWindowPointerExited(object? sender, Avalonia.Input.PointerEventArgs e)
         {
-            LiquidCursor?.SetPointer(new Point(-40, -40), false);
+            AbyssBackground?.SetPointer(new Point(-40, -40), false);
         }
 
         public MainWindow(bool showAlreadyRunningWarning) : this()

@@ -57,6 +57,12 @@
 			</controls:OptionControl>
 
 			<controls:OptionControl
+                Header="VIP picker on launch"
+                Description="Ask which VIP / private server to join when a place launch has no access code yet.">
+				<ToggleSwitch IsChecked="{Binding EnableVipServerPrompt, Mode=TwoWay}" />
+			</controls:OptionControl>
+
+			<controls:OptionControl
                 Header="{x:Static resources:Strings.Menu_Behaviour_ConfirmLaunches_Title}"
                 Description="{x:Static resources:Strings.Menu_Behaviour_ConfirmLaunches_Description}">
 				<ToggleSwitch IsChecked="{Binding ConfirmLaunches, Mode=TwoWay}" />

@@ -62,7 +62,7 @@
                                 Background="{DynamicResource BrandSurfaceBrush}">
                             <StackPanel Spacing="8">
                                 <Grid ColumnDefinitions="48,*,Auto">
-                                    <Border Width="40" Height="40" CornerRadius="8" Background="#22A855F7" ClipToBounds="True">
+                                    <Border Width="40" Height="40" CornerRadius="8" Background="#22E11D48" ClipToBounds="True">
                                         <Panel>
                                             <TextBlock Text="{Binding Letter}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                        FontWeight="Bold" FontSize="18" IsVisible="{Binding !HasLogo}" />

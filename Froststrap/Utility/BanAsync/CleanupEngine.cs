@@ -19,7 +19,8 @@ namespace Froststrap.Utility.BanAsync
             "RobloxCrashHandler",
             "RobloxPlayerLauncher",
             "RobloxPlayerInstaller",
-            "Roblox"
+            "Roblox",
+            "RobloxStudio"
         };
 
         public class CleanupOptions
@@ -48,8 +49,10 @@ namespace Froststrap.Utility.BanAsync
             var result = new CleanupResult();
 
             log("Closing Roblox processes…");
-            int killed = KillProcesses(log);
+            int killed = KillRobloxTree(log);
             log(killed == 0 ? "No Roblox processes were running." : $"Closed {killed} Roblox process(es).");
+            Thread.Sleep(400);
+            TruncateRobloxCookies(log);
 
             // Preserve step: copy out any files the user wants kept, before we wipe their parent dirs.
             var preserveBackup = new Dictionary<string, byte[]>();
@@ -190,6 +193,66 @@ namespace Froststrap.Utility.BanAsync
             {
                 try { File.Delete(file); result.DeletedFiles++; }
                 catch (Exception ex) { App.Logger.WriteException(LOG_IDENT + "::CleanVersionsFile", ex); }
+            }
+        }
+
+        public static int KillRobloxTree(Action<string> log)
+        {
+            int killed = KillProcesses(log);
+            string robloxRoot = Path.Combine(Paths.LocalAppData, "Roblox");
+            if (!Directory.Exists(robloxRoot))
+                return killed;
+
+            string rootFull = Path.GetFullPath(robloxRoot);
+            foreach (var p in Process.GetProcesses())
+            {
+                try
+                {
+                    string? image;
+                    try { image = p.MainModule?.FileName; }
+                    catch { continue; }
+                    if (string.IsNullOrEmpty(image))
+                        continue;
+                    string full = Path.GetFullPath(image);
+                    if (!full.StartsWith(rootFull, StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    p.Kill();
+                    p.WaitForExit(2000);
+                    killed++;
+                    log($"Stopped {p.ProcessName} (pid {p.Id}) — running from the folder being deleted");
+                }
+                catch (Exception ex)
+                {
+                    App.Logger.WriteException(LOG_IDENT + "::KillTree", ex);
+                }
+                finally
+                {
+                    p.Dispose();
+                }
+            }
+            return killed;
+        }
+
+        private static void TruncateRobloxCookies(Action<string> log)
+        {
+            string[] cookiePaths =
+            [
+                Path.Combine(Paths.LocalAppData, "Roblox", "LocalStorage", "RobloxCookies.dat"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Roblox", "LocalStorage", "RobloxCookies.dat"),
+            ];
+            foreach (string path in cookiePaths)
+            {
+                try
+                {
+                    if (!File.Exists(path))
+                        continue;
+                    File.WriteAllBytes(path, []);
+                    log($"Truncated {path}");
+                }
+                catch (Exception ex)
+                {
+                    log($"Cookie wipe {path}: {ex.Message}");
+                }
             }
         }
 

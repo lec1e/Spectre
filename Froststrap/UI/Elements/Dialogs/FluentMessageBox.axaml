@@ -3,75 +3,92 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
         xmlns:md="clr-namespace:Froststrap.UI.Elements.Controls"
-        Title="Eclipse"
-        MinWidth="360" MaxWidth="520" SizeToContent="WidthAndHeight" CanResize="False"
+        xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+        xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+        xmlns:app="clr-namespace:Froststrap"
+        Title="{x:Static app:App.BrandName}"
+        MinWidth="420" MaxWidth="560" SizeToContent="Height" CanResize="False"
         WindowStartupLocation="CenterScreen"
-        CornerRadius="14"
-        Background="#121018">
+        Background="Transparent">
 
-    <Border CornerRadius="14"
-            Background="#121018"
-            BorderBrush="#2E2640"
-            BorderThickness="1"
-            ClipToBounds="True">
-        <Grid RowDefinitions="Auto,*,Auto">
-            <Border Grid.Row="0"
-                    Background="#18151F"
-                    BorderBrush="#2E2640"
-                    BorderThickness="0,0,0,1">
-                <md:TitleBar x:Name="RootTitleBar"
-                             Icon="avares://Eclipse/Eclipse.ico"
-                             Title="Eclipse"
-                             ShowMaximize="False" />
-            </Border>
-
-            <Grid Grid.Row="1" Margin="22,20" ColumnDefinitions="Auto,*" ColumnSpacing="16">
-                <Border Width="40" Height="40"
-                        CornerRadius="20"
-                        Background="#3B82F6"
-                        VerticalAlignment="Top">
-                    <Panel>
-                        <Image x:Name="IconImage" Width="22" Height="22"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Panel>
+    <controls:LiquidGlassPanel x:Name="ShellGlass"
+                               Margin="0"
+                               CornerRadius="0"
+                               TintOpacity="0.58"
+                               MaterialOpacity="0.46"
+                               UseSettingsCornerRadius="False"
+                               ClipToBounds="True">
+        <Panel>
+            <controls:AbyssGlowBackground x:Name="AbyssBackground" />
+            <Grid RowDefinitions="Auto,*,Auto">
+                <Border Grid.Row="0"
+                        Background="#661A060A"
+                        BorderBrush="Transparent"
+                        BorderThickness="0">
+                    <md:TitleBar x:Name="RootTitleBar"
+                                 Icon="avares://Eclipse/SpectreMark.png"
+                                 Title="{x:Static app:App.BrandName}"
+                                 ShowMaximize="False"
+                                 ShowMinimize="False" />
                 </Border>
 
-                <md:MarkdownTextBlock x:Name="MessageMarkdownTextBlock" Grid.Column="1"
-                                         VerticalAlignment="Center"
-                                         TextWrapping="Wrap"
-                                         FontSize="14"
-                                         Foreground="#F3F4F6" />
-            </Grid>
+                <Grid Grid.Row="1" Margin="22,20" ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                    <Border Width="40" Height="40"
+                            CornerRadius="20"
+                            Background="#88C41E3A"
+                            VerticalAlignment="Top">
+                        <Panel>
+                            <ic:Lucide x:Name="GlyphIcon"
+                                       Width="20" Height="20"
+                                       Icon="CircleQuestionMark"
+                                       StrokeBrush="#FEE2E2"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                            <Image x:Name="IconImage" Width="22" Height="22" IsVisible="False"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Panel>
+                    </Border>
 
-            <Border Grid.Row="2"
-                    Padding="16"
-                    Background="#18151F"
-                    BorderBrush="#2E2640"
-                    BorderThickness="0,1,0,0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
-                    <Button x:Name="ButtonOne"
-                            MinWidth="88" Height="36"
-                            CornerRadius="10"
-                            Background="#2A2438"
-                            BorderThickness="0"
-                            Content="Button 1"
-                            IsVisible="False" />
-                    <Button x:Name="ButtonTwo"
-                            MinWidth="88" Height="36"
-                            CornerRadius="10"
-                            Background="#2A2438"
-                            BorderThickness="0"
-                            Content="Button 2"
-                            IsVisible="False" />
-                    <Button x:Name="ButtonThree"
-                            MinWidth="88" Height="36"
-                            CornerRadius="10"
-                            Background="#2A2438"
-                            BorderThickness="0"
-                            Content="Button 3"
-                            IsVisible="False" />
-                </StackPanel>
-            </Border>
-        </Grid>
-    </Border>
+                    <md:MarkdownTextBlock x:Name="MessageMarkdownTextBlock" Grid.Column="1"
+                                             VerticalAlignment="Center"
+                                             TextWrapping="Wrap"
+                                             FontSize="14"
+                                             Foreground="#F8FAFC" />
+                </Grid>
+
+                <Border Grid.Row="2"
+                        Padding="16,14"
+                        Background="#881A060A"
+                        BorderBrush="Transparent"
+                        BorderThickness="0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                        <Button x:Name="ButtonOne"
+                                MinWidth="88" Height="36"
+                                CornerRadius="10"
+                                Background="#88C41E3A"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Content="Button 1"
+                                IsVisible="False" />
+                        <Button x:Name="ButtonTwo"
+                                MinWidth="88" Height="36"
+                                CornerRadius="10"
+                                Background="#661A060A"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Content="Button 2"
+                                IsVisible="False" />
+                        <Button x:Name="ButtonThree"
+                                MinWidth="88" Height="36"
+                                CornerRadius="10"
+                                Background="#661A060A"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Content="Button 3"
+                                IsVisible="False" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Panel>
+    </controls:LiquidGlassPanel>
 </base:AvaloniaWindow>

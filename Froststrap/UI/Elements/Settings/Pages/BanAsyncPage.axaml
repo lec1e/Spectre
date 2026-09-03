@@ -9,7 +9,44 @@
     <StackPanel Margin="14" Spacing="10">
       <TextBlock Text="BanAsync tools" FontSize="18" FontWeight="SemiBold" />
       <TextBlock TextWrapping="Wrap" Opacity="0.7" FontSize="13"
-                 Text="Clean Roblox traces and spoof your MAC / MachineGuid. Use on your own machine." />
+                 Text="Full identity pipeline (Ghost420): Roblox wipe, UUID, memory profile, EDID, SystemReg. MAC tools stay below." />
+
+      <Border Padding="12" CornerRadius="8" BorderThickness="0"
+              Background="#331A060A" BorderBrush="Transparent">
+        <StackPanel Spacing="8">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel>
+              <TextBlock FontWeight="SemiBold" Text="Identity spoof" />
+              <TextBlock FontSize="12" Opacity="0.75" Text="{Binding IdentityStatusText}" />
+            </StackPanel>
+            <Border Grid.Column="1" Padding="10,4" CornerRadius="12"
+                    Background="{Binding IdentityStatusBrush}">
+              <TextBlock Text="{Binding IdentityStatusLabel}" FontWeight="SemiBold" FontSize="12" />
+            </Border>
+          </Grid>
+          <controls:OptionControl Header="Full Roblox wipe"
+                                  Description="During identity spoof, delete the whole Roblox tree (no GBS/FFlag preserve) including Studio and downloaded versions.">
+            <ToggleSwitch IsChecked="{Binding FullWipe}" />
+          </controls:OptionControl>
+          <controls:OptionControl Header="Relaunch Spectre after spoof"
+                                  Description="Starts Spectre unelevated so it can reinstall Roblox under the new identity.">
+            <ToggleSwitch IsChecked="{Binding RelaunchAfterSpoof}" />
+          </controls:OptionControl>
+          <StackPanel Orientation="Horizontal" Spacing="8" IsEnabled="{Binding IsElevated}">
+            <Button Content="Spoof identity" Command="{Binding IdentitySpoofCommand}" Classes="accent" />
+            <Button Content="Revert identity" Command="{Binding IdentityRevertCommand}" />
+          </StackPanel>
+          <TextBlock Margin="0,4,0,0" FontSize="12" FontWeight="SemiBold" Opacity="0.8" Text="Utilities" />
+          <WrapPanel Orientation="Horizontal">
+            <Button Margin="0,0,8,8" Content="Restore point" Command="{Binding RestorePointCommand}" IsEnabled="{Binding IsElevated}" />
+            <Button Margin="0,0,8,8" Content="Preflight" Command="{Binding PreflightCommand}" />
+            <Button Margin="0,0,8,8" Content="Flush DNS" Command="{Binding FlushDnsCommand}" />
+            <Button Margin="0,0,8,8" Content="Clear Roblox temp" Command="{Binding ClearRobloxTempCommand}" />
+            <Button Margin="0,0,8,8" Content="Export backup" Command="{Binding ExportBackupCommand}" />
+            <Button Margin="0,0,8,8" Content="Op log" Command="{Binding ViewOpLogCommand}" />
+          </WrapPanel>
+        </StackPanel>
+      </Border>
 
       <Border Padding="12" CornerRadius="6" BorderThickness="1" Background="#28D97706" BorderBrush="#66D97706">
         <StackPanel Spacing="4">
@@ -36,14 +73,14 @@
 
       <TextBlock Margin="0,8,0,0" Text="Clean Roblox traces" FontSize="15" FontWeight="SemiBold" />
       <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.7"
-                 Text="Closes Roblox and wipes its caches, logs, and HKCU registry. Eclipse settings stay untouched." />
+                 Text="Closes Roblox and wipes its caches, logs, and HKCU registry. Spectre settings stay untouched." />
 
       <controls:OptionControl Header="Preserve in-game settings"
                               Description="Keeps camera / graphics / keybind choices through the wipe.">
         <ToggleSwitch IsChecked="{Binding PreserveInGameSettings}" />
       </controls:OptionControl>
       <controls:OptionControl Header="Preserve vanilla Roblox FastFlags"
-                              Description="Keeps Roblox's own ClientAppSettings. Doesn't affect Eclipse flags.">
+                              Description="Keeps Roblox's own ClientAppSettings. Doesn't affect Spectre flags.">
         <ToggleSwitch IsChecked="{Binding PreserveFastFlags}" />
       </controls:OptionControl>
       <controls:OptionControl Header="Include Roblox Studio folders"
@@ -108,8 +145,8 @@
       </StackPanel>
 
       <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0" IsEnabled="{Binding IsElevated}">
-        <Button Content="Spoof MAC" Command="{Binding SpoofCommand}" Classes="accent" />
-        <Button Content="Revert MAC" Command="{Binding RevertCommand}" />
+        <Button Content="Spoof MAC" Command="{Binding SpoofMacCommand}" Classes="accent" />
+        <Button Content="Revert MAC" Command="{Binding RevertMacCommand}" />
       </StackPanel>
 
       <TextBlock Margin="0,16,0,0" Text="MachineGuid (optional)" FontSize="15" FontWeight="SemiBold" />

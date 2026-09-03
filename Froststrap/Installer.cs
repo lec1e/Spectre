@@ -49,7 +49,7 @@ namespace Froststrap
                     App.Logger.WriteLine(LOG_IDENT, "Could not overwrite executable");
                     App.Logger.WriteException(LOG_IDENT, ex);
                     await Frontend.ShowMessageBox(
-                        "Eclipse could not be installed because the existing file could not be overwritten. Close any running Eclipse processes and try again.",
+                        "Spectre could not be installed because the existing file could not be overwritten. Close any running Spectre processes and try again.",
                         MessageBoxImage.Error);
                     App.Terminate(ErrorCode.ERROR_INSTALL_FAILURE);
                     return;
@@ -122,7 +122,7 @@ namespace Froststrap
                 || InstallLocation.Contains("OneDrive", StringComparison.OrdinalIgnoreCase)
                 || InstallLocation == Path.GetPathRoot(InstallLocation))
             {
-                InstallLocationError = "Eclipse cannot be installed to this location.";
+                InstallLocationError = "Spectre cannot be installed to this location.";
                 return false;
             }
 

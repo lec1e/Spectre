@@ -568,7 +568,7 @@ Would you like to upgrade your currently installed version?</value>
     <value>Inspirations</value>
   </data>
   <data name="Menu.About.Description" xml:space="preserve">
-    <value>A Fishstrap/Eclipse Fork.</value>
+    <value>A Spectre launcher for Roblox.</value>
   </data>
   <data name="Menu.About.DiscordServer" xml:space="preserve">
     <value>Discord Server</value>
@@ -902,7 +902,7 @@ More information:
     <value>Settings saved!</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
-    <value>Eclipse Settings</value>
+    <value>Spectre Settings</value>
   </data>
   <data name="Dialog.LanguageSelector.Header" xml:space="preserve">
     <value>Choose preferred language</value>
@@ -1046,7 +1046,7 @@ If not, then please report this exception to the maintainers of this fork. Do NO
     <value>Please wait for uninstallation to finish.</value>
   </data>
   <data name="About.Title" xml:space="preserve">
-    <value>About Eclipse</value>
+    <value>About Spectre</value>
   </data>
   <data name="About.Licenses.Title" xml:space="preserve">
     <value>Licenses</value>

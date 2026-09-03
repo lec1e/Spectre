@@ -26,6 +26,8 @@ public partial class App : Application
 #else
     public const string ProjectName = "Eclipse";
 #endif
+    /// <summary>Visible product name in chrome. Install/exe identity stays <see cref="ProjectName"/>.</summary>
+    public const string BrandName = "Spectre";
     public const string ProjectOwner = "lec1e";
     public const string ProjectRepository = "lec1e/Eclipse";
     public const string ProjectDownloadLink = "https://github.com/lec1e/Eclipse/releases";
@@ -134,6 +136,13 @@ public partial class App : Application
 
         Logger.WriteLine("App::Terminate", $"Terminating with exit code {exitCodeNum} ({exitCode})");
 
+        try
+        {
+            if (OperatingSystem.IsWindows())
+                Froststrap.Utility.BanAsync.IdentityPipeline.HandleProcessExit();
+        }
+        catch { }
+
         Environment.Exit(exitCodeNum);
     }
 
@@ -145,6 +154,12 @@ public partial class App : Application
 
         Dispatcher.UIThread.Invoke(() =>
         {
+
+            if (OperatingSystem.IsWindows())
+            {
+                try { Froststrap.Utility.BanAsync.IdentityPipeline.HandleProcessExit(); }
+                catch { }
+            }
 
             if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 desktop.Shutdown((int)exitCode);
@@ -329,6 +344,15 @@ public partial class App : Application
 
             LaunchSettings = new LaunchSettings(Environment.GetCommandLineArgs());
 
+            if (OperatingSystem.IsWindows())
+            {
+                AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+                {
+                    try { Froststrap.Utility.BanAsync.IdentityPipeline.HandleProcessExit(); }
+                    catch { }
+                };
+            }
+
             string? installLocation = null;
             bool fixInstallLocation = false;
 
@@ -423,7 +447,7 @@ public partial class App : Application
                     {
                         Logger.WriteLine(LOG_IDENT, $"Install location invalid: {installer.InstallLocationError}");
                         await Frontend.ShowMessageBox(
-                            $"Eclipse could not be installed.\n\n{installer.InstallLocationError}",
+                            $"Spectre could not be installed.\n\n{installer.InstallLocationError}",
                             MessageBoxImage.Error);
                         Terminate(ErrorCode.ERROR_INSTALL_FAILURE);
                         return;
@@ -557,8 +581,8 @@ public partial class App : Application
 
                     using (var key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\AppUserModelId\" + appUserModelId))
                     {
-                        key.SetValue("DisplayName", "Eclipse");
-                        key.SetValue("IconUri", "avares://Eclipse/Eclipse.png");
+                        key.SetValue("DisplayName", App.BrandName);
+                        key.SetValue("IconUri", "avares://Eclipse/SpectreMark.png");
                     }
 
                     Logger.WriteLine("App::OnFrameworkInitializationCompleted", "Registered app for notifications");

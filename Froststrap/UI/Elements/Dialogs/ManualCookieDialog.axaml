@@ -21,7 +21,7 @@
             Title="{x:Static resources:Strings.Menu_ManualLogin_Title}"
             Grid.Row="0"
             ShowMaximize="False"
-            Icon="avares://Eclipse/Eclipse.ico"
+            Icon="avares://Eclipse/SpectreMark.png"
             KeyboardNavigation.TabNavigation="None"
             ShowMinimize="False" />
 

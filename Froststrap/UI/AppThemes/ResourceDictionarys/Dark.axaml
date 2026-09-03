@@ -1,27 +1,27 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-	<SolidColorBrush x:Key="NewTextEditorBackground"       Color="#14121C" />
+	<SolidColorBrush x:Key="NewTextEditorBackground"       Color="#140808" />
 	<SolidColorBrush x:Key="NewTextEditorForeground"       Color="White" />
-	<SolidColorBrush x:Key="NewTextEditorLink"             Color="#A855F7" />
-	<SolidColorBrush x:Key="CompletionListBackgroundBrush" Color="#14121C" />
+	<SolidColorBrush x:Key="NewTextEditorLink"             Color="#E11D48" />
+	<SolidColorBrush x:Key="CompletionListBackgroundBrush" Color="#140808" />
 
-	<SolidColorBrush x:Key="PrimaryBackgroundColor"        Color="#CC0A0A0F" />
-	<SolidColorBrush x:Key="NormalDarkAndLightBackground"  Color="#010A0A0F" />
+	<SolidColorBrush x:Key="PrimaryBackgroundColor"        Color="#CC0A0406" />
+	<SolidColorBrush x:Key="NormalDarkAndLightBackground"  Color="#010A0406" />
 
-	<SolidColorBrush x:Key="ApplicationBackgroundColor"    Color="#0A0A0F" />
+	<SolidColorBrush x:Key="ApplicationBackgroundColor"    Color="#010A0406" />
 
-	<SolidColorBrush x:Key="NotificationBackgroundColor"   Color="#14121C" />
+	<SolidColorBrush x:Key="NotificationBackgroundColor"   Color="#140808" />
 
-	<SolidColorBrush x:Key="BrandAccentBrush"              Color="#C084FC" />
-	<SolidColorBrush x:Key="BrandSurfaceBrush"             Color="#12101A" />
-	<SolidColorBrush x:Key="BrandHairlineBrush"            Color="#66A78BFA" />
-	<SolidColorBrush x:Key="BrandInkBrush"                 Color="#07060C" />
-	<SolidColorBrush x:Key="BrandPurpleBrush"              Color="#E879F9" />
-	<SolidColorBrush x:Key="GlassHeaderBrush"              Color="#E012081C" />
-	<SolidColorBrush x:Key="GlassRailBrush"                Color="#D01A0B2E" />
-	<SolidColorBrush x:Key="GlassStageBrush"               Color="#B8140A24" />
-	<SolidColorBrush x:Key="GlassFillBrush"                Color="#C012081C" />
-	<SolidColorBrush x:Key="GlassCardBrush"                Color="#B81A0B2E" />
-	<SolidColorBrush x:Key="GlassBorderBrush"              Color="#88C4B5FD" />
+	<SolidColorBrush x:Key="BrandAccentBrush"              Color="#E11D48" />
+	<SolidColorBrush x:Key="BrandSurfaceBrush"             Color="#140808" />
+	<SolidColorBrush x:Key="BrandHairlineBrush"            Color="#66C41E3A" />
+	<SolidColorBrush x:Key="BrandInkBrush"                 Color="#0A0406" />
+	<SolidColorBrush x:Key="BrandPurpleBrush"              Color="#FB7185" />
+	<SolidColorBrush x:Key="GlassHeaderBrush"              Color="#28C41E3A" />
+	<SolidColorBrush x:Key="GlassRailBrush"                Color="#3A7F1D1D" />
+	<SolidColorBrush x:Key="GlassStageBrush"               Color="#227F1D1D" />
+	<SolidColorBrush x:Key="GlassFillBrush"                Color="#557F1D1D" />
+	<SolidColorBrush x:Key="GlassCardBrush"                Color="#38C41E3A" />
+	<SolidColorBrush x:Key="GlassBorderBrush"              Color="#88FB7185" />
 </ResourceDictionary>

@@ -17,16 +17,15 @@ namespace Froststrap.UI.ViewModels.Settings
     {
         private static readonly string[] TintPalette =
         [
-            "#4C1D95", "#1E293B", "#9A3412", "#0F172A",
-            "#312E81", "#7F1D1D", "#164E63", "#3B0764"
+            "#7F1D1D", "#9F1239", "#4A1518", "#140808",
+            "#C41E3A", "#5C101C", "#7F1D1D", "#9F1239"
         ];
 
         private readonly MainWindowViewModel _host;
         private readonly string _historyPath = Path.Combine(Paths.Cache, "GameHistory.json");
 
         public string Greeting => "Welcome back";
-        public string DisplayName => "Eclipse User";
-        public string Tagline => "Your Roblox bootstrapper for a better experience.";
+        public string DisplayName => App.BrandName;
 
         public ObservableCollection<HomeGameCard> RecentGames { get; } = [];
         public ObservableCollection<HomeFeaturedItem> FeaturedGames { get; } = [];
@@ -81,7 +80,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 "94%",
                 "12.4K",
                 4924922222,
-                "#312E81"));
+                "#7F1D1D"));
             FeaturedGames.Add(new HomeFeaturedItem(
                 "The Strongest Battlegrounds",
                 "Anime battling with flashy combat.",
@@ -90,7 +89,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 10450266301,
                 "#7F1D1D"));
 
-            NewsItems.Add(new HomeNewsItem("Eclipse v2.0.22 Released", "Real smooth aurora clip background", "just now", LucideIconNames.Sparkles));
+            NewsItems.Add(new HomeNewsItem($"{App.BrandName} v{App.Version} Released", "Dark crimson liquid glass shell", "just now", LucideIconNames.Sparkles));
             NewsItems.Add(new HomeNewsItem("Roblox Update", "Client and platform notes", "5d ago", LucideIconNames.Box));
             NewsItems.Add(new HomeNewsItem("Maintenance Scheduled", "Brief downtime window this week", "1w ago", LucideIconNames.Wrench));
         }

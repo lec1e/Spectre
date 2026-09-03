@@ -14,25 +14,59 @@
              x:Class="Froststrap.UI.Elements.SearchBar"
              x:DataType="vm:SearchBarViewModel">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="280">
+    <UserControl.Styles>
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement, TextBox:focus /template/ Border#PART_BorderElement, TextBox:focus-within /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="TextBox /template/ TextBlock#PART_Watermark">
+            <Setter Property="Foreground" Value="#99FECACA" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="controls|IconButton:pointerover /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="controls|IconButton:pressed /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
         <TextBox x:Name="SearchTextBox"
-                 PlaceholderText="Search games, experiences, and more..."
+                 PlaceholderText="Search games, experiences…"
                  Text="{Binding SearchQuery}"
                  VerticalAlignment="Center"
                  VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="Left"
+                 Padding="4,0,4,0"
+                 MinHeight="28"
+                 FontSize="12.5"
+                 Foreground="#FEE2E2"
+                 CaretBrush="#E11D48"
                  Background="Transparent"
+                 BorderBrush="Transparent"
                  BorderThickness="0">
 
             <TextBox.InnerLeftContent>
                 <controls:IconButton Command="{Binding ToggleSearchListCommand}"
                                      Icon="Search"
-                                     IconSize="16"
+                                     IconSize="14"
+                                     Width="22"
+                                     Height="22"
+                                     Padding="0"
+                                     Margin="0,0,6,0"
                                      Background="Transparent"
                                      BorderThickness="0"
+                                     Foreground="#FECACA"
                                      IsTabStop="False"
                                      VerticalAlignment="Center">
                 </controls:IconButton>
-
             </TextBox.InnerLeftContent>
 
             <TextBox.InnerRightContent>

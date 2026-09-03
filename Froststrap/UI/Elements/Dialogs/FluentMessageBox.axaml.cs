@@ -1,8 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+using Avalonia.Media;
+using Avalonia.Threading;
+using LucideAvalonia.Enum;
 
 namespace Froststrap.UI.Elements.Dialogs
 {
@@ -13,43 +14,54 @@ namespace Froststrap.UI.Elements.Dialogs
         public FluentMessageBox()
         {
             InitializeComponent();
+            TransparencyLevelHint =
+            [
+                WindowTransparencyLevel.AcrylicBlur,
+                WindowTransparencyLevel.Mica,
+                WindowTransparencyLevel.Blur,
+                WindowTransparencyLevel.None
+            ];
+            Background = Brushes.Transparent;
+            PointerMoved += OnWindowPointerMoved;
+            PointerExited += (_, _) => AbyssBackground?.SetPointer(new Point(-40, -40), false);
+
+            Dispatcher.UIThread.Post(() =>
+            {
+                ShellGlass?.SyncTintFromTheme();
+                ShellGlass?.ApplyFromSettings();
+                AbyssBackground?.SyncFromTheme();
+                AbyssBackground?.SyncFromSettings();
+            }, DispatcherPriority.Loaded);
         }
 
         public FluentMessageBox(string message, MessageBoxImage image, MessageBoxButton buttons) : this()
         {
-            string? iconFilename = null;
-
             switch (image)
             {
                 case MessageBoxImage.Error:
-                    iconFilename = "Error";
+                    GlyphIcon.Icon = LucideIconNames.CircleAlert;
                     break;
 
                 case MessageBoxImage.Question:
-                    iconFilename = "Question";
+                    GlyphIcon.Icon = LucideIconNames.CircleQuestionMark;
                     break;
 
                 case MessageBoxImage.Warning:
-                    iconFilename = "Warning";
+                    GlyphIcon.Icon = LucideIconNames.TriangleAlert;
                     break;
 
                 case MessageBoxImage.Information:
-                    iconFilename = "Information";
+                    GlyphIcon.Icon = LucideIconNames.Info;
+                    break;
+
+                default:
+                    GlyphIcon.IsVisible = false;
                     break;
             }
 
-            if (iconFilename is null)
-            {
-                IconImage.IsVisible = false;
-            }
-            else
-            {
-                var uri = new Uri($"avares://Eclipse/Resources/MessageBox/{iconFilename}.png");
-                using var stream = AssetLoader.Open(uri);
-                IconImage.Source = new Bitmap(stream);
-            }
+            IconImage.IsVisible = false;
 
-            Title = App.ProjectName;
+            Title = App.BrandName;
 
             MessageMarkdownTextBlock.MarkdownText = message;
 
@@ -82,9 +94,9 @@ namespace Froststrap.UI.Elements.Dialogs
             }
 
             if (ButtonThree.IsVisible)
-                Width = 356;
+                Width = 480;
             else if (ButtonTwo.IsVisible)
-                Width = 245;
+                Width = 440;
 
             double textWidth = 180;
 
@@ -105,8 +117,16 @@ namespace Froststrap.UI.Elements.Dialogs
 
             Loaded += (s, e) =>
             {
-                // avalonia dosent have this so we will skip it for now
+                ShellGlass?.ApplyFromSettings();
+                AbyssBackground?.SyncFromTheme();
             };
+        }
+
+        private void OnWindowPointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
+        {
+            if (AbyssBackground is null)
+                return;
+            AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
         }
 
         private static string GetTextForResult(MessageBoxResult result)

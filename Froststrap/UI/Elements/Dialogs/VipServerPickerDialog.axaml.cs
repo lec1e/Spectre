@@ -29,6 +29,7 @@ namespace Froststrap.UI.Elements.Dialogs
 
             _vm = new VipServerPickerViewModel(placeId);
             DataContext = _vm;
+            ShellGlass?.ApplyFromSettings();
         }
 
         public string? PickedAccessCode => _vm.SelectedServer?.AccessCode;

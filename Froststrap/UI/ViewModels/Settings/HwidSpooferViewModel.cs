@@ -63,7 +63,7 @@ namespace Froststrap.UI.ViewModels.Settings
         public string ElevationStatusText =>
             IsElevated
                 ? "Running with administrator privileges. Spoof / Revert actions are available."
-                : "Eclipse is NOT running as administrator. HWID spoofing requires elevation. Use 'Relaunch as administrator' below.";
+                : "Spectre is NOT running as administrator. HWID spoofing requires elevation. Use 'Relaunch as administrator' below.";
 
         public ObservableCollection<HwidIdentifierRow> Identifiers { get; } = new();
         public ObservableCollection<string> ActivityLog { get; } = new();
@@ -228,7 +228,7 @@ namespace Froststrap.UI.ViewModels.Settings
             }
 
             var confirm = await Frontend.ShowMessageBox(
-                "Restore all backed-up HWID values from Eclipse settings?\n\n" +
+                "Restore all backed-up HWID values from Spectre settings?\n\n" +
                 "Identifiers without a backup will be skipped. A reboot may still be needed for ComputerName / some values.",
                 MessageBoxImage.Warning, MessageBoxButton.YesNo, MessageBoxResult.No);
             if (confirm != MessageBoxResult.Yes)
@@ -259,7 +259,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 "WARNING: These changes are MACHINE-WIDE and require administrator rights.\n" +
                 "They can affect Windows activation, licensing, Windows Update identity, and network adapters.\n" +
                 "A reboot may be required before some values take effect (especially ComputerName).\n\n" +
-                "Originals are backed up in Eclipse settings so you can Revert All later.\n\nContinue?",
+                "Originals are backed up in Spectre settings so you can Revert All later.\n\nContinue?",
                 MessageBoxImage.Warning, MessageBoxButton.YesNo, MessageBoxResult.No);
 
             if (confirm != MessageBoxResult.Yes)
@@ -323,7 +323,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 App.Logger.WriteException(ident, ex);
                 _ = Frontend.ShowMessageBox(
                     $"Couldn't relaunch as administrator.\n\nReason: {ex.GetType().Name}: {ex.Message}\n\n" +
-                    "Close Eclipse and right-click the exe → 'Run as administrator' instead.",
+                    "Close Spectre and right-click the exe → 'Run as administrator' instead.",
                     MessageBoxImage.Warning);
             }
         }

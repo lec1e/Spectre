@@ -170,7 +170,7 @@ namespace Froststrap.Utility
                     appPath = Environment.ProcessPath ?? appPath;
 
                 using var uninstallKey = Registry.CurrentUser.CreateSubKey(App.UninstallKey);
-                uninstallKey.SetValueSafe("DisplayName", App.ProjectName);
+                uninstallKey.SetValueSafe("DisplayName", App.BrandName);
                 uninstallKey.SetValueSafe("DisplayVersion", App.Version);
                 uninstallKey.SetValueSafe("Publisher", App.ProjectOwner);
                 uninstallKey.SetValueSafe("InstallLocation", Paths.Base);

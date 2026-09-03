@@ -9,6 +9,7 @@
     xmlns:resources="using:Froststrap.Resources"
     xmlns:gv="using:Froststrap.UI.ViewModels"
     xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
+    xmlns:app="clr-namespace:Froststrap"
     d:DesignHeight="900"
     d:DesignWidth="800"
     x:DataType="vm:ChannelViewModel"
@@ -43,7 +44,7 @@
             <TextBlock
                 FontSize="20"
                 FontWeight="Bold"
-                Text="Eclipse" />
+                Text="{x:Static app:App.BrandName}" />
 
             <controls:CardExpander
                 Header="{x:Static resources:Strings.Menu_Behaviour_AutoUpdate_Title}"

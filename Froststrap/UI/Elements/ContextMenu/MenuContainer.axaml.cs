@@ -30,6 +30,7 @@ namespace Froststrap.UI.Elements.ContextMenu
         private NativeMenuItem? InviteDeeplinkMenuItem;
         private NativeMenuItem? AutoJoinRegionMenuItem;
         private NativeMenuItem? ServerDetailsMenuItem;
+        private NativeMenuItem? RejoinServerMenuItem;
         private NativeMenuItem? GameHistoryMenuItem;
         private NativeMenuItem? CloseRobloxMenuItem;
 
@@ -64,8 +65,9 @@ namespace Froststrap.UI.Elements.ContextMenu
             InviteDeeplinkMenuItem = items.ElementAtOrDefault(5);
             AutoJoinRegionMenuItem = items.ElementAtOrDefault(6);
             ServerDetailsMenuItem = items.ElementAtOrDefault(7);
-            GameHistoryMenuItem = items.ElementAtOrDefault(8);
-            CloseRobloxMenuItem = items.ElementAtOrDefault(10);
+            RejoinServerMenuItem = items.ElementAtOrDefault(8);
+            GameHistoryMenuItem = items.ElementAtOrDefault(9);
+            CloseRobloxMenuItem = items.ElementAtOrDefault(11);
         }
 
         public MenuContainer(Watcher watcher) : this()
@@ -84,6 +86,7 @@ namespace Froststrap.UI.Elements.ContextMenu
                     {
                         InviteDeeplinkMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
                         ServerDetailsMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
+                        RejoinServerMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
                         GameHistoryMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
                         AutoJoinRegionMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
                         CloseRobloxMenuItem?.SetValue(MenuItem.HeaderProperty, Strings.Menu_ContextMenu_CloseStudio);
@@ -164,6 +167,7 @@ namespace Froststrap.UI.Elements.ContextMenu
                 if (ActivityWatcher?.Data.ServerType == ServerType.Public && InviteDeeplinkMenuItem != null)
                     InviteDeeplinkMenuItem.IsVisible = true;
                 ServerDetailsMenuItem?.SetValue(MenuItem.IsVisibleProperty, true);
+                RejoinServerMenuItem?.SetValue(MenuItem.IsVisibleProperty, true);
                 AutoJoinRegionMenuItem?.SetValue(MenuItem.IsVisibleProperty, true);
             });
 
@@ -171,6 +175,7 @@ namespace Froststrap.UI.Elements.ContextMenu
             Dispatcher.UIThread.Invoke(() => {
                 InviteDeeplinkMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
                 ServerDetailsMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
+                RejoinServerMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
                 AutoJoinRegionMenuItem?.SetValue(MenuItem.IsVisibleProperty, false);
                 _serverInformationWindow?.Close();
             });
@@ -215,6 +220,13 @@ namespace Froststrap.UI.Elements.ContextMenu
 
         private void ServerDetailsMenuItem_Click(object? sender, EventArgs e) => ShowServerInformationWindow();
         private void CloseRobloxMenuItem_Click(object? sender, EventArgs e) => _watcher?.KillRobloxProcess();
+
+        private void RejoinServerMenuItem_Click(object? sender, EventArgs e)
+        {
+            if (ActivityWatcher is null || !ActivityWatcher.InGame)
+                return;
+            ActivityWatcher.Data.RejoinServer(true);
+        }
 
         private void JoinLastServerMenuItem_Click(object? sender, EventArgs e)
         {

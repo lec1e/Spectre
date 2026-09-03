@@ -4,9 +4,10 @@
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          xmlns:base="clr-namespace:Froststrap.UI.Elements.Bootstrapper.Base"
                          xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+                         xmlns:app="clr-namespace:Froststrap"
                          mc:Ignorable="d"
                          x:Class="Froststrap.UI.Elements.Bootstrapper.CustomDialog"
-                         Title="Eclipse"
+                         Title="{x:Static app:App.BrandName}"
                          Width="800"
                          Height="450"
                          MinWidth="150"
@@ -19,7 +20,7 @@
     <Grid RowDefinitions="Auto,*">
         <controls:TitleBar
             x:Name="RootTitleBar"
-            Title="Eclipse"
+            Title="{x:Static app:App.BrandName}"
             Grid.Row="0"
             ZIndex="1001"
             ShowClose="False"

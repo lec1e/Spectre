@@ -125,7 +125,7 @@ namespace Froststrap.Integrations
                 // With StatusDisplay=Details, Discord shows "Playing Eclipse" in status.
                 // Profile card title still comes from the Discord Application name — use an
                 // application named "Eclipse" (see EclipseApplicationId).
-                Details = "Eclipse",
+                Details = App.BrandName,
                 State = state,
                 Type = ActivityType.Playing,
                 StatusDisplay = StatusDisplayType.Details,
@@ -133,7 +133,7 @@ namespace Froststrap.Integrations
                 Assets = new Assets
                 {
                     LargeImageKey = EclipseLogoUrl,
-                    LargeImageText = "Eclipse",
+                    LargeImageText = App.BrandName,
                     SmallImageText = $"v{App.Version}"
                 },
                 Buttons =

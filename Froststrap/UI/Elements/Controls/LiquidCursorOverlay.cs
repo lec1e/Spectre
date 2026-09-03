@@ -24,8 +24,8 @@ namespace Froststrap.UI.Elements.Controls
         private bool _ready;
         private float _fade;
 
-        private SKColor _head = new(233, 213, 255);
-        private SKColor _mid = new(192, 132, 252);
+        private SKColor _head = new(191, 219, 254);
+        private SKColor _mid = new(96, 165, 250);
         private SKColor _tail = new(34, 211, 238);
 
         public static readonly StyledProperty<bool> IsEffectEnabledProperty =

@@ -1563,7 +1563,10 @@ namespace Froststrap
                 ProcessId = _appPid,
                 LogFile = logFileName,
                 AutoclosePids = autoclosePids,
-                LaunchMode = _launchMode
+                LaunchMode = _launchMode,
+                LaunchCommandLine = _launchCommandLine,
+                AccessCode = LaunchArgsUtility.TryExtractAccessCode(_launchCommandLine)
+                            ?? _joinData?.AccessCode
             };
 
             string watcherDataArg = Convert.ToBase64String(

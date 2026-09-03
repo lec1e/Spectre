@@ -88,7 +88,7 @@ namespace Froststrap.Models.Entities
 
             string deeplink = $"{baseUrl}?placeId={PlaceId}";
 
-            if (ServerType == ServerType.Private)
+            if (ServerType == ServerType.Private && !string.IsNullOrEmpty(AccessCode))
             {
                 deeplink += "&accessCode=" + AccessCode;
             }
@@ -160,7 +160,7 @@ namespace Froststrap.Models.Entities
 		{
 			try
 			{
-				App.Logger.WriteLine("ActivityData::RejoinServer", $"Rejoining server: {PlaceId}/{JobId}");
+				App.Logger.WriteLine("ActivityData::RejoinServer", $"Rejoining server: {PlaceId}/{JobId} accessCode={(string.IsNullOrEmpty(AccessCode) ? "none" : "yes")}");
 
 				string robloxUri = GetInviteDeeplink(true);
 

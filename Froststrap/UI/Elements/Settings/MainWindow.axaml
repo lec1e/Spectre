@@ -11,8 +11,9 @@
     xmlns:resources="using:Froststrap.Resources"
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
-    Title="{x:Static resources:Strings.Menu_Title}"
-    Icon="avares://Eclipse/Eclipse.ico"
+    xmlns:app="clr-namespace:Froststrap"
+    Title="{x:Static app:App.BrandName}"
+    Icon="avares://Eclipse/SpectreMark.png"
     Width="1280"
     Height="800"
     MinWidth="1080"
@@ -46,8 +47,8 @@
         <Style Selector="Border.nav-pill">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="CornerRadius" Value="11" />
-            <Setter Property="Padding" Value="12,0" />
-            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="Height" Value="32" />
         </Style>
         <Style Selector="Border.nav-pill:pointerover">
             <Setter Property="Background" Value="Transparent" />
@@ -55,8 +56,8 @@
         <Style Selector="Border.nav-pill.selected">
             <Setter Property="Background">
                 <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                    <GradientStop Color="#EEC084FC" Offset="0" />
-                    <GradientStop Color="#AA7C3AED" Offset="1" />
+                    <GradientStop Color="#EEC41E3A" Offset="0" />
+                    <GradientStop Color="#AA7F1D1D" Offset="1" />
                 </LinearGradientBrush>
             </Setter>
         </Style>
@@ -65,59 +66,62 @@
             <Setter Property="Background" Value="Transparent" />
         </Style>
         <Style Selector="Button.top-nav:pointerover ic|Lucide">
-            <Setter Property="StrokeBrush" Value="#C084FC" />
+            <Setter Property="StrokeBrush" Value="#E11D48" />
         </Style>
         <Style Selector="Button.top-nav:pointerover TextBlock">
-            <Setter Property="Foreground" Value="#C084FC" />
+            <Setter Property="Foreground" Value="#E11D48" />
         </Style>
         <Style Selector="Border.nav-pill.selected:pointerover">
             <Setter Property="Background">
                 <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                    <GradientStop Color="#F5E1FF" Offset="0" />
-                    <GradientStop Color="#C084FC" Offset="1" />
+                    <GradientStop Color="#FEE2E2" Offset="0" />
+                    <GradientStop Color="#E11D48" Offset="1" />
                 </LinearGradientBrush>
             </Setter>
         </Style>
     </base:AvaloniaWindow.Styles>
 
     <Panel>
-        <Border Background="#FF020510" />
-
         <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="10"
-                                   CornerRadius="26"
-                                   TintOpacity="0.55"
-                                   MaterialOpacity="0.72">
+                                   Margin="0"
+                                   CornerRadius="0"
+                                   TintOpacity="0.58"
+                                   MaterialOpacity="0.46"
+                                   UseSettingsCornerRadius="False"
+                                   ClipToBounds="False">
             <Panel>
-                <!-- Abyss MUST be inside the shell — acrylic outside was fully covering it -->
+                <!-- Marble veins sit ON the acrylic; pointer parallax moves them. -->
                 <controls:AbyssGlowBackground x:Name="AbyssBackground"
                                               ZIndex="0" />
 
                 <controls:LiquidCursorOverlay x:Name="LiquidCursor"
                                               ZIndex="1"
-                                              Opacity="0.45" />
+                                              IsVisible="False"
+                                              Opacity="0" />
 
                 <Grid ZIndex="2" RowDefinitions="56,*,52" IsHitTestVisible="True">
                 <Border Grid.Row="0"
-                        BorderBrush="#22FFFFFF"
-                        BorderThickness="0,0,0,1"
-                        Background="#55080510">
-                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" Margin="14,0,8,0">
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Background="#661A060A">
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="16,0,10,0" ColumnSpacing="12">
                         <Panel Grid.Column="0" Grid.ColumnSpan="4"
                                WindowDecorationProperties.ElementRole="TitleBar"
                                Background="Transparent" />
 
                         <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10"
-                                    VerticalAlignment="Center" Margin="2,0,18,0" IsHitTestVisible="False">
-                            <controls:EclipseLogoMark Width="26" Height="26" />
-                            <TextBlock Text="Eclipse" FontSize="16" FontWeight="SemiBold"
-                                       VerticalAlignment="Center" Foreground="#F3E8FF" />
+                                    VerticalAlignment="Center" IsHitTestVisible="False">
+                            <controls:EclipseLogoMark Width="24" Height="24" />
+                            <TextBlock Text="{x:Static app:App.BrandName}" FontSize="15" FontWeight="SemiBold"
+                                       VerticalAlignment="Center" Foreground="#FEE2E2" />
                         </StackPanel>
 
-                        <ItemsControl x:Name="RailItemsControl" Grid.Column="1" VerticalAlignment="Center">
+                        <ItemsControl x:Name="RailItemsControl" Grid.Column="1"
+                                      VerticalAlignment="Center" HorizontalAlignment="Left"
+                                      Margin="8,0,0,0">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" Spacing="4" />
+                                    <StackPanel Orientation="Horizontal" Spacing="2" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
@@ -127,12 +131,11 @@
                                             ToolTip.Tip="{Binding Title}"
                                             Click="RailItem_Click"
                                             IsVisible="{Binding IsVisible}">
-                                        <!-- Single pill wraps icon+text — no separate stretch ghost -->
                                         <Border Classes="nav-pill"
                                                 Classes.selected="{Binding IsSelected}">
-                                            <StackPanel Orientation="Horizontal" Spacing="7"
+                                            <StackPanel Orientation="Horizontal" Spacing="6"
                                                         VerticalAlignment="Center">
-                                                <ic:Lucide Icon="{Binding Icon}" Width="15" Height="15"
+                                                <ic:Lucide Icon="{Binding Icon}" Width="14" Height="14"
                                                            VerticalAlignment="Center" StrokeBrush="#F8FAFC" />
                                                 <TextBlock Text="{Binding Title}" FontSize="12.5"
                                                            FontWeight="SemiBold" Foreground="#F8FAFC"
@@ -145,24 +148,30 @@
                         </ItemsControl>
 
                         <Border Grid.Column="2"
-                                MaxWidth="380" Height="34"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                CornerRadius="12"
-                                Background="#22000000"
-                                BorderBrush="#44A78BFA" BorderThickness="1"
-                                Padding="2,0,8,0" Margin="12,0,8,0">
-                            <Grid ColumnDefinitions="*,Auto">
+                                Width="300" Height="34"
+                                VerticalAlignment="Center"
+                                CornerRadius="17"
+                                ClipToBounds="True"
+                                BorderBrush="Transparent" BorderThickness="0"
+                                Padding="12,0,12,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                    <GradientStop Color="#DD5C101C" Offset="0" />
+                                    <GradientStop Color="#EE1A060A" Offset="0.55" />
+                                    <GradientStop Color="#FF0A0406" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                                 <elements:SearchBar DataContext="{Binding SearchBar}"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center" />
-                                <Border Grid.Column="1" Padding="6,2" CornerRadius="7"
-                                        Background="#33A855F7" VerticalAlignment="Center">
-                                    <TextBlock Text="Ctrl K" FontSize="10" Foreground="#E9D5FF" />
-                                </Border>
+                                <TextBlock Grid.Column="1" Text="Ctrl K" FontSize="10"
+                                           FontWeight="Medium" Foreground="#99FDA4AF"
+                                           VerticalAlignment="Center" Opacity="0.7" />
                             </Grid>
                         </Border>
 
-                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Spacing="0">
                             <controls:IconButton Classes="TitleBarButton" Icon="Download"
                                                  ToolTip.Tip="Deployment" Click="TopDownload_Click" />
                             <controls:IconButton Classes="TitleBarButton" Icon="Bell"
@@ -216,15 +225,15 @@
 
                 <Border Grid.Row="2"
                         IsVisible="{Binding ShowFooter}"
-                        BorderBrush="#22FFFFFF"
-                        BorderThickness="0,1,0,0"
-                        Background="#88080510"
-                        Padding="14,0">
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Background="#661A060A"
+                        Padding="16,0">
                     <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto" ColumnSpacing="8">
                         <TextBlock Grid.Column="0"
                                    Text="{Binding VersionText}"
                                    FontSize="11"
-                                   Foreground="#99C4B5FD"
+                                   Foreground="#99FDA4AF"
                                    VerticalAlignment="Center" />
                         <controls:IconButton Grid.Column="1" Height="34" Padding="18,0"
                                              Classes="DropDownButton Primary"

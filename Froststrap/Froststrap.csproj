@@ -8,13 +8,13 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <Version>2.0.28</Version>
     <FileVersion>2.0.28</FileVersion>
-    <Company>Eclipse</Company>
-    <Product>Eclipse</Product>
+    <Company>Spectre</Company>
+    <Product>Spectre</Product>
     <AssemblyName>Eclipse</AssemblyName>
     <RootNamespace>Froststrap</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Description>Eclipse — Roblox bootstrapper with AltMan accounts and Versions Manager</Description>
-    <ApplicationIcon>Eclipse.ico</ApplicationIcon>
+    <Description>Spectre — Roblox bootstrapper with AltMan accounts and Versions Manager</Description>
+    <ApplicationIcon>Spectre.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <NoWarn>$(NoWarn);CA1416</NoWarn>
   </PropertyGroup>
@@ -27,6 +27,8 @@
     <AvaloniaResource Include="Froststrap.png" />
     <AvaloniaResource Include="Eclipse.png" />
     <AvaloniaResource Include="EclipseMark.png" />
+    <AvaloniaResource Include="SpectreMark.png" />
+    <AvaloniaResource Include="Spectre.ico" />
     <AvaloniaResource Include="Eclipse.ico" />
     <AvaloniaResource Include="Assets\aurora-dark.gif" />
     <AvaloniaResource Include="Assets\aurora-dark-still.png" />
@@ -43,6 +45,7 @@
     <EmbeddedResource Include="Resources\Icon2022.ico" />
     <EmbeddedResource Include="Resources\Icon2025.ico" />
     <EmbeddedResource Include="Resources\IconEarly2015.ico" />
+    <EmbeddedResource Include="Spectre.ico" />
     <EmbeddedResource Include="Resources\IconFroststrap.ico" />
     <EmbeddedResource Include="Resources\IconLate2015.ico" />
     <EmbeddedResource Include="Resources\mappings.json" />

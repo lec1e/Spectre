@@ -8,6 +8,7 @@
     xmlns:colorPicker="clr-namespace:ColorPicker;assembly=ColorPicker.AvaloniaUI"
     xmlns:resources="using:Froststrap.Resources"
     xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
+    xmlns:app="clr-namespace:Froststrap"
     d:DesignHeight="2500"
     d:DesignWidth="1200"
     x:DataType="vm:AppearanceViewModel"
@@ -27,7 +28,7 @@
                     <ToggleSwitch IsChecked="{Binding EnableAurora}" />
                 </controls:OptionControl>
 
-                <controls:CardExpander Classes="NoUserExpansion" Header="Eclipse theme presets" Description="Pick a brand palette — shell tint, accents, and liquid cursor colors update live." IsExpanded="True">
+                <controls:CardExpander Classes="NoUserExpansion" Header="Spectre theme presets" Description="Pick a brand palette — shell tint, accents, and pointer parallax update live." IsExpanded="True">
                     <controls:CardExpander.HeaderContent>
                         <ComboBox MinWidth="220" Padding="10,5,10,5"
                                   ItemsSource="{Binding ThemePresets}"
@@ -37,11 +38,23 @@
                         <controls:OptionControl Header="Glass surfaces" Description="Dark frosted acrylic shell.">
                             <ToggleSwitch IsChecked="{Binding EnableGlass}" />
                         </controls:OptionControl>
-                        <controls:OptionControl Header="Liquid cursor" Description="Soft blob trail that follows the pointer.">
+                        <controls:OptionControl Header="Pointer parallax" Description="Glowing ribbons in the background follow the cursor.">
                             <ToggleSwitch IsChecked="{Binding EnableLiquidCursor}" />
                         </controls:OptionControl>
-                        <controls:OptionControl Header="Glow accents" Description="Accent glow on highlights (best-effort).">
+                        <controls:OptionControl Header="Glow accents" Description="Accent glow on highlights and abyss gleams.">
                             <ToggleSwitch IsChecked="{Binding EnableGlow}" />
+                        </controls:OptionControl>
+                        <controls:OptionControl Header="Glass tint" Description="How strongly the shell tints the desktop blur. Lower = more glass.">
+                            <Slider Width="180" Minimum="0.05" Maximum="0.85" TickFrequency="0.01"
+                                    Value="{Binding GlassTintOpacity, Mode=TwoWay}" />
+                        </controls:OptionControl>
+                        <controls:OptionControl Header="Glass material" Description="Frost density. Lower lets wallpaper show through.">
+                            <Slider Width="180" Minimum="0.10" Maximum="0.90" TickFrequency="0.01"
+                                    Value="{Binding GlassMaterialOpacity, Mode=TwoWay}" />
+                        </controls:OptionControl>
+                        <controls:OptionControl Header="Corner radius" Description="Does not round the main window. Windows already rounds the frame so the glass can fill the corners with no black gap.">
+                            <Slider Width="180" Minimum="0" Maximum="40" TickFrequency="1" IsSnapToTickEnabled="True"
+                                    Value="{Binding GlassCornerRadius, Mode=TwoWay}" />
                         </controls:OptionControl>
                     </StackPanel>
                 </controls:CardExpander>
@@ -379,12 +392,16 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <!--<controls:IconButton Grid.Column="1" Margin="4,0,0,0" Icon="Folder" ToolTip.Tip="{Binding CustomIconLocation, Mode=OneWay}" Command="{Binding BrowseCustomIconLocationCommand}" CommandParameter="{Binding $self}" IsEnabled="{Binding IsCustomIconSelected}" />-->
+                        <controls:IconButton Grid.Column="1" Margin="4,0,0,0" Icon="Folder"
+                                             ToolTip.Tip="{Binding CustomIconLocation, Mode=OneWay}"
+                                             Command="{Binding BrowseCustomIconLocationCommand}"
+                                             CommandParameter="{Binding $self}"
+                                             IsEnabled="{Binding IsCustomIconSelected}" />
                     </Grid>
                 </controls:OptionControl>
 
                 <controls:OptionControl Header="{x:Static resources:Strings.Menu_Appearance_CustomisationTitle_Title}" Description="{x:Static resources:Strings.Menu_Appearance_CustomisationTitle_Description}">
-                    <TextBox PlaceholderText="Eclipse" Width="200" Text="{Binding Title, Mode=TwoWay}" />
+                    <TextBox PlaceholderText="{x:Static app:App.BrandName}" Width="200" Text="{Binding Title, Mode=TwoWay}" />
                 </controls:OptionControl>
             </StackPanel>
         </ScrollViewer>

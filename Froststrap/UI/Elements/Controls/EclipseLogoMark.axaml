@@ -2,8 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Froststrap.UI.Elements.Controls.EclipseLogoMark"
              Width="28" Height="28">
-  <!-- Official Eclipse crescent (horned C) — same asset as window icon / README -->
+  <!-- Spectre S mark -->
   <Image Width="28" Height="28"
-         Source="avares://Eclipse/EclipseMark.png"
+         Source="avares://Eclipse/SpectreMark.png"
          RenderOptions.BitmapInterpolationMode="HighQuality" />
 </UserControl>

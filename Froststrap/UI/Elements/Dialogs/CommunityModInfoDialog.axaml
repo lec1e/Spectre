@@ -19,7 +19,7 @@
     <Grid RowDefinitions="Auto,*">
         <md:TitleBar Grid.Row="0"
                      Title="{x:Static resources:Strings.Menu_CommunityModInfo_Title}"
-                     Icon="avares://Eclipse/Eclipse.ico" />
+                     Icon="avares://Eclipse/SpectreMark.png" />
 
         <Grid Grid.Row="1" Margin="16,0,16,16" ColumnDefinitions="320,*">
 

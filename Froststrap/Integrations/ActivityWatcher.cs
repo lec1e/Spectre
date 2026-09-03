@@ -29,6 +29,9 @@ namespace Froststrap.Integrations
         private const string GameJoiningUniversePattern = @"universeid:([0-9]+)";
         private const string GameJoiningUniverseUserIDPattern = @"userid:([0-9]+)";
         private const string GameJoinReferralPattern = @"referral_page:([^,]+)";
+        private static readonly Regex AccessCodeLogPattern = new(
+            @"accesscode[^0-9a-fA-F]*([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
         private const string GameTeleportJoinTypePattern = @"JoinTypeId""%3a(\d+)%2c";
         private const string GameJoiningUDMUXPattern = @"UDMUX Address = ([0-9\.]+), Port = [0-9]+ \| RCC Server Address = ([0-9\.]+), Port = [0-9]+";
         private const string GameJoinedEntryPattern = @"serverId: ([0-9\.]+)\|[0-9]+";
@@ -120,6 +123,56 @@ namespace Froststrap.Integrations
             }
 
             LoadGameHistory();
+        }
+
+        public void SeedLaunchJoin(string? launchCommandLine, string? accessCode)
+        {
+            if (!string.IsNullOrWhiteSpace(accessCode))
+            {
+                Data.AccessCode = accessCode;
+                Data.ServerType = ServerType.Private;
+            }
+
+            if (string.IsNullOrWhiteSpace(launchCommandLine))
+                return;
+
+            TryCaptureAccessCode(launchCommandLine);
+
+            var join = GameJoin.GetJoinDataByLaunchCommand(launchCommandLine);
+            if (!string.IsNullOrEmpty(join.AccessCode))
+            {
+                Data.AccessCode = join.AccessCode;
+                Data.ServerType = ServerType.Private;
+            }
+            if (join.PlaceId is > 0 && Data.PlaceId == 0)
+                Data.PlaceId = join.PlaceId.Value;
+            if (!string.IsNullOrEmpty(join.JobId) && string.IsNullOrEmpty(Data.JobId))
+                Data.JobId = join.JobId;
+        }
+
+        private void TryCaptureAccessCode(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return;
+
+            string decoded = text;
+            try { decoded = Uri.UnescapeDataString(text.Replace("+", "%2B")); }
+            catch { }
+
+            string? code = Utility.LaunchArgsUtility.TryExtractAccessCode(decoded)
+                           ?? Utility.LaunchArgsUtility.TryExtractAccessCode(text);
+            if (string.IsNullOrEmpty(code))
+            {
+                var m = AccessCodeLogPattern.Match(decoded);
+                if (m.Success)
+                    code = m.Groups[1].Value;
+            }
+
+            if (string.IsNullOrEmpty(code))
+                return;
+
+            Data.AccessCode = code;
+            Data.ServerType = ServerType.Private;
         }
 
         public async void Start()
@@ -402,12 +455,15 @@ namespace Froststrap.Integrations
                     if (referralMatch.Groups.Count == 2)
                     {
                         string referral = referralMatch.Groups[1].Value;
+                        TryCaptureAccessCode(referral);
                         if (referral.Contains("RequestPrivateGame", StringComparison.OrdinalIgnoreCase) ||
                             referral.Contains("GameDetailPageJSHybridEvent", StringComparison.OrdinalIgnoreCase))
                         {
                             Data.ServerType = ServerType.Private;
                         }
                     }
+
+                    TryCaptureAccessCode(logMessage);
 
                     if (History.Count > 0)
                     {
@@ -723,6 +779,7 @@ namespace Froststrap.Integrations
                                 PlaceId = entry.PlaceId,
                                 JobId = server.JobId,
                                 ServerType = server.ServerType,
+                                AccessCode = server.AccessCode,
                                 TimeJoined = server.JoinedAt,
                                 TimeLeft = server.TimeLeft,
                                 Region = server.Region
@@ -753,7 +810,8 @@ namespace Froststrap.Integrations
 
         private async void AddToHistory(ActivityData activity)
         {
-            if (activity.ServerType is ServerType.Private or ServerType.Reserved) return;
+            if (activity.ServerType is ServerType.Reserved) return;
+            if (activity.ServerType is ServerType.Private && string.IsNullOrEmpty(activity.AccessCode)) return;
             if (activity.UniverseId == 0 || activity.PlaceId == 0 || activity.TimeJoined == default) return;
 
             if (activity.MachineAddressValid && string.IsNullOrEmpty(activity.Region))
@@ -800,6 +858,7 @@ namespace Froststrap.Integrations
                                        JoinedAt = s.TimeJoined,
                                        TimeLeft = s.TimeLeft,
                                        ServerType = s.ServerType,
+                                       AccessCode = s.AccessCode,
                                        Region = s.Region
                                    })]
                     })];

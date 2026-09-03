@@ -3,12 +3,38 @@
              xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
              xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
              x:Class="Froststrap.UI.Elements.Settings.Pages.ToolsHubPage"
-             x:DataType="vm:ToolsHubViewModel">
+             x:DataType="vm:ToolsHubViewModel"
+             Background="Transparent">
+  <UserControl.Styles>
+    <Style Selector="Button.spectre-tile">
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="Foreground" Value="#FEE2E2" />
+      <Setter Property="Background">
+        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+          <GradientStop Color="#CC3A0A12" Offset="0" />
+          <GradientStop Color="#EE0A0406" Offset="1" />
+        </LinearGradientBrush>
+      </Setter>
+    </Style>
+    <Style Selector="Button.spectre-tile /template/ ContentPresenter">
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.spectre-tile:pointerover /template/ ContentPresenter">
+      <Setter Property="Background">
+        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+          <GradientStop Color="#EEC41E3A" Offset="0" />
+          <GradientStop Color="#AA3A080C" Offset="1" />
+        </LinearGradientBrush>
+      </Setter>
+    </Style>
+  </UserControl.Styles>
   <ScrollViewer>
     <StackPanel Margin="24" Spacing="16">
-      <TextBlock Text="All tools" FontSize="28" FontWeight="Bold" />
+      <TextBlock Text="All tools" FontSize="28" FontWeight="Bold" Foreground="#FEE2E2" />
       <TextBlock Text="Everything else lives here — pick a tool to open it."
-                 Opacity="0.7" Margin="0,0,0,8" />
+                 Foreground="#FECACA" Opacity="0.8" Margin="0,0,0,8" />
       <ItemsControl ItemsSource="{Binding Items}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -17,20 +43,26 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate x:DataType="vm:ToolsHubItem">
-            <Button Width="260" Height="88" Margin="0,0,12,12"
+            <Button Classes="spectre-tile" Width="260" Height="88" Margin="0,0,12,12"
                     Padding="14" CornerRadius="14"
                     HorizontalContentAlignment="Left"
-                    Background="#77100F18" BorderBrush="#33A78BFA" BorderThickness="1"
                     Command="{Binding $parent[UserControl].((vm:ToolsHubViewModel)DataContext).OpenToolCommand}"
                     CommandParameter="{Binding Tag}">
               <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                <Border Width="40" Height="40" CornerRadius="12" Background="#447C3AED">
+                <Border Width="40" Height="40" CornerRadius="12">
+                  <Border.Background>
+                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                      <GradientStop Color="#E11D48" Offset="0" />
+                      <GradientStop Color="#3A080C" Offset="1" />
+                    </LinearGradientBrush>
+                  </Border.Background>
                   <ic:Lucide Icon="{Binding Icon}" Width="18" Height="18"
+                             StrokeBrush="#FEE2E2"
                              HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                  <TextBlock Text="{Binding Title}" FontWeight="SemiBold" />
-                  <TextBlock Text="{Binding Subtitle}" FontSize="12" Opacity="0.65" TextWrapping="Wrap" />
+                  <TextBlock Text="{Binding Title}" FontWeight="SemiBold" Foreground="#FEE2E2" />
+                  <TextBlock Text="{Binding Subtitle}" FontSize="12" Foreground="#FECACA" Opacity="0.75" TextWrapping="Wrap" />
                 </StackPanel>
               </Grid>
             </Button>

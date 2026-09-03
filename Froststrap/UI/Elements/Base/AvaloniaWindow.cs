@@ -6,11 +6,17 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Styling;
 using FluentAvalonia.Styling;
+using System.Runtime.InteropServices;
 
 namespace Froststrap.UI.Elements.Base
 {
     public abstract class AvaloniaWindow : Window
     {
+        private const int DwmwaWindowCornerPreference = 33;
+        private const int DwmwcpRound = 2;
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(nint hwnd, int attr, ref int attrValue, int attrSize);
         private static IStyle? _activeColorStyle;
         private static ResourceDictionary? _activeThemeDictionary;
 
@@ -18,7 +24,7 @@ namespace Froststrap.UI.Elements.Base
         {
             if (!OperatingSystem.IsMacOS())
             {
-                this.WindowDecorations = WindowDecorations.BorderOnly;
+                this.WindowDecorations = WindowDecorations.None;
                 this.ExtendClientAreaToDecorationsHint = true;
             }
             else
@@ -194,6 +200,20 @@ namespace Froststrap.UI.Elements.Base
 
             UpdateBackdropForAllWindows();
             Locale.ApplyLocaleToWindow(this);
+            RoundWindowCorners();
+        }
+
+        private void RoundWindowCorners()
+        {
+            if (!OperatingSystem.IsWindows())
+                return;
+
+            nint hwnd = TryGetPlatformHandle()?.Handle ?? nint.Zero;
+            if (hwnd == nint.Zero)
+                return;
+
+            int pref = DwmwcpRound;
+            _ = DwmSetWindowAttribute(hwnd, DwmwaWindowCornerPreference, ref pref, sizeof(int));
         }
     }
 }

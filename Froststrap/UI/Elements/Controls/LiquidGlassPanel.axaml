@@ -3,7 +3,7 @@
         xmlns:controls="using:Froststrap.UI.Elements.Controls">
 
   <Style Selector="controls|LiquidGlassPanel">
-    <Setter Property="CornerRadius" Value="22" />
+    <Setter Property="CornerRadius" Value="0" />
     <Setter Property="ClipToBounds" Value="True" />
     <Setter Property="Template">
       <ControlTemplate>
@@ -11,21 +11,42 @@
           <ExperimentalAcrylicBorder x:Name="PART_Acrylic"
                                      CornerRadius="{TemplateBinding CornerRadius}" />
 
-          <!-- Light veil so abyss / content glow stays readable -->
-          <Border IsHitTestVisible="False"
+          <Border x:Name="PART_Solid"
+                  IsVisible="False"
+                  IsHitTestVisible="False"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+            <Border.Background>
+              <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                <GradientStop Color="#E05C101C" Offset="0" />
+                <GradientStop Color="#F0140508" Offset="0.55" />
+                <GradientStop Color="#FF050203" Offset="1" />
+              </LinearGradientBrush>
+            </Border.Background>
+          </Border>
+
+          <Border x:Name="PART_Veil"
+                  IsHitTestVisible="False"
                   CornerRadius="{TemplateBinding CornerRadius}"
-                  Background="#66050A14" />
+                  Opacity="{TemplateBinding VeilOpacity}">
+            <Border.Background>
+              <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                <GradientStop Color="#885C101C" Offset="0" />
+                <GradientStop Color="#66140508" Offset="0.5" />
+                <GradientStop Color="#AA050203" Offset="1" />
+              </LinearGradientBrush>
+            </Border.Background>
+          </Border>
 
           <Border x:Name="PART_Rim"
                   IsHitTestVisible="False"
                   CornerRadius="{TemplateBinding CornerRadius}"
-                  BorderThickness="1">
+                  BorderThickness="0">
             <Border.BorderBrush>
               <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                <GradientStop Color="#88FFFFFF" Offset="0" />
-                <GradientStop Color="#4466CCFF" Offset="0.4" />
-                <GradientStop Color="#338B5CF6" Offset="0.75" />
-                <GradientStop Color="#22000000" Offset="1" />
+                <GradientStop Color="#CCFEE2E2" Offset="0" />
+                <GradientStop Color="#99E11D48" Offset="0.35" />
+                <GradientStop Color="#77C41E3A" Offset="0.7" />
+                <GradientStop Color="#447F1D1D" Offset="1" />
               </LinearGradientBrush>
             </Border.BorderBrush>
           </Border>
@@ -34,13 +55,13 @@
                   IsHitTestVisible="False"
                   Height="56"
                   VerticalAlignment="Top"
-                  Opacity="0.4"
+                  Opacity="0.16"
                   CornerRadius="{TemplateBinding CornerRadius}">
             <Border.Background>
               <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                <GradientStop Color="#55FFFFFF" Offset="0" />
-                <GradientStop Color="#18FFFFFF" Offset="0.5" />
-                <GradientStop Color="#00FFFFFF" Offset="1" />
+                <GradientStop Color="#55E11D48" Offset="0" />
+                <GradientStop Color="#22C41E3A" Offset="0.5" />
+                <GradientStop Color="#00C41E3A" Offset="1" />
               </LinearGradientBrush>
             </Border.Background>
           </Border>

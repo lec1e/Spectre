@@ -14,6 +14,9 @@
         [JsonPropertyName("ServerType")]
         public ServerType ServerType { get; set; }
 
+        [JsonPropertyName("accessCode")]
+        public string AccessCode { get; set; } = string.Empty;
+
         [JsonPropertyName("region")]
         public string Region { get; set; } = string.Empty;
 
