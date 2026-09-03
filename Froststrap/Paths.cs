@@ -120,10 +120,14 @@ namespace Froststrap
                 RobloxCache = Path.Combine(Path.GetTempPath(), "Roblox");
             }
 
-            string exeName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? $"{App.ProjectName}.exe" : App.ProjectName;
+            string spectreExe = Path.Combine(DataRoot, $"{App.ExecutableName}.exe");
+            string eclipseExe = Path.Combine(DataRoot, $"{App.ProjectName}.exe");
+            string exeName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? (File.Exists(spectreExe) ? spectreExe : File.Exists(eclipseExe) ? eclipseExe : spectreExe)
+                : Path.Combine(DataRoot, App.ExecutableName);
 
             if (!OperatingSystem.IsLinux())
-                Application = Path.Combine(DataRoot, exeName);
+                Application = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? exeName : Path.Combine(DataRoot, App.ExecutableName);
 
             if (OperatingSystem.IsLinux())
             {

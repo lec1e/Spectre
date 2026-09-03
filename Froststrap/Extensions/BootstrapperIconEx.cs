@@ -76,7 +76,7 @@ namespace Froststrap.Extensions
         private static Bitmap LoadFromResource(string name)
         {
             // Load the ICO file
-            var uri = new Uri($"avares://Eclipse/Resources/{name}.ico");
+            var uri = new Uri($"avares://Spectre/Resources/{name}.ico");
             using var stream = AssetLoader.Open(uri);
             return LoadBestIconFromIcoStream(stream);
         }

@@ -10,7 +10,7 @@
         <Setter Property="CornerRadius" Value="12" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontFamily" Value="avares://Eclipse/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+        <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="RenderTransformOrigin" Value="50%,50%" />
         <Setter Property="Template" Value="{StaticResource SpectreGlassButtonTemplate}" />

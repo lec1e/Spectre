@@ -43,7 +43,7 @@ namespace Froststrap.Utility
                         return iconPath;
                     }
 
-                    var uri = new Uri("avares://Eclipse/SpectreMark.png");
+                    var uri = new Uri("avares://Spectre/SpectreMark.png");
                     using var pngStream = AssetLoader.Open(uri);
                     if (pngStream is null)
                         throw new FileNotFoundException("Embedded SpectreMark.png not found.");

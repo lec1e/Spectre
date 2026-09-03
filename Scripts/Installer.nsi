@@ -28,19 +28,19 @@ Name "Spectre"
   OutFile "${PUBLISH_DIR}\Eclipse-Setup.exe"
 !endif
 
-Icon "..\Froststrap\Eclipse.ico"
-UninstallIcon "..\Froststrap\Eclipse.ico"
+Icon "..\Froststrap\Spectre.ico"
+UninstallIcon "..\Froststrap\Spectre.ico"
 InstallDir "$LOCALAPPDATA\Eclipse"
 InstallDirRegKey HKCU "Software\Eclipse" "InstallLocation"
 RequestExecutionLevel user
 
 !define APP_NAME "Spectre"
-!define APP_EXE "Eclipse.exe"
+!define APP_EXE "Spectre.exe"
 !define APP_UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Eclipse"
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${APP_EXE}"
 !define MUI_FINISHPAGE_RUN_TEXT "Launch Spectre"
-!define MUI_ICON "..\Froststrap\Eclipse.ico"
-!define MUI_UNICON "..\Froststrap\Eclipse.ico"
+!define MUI_ICON "..\Froststrap\Spectre.ico"
+!define MUI_UNICON "..\Froststrap\Spectre.ico"
 
 !insertmacro MUI_PAGE_DIRECTORY
 Page Custom LanguagePageCreate LanguagePageLeave

@@ -26,8 +26,10 @@ public partial class App : Application
 #else
     public const string ProjectName = "Eclipse";
 #endif
-    /// <summary>Visible product name in chrome. Install/exe identity stays <see cref="ProjectName"/>.</summary>
+    /// <summary>Visible product name in chrome. Install folder stays <see cref="ProjectName"/>.</summary>
     public const string BrandName = "Spectre";
+    /// <summary>Windows executable file name without extension.</summary>
+    public const string ExecutableName = "Spectre";
     public const string ProjectOwner = "lec1e";
     public const string ProjectRepository = "lec1e/Spectre";
     public const string ProjectDownloadLink = "https://github.com/lec1e/Spectre/releases";
@@ -69,6 +71,25 @@ public partial class App : Application
     public static bool IsPlayerInstalled => PlayerData.IsInstalled;
 
     public static bool IsStudioInstalled => StudioData.IsInstalled;
+
+    public static int CountOwnProcesses()
+    {
+        var ids = new HashSet<int>();
+        foreach (string name in new[] { ExecutableName, ProjectName, "Eclipse", "Eclipse-QA", "Froststrap" })
+        {
+            try
+            {
+                foreach (var process in Process.GetProcessesByName(name))
+                    ids.Add(process.Id);
+            }
+            catch
+            {
+                // ignore access failures
+            }
+        }
+
+        return ids.Count;
+    }
 
     public static readonly RobloxPlayerData PlayerData = new();
 

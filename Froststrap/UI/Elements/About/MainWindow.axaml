@@ -19,7 +19,7 @@
     <Grid RowDefinitions="Auto,*,Auto" Background="{DynamicResource ApplicationBackgroundColor}">
         <controls:TitleBar Grid.Row="0" Background="{DynamicResource LayerFillColorDefaultBrush}"
                            Title="{x:Static resources:Strings.About_Title}"
-                           Icon="avares://Eclipse/SpectreMark.png" />
+                           Icon="avares://Spectre/SpectreMark.png" />
 
         <Grid Grid.Row="1" Name="MainGrid">
             <ui:FANavigationView Name="NavView"

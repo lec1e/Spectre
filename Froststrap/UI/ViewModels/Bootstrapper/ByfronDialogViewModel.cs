@@ -7,7 +7,7 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
 {
     public class ByfronDialogViewModel(IBootstrapperDialog dialog, string version) : BootstrapperDialogViewModel(dialog)
     {
-        public Bitmap ByfronLogoLocation { get; set; } = new(AssetLoader.Open(new Uri("avares://Eclipse/Resources/BootstrapperStyles/ByfronDialog/ByfronLogoDark.jpg")));
+        public Bitmap ByfronLogoLocation { get; set; } = new(AssetLoader.Open(new Uri("avares://Spectre/Resources/BootstrapperStyles/ByfronDialog/ByfronLogoDark.jpg")));
 
         public Thickness DialogBorder { get; set; } = new(0);
 

@@ -320,7 +320,7 @@ namespace Froststrap
             int self = Environment.ProcessId;
             bool killedAny = false;
 
-            foreach (string name in new[] { App.ProjectName, "Eclipse", "Eclipse-QA", "Froststrap" })
+            foreach (string name in new[] { App.ExecutableName, App.ProjectName, "Eclipse", "Eclipse-QA", "Froststrap" })
             {
                 foreach (var proc in Process.GetProcessesByName(name))
                 {

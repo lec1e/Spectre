@@ -17,7 +17,7 @@
         WindowStartupLocation="CenterScreen">
         
     <Grid Background="{DynamicResource ApplicationBackgroundColor}" RowDefinitions="Auto,*,Auto">
-        <controls:TitleBar Grid.Row="0" Title="{x:Static app:App.BrandName}" Icon="avares://Eclipse/SpectreMark.png" />
+        <controls:TitleBar Grid.Row="0" Title="{x:Static app:App.BrandName}" Icon="avares://Spectre/SpectreMark.png" />
 
         <StackPanel Grid.Row="1" Margin="12">
             <TextBlock Text="{x:Static resources:Strings.Dialog_LanguageSelector_Header}" 

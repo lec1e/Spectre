@@ -175,7 +175,7 @@ namespace Froststrap
                     App.Logger.WriteLine(LOG_IDENT, $"Created directory: {directory}");
                 }
 
-                var uri = new Uri("avares://Eclipse/Resources/GlobalBasicSettings_Template.xml");
+                var uri = new Uri("avares://Spectre/Resources/GlobalBasicSettings_Template.xml");
                 using var resourceStream = Avalonia.Platform.AssetLoader.Open(uri);
                 using var fileStream = File.Create(FileLocation);
                 resourceStream.CopyTo(fileStream);

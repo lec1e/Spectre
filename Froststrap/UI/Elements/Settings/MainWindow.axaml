@@ -13,7 +13,7 @@
     xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
     xmlns:app="clr-namespace:Froststrap"
     Title="{x:Static app:App.BrandName}"
-    Icon="avares://Eclipse/SpectreMark.png"
+    Icon="avares://Spectre/SpectreMark.png"
     Width="1280"
     Height="800"
     MinWidth="1080"
@@ -130,7 +130,7 @@
                 <Border Grid.Row="0"
                         BorderBrush="Transparent"
                         BorderThickness="0"
-                        Background="#661A060A">
+                        Background="#22140608">
                     <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="16,0,10,0" ColumnSpacing="12">
                         <Panel Grid.Column="0" Grid.ColumnSpan="4"
                                WindowDecorationProperties.ElementRole="TitleBar"

@@ -6,11 +6,11 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <Version>2.0.29</Version>
-    <FileVersion>2.0.29</FileVersion>
+    <Version>2.0.30</Version>
+    <FileVersion>2.0.30</FileVersion>
     <Company>Spectre</Company>
     <Product>Spectre</Product>
-    <AssemblyName>Eclipse</AssemblyName>
+    <AssemblyName>Spectre</AssemblyName>
     <RootNamespace>Froststrap</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Description>Spectre — Roblox bootstrapper with AltMan accounts and Versions Manager</Description>
@@ -32,6 +32,8 @@
     <AvaloniaResource Include="Eclipse.ico" />
     <AvaloniaResource Include="Assets\aurora-dark.gif" />
     <AvaloniaResource Include="Assets\aurora-dark-still.png" />
+    <AvaloniaResource Include="Assets\spectre-nebula-field.png" />
+    <AvaloniaResource Include="Assets\spectre-nebula-dust.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -125,4 +127,8 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
   </ItemGroup>
+
+  <Target Name="CopyLegacyEclipseExe" AfterTargets="Publish">
+    <Copy SourceFiles="$(PublishDir)Spectre.exe" DestinationFiles="$(PublishDir)Eclipse.exe" Condition="Exists('$(PublishDir)Spectre.exe')" />
+  </Target>
 </Project>

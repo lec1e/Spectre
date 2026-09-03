@@ -14,7 +14,7 @@
 
     <Grid RowDefinitions="Auto,*,Auto" Background="{DynamicResource ApplicationBackgroundColor}">
         <controls:TitleBar Grid.Row="0" Title="{Binding Title}"
-                           Icon="avares://Eclipse/SpectreMark.png" />
+                           Icon="avares://Spectre/SpectreMark.png" />
         <Panel
             Name="NotificationPanel"
             Grid.Row="0"

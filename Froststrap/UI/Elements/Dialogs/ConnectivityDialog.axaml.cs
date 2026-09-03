@@ -42,7 +42,7 @@ namespace Froststrap.UI.Elements.Dialogs
             }
             else
             {
-                var uri = new Uri($"avares://Eclipse/Resources/MessageBox/{iconFilename}.png");
+                var uri = new Uri($"avares://Spectre/Resources/MessageBox/{iconFilename}.png");
                 using var stream = AssetLoader.Open(uri);
                 IconImage.Source = new Bitmap(stream);
             }

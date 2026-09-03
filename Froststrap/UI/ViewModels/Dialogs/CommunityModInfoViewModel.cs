@@ -60,7 +60,7 @@ namespace Froststrap.UI.ViewModels.Dialogs
         {
             try
             {
-                var fontFamily = new AvaFontFamily("avares://Eclipse/Resources/Fonts#BuilderIcons-Regular");
+                var fontFamily = new AvaFontFamily("avares://Spectre/Resources/Fonts#BuilderIcons-Regular");
                 var typeface = new Typeface(fontFamily);
 
                 UpdateGlyphColors();

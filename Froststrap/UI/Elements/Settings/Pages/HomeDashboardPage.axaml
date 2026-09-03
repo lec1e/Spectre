@@ -207,7 +207,7 @@
                         <GradientStop Color="#000000" Offset="1" />
                       </LinearGradientBrush>
                     </Border.Background>
-                    <Image Source="avares://Eclipse/SpectreMark.png" Width="22" Height="22"
+                    <Image Source="avares://Spectre/SpectreMark.png" Width="22" Height="22"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            RenderOptions.BitmapInterpolationMode="HighQuality" />
                   </Border>

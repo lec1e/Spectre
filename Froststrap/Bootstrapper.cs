@@ -1734,7 +1734,7 @@ namespace Froststrap
         {
             const string LOG_IDENT = "Bootstrapper::CheckForUpdates";
 
-            if (Process.GetProcessesByName(App.ProjectName).Length > 1)
+            if (App.CountOwnProcesses() > 1)
             {
                 App.Logger.WriteLine(LOG_IDENT, $"More than one {App.ProjectName} instance running, aborting update check");
                 return false;
@@ -1880,8 +1880,10 @@ namespace Froststrap
             if (assets is null || assets.Count == 0)
                 return null;
 
-            // Prefer portable Eclipse.exe (assembly name stays Eclipse so existing installs update).
+            // Prefer portable Spectre.exe; keep Eclipse.exe so 2.0.29 installs still update.
             var exact = assets.FirstOrDefault(a =>
+                a.Name?.Equals("Spectre.exe", StringComparison.OrdinalIgnoreCase) == true)
+                ?? assets.FirstOrDefault(a =>
                 a.Name?.Equals("Eclipse.exe", StringComparison.OrdinalIgnoreCase) == true);
             if (exact is not null)
                 return exact;
@@ -1906,7 +1908,9 @@ namespace Froststrap
             {
                 return
                 [
+                    "Spectre.exe",
                     "Eclipse.exe",
+                    "Spectre-Setup.exe",
                     "Eclipse-Setup.exe",
                     "-Setup.exe",
                     "Froststrap-SelfContained-Setup.exe",
@@ -1973,8 +1977,9 @@ namespace Froststrap
                 string processPath = Paths.Application;
                 string fileName = Path.GetFileName(updatePath);
 
-                // Single-file Eclipse.exe updates: replace the installed EXE, then relaunch.
-                bool isPortableExe = fileName.Equals("Eclipse.exe", StringComparison.OrdinalIgnoreCase)
+                // Single-file Spectre.exe / Eclipse.exe updates: replace with Spectre.exe, then relaunch.
+                bool isPortableExe = fileName.Equals("Spectre.exe", StringComparison.OrdinalIgnoreCase)
+                    || fileName.Equals("Eclipse.exe", StringComparison.OrdinalIgnoreCase)
                     || (!fileName.Contains("Setup", StringComparison.OrdinalIgnoreCase)
                         && fileName.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
                         && new FileInfo(updatePath).Length > 20 * 1024 * 1024);
@@ -1982,19 +1987,21 @@ namespace Froststrap
                 string scriptContent;
                 if (isPortableExe)
                 {
+                    string installDir = Path.GetDirectoryName(processPath) ?? Paths.DataRoot;
+                    string targetPath = Path.Combine(installDir, $"{App.ExecutableName}.exe");
                     scriptContent = $@"@echo off
-echo Waiting for {App.ProjectName} to exit...
+echo Waiting for {App.BrandName} to exit...
 timeout /t 2 /nobreak >nul
 echo Installing update...
-copy /Y ""{updatePath}"" ""{processPath}""
+copy /Y ""{updatePath}"" ""{targetPath}""
 if errorlevel 1 (
     echo Update failed with error code %errorlevel%
     pause
     exit /b %errorlevel%
 )
 echo Update installed successfully!
-echo Restarting {App.ProjectName}...
-start """" ""{processPath}""
+echo Restarting {App.BrandName}...
+start """" ""{targetPath}""
 exit";
                 }
                 else
