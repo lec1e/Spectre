@@ -2501,8 +2501,9 @@ exit";
 
             _isInstalling = true;
 
-            // A normal Play leaves the installed client in place. A forced reinstall still replaces it.
-            if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && MustUpgrade)
+            // Play keeps the installed client and the saved graphics settings.
+            // A missing client is downloaded beside it; an existing folder is not wiped.
+            if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && MustUpgrade && !File.Exists(AppData.ExecutablePath))
             {
                 KillRobloxPlayers();
                 await Task.Delay(600);
