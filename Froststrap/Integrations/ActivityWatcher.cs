@@ -45,6 +45,7 @@ namespace Froststrap.Integrations
         private bool _teleportMarker = false;
         private bool _reservedTeleportMarker = false;
         private bool _shouldAutoRejoin = false;
+        private bool _joinAnnounced = false;
 
         private static readonly string GameHistoryCachePath = Path.Combine(Paths.Cache, "GameHistory.json");
 
@@ -205,6 +206,7 @@ namespace Froststrap.Integrations
                 if (InGame)
                 {
                     InGame = false;
+                    _joinAnnounced = false;
                     OnGameLeave?.Invoke(this, EventArgs.Empty);
                 }
 
@@ -401,6 +403,24 @@ namespace Froststrap.Integrations
             }
         }
 
+        private void AnnounceJoin()
+        {
+            if (_joinAnnounced || !InGame || !App.Settings.Prop.ShowServerDetails)
+                return;
+
+            _joinAnnounced = true;
+            ShowNotif?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async Task AnnounceJoinSoon()
+        {
+            try { await Task.Delay(1200); }
+            catch { return; }
+
+            if (!IsDisposed)
+                AnnounceJoin();
+        }
+
         private async void ProcessPlayerLogEntry(string logMessage)
         {
             const string LOG_IDENT = "ActivityWatcher::ProcessPlayerLogEntry";
@@ -441,6 +461,18 @@ namespace Froststrap.Integrations
                     {
                         App.Logger.WriteLine(LOG_IDENT, $"Disconnect reason code: {reasonCode}");
                     }
+                }
+            }
+
+            if (logMessage.StartsWith(GameJoiningUDMUXEntry))
+            {
+                var udmux = Regex.Match(logMessage, GameJoiningUDMUXPattern);
+                if (udmux.Success && udmux.Groups.Count >= 3 && !udmux.Groups[1].Value.StartsWith("10."))
+                {
+                    Data.MachineAddress = udmux.Groups[1].Value;
+                    App.Logger.WriteLine(LOG_IDENT, $"Server is UDMUX protected ({Data})");
+                    if (InGame)
+                        AnnounceJoin();
                 }
             }
 
@@ -494,9 +526,11 @@ namespace Froststrap.Integrations
                     }
 
                     App.Logger.WriteLine(LOG_IDENT, $"Joining Game ({Data})");
+                    _joinAnnounced = false;
                     InGame = true;
                     Data.TimeJoined = DateTime.Now;
                     OnGameJoin?.Invoke(this, EventArgs.Empty);
+                    _ = AnnounceJoinSoon();
                 }
             }
             else if (!InGame && Data.PlaceId != 0)
@@ -592,6 +626,7 @@ namespace Froststrap.Integrations
                     App.Logger.WriteLine(LOG_IDENT, $"Disconnected from Game ({Data})");
 
                     InGame = false;
+                    _joinAnnounced = false;
                     Data.TimeLeft = DateTime.Now;
                     AddToHistory(Data);
                     OnGameLeave?.Invoke(this, EventArgs.Empty);
