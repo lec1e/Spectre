@@ -639,8 +639,8 @@ namespace Froststrap.UI.ViewModels.Settings.Mods
                             if (visualRoot == null) return;
                             var file = await visualRoot.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
                             {
-                                Title = "Save Froststrap Mod",
-                                SuggestedFileName = $"FroststrapMod_{SolidColorHex}.zip",
+                                Title = "Save Spectre Mod",
+                                SuggestedFileName = $"SpectreMod_{SolidColorHex}.zip",
                                 DefaultExtension = ".zip",
                                 FileTypeChoices = [new FilePickerFileType("Zip Archive") { Patterns = ["*.zip"] }]
                             });

@@ -9,8 +9,8 @@ namespace Froststrap.UI.Elements.Dialogs
         public ConnectivityDialog()
         {
             InitializeComponent();
-            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-            SpectreChrome.AttachPointer(this, AbyssBackground);
+            SpectreChrome.Apply(this);
+            Backdrop.ApplyFromSettings();
         }
 
         public ConnectivityDialog(string title, string description, MessageBoxImage image, Exception exception) : this()

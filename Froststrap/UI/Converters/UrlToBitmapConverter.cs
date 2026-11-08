@@ -54,5 +54,34 @@ namespace Froststrap.UI.Converters
         {
             throw new NotImplementedException();
         }
+
+        public static async Task<Bitmap?> GetBitmapFromCacheOrDownloadAsync(string url)
+        {
+            if (_imageCache.TryGetValue(url, out var cached))
+                return cached;
+
+            try
+            {
+                using var response = await App.HttpClient.GetAsync(new Uri(url));
+                if (!response.IsSuccessStatusCode)
+                {
+                    _imageCache.TryAdd(url, null);
+                    return null;
+                }
+
+                await using var stream = await response.Content.ReadAsStreamAsync();
+                using var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+                var bitmap = new Bitmap(memoryStream);
+                _imageCache.TryAdd(url, bitmap);
+                return bitmap;
+            }
+            catch
+            {
+                _imageCache.TryAdd(url, null);
+                return null;
+            }
+        }
     }
 }

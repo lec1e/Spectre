@@ -1,4 +1,5 @@
-﻿using Froststrap.UI.Utility;
+using Avalonia.Interactivity;
+using Froststrap.UI.Utility;
 using Froststrap.UI.ViewModels.Dialogs;
 
 namespace Froststrap.UI.Elements.Dialogs
@@ -20,14 +21,13 @@ namespace Froststrap.UI.Elements.Dialogs
             };
 
             DataContext = viewModel;
-            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-            SpectreChrome.AttachPointer(this, AbyssBackground);
+            SpectreChrome.Apply(this);
+            Backdrop.ApplyFromSettings();
 
-            Random Chance = new();
-            if (Chance.Next(0, 10000) == 1)
-            {
+            if (new Random().Next(0, 10000) == 1)
                 LaunchTitle.Text = "Cartistrap";
-            }
         }
+
+        private void Close_Click(object? sender, RoutedEventArgs e) => Close();
     }
 }

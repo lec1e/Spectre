@@ -299,6 +299,9 @@ namespace Froststrap.UI.ViewModels.Settings
                         App.Logger.WriteException(LOG_IDENT + "::Activate.SetInstallTarget", ex);
                     }
                 }
+
+                App.State.Prop.ForceReinstall = true;
+                App.State.Save();
             }
 
             App.Settings.Save();
@@ -366,6 +369,8 @@ namespace Froststrap.UI.ViewModels.Settings
             try
             {
                 VersionJunctionManager.SetInstallTarget(profile);
+                App.State.Prop.ForceReinstall = true;
+                App.State.Save();
                 RebuildTiles();
             }
             catch (Exception ex)

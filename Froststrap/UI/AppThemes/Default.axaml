@@ -6,48 +6,239 @@
         xmlns:cc="using:AvaloniaEdit.CodeCompletion"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls">
 
-    <Style Selector="Button">
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="RenderTransformOrigin" Value="50%,50%" />
-        <Setter Property="Template" Value="{StaticResource SpectreGlassButtonTemplate}" />
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                <GradientStop Color="#E8E11D48" Offset="0" />
-                <GradientStop Color="#C44A1518" Offset="0.55" />
-                <GradientStop Color="#F2000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+    <Styles.Resources>
+        <!-- Flat workbench button: one bordered fill + content. PART_Fill is the hover/press target. -->
+        <ControlTemplate x:Key="WbButtonTemplate" TargetType="Button">
+            <Border x:Name="PART_Fill"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  Background="Transparent"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Padding="{TemplateBinding Padding}"
+                                  Foreground="{TemplateBinding Foreground}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  RecognizesAccessKey="True" />
+            </Border>
+        </ControlTemplate>
+
+        <!-- Transparent hit target for split-button halves. -->
+        <ControlTemplate x:Key="WbHitTemplate" TargetType="Button">
+            <ContentPresenter x:Name="PART_ContentPresenter"
+                              Background="Transparent"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Padding="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              RecognizesAccessKey="True" />
+        </ControlTemplate>
+    </Styles.Resources>
+
+    <!-- ============ Buttons ============ -->
+
+    <Style Selector="Button, ToggleButton">
+        <Setter Property="Template" Value="{StaticResource WbButtonTemplate}" />
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource WbFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="12,5" />
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Transitions">
             <Transitions>
-                <BrushTransition Property="Background" Duration="0:0:0.12" />
+                <BrushTransition Property="Background" Duration="0:0:0.1" />
             </Transitions>
         </Setter>
     </Style>
+    <Style Selector="Button:pointerover /template/ Border#PART_Fill, ToggleButton:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbRaisedHoverBrush}" />
+    </Style>
+    <Style Selector="Button:pointerover, ToggleButton:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+    <Style Selector="Button:pressed /template/ Border#PART_Fill, ToggleButton:pressed /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbOverlayBrush}" />
+    </Style>
+    <Style Selector="Button:disabled, ToggleButton:disabled">
+        <Setter Property="Opacity" Value="0.45" />
+    </Style>
+    <Style Selector="Button:pointerover ic|Lucide, ToggleButton:pointerover ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
 
-    <Style Selector="Button /template/ ContentPresenter">
+    <Style Selector="ToggleButton:checked /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbRaisedHoverBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineFocusBrush}" />
+    </Style>
+    <Style Selector="ToggleButton:checked">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+
+    <!-- Primary (solid accent) -->
+    <Style Selector="Button.accent, Button.eclipse-primary, Button.primary">
+        <Setter Property="Background" Value="{DynamicResource WbAccentBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbAccentBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource WbOnAccentBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.accent:pointerover /template/ Border#PART_Fill, Button.eclipse-primary:pointerover /template/ Border#PART_Fill, Button.primary:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbAccentHoverBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbAccentHoverBrush}" />
+    </Style>
+    <Style Selector="Button.accent:pressed /template/ Border#PART_Fill, Button.eclipse-primary:pressed /template/ Border#PART_Fill, Button.primary:pressed /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbAccentBrush}" />
+    </Style>
+    <!-- FluentAvalonia's accent style paints the content presenter with its own generated accent shade. -->
+    <Style Selector="Button.accent /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.accent:pointerover, Button.eclipse-primary:pointerover, Button.primary:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource WbOnAccentBrush}" />
+    </Style>
+    <Style Selector="Button.accent ic|Lucide, Button.eclipse-primary ic|Lucide, Button.primary ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbOnAccentBrush}" />
+    </Style>
+    <Style Selector="Button.accent TextBlock, Button.eclipse-primary TextBlock, Button.primary TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource WbOnAccentBrush}" />
+    </Style>
+
+    <!-- Ghost / chrome / navigation: no fill until hovered -->
+    <Style Selector="Button.eclipse-ghost, Button.ghost, Button.chrome, Button.top-nav, Button.section-link, Button.rail, Button.rail-labeled, Button.rail-icon">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.eclipse-ghost:pointerover /template/ Border#PART_Fill, Button.ghost:pointerover /template/ Border#PART_Fill, Button.chrome:pointerover /template/ Border#PART_Fill, Button.rail:pointerover /template/ Border#PART_Fill, Button.rail-labeled:pointerover /template/ Border#PART_Fill, Button.rail-icon:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.eclipse-ghost:pressed /template/ Border#PART_Fill, Button.ghost:pressed /template/ Border#PART_Fill, Button.chrome:pressed /template/ Border#PART_Fill, Button.rail:pressed /template/ Border#PART_Fill, Button.rail-labeled:pressed /template/ Border#PART_Fill, Button.rail-icon:pressed /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbActiveBrush}" />
+    </Style>
+    <Style Selector="Button.top-nav:pointerover /template/ Border#PART_Fill, Button.section-link:pointerover /template/ Border#PART_Fill, Button.top-nav:pressed /template/ Border#PART_Fill, Button.section-link:pressed /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.section-link">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="Button.section-link:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+    <Style Selector="Button.rail, Button.rail-labeled, Button.rail-icon">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
+    </Style>
+
+    <!-- Destructive -->
+    <Style Selector="Button.danger">
+        <Setter Property="Foreground" Value="{DynamicResource WbDangerBrush}" />
+    </Style>
+    <Style Selector="Button.danger:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbDangerSoftBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbDangerBrush}" />
+    </Style>
+    <Style Selector="Button.danger:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource WbDangerBrush}" />
+    </Style>
+    <Style Selector="Button.danger ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbDangerBrush}" />
+    </Style>
+
+    <!-- Workbench tab strip -->
+    <Style Selector="Button.wb-tab">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1,0,1,0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Padding" Value="14,0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.wb-tab ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgFaintBrush}" />
+    </Style>
+    <Style Selector="Button.wb-tab:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.wb-tab:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+    </Style>
+    <Style Selector="Button.wb-tab.selected">
+        <Setter Property="Background" Value="{DynamicResource WbCanvasBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+    <Style Selector="Button.wb-tab.selected:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbCanvasBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+    </Style>
+    <Style Selector="Button.wb-tab.selected ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+
+    <!-- Workbench icon button (title bar tools, toolbar actions) -->
+    <Style Selector="Button.wb-icon">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Width" Value="28" />
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.wb-icon ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgMutedBrush}" />
+        <Setter Property="Width" Value="15" />
+        <Setter Property="Height" Value="15" />
+    </Style>
+    <Style Selector="Button.wb-icon:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.wb-icon:pointerover ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+
+    <!-- Sidebar row -->
+    <Style Selector="Button.wb-row">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
     </Style>
-
-    <Style Selector="Button:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#F43F5E" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.35" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+    <Style Selector="Button.wb-row:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
     </Style>
-    <Style Selector="Button:pointerover /template/ Border#PART_Gloss">
-        <Setter Property="Opacity" Value="0.82" />
+    <Style Selector="Button.wb-row.selected /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
     </Style>
-    <Style Selector="Button:pointerover /template/ Border#PART_Sheen">
-        <Setter Property="Opacity" Value="0.4" />
+    <Style Selector="Button.wb-row.selected">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+    <Style Selector="Button.wb-row ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgMutedBrush}" />
+    </Style>
+    <Style Selector="Button.wb-row.selected ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgBrightBrush}" />
     </Style>
 
     <!-- Chrome icon buttons must not pick up the global button hover fill -->
@@ -58,288 +249,76 @@
         <Setter Property="Background" Value="Transparent" />
     </Style>
 
-    <Style Selector="Button:pressed">
-        <Setter Property="RenderTransform" Value="scale(0.985)" />
+    <!-- ============ Typography helpers ============ -->
+
+    <Style Selector="TextBlock.wb-title">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
     </Style>
-    <Style Selector="Button:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#BE123C" Offset="0" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+    <Style Selector="TextBlock.wb-heading">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
     </Style>
-    <Style Selector="Button:pressed /template/ Border#PART_Gloss">
-        <Setter Property="Opacity" Value="0.28" />
+    <Style Selector="TextBlock.wb-label">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgFaintBrush}" />
     </Style>
-    <Style Selector="Button:pressed /template/ Border#PART_Sheen">
-        <Setter Property="Opacity" Value="0.12" />
+    <Style Selector="TextBlock.wb-muted">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
+    </Style>
+    <Style Selector="TextBlock.wb-faint">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgFaintBrush}" />
+    </Style>
+    <Style Selector="TextBlock.wb-mono, SelectableTextBlock.wb-mono">
+        <Setter Property="FontFamily" Value="{DynamicResource WbMonoFont}" />
+        <Setter Property="FontSize" Value="12" />
     </Style>
 
-    <!-- Icon stroke stays white on press/hover -->
-    <Style Selector="Button:pressed ic|Lucide">
-        <Setter Property="StrokeBrush" Value="White" />
-    </Style>
+    <!-- ============ Surfaces ============ -->
 
-    <Style Selector="Button:pointerover ic|Lucide">
-        <Setter Property="StrokeBrush" Value="White" />
-    </Style>
-
-    <!-- Text/link chrome: no glass fill, no press scale -->
-    <Style Selector="Button.chrome /template/ Border#PART_Gloss, Button.top-nav /template/ Border#PART_Gloss, Button.section-link /template/ Border#PART_Gloss, Button.rail /template/ Border#PART_Gloss, Button.rail-labeled /template/ Border#PART_Gloss, Button.rail-icon /template/ Border#PART_Gloss">
-        <Setter Property="Opacity" Value="0" />
-    </Style>
-    <Style Selector="Button.chrome /template/ Border#PART_Sheen, Button.top-nav /template/ Border#PART_Sheen, Button.section-link /template/ Border#PART_Sheen, Button.rail /template/ Border#PART_Sheen, Button.rail-labeled /template/ Border#PART_Sheen, Button.rail-icon /template/ Border#PART_Sheen">
-        <Setter Property="Opacity" Value="0" />
-    </Style>
-    <Style Selector="Button.chrome /template/ Border#PART_Depth, Button.top-nav /template/ Border#PART_Depth, Button.section-link /template/ Border#PART_Depth, Button.rail /template/ Border#PART_Depth, Button.rail-labeled /template/ Border#PART_Depth, Button.rail-icon /template/ Border#PART_Depth">
-        <Setter Property="Opacity" Value="0" />
-    </Style>
-    <Style Selector="Button.chrome /template/ Border#PART_Clip, Button.top-nav /template/ Border#PART_Clip, Button.section-link /template/ Border#PART_Clip, Button.rail /template/ Border#PART_Clip, Button.rail-labeled /template/ Border#PART_Clip, Button.rail-icon /template/ Border#PART_Clip">
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-    </Style>
-    <Style Selector="Button.chrome /template/ Border#PART_Rim, Button.top-nav /template/ Border#PART_Rim, Button.section-link /template/ Border#PART_Rim, Button.rail /template/ Border#PART_Rim, Button.rail-labeled /template/ Border#PART_Rim, Button.rail-icon /template/ Border#PART_Rim">
-        <Setter Property="Opacity" Value="0" />
-    </Style>
-    <Style Selector="Button.chrome /template/ Border#PART_Shadow, Button.top-nav /template/ Border#PART_Shadow, Button.section-link /template/ Border#PART_Shadow, Button.rail /template/ Border#PART_Shadow, Button.rail-labeled /template/ Border#PART_Shadow, Button.rail-icon /template/ Border#PART_Shadow">
-        <Setter Property="BoxShadow" Value="0 0 0 0 #00000000" />
-    </Style>
-    <Style Selector="Button.chrome:pressed, Button.top-nav:pressed, Button.section-link:pressed, Button.rail:pressed, Button.rail-labeled:pressed">
-        <Setter Property="RenderTransform" Value="none" />
-    </Style>
-    <Style Selector="Button.top-nav:pointerover /template/ Border#PART_Fill, Button.section-link:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-    <Style Selector="Button.top-nav:pressed /template/ Border#PART_Fill, Button.section-link:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-
-    <Style Selector="Button.eclipse-primary">
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                <GradientStop Color="#E8E11D48" Offset="0" />
-                <GradientStop Color="#C44A1518" Offset="0.5" />
-                <GradientStop Color="#F2000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.eclipse-primary:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                <GradientStop Color="#F43F5E" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.4" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.eclipse-primary:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#9F1239" Offset="0" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.eclipse-ghost">
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E8E11D48" Offset="0" />
-                <GradientStop Color="#C44A1518" Offset="0.5" />
-                <GradientStop Color="#F2000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.eclipse-ghost:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#F43F5E" Offset="0" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.eclipse-ghost:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#9F1239" Offset="0" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.accent">
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E8E11D48" Offset="0" />
-                <GradientStop Color="#C44A1518" Offset="0.5" />
-                <GradientStop Color="#F2000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.accent:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E11D48" Offset="0" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.rail-labeled">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="11" />
-        <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="White" />
-    </Style>
-
-    <Style Selector="Button.rail-labeled:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background" Value="#33C41E3A" />
-    </Style>
-    <Style Selector="Button.rail-labeled:pointerover">
-        <Setter Property="Foreground" Value="White" />
-    </Style>
-
-    <Style Selector="Button.rail-labeled:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background" Value="#55C41E3A" />
-    </Style>
-
-    <Style Selector="Button.rail-icon">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="14" />
-        <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="Transitions">
-            <Transitions>
-                <BrushTransition Property="Background" Duration="0:0:0.16" />
-            </Transitions>
-        </Setter>
-    </Style>
-
-    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E8E11D48" Offset="0" />
-                <GradientStop Color="#F2000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Gloss">
-        <Setter Property="Opacity" Value="0.62" />
-    </Style>
-    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Sheen">
-        <Setter Property="Opacity" Value="0.28" />
-    </Style>
-    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Clip">
+    <Style Selector="Border.wb-panel">
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush">
-            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                <GradientStop Color="#55FFFFFF" Offset="0" />
-                <GradientStop Color="#33E11D48" Offset="0.45" />
-                <GradientStop Color="#22000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
     </Style>
-    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Depth">
-        <Setter Property="Opacity" Value="0.4" />
+    <Style Selector="Border.wb-raised">
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
     </Style>
-    <Style Selector="Button.rail-icon:pointerover /template/ Border#PART_Shadow">
-        <Setter Property="BoxShadow" Value="0 6 18 0 #55000000" />
-    </Style>
-
-    <Style Selector="Button.rail-icon:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#E11D48" Offset="0" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+    <Style Selector="Border.wb-chip">
+        <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadiusSmall}" />
+        <Setter Property="Padding" Value="6,1" />
     </Style>
 
-    <Style Selector="Button.rail-icon:pointerover ic|Lucide">
-        <Setter Property="StrokeBrush" Value="White" />
-    </Style>
-
-    <Style Selector="Button.rail-icon:pressed ic|Lucide">
-        <Setter Property="StrokeBrush" Value="White" />
-    </Style>
-
-    <Style Selector="Button.rail-icon:pointerover TextBlock">
-        <Setter Property="Foreground" Value="White" />
-    </Style>
-
-    <Style Selector="Button.rail-icon:pressed TextBlock">
-        <Setter Property="Foreground" Value="White" />
-    </Style>
-
-    <Style Selector="Button.rail-labeled:disabled">
-        <Setter Property="Opacity" Value="0.4" />
-    </Style>
-
-    <Style Selector="Button.rail">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
-    </Style>
-
-    <Style Selector="Button.rail:pointerover">
-        <Setter Property="Background" Value="#28FFFFFF" />
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-    </Style>
-
-    <Style Selector="Button.rail:pressed">
-        <Setter Property="Background" Value="#33FFFFFF" />
-    </Style>
-
-    <Style Selector="Button.rail:disabled">
-        <Setter Property="Opacity" Value="0.4" />
-    </Style>
-
-    <Style Selector="ToggleButton">
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="Template" Value="{StaticResource SpectreGlassButtonTemplate}" />
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                <GradientStop Color="#E8E11D48" Offset="0" />
-                <GradientStop Color="#C44A1518" Offset="0.55" />
-                <GradientStop Color="#F2000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-    <Style Selector="ToggleButton:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#F43F5E" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.35" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+    <Style Selector="Separator">
+        <Setter Property="Background" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="Height" Value="1" />
     </Style>
 
     <Style Selector="TextBox">
-        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="MinHeight" Value="30" />
+    </Style>
+
+    <Style Selector="ComboBox">
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style Selector="NumericUpDown">
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
     </Style>
 
     <Style Selector="TabControl">
@@ -347,11 +326,11 @@
     </Style>
 
     <Style Selector="controls|Card">
-        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadiusLarge}" />
     </Style>
 
     <Style Selector="controls|Hyperlink">
-        <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource WbAccentBrush}" />
         <Setter Property="Cursor" Value="Hand" />
     </Style>
 
@@ -359,19 +338,19 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <ControlTemplate>
-                <controls:Card Name="ContentBorder" Padding="0" Margin="0,2">
+                <controls:Card Name="ContentBorder" Padding="0" Margin="0,0,0,8">
                     <StackPanel>
-                        <Border Padding="16,12" Background="Transparent">
+                        <Border Padding="14,10" Background="Transparent">
                             <Grid ColumnDefinitions="*, Auto">
-                                <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="3">
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="2">
                                     <ContentPresenter Content="{TemplateBinding Header}"
-                                                      FontSize="14"
+                                                      FontSize="13"
                                                       FontWeight="SemiBold"
-                                                      Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                                                      Foreground="{DynamicResource WbFgBrightBrush}" />
                                     <controls:MarkdownTextBlock MarkdownText="{TemplateBinding Description}"
                                                                 FontSize="12"
                                                                 TextWrapping="Wrap"
-                                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                                Foreground="{DynamicResource WbFgMutedBrush}"
                                                                 IsVisible="{TemplateBinding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                                 </StackPanel>
                                 <ContentPresenter Grid.Column="1"
@@ -383,14 +362,14 @@
                         </Border>
 
                         <Border Name="PART_ContentContainer"
-                                BorderBrush="Transparent"
+                                BorderBrush="{DynamicResource WbLineBrush}"
                                 ClipToBounds="True">
                             <Border.Transitions>
                                 <Transitions>
-                                    <DoubleTransition Property="Height" Duration="0:0:0.25" Easing="CubicEaseOut" />
+                                    <DoubleTransition Property="Height" Duration="0:0:0.15" Easing="CubicEaseOut" />
                                 </Transitions>
                             </Border.Transitions>
-                            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" Padding="16" />
+                            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" Padding="14" />
                         </Border>
                     </StackPanel>
                 </controls:Card>
@@ -407,18 +386,32 @@
         <Setter Property="BorderThickness" Value="0" />
     </Style>
 
-    <Style Selector="FlyoutPresenter">
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+    <Style Selector="FlyoutPresenter, MenuFlyoutPresenter">
+        <Setter Property="Background" Value="{DynamicResource WbOverlayBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
+    </Style>
+
+    <Style Selector="ToolTip">
+        <Setter Property="Background" Value="{DynamicResource WbOverlayBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadiusSmall}" />
+        <Setter Property="FontSize" Value="12" />
     </Style>
 
     <Style Selector="AvaloniaEdit|TextEditor">
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WbDeepBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource WbMonoFont}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border CornerRadius="6">
+                <Border CornerRadius="{DynamicResource WbRadius}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{DynamicResource WbLineBrush}"
+                        BorderThickness="1">
                     <ScrollViewer Name="PART_ScrollViewer"
                                   Padding="{TemplateBinding Padding}"
                                   HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
@@ -429,14 +422,13 @@
         </Setter>
     </Style>
 
-
     <Style Selector="ListBox">
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
         <Setter Property="Margin" Value="0,4" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_RootBorder"
@@ -458,11 +450,34 @@
         </Setter>
     </Style>
 
+    <Style Selector="ListBox.wb-plain">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style Selector="ListBoxItem">
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="Margin" Value="0,1" />
+        <Setter Property="MinHeight" Value="0" />
+    </Style>
+    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
+    </Style>
+    <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
+    </Style>
+    <Style Selector="ListBoxItem:selected">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+
     <Style Selector="cc|CompletionListBox">
         <Setter Property="Background" Value="{DynamicResource CompletionListBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadiusSmall}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="ClipToBounds" Value="True" />
     </Style>
@@ -491,25 +506,26 @@
         </Setter>
     </Style>
 
-
     <Style Selector="DataGrid">
-        <Setter Property="Background" Value="{DynamicResource NormalDarkAndLightBackground}" />
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="GridLinesVisibility" Value="Horizontal" />
-        <Setter Property="HorizontalGridLinesBrush" Value="#11000000" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource WbLineSubtleBrush}" />
         <Setter Property="VerticalGridLinesBrush" Value="Transparent" />
 
         <Style Selector="^ DataGridColumnHeader">
-            <Setter Property="Background" Value="{DynamicResource ControlFillColorTertiaryBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="Background" Value="{DynamicResource WbDeepBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
             <Setter Property="Height" Value="30" />
             <Setter Property="Padding" Value="8,0,12,0" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="FontWeight" Value="SemiBold" />
 
             <Style Selector="^:pointerover">
-                <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+                <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
             </Style>
         </Style>
 
@@ -518,11 +534,384 @@
             <Setter Property="Padding" Value="6,0,6,0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
 
             <Style Selector="^:pointerover">
-                <Setter Property="Background" Value="#14000000" />
+                <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
             </Style>
         </Style>
+    </Style>
+
+    <!-- Square progress bar (bootstrapper dialogs) -->
+    <Style Selector="ProgressBar.Square">
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource WbAccentBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Name="TemplateRoot" ClipToBounds="True">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0" />
+                    <Border Name="PART_Indicator"
+                            HorizontalAlignment="Left"
+                            Background="{TemplateBinding Foreground}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Width" Duration="0:0:0.1" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="ProgressBar.Square:indeterminate /template/ Border#PART_Indicator">
+        <Style.Animations>
+            <Animation Duration="0:0:3" IterationCount="Infinite">
+                <KeyFrame KeyTime="0:0:0">
+                    <Setter Property="TranslateTransform.X" Value="-200"/>
+                </KeyFrame>
+                <KeyFrame KeyTime="0:0:3">
+                    <Setter Property="TranslateTransform.X" Value="800"/>
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+        <Setter Property="Width" Value="100" />
+        <Setter Property="RenderTransform" Value="translate(-200px, 0px)"/>
+    </Style>
+
+    <Style Selector="ProgressBar">
+        <Setter Property="Foreground" Value="{DynamicResource WbAccentBrush}" />
+    </Style>
+
+    <!-- Split-button halves are plain Buttons; keep them on accent text so hover rules above don't override. -->
+    <Style Selector="controls|IconButton.Primary ic|Lucide, controls|IconButton.Primary Button:pointerover ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbOnAccentBrush}" />
+    </Style>
+    <Style Selector="controls|IconButton.Primary TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource WbOnAccentBrush}" />
+    </Style>
+
+    <!-- ============ Shell: sidebar ============ -->
+
+    <Style Selector="Button.nav">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="9" />
+        <Setter Property="Padding" Value="11,0" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.nav ic|Lucide">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="StrokeThickness" Value="1.8" />
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgFaintBrush}" />
+    </Style>
+    <Style Selector="Button.nav:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
+    </Style>
+    <Style Selector="Button.nav:pressed /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbActiveBrush}" />
+    </Style>
+    <Style Selector="Button.nav:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+    </Style>
+    <Style Selector="Button.nav:pointerover ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgBrush}" />
+    </Style>
+    <Style Selector="Button.nav.selected /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbNavSelectedBrush}" />
+    </Style>
+    <Style Selector="Button.nav.selected">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.nav.selected ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbAccentBrush}" />
+    </Style>
+    <Style Selector="Button.nav Border.nav-pip">
+        <Setter Property="Width" Value="3" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="CornerRadius" Value="2" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="-11,0,0,0" />
+        <Setter Property="Background" Value="{DynamicResource WbAccentBrush}" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Opacity" Duration="0:0:0.15" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.nav.selected Border.nav-pip">
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+
+    <Style Selector="TextBlock.nav-section">
+        <Setter Property="FontSize" Value="10.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="LetterSpacing" Value="0.9" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgFaintBrush}" />
+        <Setter Property="Margin" Value="12,16,0,6" />
+    </Style>
+
+    <Style Selector="Border.sidebar-search">
+        <Setter Property="Height" Value="36" />
+        <Setter Property="Padding" Value="8,0,6,0" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.kbd">
+        <Setter Property="Padding" Value="5,1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.sidebar-card">
+        <Setter Property="Padding" Value="10,9" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <!-- ============ Shell: action dock ============ -->
+
+    <Style Selector="Border.action-dock">
+        <Setter Property="Padding" Value="6" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Background" Value="{DynamicResource WbDockBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BoxShadow" Value="0 10 30 0 #50000000" />
+    </Style>
+    <Style Selector="Button.dock">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="Padding" Value="14,0" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.dock ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgFaintBrush}" />
+    </Style>
+    <Style Selector="Button.dock:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+
+    <!-- ============ Home ============ -->
+
+    <Style Selector="Border.home-hero">
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.home-tile">
+        <Setter Property="Padding" Value="14,13" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="Border.home-icon">
+        <Setter Property="Width" Value="36" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="{DynamicResource WbTileIconBrush}" />
+    </Style>
+    <Style Selector="Button.hero">
+        <Setter Property="Height" Value="38" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="CornerRadius" Value="11" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.hero.accent">
+        <Setter Property="Background" Value="{DynamicResource WbAccentBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbAccentBrush}" />
+        <Setter Property="Padding" Value="20,0" />
+    </Style>
+    <Style Selector="Button.home-action">
+        <Setter Property="Padding" Value="14,12" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.home-action:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineFocusBrush}" />
+    </Style>
+    <Style Selector="Button.home-action ic|Lucide.chevron">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgFaintBrush}" />
+        <Setter Property="Opacity" Value="0.6" />
+    </Style>
+    <Style Selector="Button.home-action:pointerover ic|Lucide.chevron">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbFgBrightBrush}" />
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="Button.home-action:pointerover Border.home-icon ic|Lucide, Button.home-game:pointerover ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbAccentBrush}" />
+    </Style>
+    <Style Selector="Button.home-game">
+        <Setter Property="Padding" Value="6,6,6,8" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.home-game:pointerover /template/ Border#PART_Fill">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.home-game Border.play-badge">
+        <Setter Property="Width" Value="26" />
+        <Setter Property="Height" Value="26" />
+        <Setter Property="CornerRadius" Value="13" />
+        <Setter Property="Background" Value="{DynamicResource WbAccentBrush}" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Opacity" Duration="0:0:0.15" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.home-game:pointerover Border.play-badge">
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="Button.home-game Border.play-badge ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{DynamicResource WbOnAccentBrush}" />
+    </Style>
+
+    <!-- ============ Appearance pickers ============ -->
+
+    <Style Selector="ListBox.wb-cards">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="-5,0,-5,8" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="CornerRadius" Value="14" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem Border.pick-card">
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="BorderThickness" Value="1.5" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem:pointerover Border.pick-card">
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineFocusBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem:selected Border.pick-card">
+        <Setter Property="BorderBrush" Value="{DynamicResource WbAccentBrush}" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem Border.pick-check">
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="ListBox.wb-cards ListBoxItem:selected Border.pick-check">
+        <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <Style Selector="Border.anim-badge">
+        <Setter Property="Padding" Value="6,1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Background" Value="{DynamicResource WbAccentSoftBrush}" />
+    </Style>
+    <Style Selector="Border.anim-badge > TextBlock">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource WbAccentBrush}" />
+    </Style>
+
+    <Style Selector="RadioButton.chip">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgMutedBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Chip" CornerRadius="999" Padding="12,5" BorderThickness="1"
+                        Background="{DynamicResource WbFillBrush}" BorderBrush="{DynamicResource WbLineBrush}">
+                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="RadioButton.chip:pointerover /template/ Border#PART_Chip">
+        <Setter Property="Background" Value="{DynamicResource WbHoverBrush}" />
+    </Style>
+    <Style Selector="RadioButton.chip:pointerover">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+    </Style>
+    <Style Selector="RadioButton.chip:checked /template/ Border#PART_Chip">
+        <Setter Property="Background" Value="{DynamicResource WbAccentSoftBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbAccentBrush}" />
+    </Style>
+    <Style Selector="RadioButton.chip:checked">
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrightBrush}" />
+    </Style>
+    <Style Selector="RadioButton.chip TextBlock.chip-count">
+        <Setter Property="Opacity" Value="0.6" />
+    </Style>
+    <Style Selector="RadioButton.chip ic|Lucide">
+        <Setter Property="StrokeBrush" Value="{Binding $parent[RadioButton].Foreground}" />
+    </Style>
+
+    <Style Selector="Button.bg-quick">
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1.5" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.bg-quick:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineFocusBrush}" />
     </Style>
 </Styles>

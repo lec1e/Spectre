@@ -2,84 +2,74 @@
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
-        xmlns:md="clr-namespace:Froststrap.UI.Elements.Controls"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
         xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
         xmlns:app="clr-namespace:Froststrap"
         Title="{x:Static app:App.BrandName}"
-        MinWidth="420" MaxWidth="560" SizeToContent="Height" CanResize="False"
-        WindowStartupLocation="CenterScreen"
-        Background="Transparent">
+        Width="440" MinWidth="400" MaxWidth="520"
+        SizeToContent="Height" CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource WbWindowBackgroundBrush}">
 
-    <controls:LiquidGlassPanel x:Name="ShellGlass"
-                               Margin="0"
-                               CornerRadius="0"
-                               TintOpacity="0.58"
-                               MaterialOpacity="0.46"
-                               UseSettingsCornerRadius="False"
-                               ClipToBounds="True">
-        <Panel>
-            <controls:AbyssGlowBackground x:Name="AbyssBackground" />
-            <Grid RowDefinitions="Auto,*,Auto">
-                <Border Grid.Row="0"
-                        Background="#661A060A"
-                        BorderBrush="Transparent"
-                        BorderThickness="0">
-                    <md:TitleBar x:Name="RootTitleBar"
-                                 Icon="avares://Spectre/SpectreMark.png"
-                                 Title="{x:Static app:App.BrandName}"
-                                 ShowMaximize="False"
-                                 ShowMinimize="False" />
-                </Border>
+    <Panel>
+        <controls:AnimatedBackground x:Name="Backdrop" />
 
-                <Grid Grid.Row="1" Margin="22,20" ColumnDefinitions="Auto,*" ColumnSpacing="16">
-                    <Border Width="40" Height="40"
-                            CornerRadius="20"
-                            Background="#88C41E3A"
-                            VerticalAlignment="Top">
-                        <Panel>
-                            <ic:Lucide x:Name="GlyphIcon"
-                                       Width="20" Height="20"
-                                       Icon="CircleQuestionMark"
-                                       StrokeBrush="#FEE2E2"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                            <Image x:Name="IconImage" Width="22" Height="22" IsVisible="False"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Panel>
-                    </Border>
-
-                    <md:MarkdownTextBlock x:Name="MessageMarkdownTextBlock" Grid.Column="1"
-                                             VerticalAlignment="Center"
-                                             TextWrapping="Wrap"
-                                             FontSize="14"
-                                             Foreground="White" />
-                </Grid>
-
-                <Border Grid.Row="2"
-                        Padding="16,14"
-                        Background="#881A060A"
-                        BorderBrush="Transparent"
-                        BorderThickness="0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
-                        <Button x:Name="ButtonOne"
-                                MinWidth="88" Height="36"
-                                CornerRadius="12"
-                                Content="Button 1"
-                                IsVisible="False" />
-                        <Button x:Name="ButtonTwo"
-                                MinWidth="88" Height="36"
-                                CornerRadius="12"
-                                Content="Button 2"
-                                IsVisible="False" />
-                        <Button x:Name="ButtonThree"
-                                MinWidth="88" Height="36"
-                                CornerRadius="12"
-                                Content="Button 3"
-                                IsVisible="False" />
-                    </StackPanel>
-                </Border>
+        <Grid RowDefinitions="36,*,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="14,0,0,0">
+                <Panel WindowDecorationProperties.ElementRole="TitleBar" Background="Transparent" />
+                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" IsHitTestVisible="False">
+                    <controls:SpectreLogo Width="18" Height="18" Glow="0.4" />
+                    <TextBlock Text="{x:Static app:App.BrandName}" FontSize="12" FontWeight="SemiBold"
+                               Foreground="{DynamicResource WbLogoBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+                <controls:IconButton Grid.Column="1" Classes="TitleBarButton Close"
+                                     Icon="X" Click="Close_Click" />
             </Grid>
-        </Panel>
-    </controls:LiquidGlassPanel>
+
+            <Grid Grid.Row="1" Margin="24,4,24,8" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                <Border Width="40" Height="40" CornerRadius="12"
+                        Background="{DynamicResource WbAccentSoftBrush}"
+                        VerticalAlignment="Top">
+                    <Panel>
+                        <ic:Lucide x:Name="GlyphIcon"
+                                   Width="18" Height="18"
+                                   Icon="CircleQuestionMark"
+                                   StrokeBrush="{DynamicResource WbAccentBrush}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                        <Image x:Name="IconImage" Width="20" Height="20" IsVisible="False"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Panel>
+                </Border>
+
+                <controls:MarkdownTextBlock x:Name="MessageMarkdownTextBlock" Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      TextWrapping="Wrap"
+                                      FontSize="14"
+                                      Foreground="{DynamicResource WbFgBrightBrush}" />
+            </Grid>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"
+                        Spacing="8" Margin="24,4,24,20">
+                <controls:IconButton x:Name="ButtonOne"
+                        Classes="Primary"
+                        MinWidth="92" Height="38" CornerRadius="12"
+                        Padding="16,0"
+                        Content="Button 1"
+                        IsVisible="False" />
+                <controls:IconButton x:Name="ButtonTwo"
+                        Classes="ghost"
+                        MinWidth="92" Height="38" CornerRadius="12"
+                        Padding="16,0"
+                        Content="Button 2"
+                        IsVisible="False" />
+                <controls:IconButton x:Name="ButtonThree"
+                        Classes="ghost"
+                        MinWidth="92" Height="38" CornerRadius="12"
+                        Padding="16,0"
+                        Content="Button 3"
+                        IsVisible="False" />
+            </StackPanel>
+        </Grid>
+    </Panel>
 </base:AvaloniaWindow>

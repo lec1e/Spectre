@@ -1,4 +1,4 @@
-<Application
+﻿<Application
     x:Class="Froststrap.App"
     Name="Spectre"
     xmlns="https://github.com/avaloniaui"
@@ -10,7 +10,7 @@
     RequestedThemeVariant="Dark">
 
     <Application.Styles>
-        <sty:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True" />
+        <sty:FluentAvaloniaTheme PreferSystemTheme="False" PreferUserAccentColor="False" />
 
         <StyleInclude Source="avares://Spectre/UI/Elements/Controls/Hyperlink.axaml" />
         <StyleInclude Source="avares://Spectre/UI/Elements/Controls/OptionControl.axaml" />
@@ -18,9 +18,7 @@
         <StyleInclude Source="avares://Spectre/UI/Elements/Controls/Card.axaml" />
         <StyleInclude Source="avares://Spectre/UI/Elements/Controls/CardExpander.axaml" />
         <StyleInclude Source="avares://Spectre/UI/Elements/Controls/TitleBar.axaml" />
-        <StyleInclude Source="avares://Spectre/UI/AppThemes/GlassChrome.axaml" />
         <StyleInclude Source="avares://Spectre/UI/Elements/Controls/IconButton.axaml" />
-        <StyleInclude Source="avares://Spectre/UI/Elements/Controls/LiquidGlassPanel.axaml" />
 
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 
@@ -28,35 +26,28 @@
         <StyleInclude Source="avares://Spectre/UI/Elements/Controls/CardAction.axaml" />
 
         <Style Selector="ic|Lucide">
-            <Setter Property="StrokeBrush" Value="White" />
+            <Setter Property="StrokeBrush" Value="{DynamicResource WbFgBrush}" />
             <Setter Property="StrokeThickness" Value="1.5" />
         </Style>
         <Style Selector="Window">
-            <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="FontFamily" Value="{DynamicResource WbFontFamily}" />
+            <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
         </Style>
         <Style Selector="TextBlock">
-            <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="{DynamicResource WbFontFamily}" />
         </Style>
-        <Style Selector="SelectableTextBlock">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style Selector="Label">
-            <Setter Property="Foreground" Value="White" />
+        <Style Selector="ui|FANavigationView /template/ Button#TogglePaneButton /template/ TextBlock#Icon">
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets" />
         </Style>
         <Style Selector="Button">
-            <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="{DynamicResource WbFontFamily}" />
         </Style>
         <Style Selector="TextBox">
-            <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style Selector="Button">
-            <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="FontFamily" Value="{DynamicResource WbFontFamily}" />
+            <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
         </Style>
         <Style Selector="ToggleSwitch">
-            <Setter Property="FontFamily" Value="avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora" />
+            <Setter Property="FontFamily" Value="{DynamicResource WbFontFamily}" />
         </Style>
     </Application.Styles>
 
@@ -74,18 +65,13 @@
 
             <FontFamily x:Key="Rubik">avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora</FontFamily>
             <FontFamily x:Key="SpectreFont">avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora</FontFamily>
+            <FontFamily x:Key="WbMonoFont">Cascadia Mono, Consolas, monospace</FontFamily>
             <FontFamily x:Key="BuilderIconsRegular">avares://Spectre/Resources/Fonts#BuilderIcons-Regular</FontFamily>
             <FontFamily x:Key="BuilderIconsFilled">avares://Spectre/Resources/Fonts#BuilderIcons-Filled</FontFamily>
 
-            <SolidColorBrush x:Key="BrandInkBrush" Color="#0A0406" />
-            <SolidColorBrush x:Key="BrandAccentBrush" Color="#E11D48" />
-            <SolidColorBrush x:Key="BrandHairlineBrush" Color="#66FFFFFF" />
-            <SolidColorBrush x:Key="GlassHeaderBrush" Color="#28C41E3A" />
-            <SolidColorBrush x:Key="GlassRailBrush" Color="#3A7F1D1D" />
-            <SolidColorBrush x:Key="GlassStageBrush" Color="#227F1D1D" />
-            <SolidColorBrush x:Key="GlassFillBrush" Color="#557F1D1D" />
-            <SolidColorBrush x:Key="GlassCardBrush" Color="#38C41E3A" />
-            <SolidColorBrush x:Key="GlassBorderBrush" Color="#88FB7185" />
+            <CornerRadius x:Key="WbRadius">8</CornerRadius>
+            <CornerRadius x:Key="WbRadiusSmall">6</CornerRadius>
+            <CornerRadius x:Key="WbRadiusLarge">12</CornerRadius>
 
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
             <converters:EnumNameConverter x:Key="EnumNameConverter" />

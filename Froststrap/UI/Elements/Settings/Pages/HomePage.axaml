@@ -1,0 +1,173 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+             xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
+             xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+             x:Class="Froststrap.UI.Elements.Settings.Pages.HomePage"
+             x:DataType="vm:HomeViewModel">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="14,6,14,14" Spacing="12">
+
+            <!-- Hero -->
+            <Border Classes="home-hero">
+                <Panel>
+                    <Border CornerRadius="18" Background="{DynamicResource WbHeroBrush}" />
+                    <Grid ColumnDefinitions="*,Auto" Margin="30,28,30,28" ColumnSpacing="24">
+                        <StackPanel Spacing="10" VerticalAlignment="Center">
+                            <Border Classes="wb-chip" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Ellipse Width="6" Height="6" Fill="{DynamicResource WbAccentBrush}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding VersionBadge}" FontSize="10.5" FontWeight="SemiBold"
+                                               LetterSpacing="0.6" Foreground="{DynamicResource WbFgMutedBrush}" />
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="{Binding HeroTitle}" FontSize="30" FontWeight="Bold"
+                                       Foreground="{DynamicResource WbFgBrightBrush}" TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding HeroSubtitle}" FontSize="13.5" MaxWidth="560" HorizontalAlignment="Left"
+                                       Foreground="{DynamicResource WbFgMutedBrush}" TextWrapping="Wrap" LineHeight="20" />
+
+                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,10,0,0">
+                                <Button Classes="accent hero" Command="{Binding LaunchPlayerCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <ic:Lucide Icon="Play" Width="15" Height="15" StrokeBrush="{DynamicResource WbOnAccentBrush}" />
+                                        <TextBlock Text="{Binding PlayerLaunchText}" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="hero" Command="{Binding LaunchStudioCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <ic:Lucide Icon="Wrench" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding StudioLaunchText}" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="hero" Command="{Binding NavigateCommand}" CommandParameter="quickplay">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <ic:Lucide Icon="Gamepad2" Width="15" Height="15" />
+                                        <TextBlock Text="Quick Play" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Panel Grid.Column="1" Width="112" Height="112" VerticalAlignment="Center">
+                            <Ellipse Fill="{DynamicResource WbTileIconBrush}" Stroke="{DynamicResource WbLineStrongBrush}" StrokeThickness="1" />
+                            <controls:SpectreLogo Width="62" Height="62" Glow="0.65" IsVisible="{Binding !HasAvatar}" />
+                            <Border CornerRadius="56" ClipToBounds="True" Margin="4" IsVisible="{Binding HasAvatar}">
+                                <Image Source="{Binding Avatar}" Stretch="UniformToFill" />
+                            </Border>
+                        </Panel>
+                    </Grid>
+                </Panel>
+            </Border>
+
+            <!-- Stats -->
+            <ItemsControl ItemsSource="{Binding Stats}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:HomeStat">
+                        <Border Classes="home-tile" Margin="0,0,10,0">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <Border Classes="home-icon">
+                                    <ic:Lucide Icon="{Binding Icon}" Width="16" Height="16"
+                                               StrokeBrush="{DynamicResource WbAccentBrush}" />
+                                </Border>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
+                                    <TextBlock Text="{Binding Label}" FontSize="11" Foreground="{DynamicResource WbFgFaintBrush}" />
+                                    <TextBlock Text="{Binding Value}" FontSize="15" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
+                                               Foreground="{DynamicResource WbFgBrightBrush}" ToolTip.Tip="{Binding Value}" />
+                                    <TextBlock Text="{Binding Detail}" FontSize="11" Foreground="{DynamicResource WbFgMutedBrush}"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Recent games -->
+            <StackPanel Spacing="10" IsVisible="{Binding HasRecentGames}">
+                <Grid ColumnDefinitions="*,Auto" Margin="2,8,10,0">
+                    <TextBlock Classes="wb-label" Text="JUMP BACK IN" VerticalAlignment="Center" />
+                    <Button Grid.Column="1" Classes="section-link" Command="{Binding NavigateCommand}" CommandParameter="quickplay">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock Text="See all" FontSize="12" />
+                            <ic:Lucide Icon="ChevronRight" Width="13" Height="13" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <ItemsControl ItemsSource="{Binding RecentGames}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="6" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:HomeRecentGame">
+                            <Button Classes="home-game" Margin="0,0,10,0"
+                                    Command="{Binding $parent[ItemsControl].((vm:HomeViewModel)DataContext).PlayGameCommand}"
+                                    CommandParameter="{Binding}"
+                                    ToolTip.Tip="{Binding Name}">
+                                <StackPanel Spacing="8">
+                                    <Panel>
+                                        <Border CornerRadius="12" ClipToBounds="True" Background="{DynamicResource WbFillBrush}">
+                                            <Viewbox Stretch="UniformToFill">
+                                                <Panel Width="150" Height="150">
+                                                    <ic:Lucide Icon="Gamepad2" Width="34" Height="34"
+                                                               StrokeBrush="{DynamicResource WbFgFaintBrush}" />
+                                                    <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                                </Panel>
+                                            </Viewbox>
+                                        </Border>
+                                        <Border Classes="play-badge" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8">
+                                            <ic:Lucide Icon="Play" Width="12" Height="12" StrokeBrush="{DynamicResource WbOnAccentBrush}" />
+                                        </Border>
+                                    </Panel>
+                                    <StackPanel Spacing="1" Margin="2,0">
+                                        <TextBlock Text="{Binding Name}" FontSize="12.5" FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource WbFgBrightBrush}" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding LastPlayed}" FontSize="11" Foreground="{DynamicResource WbFgFaintBrush}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Shortcuts -->
+            <TextBlock Classes="wb-label" Text="SHORTCUTS" Margin="2,8,0,0" />
+            <ItemsControl ItemsSource="{Binding Actions}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:HomeAction">
+                        <Button Classes="home-action" Margin="0,0,10,10"
+                                Command="{Binding $parent[ItemsControl].((vm:HomeViewModel)DataContext).NavigateCommand}"
+                                CommandParameter="{Binding Tag}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Classes="home-icon">
+                                    <ic:Lucide Icon="{Binding Icon}" Width="16" Height="16"
+                                               StrokeBrush="{DynamicResource WbAccentBrush}" />
+                                </Border>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                                    <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource WbFgBrightBrush}" />
+                                    <TextBlock Text="{Binding Description}" FontSize="11.5" TextTrimming="CharacterEllipsis"
+                                               Foreground="{DynamicResource WbFgMutedBrush}" />
+                                </StackPanel>
+                                <ic:Lucide Grid.Column="2" Classes="chevron" Icon="ArrowUpRight" Width="14" Height="14" />
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

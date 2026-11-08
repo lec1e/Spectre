@@ -8,9 +8,8 @@
              x:DataType="vm:MultiInstanceViewModel">
   <ScrollViewer>
     <StackPanel Margin="14" Spacing="12">
-      <TextBlock Text="Multi Instance" FontSize="18" FontWeight="SemiBold" />
       <TextBlock TextWrapping="Wrap" Opacity="0.7" FontSize="13"
-                 Text="Hold Roblox's single-instance lock so multiple clients can run side by side. Manage accounts and bulk launches on the AltMan tab." />
+                 Text="Hold Roblox's single-instance lock so multiple clients can run side by side. Each client uses whichever Roblox account is signed in when it launches." />
 
       <Border Padding="12" CornerRadius="6" BorderThickness="1">
         <TextBlock FontSize="12" TextWrapping="Wrap" Opacity="0.75"

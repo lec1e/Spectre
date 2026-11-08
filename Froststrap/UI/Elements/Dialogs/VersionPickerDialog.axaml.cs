@@ -16,8 +16,7 @@ public partial class VersionPickerDialog : AvaloniaWindow
     {
         InitializeComponent();
         DataContext = _vm;
-        SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-        SpectreChrome.AttachPointer(this, AbyssBackground);
+        SpectreChrome.Apply(this);
     }
 
     private void Cancel_Click(object? sender, RoutedEventArgs e) => Close(false);

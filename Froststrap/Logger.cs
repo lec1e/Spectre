@@ -56,7 +56,7 @@
                 if (NoWriteMode)
                     return;
 
-                WriteLine(LOG_IDENT, $"Failed to initialize because Froststrap cannot write to {directory}");
+                WriteLine(LOG_IDENT, $"Failed to initialize because Spectre cannot write to {directory}");
 
                 await Frontend.ShowMessageBox(
                     String.Format(Strings.Logger_NoWriteMode, directory),
@@ -115,6 +115,16 @@
             WriteToLog(line);
             History.Add(line);
         }
+
+        public void Debug(string message) => WriteLine("Debug", message);
+        public void Info(string message) => WriteLine("Info", message);
+        public void Info(string identifier, string message) => WriteLine(identifier, message);
+        public void Warn(string message) => WriteLine("Warning", message);
+        public void Warn(string identifier, string message) => WriteLine(identifier, message);
+        public void Error(string message) => WriteLine("Error", message);
+        public void Error(string identifier, string message) => WriteLine(identifier, message);
+        public void Error(Exception ex) => WriteException("Error", ex);
+        public void Error(Exception ex, string message) => WriteException(message, ex);
 
         public void WriteException(string identifier, Exception ex)
         {

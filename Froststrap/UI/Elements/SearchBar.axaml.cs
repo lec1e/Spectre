@@ -48,6 +48,12 @@ public partial class SearchBar : UserControl
             FlyoutBase.ShowAttachedFlyout(SearchTextBox);
     }
 
+    public void FocusSearch()
+    {
+        SearchTextBox.Focus();
+        SearchTextBox.SelectAll();
+    }
+
     private void OnScrollChanged(object? sender, ScrollChangedEventArgs e)
     {
         if (sender is ScrollViewer scrollViewer)

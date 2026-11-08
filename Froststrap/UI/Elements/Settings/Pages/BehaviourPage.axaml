@@ -110,6 +110,26 @@
 				</StackPanel>
 			</controls:OptionControl>
 
+			<controls:CardExpander Header="SoftKey (snap tap)"
+                                   Description="When you press the opposite direction key, the key you were already holding is released, so you change direction instantly. Only active while Roblox is focused."
+                                   Classes="NoUserExpansion"
+                                   IsExpanded="{Binding SoftKeyEnabled, Mode=OneWay}"
+                                   IsVisible="{x:Static gv:GlobalViewModel.IsWindows}">
+				<controls:CardExpander.HeaderContent>
+					<ToggleSwitch IsChecked="{Binding SoftKeyEnabled, Mode=TwoWay}" />
+				</controls:CardExpander.HeaderContent>
+				<StackPanel>
+					<controls:OptionControl
+                        Header="Key layout"
+                        Description="Which movement keys SoftKey watches.">
+						<ComboBox
+                            MinWidth="200"
+                            ItemsSource="{Binding SoftKeyProfiles}"
+                            SelectedItem="{Binding SoftKeyProfile, Mode=TwoWay}" />
+					</controls:OptionControl>
+				</StackPanel>
+			</controls:CardExpander>
+
 			<controls:CardExpander Header="{x:Static resources:Strings.Menu_Bootstrapper_Experimental_BetterMatchmaking_Title}"
                                    Description="{x:Static resources:Strings.Menu_Bootstrapper_Experimental_BetterMatchmaking_Description}"
                                    Classes="NoUserExpansion" IsExpanded="{Binding EnableBetterMatchmaking, Mode=OneWay}">

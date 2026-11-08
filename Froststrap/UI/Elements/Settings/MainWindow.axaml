@@ -3,241 +3,193 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
+    xmlns:util="clr-namespace:Froststrap.Utility"
     xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
     xmlns:elements="clr-namespace:Froststrap.UI.Elements"
     xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
-    xmlns:local="clr-namespace:Froststrap.UI.Elements.Settings"
     xmlns:enums="using:Froststrap.Enums"
+    xmlns:models="using:Froststrap.Models"
     xmlns:resources="using:Froststrap.Resources"
+    xmlns:transitions="clr-namespace:Froststrap.UI.Utility"
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
     xmlns:app="clr-namespace:Froststrap"
     Title="{x:Static app:App.BrandName}"
     Icon="avares://Spectre/SpectreMark.png"
-    Width="1280"
-    Height="800"
-    MinWidth="1080"
-    MinHeight="680"
+    Width="1200"
+    Height="780"
+    MinWidth="900"
+    MinHeight="580"
     x:DataType="vm:MainWindowViewModel"
     CanResize="True"
     WindowStartupLocation="CenterScreen"
-    Background="Transparent">
-
-    <base:AvaloniaWindow.Styles>
-        <!-- Kill default button chrome so selection pill alone provides the highlight -->
-        <Style Selector="Button.top-nav">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-        <Style Selector="Button.top-nav /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
-        <Style Selector="Button.top-nav:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="Button.top-nav:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-
-        <Style Selector="Border.nav-pill">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="CornerRadius" Value="11" />
-            <Setter Property="Padding" Value="10,0" />
-            <Setter Property="Height" Value="32" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="ClipToBounds" Value="True" />
-            <Setter Property="UseLayoutRounding" Value="True" />
-        </Style>
-        <Style Selector="Border.nav-pill:pointerover">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="Border.nav-pill.selected">
-            <Setter Property="BorderBrush">
-                <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                    <GradientStop Color="#55FFFFFF" Offset="0" />
-                    <GradientStop Color="#33E11D48" Offset="0.45" />
-                    <GradientStop Color="#22000000" Offset="1" />
-                </LinearGradientBrush>
-            </Setter>
-            <Setter Property="BoxShadow" Value="0 6 16 0 #40000000" />
-            <Setter Property="Background">
-                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                    <GradientStop Color="#E8E11D48" Offset="0" />
-                    <GradientStop Color="#C44A1518" Offset="0.5" />
-                    <GradientStop Color="#F2000000" Offset="1" />
-                </LinearGradientBrush>
-            </Setter>
-        </Style>
-        <Style Selector="Border.nav-pill Border.nav-gloss">
-            <Setter Property="Opacity" Value="0" />
-        </Style>
-        <Style Selector="Border.nav-pill Border.nav-sheen">
-            <Setter Property="Opacity" Value="0" />
-        </Style>
-        <Style Selector="Border.nav-pill.selected Border.nav-gloss">
-            <Setter Property="Opacity" Value="0.48" />
-        </Style>
-        <Style Selector="Border.nav-pill.selected Border.nav-sheen">
-            <Setter Property="Opacity" Value="0.2" />
-        </Style>
-        <!-- Selected stays filled; unselected hover only tints the icon via button styles below -->
-        <Style Selector="Button.top-nav:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="Button.top-nav:pointerover /template/ Border#PART_Fill">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="Button.top-nav:pointerover ic|Lucide">
-            <Setter Property="StrokeBrush" Value="White" />
-        </Style>
-        <Style Selector="Button.top-nav:pointerover TextBlock">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style Selector="Border.nav-pill.selected:pointerover">
-            <Setter Property="Background">
-                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                    <GradientStop Color="#F43F5E" Offset="0" />
-                    <GradientStop Color="#E11D48" Offset="0.35" />
-                    <GradientStop Color="#000000" Offset="1" />
-                </LinearGradientBrush>
-            </Setter>
-        </Style>
-        <Style Selector="Border.nav-pill.selected:pointerover Border.nav-gloss">
-            <Setter Property="Opacity" Value="0.82" />
-        </Style>
-    </base:AvaloniaWindow.Styles>
+    Background="{DynamicResource WbWindowBackgroundBrush}">
 
     <Panel>
-        <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="0"
-                                   CornerRadius="0"
-                                   TintOpacity="0.58"
-                                   MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False"
-                                   ClipToBounds="False">
-            <Panel>
-                <!-- Marble veins sit ON the acrylic; pointer parallax moves them. -->
-                <controls:AbyssGlowBackground x:Name="AbyssBackground"
-                                              ZIndex="0" />
+        <controls:AnimatedBackground x:Name="Backdrop" />
 
-                <Grid ZIndex="2" RowDefinitions="56,*,52" IsHitTestVisible="True">
-                <Border Grid.Row="0"
-                        BorderBrush="Transparent"
-                        BorderThickness="0"
-                        Background="#22140608">
-                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="16,0,10,0" ColumnSpacing="12">
-                        <Panel Grid.Column="0" Grid.ColumnSpan="4"
-                               WindowDecorationProperties.ElementRole="TitleBar"
-                               Background="Transparent" />
+        <Grid ColumnDefinitions="240,*">
 
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10"
+            <!-- ===== Sidebar ===== -->
+            <Border Grid.Column="0"
+                    Background="{DynamicResource WbSidebarBrush}"
+                    BorderBrush="{DynamicResource WbLineBrush}" BorderThickness="0,0,1,0">
+                <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+                    <Panel Grid.Row="0" Height="64">
+                        <Panel WindowDecorationProperties.ElementRole="TitleBar" Background="Transparent" />
+                        <StackPanel Orientation="Horizontal" Spacing="11" Margin="18,6,0,0"
                                     VerticalAlignment="Center" IsHitTestVisible="False">
-                            <controls:EclipseLogoMark Width="24" Height="24" />
-                            <TextBlock Text="{x:Static app:App.BrandName}" FontSize="15" FontWeight="SemiBold"
-                                       VerticalAlignment="Center" Foreground="White" />
+                            <controls:SpectreLogo Width="30" Height="30" Glow="0.6" />
+                            <StackPanel VerticalAlignment="Center" Spacing="1">
+                                <TextBlock Text="{x:Static app:App.BrandName}" FontSize="16" FontWeight="Bold"
+                                           Foreground="{DynamicResource WbLogoBrush}" />
+                                <TextBlock Text="{Binding VersionText}" Classes="wb-faint" FontSize="11" />
+                            </StackPanel>
                         </StackPanel>
+                    </Panel>
 
-                        <ItemsControl x:Name="RailItemsControl" Grid.Column="1"
-                                      VerticalAlignment="Center" HorizontalAlignment="Left"
-                                      Margin="8,0,0,0">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" Spacing="2" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="local:RailNavItem">
-                                    <Button Classes="top-nav"
-                                            Tag="{Binding Tag}"
-                                            ToolTip.Tip="{Binding Title}"
-                                            Click="RailItem_Click"
-                                            IsVisible="{Binding IsVisible}">
-                                        <Border Classes="nav-pill"
-                                                Classes.selected="{Binding IsSelected}">
-                                            <Panel>
-                                                <Border Classes="nav-sheen" IsHitTestVisible="False">
-                                                    <Border.Background>
-                                                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                                                            <GradientStop Color="#66FFFFFF" Offset="0" />
-                                                            <GradientStop Color="#14FFFFFF" Offset="0.28" />
-                                                            <GradientStop Color="#00000000" Offset="0.55" />
-                                                        </LinearGradientBrush>
-                                                    </Border.Background>
-                                                </Border>
-                                                <Border Classes="nav-gloss" Height="14" VerticalAlignment="Top" IsHitTestVisible="False">
-                                                    <Border.Background>
-                                                        <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                                                            <GradientStop Color="#99FFFFFF" Offset="0" />
-                                                            <GradientStop Color="#33FFFFFF" Offset="0.4" />
-                                                            <GradientStop Color="#00FFFFFF" Offset="1" />
-                                                        </LinearGradientBrush>
-                                                    </Border.Background>
-                                                </Border>
-                                                <StackPanel Orientation="Horizontal" Spacing="6"
-                                                            VerticalAlignment="Center">
-                                                    <ic:Lucide Icon="{Binding Icon}" Width="14" Height="14"
-                                                               VerticalAlignment="Center" StrokeBrush="White" />
-                                                    <TextBlock Text="{Binding Title}" FontSize="12.5"
-                                                               FontWeight="SemiBold" Foreground="White"
-                                                               VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </Panel>
-                                        </Border>
+                    <Border Grid.Row="1" Classes="sidebar-search" Margin="14,8,14,6">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                            <elements:SearchBar x:Name="TitleSearchBar" DataContext="{Binding SearchBar}"
+                                                HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                            <Border Grid.Column="1" Classes="kbd">
+                                <TextBlock Text="Ctrl K" FontSize="10" Foreground="{DynamicResource WbFgFaintBrush}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="NavPanel" Margin="12,4,12,10" Spacing="2">
+                            <controls:NavButton Tag="home" Icon="House" Text="Home" Click="Nav_Click" />
+
+                            <TextBlock Classes="nav-section" Text="PLAY" />
+                            <controls:NavButton Tag="quickplay" Icon="Gamepad2" Text="{x:Static resources:Strings.Menu_QuickPlay_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="regionselector" Icon="Globe" Text="Server Browser" Click="Nav_Click" />
+                            <controls:NavButton Tag="vipserver" Icon="Crown" Text="VIP Server" Click="Nav_Click" />
+                            <controls:NavButton Tag="multiinstance" Icon="Copy" Text="Multi Instance" Click="Nav_Click" />
+
+                            <TextBlock Classes="nav-section" Text="ROBLOX" />
+                            <controls:NavButton Tag="behaviour" Icon="Rocket" Text="{x:Static resources:Strings.Menu_Behaviour_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="integrations" Icon="Plug" Text="{x:Static resources:Strings.Menu_Integrations_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="channels" Icon="HardDriveUpload" Text="{x:Static resources:Strings.Common_Deployment}" Click="Nav_Click" />
+                            <controls:NavButton Tag="versions" Icon="Layers" Text="Versions" Click="Nav_Click" />
+                            <controls:NavButton Tag="fastflags" Icon="Flag" Text="{x:Static resources:Strings.Menu_FastFlags_Title}" Click="Nav_Click" />
+                            <controls:NavButton x:Name="GbsNavItem" Tag="globalsettings" Icon="PenLine" Text="{x:Static resources:Strings.Menu_GlobalSettings_Title}" Click="Nav_Click" />
+                            <controls:NavButton x:Name="LinuxNavItem" Tag="linuxsettings" Icon="Cpu" Text="{x:Static resources:Strings.Menu_LinuxSettings_Title}" Click="Nav_Click" />
+
+                            <TextBlock Classes="nav-section" Text="CUSTOMIZE" />
+                            <controls:NavButton Tag="appearance" Icon="Palette" Text="{x:Static resources:Strings.Menu_Appearance_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="mods" Icon="BookOpen" Text="{x:Static resources:Strings.Menu_PresetMods_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="custommods" Icon="Puzzle" Text="{x:Static resources:Strings.Menu_Mods_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="communitymods" Icon="Store" Text="{x:Static resources:Strings.Menu_CommunityMods_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="modgenerator" Icon="WandSparkles" Text="{x:Static resources:Strings.Menu_ModGenerator_Title}" Click="Nav_Click" />
+                            <controls:NavButton Tag="shortcuts" Icon="Link2" Text="{x:Static resources:Strings.Common_Shortcuts}" Click="Nav_Click" />
+
+                            <StackPanel x:Name="PrivacySection" Spacing="2">
+                                <TextBlock Classes="nav-section" Text="PRIVACY" />
+                                <controls:NavButton Tag="banasync" Icon="Shield" Text="BanAsync" Click="Nav_Click" />
+                                <controls:NavButton Tag="hwidspoofer" Icon="FingerprintPattern" Text="HWID Spoofer" Click="Nav_Click" />
+                            </StackPanel>
+
+                            <TextBlock Classes="nav-section" Text="MORE" />
+                            <controls:NavButton Tag="news" Icon="Newspaper" Text="News" Click="Nav_Click" />
+                            <controls:NavButton Tag="about" Icon="Info" Text="{x:Static resources:Strings.Menu_About_Title}" Click="Nav_Click" />
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Border Grid.Row="3" Classes="sidebar-card" Margin="12,6,12,14">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Panel Width="30" Height="30" VerticalAlignment="Center">
+                                <Border CornerRadius="15" Background="{DynamicResource WbFillBrush}" ClipToBounds="True">
+                                    <Panel>
+                                        <ic:Lucide Icon="User" Width="14" Height="14"
+                                                   StrokeBrush="{DynamicResource WbFgFaintBrush}" />
+                                        <Image x:Name="SessionAvatar" Stretch="UniformToFill" />
+                                    </Panel>
+                                </Border>
+                                <Ellipse x:Name="CookieStatusDot" Width="9" Height="9"
+                                         HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                         Stroke="{DynamicResource WbDeepBrush}" StrokeThickness="2"
+                                         Fill="{DynamicResource WbFgFaintBrush}" />
+                            </Panel>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
+                                <TextBlock x:Name="SessionNameText" Text="Roblox session" FontSize="12.5" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource WbFgBrightBrush}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock x:Name="CookieStatusText" Classes="wb-faint" FontSize="11" TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ===== Main column ===== -->
+            <Grid Grid.Column="1" RowDefinitions="44,Auto,*,Auto">
+
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto">
+                    <Panel Grid.ColumnSpan="3" WindowDecorationProperties.ElementRole="TitleBar" Background="Transparent" />
+
+                    <Button Grid.Column="1" Classes="wb-icon" ToolTip.Tip="Background" Margin="0,0,6,0"
+                            VerticalAlignment="Center">
+                        <ic:Lucide Icon="Palette" />
+                        <Button.Flyout>
+                            <Flyout Placement="BottomEdgeAlignedRight">
+                                <StackPanel Width="292" Spacing="6" Margin="2">
+                                    <TextBlock Classes="wb-label" Text="BACKGROUND" Margin="4,2,0,2" />
+                                    <ScrollViewer MaxHeight="300" HorizontalScrollBarVisibility="Disabled">
+                                        <ItemsControl x:Name="BackgroundQuickList">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Columns="4" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="util:SceneSpec">
+                                                    <Button Classes="bg-quick" Click="QuickBackground_Click" Tag="{Binding Id}"
+                                                            ToolTip.Tip="{Binding Name}">
+                                                        <Border CornerRadius="6" ClipToBounds="True" Height="40">
+                                                            <controls:AnimatedBackground SceneId="{Binding Id}" IsPreview="True"
+                                                                                         IsAnimated="{Binding $parent[Button].IsPointerOver}" />
+                                                        </Border>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                    <Separator Margin="0,2" />
+                                    <Button Classes="wb-row" Click="OpenAppearance_Click">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <ic:Lucide Icon="SlidersHorizontal" Width="14" Height="14" />
+                                            <TextBlock Text="All appearance settings" FontSize="13" />
+                                        </StackPanel>
                                     </Button>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
 
-                        <Border Grid.Column="2"
-                                Width="300" Height="34"
-                                VerticalAlignment="Center"
-                                CornerRadius="17"
-                                ClipToBounds="True"
-                                BorderBrush="Transparent" BorderThickness="0"
-                                Padding="12,0,12,0">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                                    <GradientStop Color="#DD5C101C" Offset="0" />
-                                    <GradientStop Color="#EE1A060A" Offset="0.55" />
-                                    <GradientStop Color="#FF0A0406" Offset="1" />
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                <elements:SearchBar DataContext="{Binding SearchBar}"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="Ctrl K" FontSize="10"
-                                           FontWeight="Medium" Foreground="White"
-                                           VerticalAlignment="Center" Opacity="0.7" />
-                            </Grid>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <controls:IconButton Name="PART_MinimizeButton" Classes="TitleBarButton" Icon="Minus" />
+                        <controls:IconButton Name="PART_MaximizeButton" Classes="TitleBarButton" Icon="Maximize" />
+                        <controls:IconButton Name="PART_CloseButton" Classes="TitleBarButton Close" Icon="X" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Page header -->
+                <StackPanel Grid.Row="1" x:Name="PageHeader" Margin="30,4,30,12" Spacing="6"
+                            IsVisible="{Binding ShowPageHeader}">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Width="38" Height="38" CornerRadius="11"
+                                Background="{DynamicResource WbTileIconBrush}"
+                                VerticalAlignment="Center">
+                            <ic:Lucide Icon="{Binding CurrentPageIcon}" Width="18" Height="18"
+                                       StrokeBrush="{DynamicResource WbAccentBrush}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
 
-                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Spacing="0">
-                            <controls:IconButton Classes="TitleBarButton" Icon="Download"
-                                                 ToolTip.Tip="Deployment" Click="TopDownload_Click" />
-                            <controls:IconButton Classes="TitleBarButton" Icon="Bell"
-                                                 ToolTip.Tip="News" Click="TopNews_Click" />
-                            <controls:IconButton Name="PART_MinimizeButton" Classes="TitleBarButton" Icon="Minus" />
-                            <controls:IconButton Name="PART_MaximizeButton" Classes="TitleBarButton" Icon="Maximize" />
-                            <controls:IconButton Name="PART_CloseButton" Classes="TitleBarButton Close" Icon="X" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Margin="24,14,24,0" IsVisible="{Binding ShowPageChrome}">
-                        <ItemsControl IsVisible="{Binding HasBreadcrumbs}" ItemsSource="{Binding BreadcrumbItems}" Margin="0,0,0,8">
+                        <ItemsControl IsVisible="{Binding HasBreadcrumbs}"
+                                      ItemsSource="{Binding BreadcrumbItems}"
+                                      VerticalAlignment="Center">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" Spacing="8" />
@@ -245,45 +197,69 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="vm:BreadcrumbItemModel">
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Button Padding="0" Background="Transparent" BorderThickness="0"
-                                                Classes="chrome"
+                                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                        <Button Classes="section-link" FontSize="24" FontWeight="Bold"
+                                                Padding="0"
                                                 Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).BreadcrumbItemClickedCommand}"
                                                 CommandParameter="{Binding}" Content="{Binding Content}"
-                                                FontSize="18" FontWeight="SemiBold" IsVisible="{Binding !IsLast}" />
-                                        <TextBlock Text="›" FontSize="18" Opacity="0.5" IsVisible="{Binding !IsLast}" />
-                                        <TextBlock Text="{Binding Content}" FontSize="18" FontWeight="SemiBold" IsVisible="{Binding IsLast}" />
+                                                IsVisible="{Binding !IsLast}" />
+                                        <TextBlock Text="›" FontSize="24" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource WbFgFaintBrush}"
+                                                   IsVisible="{Binding !IsLast}" />
+                                        <TextBlock Text="{Binding Content}" FontSize="24" FontWeight="Bold"
+                                                   Foreground="{DynamicResource WbFgBrightBrush}"
+                                                   IsVisible="{Binding IsLast}" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <TextBlock x:Name="PageTitleText" FontSize="22" FontWeight="SemiBold"
+
+                        <TextBlock x:Name="PageTitleText" FontSize="24" FontWeight="Bold"
+                                   Foreground="{DynamicResource WbFgBrightBrush}"
+                                   VerticalAlignment="Center"
                                    IsVisible="{Binding ShowPageTitle}" Text="{Binding CurrentPageTitle}" />
-                        <controls:MarkdownTextBlock x:Name="PageDescriptionText" Margin="0,4,0,0"
-                                                    FontSize="13" Opacity="0.7"
-                                                    IsVisible="{Binding CurrentPageDescription, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                                    MarkdownText="{Binding CurrentPageDescription}" />
-                        <ui:FAInfoBar x:Name="AlertBar" Margin="0,8,0,0" IsVisible="False" Severity="Warning" />
                     </StackPanel>
 
-                    <TransitioningContentControl Grid.Row="1" x:Name="PageContentControl"
-                                                 HorizontalAlignment="Stretch"
-                                                 VerticalAlignment="Stretch" />
-                </Grid>
+                    <controls:MarkdownTextBlock x:Name="PageDescriptionText"
+                                                FontSize="13" Margin="2,0,0,0"
+                                                Foreground="{DynamicResource WbFgMutedBrush}"
+                                                IsVisible="{Binding CurrentPageDescription, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                MarkdownText="{Binding CurrentPageDescription}" />
 
-                <Border Grid.Row="2"
-                        IsVisible="{Binding ShowFooter}"
-                        BorderBrush="Transparent"
-                        BorderThickness="0"
-                        Background="#661A060A"
-                        Padding="16,0">
-                    <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto" ColumnSpacing="8">
-                        <TextBlock Grid.Column="0"
-                                   Text="{Binding VersionText}"
-                                   FontSize="11"
-                                   Foreground="White"
-                                   VerticalAlignment="Center" />
-                        <controls:IconButton Grid.Column="1" Height="34" Padding="18,0"
+                    <ui:FAInfoBar x:Name="AlertBar" Margin="0,6,0,0" IsOpen="False"
+                                  IsClosable="False" Severity="Informational" />
+                </StackPanel>
+
+                <TransitioningContentControl Grid.Row="2" x:Name="PageContentControl"
+                                             Margin="16,0,16,0"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch">
+                    <TransitioningContentControl.PageTransition>
+                        <transitions:FluentEntranceTransition VerticalOffset="40" Duration="0:0:0.28" />
+                    </TransitioningContentControl.PageTransition>
+                </TransitioningContentControl>
+
+                <!-- Floating action dock -->
+                <Border Grid.Row="3" Classes="action-dock" HorizontalAlignment="Right" Margin="0,6,24,18">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Button Classes="dock" Command="{Binding CloseWindowCommand}"
+                                Content="{x:Static resources:Strings.Common_Close}" />
+                        <Button Classes="dock" Command="{Binding RestartAppCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="7">
+                                <ic:Lucide Icon="RefreshCw" Width="14" Height="14" />
+                                <TextBlock Text="{x:Static resources:Strings.Menu_Restart}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Classes="dock" Command="{Binding SaveSettingsCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="7">
+                                <ic:Lucide Icon="Check" Width="14" Height="14" />
+                                <TextBlock Text="{x:Static resources:Strings.Menu_Save}" />
+                            </StackPanel>
+                        </Button>
+                        <Rectangle Width="1" Height="20" Margin="2,0" VerticalAlignment="Center"
+                                   Fill="{DynamicResource WbLineStrongBrush}" />
+                        <controls:IconButton Height="36" Padding="18,0" CornerRadius="10"
+                                             FontWeight="SemiBold"
                                              Classes="DropDownButton Primary"
                                              Command="{Binding SaveAndLaunchSettingsCommand}"
                                              Content="{Binding LaunchButtonText}">
@@ -300,24 +276,13 @@
                                 </MenuFlyout>
                             </controls:IconButton.Flyout>
                         </controls:IconButton>
-                        <Button Grid.Column="2" Height="34" Padding="18,0" Classes="accent"
-                                Command="{Binding RestartAppCommand}" Content="{x:Static resources:Strings.Menu_Restart}" />
-                        <Button Grid.Column="3" Height="34" Padding="18,0" Classes="accent"
-                                Command="{Binding SaveSettingsCommand}" Content="{x:Static resources:Strings.Menu_Save}" />
-                        <Button Grid.Column="4" Height="34" Padding="18,0" Classes="eclipse-ghost"
-                                Command="{Binding CloseWindowCommand}" Content="{x:Static resources:Strings.Common_Close}" />
-                    </Grid>
+                    </StackPanel>
                 </Border>
-                </Grid>
-            </Panel>
-        </controls:LiquidGlassPanel>
-
-        <controls:LiquidCursorOverlay x:Name="LiquidCursor"
-                                      ZIndex="50"
-                                      IsHitTestVisible="False" />
+            </Grid>
+        </Grid>
 
         <Panel Name="NotificationPanel"
-               Margin="0,0,0,20" VerticalAlignment="Bottom" ZIndex="1000" />
+               Margin="240,0,0,84" VerticalAlignment="Bottom" ZIndex="1000" />
 
         <Border x:Name="OffscreenIndexingCanvas"
                 Width="905" Height="700"

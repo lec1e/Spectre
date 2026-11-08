@@ -143,7 +143,7 @@
                                                                 Grid.Column="0"
                                                                 Width="44"
                                                                 Height="44"
-                                                                Background="#10FFFFFF"
+                                                                Background="{DynamicResource WbFillBrush}"
                                                                 ClipToBounds="True"
                                                                 CornerRadius="4">
                                                                 <Image

@@ -8,8 +8,7 @@ public partial class ServerInformation : Base.AvaloniaWindow
     public ServerInformation()
     {
         InitializeComponent();
-        SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-        SpectreChrome.AttachPointer(this, AbyssBackground);
+        SpectreChrome.Apply(this);
     }
 
     public ServerInformation(Watcher watcher) : this()

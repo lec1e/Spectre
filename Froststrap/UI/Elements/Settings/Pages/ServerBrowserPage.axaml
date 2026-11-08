@@ -6,7 +6,7 @@
              x:DataType="vm:ServerBrowserViewModel">
   <Grid Margin="14" RowDefinitions="Auto,Auto,Auto,*,Auto">
     <TextBlock Grid.Row="0" Margin="0,0,0,10" FontSize="13" TextWrapping="Wrap" Opacity="0.75"
-               Text="Browse live public servers and jump into the one you want. Region detection needs a saved AltMan account and is best-effort / rate-limited. Sorting and joining the emptiest server need no account." />
+               Text="Browse live public servers and jump into the one you want. Region detection needs a saved account and is best-effort / rate-limited. Sorting and joining the emptiest server need no account." />
 
     <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,8">
       <TextBox Grid.Column="0" Watermark="Place ID or game link"

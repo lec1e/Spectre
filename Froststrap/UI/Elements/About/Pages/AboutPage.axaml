@@ -32,8 +32,7 @@
 
             <Grid Margin="0,0,0,24" HorizontalAlignment="Center" ColumnDefinitions="Auto,*">
                 <Panel Grid.Column="0">
-                    <Image x:Name="Image1" Width="72" Height="72" VerticalAlignment="Center"
-                           Source="avares://Spectre/SpectreMark.png" RenderOptions.BitmapInterpolationMode="HighQuality" />
+                    <controls:SpectreLogo x:Name="Image1" Width="58" Height="58" VerticalAlignment="Center" />
                     <Image x:Name="Image2" Width="72" Height="72" VerticalAlignment="Center"
                            Source="avares://Spectre/Resources/BootstrapperStyles/ByfronDialog/Matt.png" RenderOptions.BitmapInterpolationMode="HighQuality"
                            Opacity="0" />
@@ -41,7 +40,7 @@
 
                 <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
                     <TextBlock Text="{x:Static app:App.BrandName}" FontSize="24" FontWeight="Bold"
-                               Foreground="{DynamicResource BrandAccentBrush}" />
+                               Foreground="{DynamicResource WbLogoBrush}" />
                     <TextBlock Text="Created by lecie"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                     <TextBlock Text="{x:Static resources:Strings.Menu_About_Description}"

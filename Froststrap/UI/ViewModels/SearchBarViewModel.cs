@@ -162,13 +162,8 @@ namespace Froststrap.UI.ViewModels
                             Query = $"placeIds={placeId}"
                         };
                         var placeReq = new HttpRequestMessage(HttpMethod.Get, uriBuilder.Uri);
-                        var account = AccountManager.Shared.ActiveAccount;
-                        if (account != null)
-                        {
-                            var cookie = AccountManager.Shared.GetRoblosecurityForUser(account.UserIdLong);
-                            if (!string.IsNullOrEmpty(cookie))
-                                placeReq.Headers.Add("Cookie", $".ROBLOSECURITY={cookie}");
-                        }
+                        if (App.Cookies.Loaded)
+                            placeReq.Headers.Add("Cookie", $".ROBLOSECURITY={App.Cookies.GetAuthCookie()}");
 
                         var placeResp = await App.HttpClient.SendAsync(placeReq, token);
                         if (placeResp.IsSuccessStatusCode)

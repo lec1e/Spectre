@@ -2224,7 +2224,7 @@ namespace Froststrap.Resources {
         /// </summary>
         public static string Enums_BootstrapperIcon_IconFroststrapClassic {
             get {
-                return ResourceManager.GetString("Enums.BootstrapperIcon.IconFroststrapClassic", resourceCulture);
+                return ResourceManager.GetString("Enums.BootstrapperIcon.IconSpectreClassic", resourceCulture);
             }
         }
         
@@ -2989,7 +2989,7 @@ namespace Froststrap.Resources {
         /// </summary>
         public static string Enums_Theme_Froststrap {
             get {
-                return ResourceManager.GetString("Enums.Theme.Froststrap", resourceCulture);
+                return ResourceManager.GetString("Enums.Theme.Spectre", resourceCulture);
             }
         }
         
@@ -6107,7 +6107,7 @@ namespace Froststrap.Resources {
         /// </summary>
         public static string Menu_Integrations_FroststrapRPC_Description {
             get {
-                return ResourceManager.GetString("Menu.Integrations.FroststrapRPC.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Integrations.SpectreRPC.Description", resourceCulture);
             }
         }
         
@@ -6116,7 +6116,7 @@ namespace Froststrap.Resources {
         /// </summary>
         public static string Menu_Integrations_FroststrapRPC_Title {
             get {
-                return ResourceManager.GetString("Menu.Integrations.FroststrapRPC.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Integrations.SpectreRPC.Title", resourceCulture);
             }
         }
         

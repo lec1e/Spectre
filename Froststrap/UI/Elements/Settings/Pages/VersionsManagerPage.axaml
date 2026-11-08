@@ -62,7 +62,7 @@
                                 Background="{DynamicResource BrandSurfaceBrush}">
                             <StackPanel Spacing="8">
                                 <Grid ColumnDefinitions="48,*,Auto">
-                                    <Border Width="40" Height="40" CornerRadius="8" Background="#22E11D48" ClipToBounds="True">
+                                    <Border Width="40" Height="40" CornerRadius="8" Background="{DynamicResource WbAccentSoftBrush}" ClipToBounds="True">
                                         <Panel>
                                             <TextBlock Text="{Binding Letter}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                        FontWeight="Bold" FontSize="18" IsVisible="{Binding !HasLogo}" />
@@ -75,7 +75,7 @@
                                     </StackPanel>
                                     <Border Grid.Column="2" IsVisible="{Binding IsActive}" Background="{DynamicResource BrandAccentBrush}"
                                             CornerRadius="4" Padding="6,2" VerticalAlignment="Top">
-                                        <TextBlock Text="ACTIVE" FontSize="10" FontWeight="Bold" Foreground="White" />
+                                        <TextBlock Text="ACTIVE" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource WbOnAccentBrush}" />
                                     </Border>
                                 </Grid>
 

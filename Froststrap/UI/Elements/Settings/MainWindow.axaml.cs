@@ -6,20 +6,18 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Avalonia.LogicalTree;
 using FluentAvalonia.UI.Controls;
 using Froststrap.UI.Elements.Controls;
 using Froststrap.UI.Utility;
 using Froststrap.UI.ViewModels;
 using Froststrap.UI.ViewModels.Settings;
 using Froststrap.UI.ViewModels.Settings.Mods;
-using LucideAvalonia;
 using LucideAvalonia.Enum;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
+using ThemeManager = Froststrap.Utility.ThemeManager;
 
 namespace Froststrap.UI.Elements.Settings
 {
@@ -29,7 +27,6 @@ namespace Froststrap.UI.Elements.Settings
 
         private static Models.Persistable.WindowState State => App.State.Prop.SettingsWindow;
         private readonly MainWindowViewModel? _viewModel;
-        private readonly ObservableCollection<RailNavItem> _railItems = [];
 
         private Border? _currentNotification;
         private CancellationTokenSource? _notificationCts;
@@ -42,64 +39,24 @@ namespace Froststrap.UI.Elements.Settings
             Instance = this;
             InitializeComponent();
 
-            // Frosted glass chrome (Acrylic/Mica when the OS supports it).
-            TransparencyLevelHint =
-            [
-                WindowTransparencyLevel.AcrylicBlur,
-                WindowTransparencyLevel.Mica,
-                WindowTransparencyLevel.Blur,
-                WindowTransparencyLevel.None
-            ];
-            Background = Brushes.Transparent;
+            BackgroundQuickList.ItemsSource = Froststrap.Utility.SceneCatalog.All;
 
-            AddHandler(PointerMovedEvent, OnWindowPointerMoved, RoutingStrategies.Tunnel | RoutingStrategies.Bubble, handledEventsToo: true);
-            AddHandler(PointerExitedEvent, OnWindowPointerExited, RoutingStrategies.Bubble, handledEventsToo: true);
-            global::Froststrap.Utility.ThemeManager.ThemeChanged += OnThemeChanged;
-            Closed += (_, _) => global::Froststrap.Utility.ThemeManager.ThemeChanged -= OnThemeChanged;
+            LinuxNavItem.IsVisible = OperatingSystem.IsLinux();
+            PrivacySection.IsVisible = OperatingSystem.IsWindows();
 
-            Dispatcher.UIThread.Post(() =>
+            App.Cookies.StateChanged += OnCookieStateChanged;
+            ThemeManager.ThemeChanged += UpdateBackdrop;
+            ThemeManager.BackdropChanged += UpdateBackdrop;
+            Closed += (_, _) =>
             {
-                ShellGlass?.SyncTintFromTheme();
-                ShellGlass?.ApplyFromSettings();
-                AbyssBackground?.SyncFromTheme();
-                AbyssBackground?.SyncFromSettings();
-                SyncPointerEffects();
-            }, DispatcherPriority.Loaded);
-        }
+                App.Cookies.StateChanged -= OnCookieStateChanged;
+                ThemeManager.ThemeChanged -= UpdateBackdrop;
+                ThemeManager.BackdropChanged -= UpdateBackdrop;
+            };
+            UpdateCookieStatus();
+            UpdateBackdrop();
 
-        public void SyncPointerEffects()
-        {
-            bool on = App.Settings?.Prop.EnableLiquidCursor ?? true;
-            if (LiquidCursor is null)
-                return;
-
-            LiquidCursor.IsVisible = on;
-            LiquidCursor.IsEffectEnabled = on;
-            LiquidCursor.SyncColorsFromTheme();
-        }
-
-        private void OnThemeChanged()
-        {
-            Dispatcher.UIThread.Post(() =>
-            {
-                ShellGlass?.SyncTintFromTheme();
-                ShellGlass?.ApplyFromSettings();
-                AbyssBackground?.SyncFromTheme();
-                AbyssBackground?.SyncFromSettings();
-                SyncPointerEffects();
-            });
-        }
-
-        private void OnWindowPointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
-        {
-            AbyssBackground?.SetPointer(e.GetPosition(AbyssBackground), true);
-            LiquidCursor?.SetPointer(e.GetPosition(LiquidCursor), true);
-        }
-
-        private void OnWindowPointerExited(object? sender, Avalonia.Input.PointerEventArgs e)
-        {
-            AbyssBackground?.SetPointer(new Point(-40, -40), false);
-            LiquidCursor?.SetPointer(new Point(-40, -40), false);
+            KeyDown += MainWindow_KeyDown;
         }
 
         public MainWindow(bool showAlreadyRunningWarning) : this()
@@ -113,20 +70,13 @@ namespace Froststrap.UI.Elements.Settings
 
             App.Logger.WriteLine("MainWindow", "Initializing settings window");
 
+            GbsNavItem.IsEnabled = _viewModel.GBSEnabled;
+            GbsNavItem.Opacity = _viewModel.GBSEnabled ? 1 : 0.5;
+
             if (showAlreadyRunningWarning)
                 ShowAlreadyRunningNotification();
 
-            BuildRailItems();
-            ApplyGbsRailState();
-
             LoadState();
-
-            App.RemoteData.Subscribe((_, _) => Dispatcher.UIThread.Post(() =>
-            {
-                // Remote alert banners from third-party config hosts are disabled.
-                if (AlertBar is not null)
-                    AlertBar.IsVisible = false;
-            }));
 
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
@@ -134,14 +84,80 @@ namespace Froststrap.UI.Elements.Settings
             this.Closed += MainWindow_Closed;
 
             UpdatePageView(_viewModel.CurrentPage);
+            UpdateSelectedNav(_viewModel.SelectedPage);
 
             Dispatcher.UIThread.Post(() =>
             {
-                UpdateSelectedRailItem(_viewModel.SelectedPage);
                 AttachTitleBarButtons();
                 BuildSearchIndex();
                 ApplyLaunchPage();
             }, DispatcherPriority.Loaded);
+        }
+
+        private void OnCookieStateChanged(object? sender, CookieState state) => Dispatcher.UIThread.Post(UpdateCookieStatus);
+
+        private void UpdateCookieStatus()
+        {
+            (string text, string brush) = App.Cookies.State switch
+            {
+                CookieState.Success => ("Signed in with your Roblox session", "WbSuccessBrush"),
+                CookieState.NotAllowed => ("Cookie access is off", "WbFgFaintBrush"),
+                CookieState.NotFound => ("No Roblox session found", "WbWarningBrush"),
+                CookieState.Invalid => ("Roblox session expired", "WbWarningBrush"),
+                CookieState.Failed => ("Couldn't read the Roblox session", "WbDangerBrush"),
+                _ => (App.Settings.Prop.AllowCookieAccess ? "Loading Roblox session..." : "Cookie access is off", "WbFgFaintBrush")
+            };
+
+            CookieStatusText.Text = text;
+            CookieStatusDot.Bind(Avalonia.Controls.Shapes.Shape.FillProperty, new DynamicResourceExtension(brush));
+
+            var user = App.Cookies.State == CookieState.Success ? App.Cookies.User : null;
+            SessionNameText.Text = user is null ? "Roblox session" : user.DisplayName;
+            if (user is null)
+                SessionAvatar.Source = null;
+            else
+                _ = LoadSessionAvatarAsync(user.Id);
+        }
+
+        private async Task LoadSessionAvatarAsync(long userId)
+        {
+            try
+            {
+                var urls = await Thumbnails.GetThumbnailUrlsAsync(
+                    [new ThumbnailRequest { TargetId = (ulong)userId, Type = ThumbnailType.AvatarHeadShot, Size = "150x150", IsCircular = true }],
+                    CancellationToken.None);
+
+                if (urls.FirstOrDefault() is not { Length: > 0 } url)
+                    return;
+
+                var bitmap = await Froststrap.UI.Converters.UrlToBitmapConverter.GetBitmapFromCacheOrDownloadAsync(url);
+                if (bitmap is not null && App.Cookies.User?.Id == userId)
+                    SessionAvatar.Source = bitmap;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteLine("MainWindow::LoadSessionAvatar", ex.Message);
+            }
+        }
+
+        private void UpdateBackdrop()
+        {
+            var settings = App.Settings?.Prop;
+            if (settings is null)
+                return;
+
+            Backdrop.ApplyFromSettings();
+            if (SpectreLogo.CreateBrandIcon() is { } icon)
+                Icon = icon;
+        }
+
+        private void MainWindow_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.K && e.KeyModifiers.HasFlag(KeyModifiers.Control))
+            {
+                TitleSearchBar.FocusSearch();
+                e.Handled = true;
+            }
         }
 
         private void ApplyLaunchPage()
@@ -152,55 +168,61 @@ namespace Froststrap.UI.Elements.Settings
 
             string tag = page.Trim().ToLowerInvariant() switch
             {
-                "games" or "quickplay" => "quickplay",
-                "library" or "mods" or "presets" => "mods",
-                "custommods" or "mymods" => "custommods",
-                "settings" or "tools" => "tools",
-                _ => "home"
+                "games" => "quickplay",
+                "library" or "presets" => "mods",
+                "mymods" => "custommods",
+                "settings" => "integrations",
+                var other => other
             };
 
-            GetNavigationAction(tag)?.Invoke();
+            if (tag != _viewModel?.SelectedPage)
+                GetNavigationAction(tag)?.Invoke();
         }
 
-        private void BuildRailItems()
+        #region Navigation
+
+        private void Nav_Click(object? sender, RoutedEventArgs e)
         {
-            _railItems.Clear();
-
-            void Add(string tag, string title, LucideIconNames icon, bool visible = true)
-                => _railItems.Add(new RailNavItem { Tag = tag, Title = title, Icon = icon, IsVisible = visible });
-
-            void Sep() => _railItems.Add(new RailNavItem { IsSeparator = true, Tag = $"sep-{_railItems.Count}" });
-
-            // Exact mockup nav — everything else lives under Settings (tools hub)
-            Add("home", "Home", LucideIconNames.House);
-            Add("quickplay", "Games", LucideIconNames.Gamepad2);
-            Add("mods", "Library", LucideIconNames.Library);
-            Add("custommods", "Mods", LucideIconNames.Puzzle);
-            Add("tools", "Settings", LucideIconNames.Settings);
-
-            if (RailItemsControl is not null)
-                RailItemsControl.ItemsSource = _railItems;
-        }
-
-        private void ApplyGbsRailState()
-        {
-            // GBS lives under Settings tools hub now — nothing to toggle on the rail.
-        }
-
-        private void TopDownload_Click(object? sender, RoutedEventArgs e)
-            => _viewModel?.NavigateToChannelsCommand.Execute(null);
-
-        private void TopNews_Click(object? sender, RoutedEventArgs e)
-            => _viewModel?.NavigateToNewsCommand.Execute(null);
-
-        private void RailItem_Click(object? sender, RoutedEventArgs e)
-        {
-            if (sender is not Button { Tag: string tag })
+            if (sender is not Button { Tag: string tag } || _viewModel is null)
                 return;
 
-            SaveCurrentPage();
-            GetNavigationAction(tag)?.Invoke();
+            if (tag != "about" && _viewModel.SelectedPage == tag)
+                return;
+
+            if (tag != "about")
+                SaveCurrentPage();
+
+            _viewModel.NavigateTo(tag);
         }
+
+        private static string NavTagFor(string page) => page switch
+        {
+            "fastflageditor" => "fastflags",
+            "globalsettingseditor" => "globalsettings",
+            _ => page
+        };
+
+        private void UpdateSelectedNav(string selectedPage)
+        {
+            string tag = NavTagFor(selectedPage);
+
+            foreach (var button in NavPanel.GetLogicalDescendants().OfType<NavButton>())
+                button.Classes.Set("selected", button.Tag as string == tag);
+        }
+
+        private void QuickBackground_Click(object? sender, RoutedEventArgs e)
+        {
+            if (sender is not Button { Tag: string id })
+                return;
+
+            App.Settings.Prop.BackgroundId = id;
+            ThemeManager.ApplyFromSettings();
+        }
+
+        private void OpenAppearance_Click(object? sender, RoutedEventArgs e)
+            => _viewModel?.NavigateToAppearanceCommand.Execute(null);
+
+        #endregion
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -212,7 +234,7 @@ namespace Froststrap.UI.Elements.Settings
             }
             else if (e.PropertyName == nameof(MainWindowViewModel.SelectedPage))
             {
-                UpdateSelectedRailItem(_viewModel.SelectedPage);
+                UpdateSelectedNav(_viewModel.SelectedPage);
             }
         }
 
@@ -238,37 +260,14 @@ namespace Froststrap.UI.Elements.Settings
 
         private Action? GetNavigationAction(string pageTag)
         {
-            return pageTag switch
-            {
-                "home" => () => _viewModel?.NavigateToHomeCommand.Execute(null),
-                "tools" => () => _viewModel?.NavigateToToolsHubCommand.Execute(null),
-                "custommods" => () => _viewModel?.NavigateToMyModsCommand.Execute(null),
-                "integrations" => () => _viewModel?.NavigateToIntegrationsCommand.Execute(null),
-                "behaviour" => () => _viewModel?.NavigateToBehaviourCommand.Execute(null),
-                "linuxsettings" => () => _viewModel?.NavigateToLinuxSettingsCommand.Execute(null),
-                "mods" => () => _viewModel?.NavigateToPresetModsCommand.Execute(null),
-                "fastflags" => () => _viewModel?.NavigateToFastFlagsCommand.Execute(null),
-                "appearance" => () => _viewModel?.NavigateToAppearanceCommand.Execute(null),
-                "regionselector" => () => _viewModel?.NavigateToRegionSelectorCommand.Execute(null),
-                "globalsettings" => () => _viewModel?.NavigateToGlobalSettingsCommand.Execute(null),
-                "shortcuts" => () => _viewModel?.NavigateToShortcutsCommand.Execute(null),
-                "quickplay" => () => _viewModel?.NavigateToQuickPlayCommand.Execute(null),
-                "channels" => () => _viewModel?.NavigateToChannelsCommand.Execute(null),
-                "versions" => () => _viewModel?.NavigateToVersionsManagerCommand.Execute(null),
-                "banasync" => () => _viewModel?.NavigateToBanAsyncCommand.Execute(null),
-                "hwidspoofer" => () => _viewModel?.NavigateToHwidSpooferCommand.Execute(null),
-                "multiinstance" => () => _viewModel?.NavigateToMultiInstanceCommand.Execute(null),
-                "vipserver" => () => _viewModel?.NavigateToVipServerCommand.Execute(null),
-                "news" => () => _viewModel?.NavigateToNewsCommand.Execute(null),
-                _ => null
-            };
+            var command = _viewModel?.GetNavigationCommand(pageTag);
+            return command is null ? null : () => command.Execute(null);
         }
 
         private readonly Dictionary<string, (string Title, LucideIconNames Icon)> _pageInfo = new()
         {
-            ["home"] = ("Home", LucideIconNames.House),
-            ["integrations"] = (Strings.Menu_Integrations_Title, LucideIconNames.Plus),
-            ["behaviour"] = (Strings.Menu_Behaviour_Title, LucideIconNames.Play),
+            ["integrations"] = (Strings.Menu_Integrations_Title, LucideIconNames.Plug),
+            ["behaviour"] = (Strings.Menu_Behaviour_Title, LucideIconNames.Rocket),
             ["linuxsettings"] = (Strings.Menu_LinuxSettings_Title, LucideIconNames.Cpu),
             ["mods"] = (Strings.Menu_PresetMods_Title, LucideIconNames.BookOpen),
             ["fastflags"] = (Strings.Menu_FastFlags_Title, LucideIconNames.Flag),
@@ -336,29 +335,6 @@ namespace Froststrap.UI.Elements.Settings
             }
         }
 
-        private void UpdateSelectedRailItem(string selectedPage)
-        {
-            string mapped = selectedPage switch
-            {
-                "home" => "home",
-                "quickplay" => "quickplay",
-                "mods" => "mods",
-                "custommods" => "custommods",
-                "tools" or "integrations" or "behaviour" or "linuxsettings"
-                    or "fastflags" or "appearance" or "regionselector" or "globalsettings"
-                    or "shortcuts" or "channels" or "versions" or "banasync" or "hwidspoofer"
-                    or "multiinstance" or "vipserver" or "news" => "tools",
-                _ => selectedPage
-            };
-
-            foreach (var item in _railItems)
-            {
-                if (item.IsSeparator)
-                    continue;
-                item.IsSelected = item.Tag == mapped;
-            }
-        }
-
         private static Control? ResolveViewForViewModel(object viewModel)
         {
             var viewModelName = viewModel.GetType().Name;
@@ -415,6 +391,8 @@ namespace Froststrap.UI.Elements.Settings
             }
         }
 
+        #region Notifications
+
         private void ShowSaveNotification()
         {
             ShowNotification(
@@ -460,7 +438,6 @@ namespace Froststrap.UI.Elements.Settings
             _notificationCts?.Cancel();
             _notificationCts?.Dispose();
             _notificationCts = new CancellationTokenSource();
-            var token = _notificationCts.Token;
 
             if (_currentNotification != null && notificationPanel.Children.Contains(_currentNotification))
             {
@@ -468,11 +445,11 @@ namespace Froststrap.UI.Elements.Settings
                 var oldNotification = _currentNotification;
 
                 oldNotification.Opacity = 0;
-                oldNotification.RenderTransform = new TranslateTransform(0, 40);
+                oldNotification.RenderTransform = new TranslateTransform(0, 24);
 
                 Task.Run(async () =>
                 {
-                    await Task.Delay(350);
+                    await Task.Delay(200);
                     Dispatcher.UIThread.Post(() =>
                     {
                         if (notificationPanel.Children.Contains(oldNotification))
@@ -496,76 +473,73 @@ namespace Froststrap.UI.Elements.Settings
             var notificationPanel = this.FindControl<Panel>("NotificationPanel");
             if (notificationPanel == null) return;
 
-            var accentColor = type == FAInfoBarSeverity.Success ? "#E11D48" : "#9F1239";
+            (string toneKey, LucideIconNames defaultIcon) = type switch
+            {
+                FAInfoBarSeverity.Success => ("WbSuccessBrush", LucideIconNames.CircleCheck),
+                FAInfoBarSeverity.Warning => ("WbWarningBrush", LucideIconNames.TriangleAlert),
+                FAInfoBarSeverity.Error => ("WbDangerBrush", LucideIconNames.CircleX),
+                _ => ("WbAccentBrush", LucideIconNames.Info)
+            };
 
             var contentGrid = new Grid
             {
                 ColumnDefinitions = new ColumnDefinitions("Auto,*,Auto"),
-                Margin = new Thickness(0)
+                ColumnSpacing = 12
             };
 
-            var icon = new Image
+            var icon = new LucideAvalonia.Lucide
             {
-                Width = 36,
-                Height = 36,
-                Source = new Bitmap(AssetLoader.Open(new Uri("avares://Spectre/SpectreMark.png"))),
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
-                Margin = new Thickness(16, 0, 12, 0)
+                Icon = customIcon ?? defaultIcon,
+                Width = 16,
+                Height = 16,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
             };
+            icon.Bind(LucideAvalonia.Lucide.StrokeBrushProperty, new DynamicResourceExtension(toneKey));
             Grid.SetColumn(icon, 0);
             contentGrid.Children.Add(icon);
 
-            var textPanel = new StackPanel { VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center, Spacing = 2 };
+            var textPanel = new StackPanel { VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center, Spacing = 1 };
 
-            var titleText = new TextBlock { Text = title, FontWeight = FontWeight.SemiBold, FontSize = 14, Foreground = Brushes.White };
-            var subtitleText = new TextBlock { Text = subtitle, FontSize = 12, TextWrapping = TextWrapping.Wrap, Foreground = Brushes.White };
+            var titleText = new TextBlock { Text = title, FontWeight = FontWeight.SemiBold, FontSize = 13 };
+            titleText.Bind(TextBlock.ForegroundProperty, new DynamicResourceExtension("WbFgBrightBrush"));
+            var subtitleText = new TextBlock { Text = subtitle, FontSize = 12, TextWrapping = TextWrapping.Wrap };
+            subtitleText.Bind(TextBlock.ForegroundProperty, new DynamicResourceExtension("WbFgMutedBrush"));
 
             textPanel.Children.Add(titleText);
             textPanel.Children.Add(subtitleText);
             Grid.SetColumn(textPanel, 1);
             contentGrid.Children.Add(textPanel);
 
-            var closeButton = new IconButton
+            var closeButton = new Button
             {
-                Icon = LucideIconNames.X,
-                IconSize = 16,
-                Background = Brushes.Transparent,
-                BorderThickness = new Thickness(0),
-                Padding = new Thickness(8, 4, 8, 4),
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
-                Width = 32,
-                Height = 32,
-                Margin = new Thickness(0, 0, 12, 0)
+                Classes = { "wb-icon" },
+                Content = new LucideAvalonia.Lucide { Icon = LucideIconNames.X },
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
             };
-
-            closeButton.Bind(IconButton.ForegroundProperty, new DynamicResourceExtension("TextFillColorSecondaryBrush"));
-
             Grid.SetColumn(closeButton, 2);
             contentGrid.Children.Add(closeButton);
 
             var notification = new Border
             {
-                BorderBrush = new SolidColorBrush(Color.Parse(accentColor)),
                 BorderThickness = new Thickness(1),
-                Padding = new Thickness(0, 12, 0, 12),
-                Margin = new Thickness(200, 0, 200, 40),
-                MinWidth = 350,
-                Height = 80,
+                Padding = new Thickness(14, 10, 8, 10),
+                MinWidth = 340,
+                MaxWidth = 520,
                 CornerRadius = new CornerRadius(6),
                 Opacity = 0,
-                RenderTransform = new TranslateTransform(0, 40),
+                RenderTransform = new TranslateTransform(0, 24),
                 Child = contentGrid,
-                BoxShadow = new BoxShadows(new BoxShadow { Blur = 10, OffsetY = 4, Color = Color.Parse("#40000000") }),
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch
+                BoxShadow = new BoxShadows(new BoxShadow { Blur = 18, OffsetY = 6, Color = Color.Parse("#40000000") }),
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center
             };
 
-            notification.Bind(Border.BackgroundProperty, new DynamicResourceExtension("NotificationBackgroundColor"));
+            notification.Bind(Border.BackgroundProperty, new DynamicResourceExtension("WbOverlayBrush"));
+            notification.Bind(Border.BorderBrushProperty, new DynamicResourceExtension("WbLineStrongBrush"));
 
             notification.Transitions =
             [
-                new TransformOperationsTransition { Property = Border.RenderTransformProperty, Duration = TimeSpan.FromMilliseconds(350), Easing = new QuarticEaseOut() },
-                new DoubleTransition { Property = Border.OpacityProperty, Duration = TimeSpan.FromMilliseconds(250) }
+                new TransformOperationsTransition { Property = Border.RenderTransformProperty, Duration = TimeSpan.FromMilliseconds(180), Easing = new CubicEaseOut() },
+                new DoubleTransition { Property = Border.OpacityProperty, Duration = TimeSpan.FromMilliseconds(150) }
             ];
 
             async void Dismiss()
@@ -573,8 +547,8 @@ namespace Froststrap.UI.Elements.Settings
                 if (_notificationCts?.Token.IsCancellationRequested ?? false) return;
                 if (!notificationPanel.Children.Contains(notification)) return;
                 notification.Opacity = 0;
-                notification.RenderTransform = new TranslateTransform(0, 40);
-                await Task.Delay(350);
+                notification.RenderTransform = new TranslateTransform(0, 24);
+                await Task.Delay(200);
                 if (notificationPanel.Children.Contains(notification))
                 {
                     notificationPanel.Children.Remove(notification);
@@ -593,7 +567,7 @@ namespace Froststrap.UI.Elements.Settings
 
             notification.PointerPressed += (s, e) =>
             {
-                if (e.Source is IconButton) return;
+                if (e.Source is Button) return;
                 Dismiss();
             };
 
@@ -615,6 +589,8 @@ namespace Froststrap.UI.Elements.Settings
                 }
             });
         }
+
+        #endregion
 
         public void ShowLoading(string message = "Loading...")
         {
@@ -658,6 +634,8 @@ namespace Froststrap.UI.Elements.Settings
             };
         }
 
+        #region Search
+
         private SearchIndexBuilder? _searchIndexBuilder;
 
         private void BuildSearchIndex()
@@ -684,30 +662,8 @@ namespace Froststrap.UI.Elements.Settings
             if (!_viewModel.GBSEnabled)
                 pages.RemoveAll(p => p.PageTag == "globalsettings");
 
-            var searchIndex = _searchIndexBuilder.BuildIndex(pages);
-
-            var navigationActions = new Dictionary<string, Action>
-            {
-                { "integrations", () => _viewModel.NavigateToIntegrationsCommand.Execute(null) },
-                { "behaviour", () => _viewModel.NavigateToBehaviourCommand.Execute(null) },
-                { "linuxsettings", () => _viewModel.NavigateToLinuxSettingsCommand.Execute(null) },
-                { "mods", () => _viewModel.NavigateToPresetModsCommand.Execute(null) },
-                { "fastflags", () => _viewModel.NavigateToFastFlagsCommand.Execute(null) },
-                { "appearance", () => _viewModel.NavigateToAppearanceCommand.Execute(null) },
-                { "regionselector", () => _viewModel.NavigateToRegionSelectorCommand.Execute(null) },
-                { "globalsettings", () => _viewModel.NavigateToGlobalSettingsCommand.Execute(null) },
-                { "shortcuts", () => _viewModel.NavigateToShortcutsCommand.Execute(null) },
-                { "quickplay", () => _viewModel.NavigateToQuickPlayCommand.Execute(null) },
-                { "channels", () => _viewModel.NavigateToChannelsCommand.Execute(null) },
-            };
-
-            foreach (var item in searchIndex)
-            {
-                if (item.PageTag != null && navigationActions.TryGetValue(item.PageTag, out var action))
-                {
-                    item.NavigateAction = action;
-                }
-            }
+            if (!OperatingSystem.IsLinux())
+                pages.RemoveAll(p => p.PageTag == "linuxsettings");
 
             _viewModel.SearchBar.SetSearchIndex([]);
 
@@ -855,6 +811,8 @@ namespace Froststrap.UI.Elements.Settings
             }
         }
 
+        #endregion
+
         private void SaveCurrentPage()
         {
             if (_viewModel?.CurrentPage != null)
@@ -898,11 +856,7 @@ namespace Froststrap.UI.Elements.Settings
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
-            if (App.LaunchSettings.TestModeFlag.Active)
-                LaunchHandler.LaunchRoblox(LaunchMode.Player);
-            else
-                App.SoftTerminate();
-
+            Instance = null;
             App.Logger.WriteLine("MainWindow", "Settings window closed");
         }
 

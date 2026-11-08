@@ -6,7 +6,12 @@
         public string? RequestId { get; set; }
 
         [JsonPropertyName("targetId")]
-        public ulong TargetId { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ulong? TargetId { get; set; }
+
+        [JsonPropertyName("token")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Token { get; set; }
 
         /// <summary>
         /// List of valid types can be found at https://thumbnails.roblox.com//docs/index.html

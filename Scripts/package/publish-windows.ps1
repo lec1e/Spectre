@@ -11,12 +11,10 @@ New-Item -ItemType Directory -Path "./$BuildDir" | Out-Null
 
 dotnet publish "$Project" /p:PublishProfile=Publish-x64 -c "$Config" --configfile "$PSScriptRoot\..\..\nuget.config"
 
-$PublishPath = "./Froststrap/bin/$Config/net10.0/publish/Froststrap.exe"
-Copy-Item $PublishPath -Destination "./$BuildDir/"
+$PublishPath = "./Froststrap/bin/$Config/net10.0/publish/Spectre.exe"
+if (-not (Test-Path $PublishPath)) {
+    throw "Expected publish output at $PublishPath"
+}
 
-$Version = (git describe --tags --abbrev=0).TrimStart('v')
-& makensis /DPUBLISH_DIR="..\$BuildDir" /DAPP_VERSION="$Version" Scripts/Installer.nsi
-
-Remove-Item "./$BuildDir/Froststrap.exe"
-
-Write-Host "Windows build complete: $BuildDir/Froststrap-Setup.exe" -ForegroundColor Green
+Copy-Item $PublishPath -Destination "./$BuildDir/Spectre.exe" -Force
+Write-Host "Windows build complete: $BuildDir/Spectre.exe" -ForegroundColor Green

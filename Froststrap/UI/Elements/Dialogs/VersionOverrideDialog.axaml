@@ -1,0 +1,82 @@
+<base:AvaloniaWindow
+    x:Class="Froststrap.UI.Elements.Dialogs.VersionOverrideDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
+    xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:local="clr-namespace:Froststrap.UI.Elements.Dialogs"
+    x:DataType="local:VersionOverrideDialog"
+    Title="Roblox versions"
+    Width="680"
+    Height="520"
+    MinWidth="520"
+    MinHeight="360"
+    WindowDecorations="None"
+    WindowStartupLocation="CenterOwner"
+    CanResize="True"
+    ShowInTaskbar="False">
+
+    <Border BorderBrush="{DynamicResource WbLineBrush}"
+            Background="{DynamicResource WbCanvasBrush}"
+            BorderThickness="1"
+            ClipToBounds="True">
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <Border Grid.Row="0"
+                    Background="{DynamicResource WbDeepBrush}"
+                    Padding="16,12"
+                    PointerPressed="OnHeaderPointerPressed">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <ic:Lucide Icon="History" Width="18" Height="18" StrokeBrush="{DynamicResource WbAccentBrush}" VerticalAlignment="Center" />
+                        <TextBlock x:Name="HeaderText" Text="Studio versions" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Classes="ghost" Padding="6" Click="OnCloseClicked">
+                        <ic:Lucide Icon="X" Width="14" Height="14" StrokeBrush="{DynamicResource WbFgMutedBrush}" />
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="16,10,16,4" ColumnDefinitions="140,*,170">
+                <TextBlock Grid.Column="0" Text="File version" Classes="wb-label" />
+                <TextBlock Grid.Column="1" Text="Version hash" Classes="wb-label" />
+                <TextBlock Grid.Column="2" Text="Released" Classes="wb-label" />
+            </Grid>
+
+            <Panel Grid.Row="2" Margin="8,0,8,0">
+                <ListBox x:Name="VersionsList"
+                         ItemsSource="{Binding Versions}"
+                         SelectionMode="Single"
+                         Background="Transparent"
+                         DoubleTapped="OnVersionDoubleTapped">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="local:VersionEntry">
+                            <Grid ColumnDefinitions="140,*,170">
+                                <TextBlock Grid.Column="0" Text="{Binding Version}" />
+                                <TextBlock Grid.Column="1" Text="{Binding FullHash}" FontFamily="Consolas,Cascadia Mono,monospace" Foreground="{DynamicResource WbFgMutedBrush}" />
+                                <TextBlock Grid.Column="2" Text="{Binding Date}" Foreground="{DynamicResource WbFgFaintBrush}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <ui:FAProgressRing x:Name="LoadingRing" Width="32" Height="32" IsActive="False" IsVisible="False" />
+                <TextBlock x:Name="StatusText" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           TextWrapping="Wrap" Foreground="{DynamicResource WbFgMutedBrush}" />
+            </Panel>
+
+            <Border Grid.Row="3" Padding="16,12" Background="{DynamicResource WbDeepBrush}"
+                    BorderBrush="{DynamicResource WbLineBrush}" BorderThickness="0,1,0,0">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Text="Builds from the last year. Double-click a row to use it."
+                               Classes="wb-faint" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
+                        <Button x:Name="RefreshButton" Content="Refresh" Click="OnRefreshClicked" />
+                        <Button x:Name="CopyHashButton" Content="Copy hash" IsEnabled="False" Click="OnCopyClicked" />
+                        <Button x:Name="UseButton" Classes="accent" Content="Use this version" IsEnabled="False" Click="OnUseClicked" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</base:AvaloniaWindow>

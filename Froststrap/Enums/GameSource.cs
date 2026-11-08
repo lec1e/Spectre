@@ -3,6 +3,7 @@
     public enum GameSource
     {
         Tracked,
-        RobloxApi
+        RobloxApi,
+        None
     }
 }

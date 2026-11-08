@@ -7,7 +7,6 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
     public class FluentDialogViewModel : BootstrapperDialogViewModel
     {
         public List<WindowTransparencyLevel> WindowBackdropType { get; set; }
-        public IBrush BackgroundColourBrush { get; set; } = Brushes.Transparent;
         public string VersionText { get; set; }
         public string ChannelText { get; set; }
         public string ProductVersion => $"Version {App.Version}";
@@ -16,10 +15,7 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
         public FluentDialogViewModel(IBootstrapperDialog dialog, bool aero, string version) : base(dialog)
         {
             IsAero = aero;
-            WindowBackdropType = ResolveBackdrop(aero);
-
-            // Keep bootstrapper backdrop transparent so LiquidGlassPanel acrylic can show through.
-            BackgroundColourBrush = Brushes.Transparent;
+            WindowBackdropType = [WindowTransparencyLevel.None];
 
             VersionText = $"Version: V{ExtractMajorVersion(version)}";
             ChannelText = $"Channel: {Deployment.Channel}";
@@ -29,18 +25,6 @@ namespace Froststrap.UI.ViewModels.Bootstrapper
                 ChannelText = $"Channel: {newChannel}";
                 OnPropertyChanged(nameof(ChannelText));
             };
-        }
-
-        public static List<WindowTransparencyLevel> ResolveBackdrop(bool aero)
-        {
-            // Same acrylic stack as the launch menu so the loader is glass, not a solid blur plate.
-            return
-            [
-                WindowTransparencyLevel.AcrylicBlur,
-                WindowTransparencyLevel.Mica,
-                WindowTransparencyLevel.Blur,
-                WindowTransparencyLevel.None
-            ];
         }
 
         private static string ExtractMajorVersion(string versionStr)

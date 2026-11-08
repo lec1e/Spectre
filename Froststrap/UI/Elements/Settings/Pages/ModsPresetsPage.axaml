@@ -195,7 +195,7 @@
 
                                         <Grid Grid.Row="2" Grid.Column="0" Margin="4,16,8,16" RowDefinitions="Auto,*,Auto">
                                             <TextBlock Grid.Row="0" Margin="0,0,0,8" Text="ShiftLock" FontSize="14" TextAlignment="Center" />
-                                            <Border Grid.Row="1" Background="#33000000" CornerRadius="16" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
+                                            <Border Grid.Row="1" Background="{DynamicResource WbFillBrush}" CornerRadius="6" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
                                                 <Viewbox Stretch="Uniform">
                                                     <Image Source="{Binding ShiftlockCursorPreview}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                 </Viewbox>
@@ -218,7 +218,7 @@
 
                                         <Grid Grid.Row="2" Grid.Column="1" Margin="8,16,8,16" RowDefinitions="Auto,*,Auto">
                                             <TextBlock Grid.Row="0" Margin="0,0,0,8" Text="Arrow Cursor" FontSize="14" TextAlignment="Center" />
-                                            <Border Grid.Row="1" Background="#33000000" CornerRadius="16" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
+                                            <Border Grid.Row="1" Background="{DynamicResource WbFillBrush}" CornerRadius="6" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
                                                 <Viewbox Stretch="Uniform">
                                                     <Image Source="{Binding ArrowCursorPreview}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                 </Viewbox>
@@ -241,7 +241,7 @@
 
                                         <Grid Grid.Row="2" Grid.Column="2" Margin="8,16,8,16" RowDefinitions="Auto,*,Auto">
                                             <TextBlock Grid.Row="0" Margin="0,0,0,8" Text="ArrowFar Cursor" FontSize="14" TextAlignment="Center" />
-                                            <Border Grid.Row="1" Background="#33000000" CornerRadius="16" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
+                                            <Border Grid.Row="1" Background="{DynamicResource WbFillBrush}" CornerRadius="6" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
                                                 <Viewbox Stretch="Uniform">
                                                     <Image Source="{Binding ArrowFarCursorPreview}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                 </Viewbox>
@@ -264,7 +264,7 @@
 
                                         <Grid Grid.Row="2" Grid.Column="3" Margin="8,16,4,16" RowDefinitions="Auto,*,Auto">
                                             <TextBlock Grid.Row="0" Margin="0,0,0,8" Text="IBeam Cursor" FontSize="14" TextAlignment="Center" />
-                                            <Border Grid.Row="1" Background="#33000000" CornerRadius="16" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
+                                            <Border Grid.Row="1" Background="{DynamicResource WbFillBrush}" CornerRadius="6" Margin="0,0,0,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="200" MaxHeight="200" MinHeight="100" MinWidth="100">
                                                 <Viewbox Stretch="Uniform">
                                                     <Image Source="{Binding IBeamCursorPreview}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                 </Viewbox>

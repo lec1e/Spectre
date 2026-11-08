@@ -1,32 +1,26 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ui="using:FluentAvalonia.UI.Controls"
-        xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls">
 
     <Style Selector="controls|TitleBar">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Height" Value="48" />
+        <Setter Property="Height" Value="36" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="Auto, *, Auto"
                       Height="{TemplateBinding Height}"
                       Background="{TemplateBinding Background}">
 
-                    <StackPanel Grid.Column="0" Name="PART_LeftPanel" Margin="0,12,0,0" Orientation="Horizontal" IsHitTestVisible="False" VerticalAlignment="Top">
-                        <Image Source="{TemplateBinding Icon}"
-                               IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"
-                               Width="16" Height="16"
-                               Margin="12,0,0,0"
-                               VerticalAlignment="Center"
-                               RenderOptions.BitmapInterpolationMode="HighQuality" />
+                    <StackPanel Grid.Column="0" Name="PART_LeftPanel" Orientation="Horizontal" IsHitTestVisible="False" VerticalAlignment="Center">
+                        <controls:SpectreLogo Width="16" Height="16" Glow="0.35" Margin="12,0,0,0"
+                                              IsAnimated="False"
+                                              IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
                         <TextBlock Text="{TemplateBinding Title}"
                                    VerticalAlignment="Center"
                                    FontSize="12"
                                    Margin="8,0"
-                                   FontWeight="Normal"
-                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                                   Foreground="{DynamicResource WbFgMutedBrush}" />
                     </StackPanel>
 
                     <Panel Grid.Column="1">
@@ -63,51 +57,13 @@
     </Style>
 
     <Style Selector="controls|IconButton.TitleBarButton">
-        <Setter Property="Width" Value="42" />
-        <Setter Property="Height" Value="42" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="0" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Width" Value="44" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="IconSize" Value="16" />
-        <Setter Property="Foreground" Value="#E2E8F0" />
-    </Style>
-
-    <!-- No hover box — icon color only -->
-    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ Border#PART_LayoutRoot">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-    </Style>
-    <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ Border#PART_LayoutRoot">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-    </Style>
-    <Style Selector="controls|IconButton.TitleBarButton:pointerover">
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-    <Style Selector="controls|IconButton.TitleBarButton:pressed">
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-
-    <Style Selector="controls|IconButton.TitleBarButton:pointerover /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#E11D48" />
-    </Style>
-    <Style Selector="controls|IconButton.TitleBarButton:pressed /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#FECDD3" />
-    </Style>
-
-    <!-- Close: red icon tint on hover, still no box -->
-    <Style Selector="controls|IconButton.TitleBarButton.Close:pointerover /template/ Border#PART_LayoutRoot">
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-    <Style Selector="controls|IconButton.TitleBarButton.Close:pointerover /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#FB7185" />
-    </Style>
-    <Style Selector="controls|IconButton.TitleBarButton.Close:pressed /template/ ic|Lucide">
-        <Setter Property="StrokeBrush" Value="#FDA4AF" />
+        <Setter Property="IconSize" Value="14" />
     </Style>
 
     <Style Selector="controls|IconButton.TitleBarButton:disabled">

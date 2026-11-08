@@ -30,7 +30,7 @@ namespace Froststrap.UI.ViewModels.Settings
         public string ElevationStatusText =>
             IsElevated
                 ? "Running with administrator privileges. All actions on this page are available."
-                : "Froststrap is NOT running as administrator. MAC spoofing, MachineGuid changes, and prefetch cleanup are disabled. Use 'Relaunch as administrator' below.";
+                : "Spectre is NOT running as administrator. MAC spoofing, MachineGuid changes, and prefetch cleanup are disabled. Use 'Relaunch as administrator' below.";
 
         public ObservableCollection<NetworkAdapter> Adapters { get; } = new();
 
@@ -341,7 +341,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 "  ? %Temp%\\Roblox*\n" +
                 "  ? Prefetch entries for Roblox (admin only)\n" +
                 "  ? HKCU\\Software\\ROBLOX Corporation\n" +
-                (CleanMrExVersions ? "  ? Froststrap's downloaded Roblox installs (Versions)\n" : "") +
+                (CleanMrExVersions ? "  ? Spectre's downloaded Roblox installs (Versions)\n" : "") +
                 (ClearBrowserCookies ? "  ? Roblox cookies in installed browsers\n" : "") +
                 "\n" +
                 (PreserveInGameSettings ? "In-game settings will be preserved.\n" : "") +
@@ -612,7 +612,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 App.Logger.WriteException(ident, ex);
                 _ = Frontend.ShowMessageBox(
                     $"Couldn't relaunch as administrator.\n\nReason: {ex.GetType().Name}: {ex.Message}\n\n" +
-                    "Close Froststrap and right-click the exe ? 'Run as administrator' instead.",
+                    "Close Spectre and right-click the exe ? 'Run as administrator' instead.",
                     MessageBoxImage.Warning);
             }
         }

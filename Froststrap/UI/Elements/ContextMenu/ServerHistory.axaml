@@ -15,7 +15,7 @@
                      MinWidth="480" MinHeight="380"
                      MaxWidth="720" MaxHeight="560"
                      WindowStartupLocation="CenterScreen"
-                     Background="Transparent"
+                     Background="{DynamicResource WbWindowBackgroundBrush}"
                      mc:Ignorable="d">
 
     <base:AvaloniaWindow.Styles>
@@ -42,15 +42,8 @@
     </base:AvaloniaWindow.Styles>
 
     <Panel>
-        <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="0"
-                                   CornerRadius="0"
-                                   TintOpacity="0.58"
-                                   MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False"
-                                   ClipToBounds="True">
+        <Panel ClipToBounds="True">
             <Panel>
-                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
                 <Grid RowDefinitions="Auto,Auto,*,Auto">
         <controls:TitleBar x:Name="RootTitleBar"
                            Title="{x:Static resources:Strings.ContextMenu_GameHistory_Title}"
@@ -136,6 +129,6 @@
         </ListBox>
             </Grid>
             </Panel>
-        </controls:LiquidGlassPanel>
+        </Panel>
     </Panel>
 </base:AvaloniaWindow>

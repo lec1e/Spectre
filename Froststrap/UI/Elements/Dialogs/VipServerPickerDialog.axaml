@@ -8,19 +8,11 @@
         Title="Pick a VIP server"
         Width="560" Height="520"
         WindowStartupLocation="CenterOwner"
-        Background="Transparent"
+        Background="{DynamicResource WbWindowBackgroundBrush}"
         CanResize="False">
     <Panel>
-        <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="0"
-                                   Padding="0"
-                                   CornerRadius="0"
-                                   TintOpacity="0.58"
-                                   MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False"
-                                   ClipToBounds="True">
+        <Panel ClipToBounds="True">
             <Panel>
-                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
                 <Grid Margin="22,16,22,18" RowDefinitions="Auto,*,Auto">
                 <TextBlock Text="{Binding GameName}"
                            FontWeight="SemiBold"
@@ -36,8 +28,8 @@
                                 <Border Margin="0,3"
                                         Padding="12,10"
                                         CornerRadius="12"
-                                        Background="#22FFFFFF"
-                                        BorderBrush="#44FFFFFF"
+                                        Background="{DynamicResource WbRaisedBrush}"
+                                        BorderBrush="{DynamicResource WbLineBrush}"
                                         BorderThickness="1">
                                     <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
                                 </Border>
@@ -66,6 +58,6 @@
                 </StackPanel>
             </Grid>
             </Panel>
-        </controls:LiquidGlassPanel>
+        </Panel>
     </Panel>
 </base:AvaloniaWindow>

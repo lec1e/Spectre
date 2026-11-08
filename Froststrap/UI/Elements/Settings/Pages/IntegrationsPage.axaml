@@ -37,6 +37,13 @@
             </controls:OptionControl>
 
             <controls:OptionControl
+                Header="Server uptime"
+                Description="Show how long the server has been running in the server info window and join notification."
+                IsEnabled="{Binding ActivityTrackingEnabled}">
+                <ToggleSwitch IsChecked="{Binding ShowServerUptimeEnabled, Mode=TwoWay}" />
+            </controls:OptionControl>
+
+            <controls:OptionControl
                 Header="{x:Static resources:Strings.Menu_Integrations_IconChange_Title}"
                 Description="{x:Static resources:Strings.Menu_Integrations_IconChange_Description}"
                 IsVisible="{x:Static gv:GlobalViewModel.IsWindows}"

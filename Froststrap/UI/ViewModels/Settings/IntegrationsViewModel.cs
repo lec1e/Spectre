@@ -95,6 +95,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 if (!value)
                 {
                     ShowServerDetailsEnabled = false;
+                    ShowServerUptimeEnabled = false;
                     ShowGameHistoryEnabled = false;
                     AutoRejoinEnabled = false;
                     PlaytimeCounterEnabled = false;
@@ -106,6 +107,7 @@ namespace Froststrap.UI.ViewModels.Settings
                     StudioRPCEnabled = false;
 
                     OnPropertyChanged(nameof(ShowServerDetailsEnabled));
+                    OnPropertyChanged(nameof(ShowServerUptimeEnabled));
                     OnPropertyChanged(nameof(ShowGameHistoryEnabled));
                     OnPropertyChanged(nameof(AutoRejoinEnabled));
                     OnPropertyChanged(nameof(PlaytimeCounterEnabled));
@@ -125,6 +127,12 @@ namespace Froststrap.UI.ViewModels.Settings
         {
             get => App.Settings.Prop.ShowServerDetails;
             set => App.Settings.Prop.ShowServerDetails = value;
+        }
+
+        public static bool ShowServerUptimeEnabled
+        {
+            get => App.Settings.Prop.ShowServerUptime;
+            set => App.Settings.Prop.ShowServerUptime = value;
         }
 
         public static bool PlaytimeCounterEnabled

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  Froststrap
  *  Copyright (c) Froststrap Team
  *
@@ -15,7 +15,7 @@ using Froststrap.Utility.RoValra;
 
 namespace Froststrap.Integrations
 {
-    public class RobloxServerFetcher
+    public class RobloxServerFetcher : IDisposable
     {
         private const string LOG_IDENT = "RobloxServerFetcher";
         private readonly HttpClient _client;
@@ -289,33 +289,13 @@ namespace Froststrap.Integrations
             }
         }
 
-        private static async Task<string?> GetCookieFromAccountManagerAsync()
-        {
-            try
-            {
-                if (AccountManager.Shared?.ActiveAccount != null)
-                {
-                    return AccountManager.Shared.ActiveAccount.SecurityToken;
-                }
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteException($"{LOG_IDENT}::GetCookieFromAccountManager", ex);
-            }
-            return null;
-        }
-
         private static async Task<string?> GetCookieFromCookiesManagerAsync()
         {
             try
             {
                 if (App.Cookies != null)
                 {
-                    var field = typeof(CookiesManager).GetField("AuthCookie", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                    if (field != null)
-                    {
-                        return field.GetValue(App.Cookies) as string;
-                    }
+                    return App.Cookies.Loaded ? App.Cookies.GetAuthCookie() : null;
                 }
             }
             catch (Exception ex)
@@ -333,17 +313,10 @@ namespace Froststrap.Integrations
 
         public async Task<string?> ResolveCookieAsync()
         {
-            var accountManagerCookie = await GetCookieFromAccountManagerAsync();
-            if (!string.IsNullOrWhiteSpace(accountManagerCookie) && await ValidateCookieAsync(accountManagerCookie))
-            {
-                App.Logger.WriteLine(LOG_IDENT, "Using valid cookie from Account Manager.");
-                return accountManagerCookie;
-            }
-
             var cookiesManagerCookie = await GetCookieFromCookiesManagerAsync();
             if (!string.IsNullOrWhiteSpace(cookiesManagerCookie) && await ValidateCookieAsync(cookiesManagerCookie))
             {
-                App.Logger.WriteLine(LOG_IDENT, "Account Manager cookie failed or missing. Using valid cookie from Cookies Manager.");
+                App.Logger.WriteLine(LOG_IDENT, "Using valid cookie from Cookies Manager.");
                 return cookiesManagerCookie;
             }
 
@@ -351,7 +324,7 @@ namespace Froststrap.Integrations
             return null;
         }
 
-        public async Task<FetchResult> FetchServerInstancesAsync(long placeId, string cursor = "", int sortOrder = 2, string? optionalCookie = null, CancellationToken cancellationToken = default)
+        public async Task<FetchResult> FetchServerInstancesAsync(long placeId, string cursor = "", int sortOrder = 2, string? optionalCookie = null, CancellationToken cancellationToken = default, int? maxServers = null)
         {
             string? roblosecurity = !string.IsNullOrWhiteSpace(optionalCookie) ? optionalCookie : await ResolveCookieAsync();
             if (string.IsNullOrWhiteSpace(roblosecurity)) return new FetchResult();
@@ -383,6 +356,9 @@ namespace Froststrap.Integrations
 
             foreach (var serverElem in dataElement.EnumerateArray())
             {
+                if (maxServers.HasValue && instances.Count + serverInfos.Count >= maxServers.Value)
+                    break;
+
                 string jobId = serverElem.GetProperty("id").GetString() ?? "";
                 int playing = serverElem.GetProperty("playing").GetInt32();
                 int maxPlayers = serverElem.GetProperty("maxPlayers").GetInt32();
@@ -402,7 +378,7 @@ namespace Froststrap.Integrations
             var regionTasks = new List<Task<(string jobId, int? dcId)>>();
             var uptimeTasks = new Dictionary<string, Task<DateTime?>>();
 
-            foreach (var (jobId, playing, maxPlayers, _) in serverInfos)
+            foreach (var (jobId, _, _, _) in serverInfos)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -420,7 +396,7 @@ namespace Froststrap.Integrations
 
             for (int i = 0; i < serverInfos.Count; i++)
             {
-                var (jobId, playing, maxPlayers, _) = serverInfos[i];
+                var (jobId, playing, maxPlayers, serverElem) = serverInfos[i];
                 var (_, dcId) = regionResults[i];
 
                 string region = (dcId.HasValue && _datacenterIdToRegion!.TryGetValue(dcId.Value, out var mapped)) ? mapped : "Unknown";
@@ -435,6 +411,9 @@ namespace Froststrap.Integrations
                     DataCenterId = dcId,
                     FirstSeen = uptime
                 };
+
+                if (serverElem.TryGetProperty("playerTokens", out var tokensElem) && tokensElem.ValueKind == JsonValueKind.Array)
+                    server.PlayerTokens = [.. tokensElem.EnumerateArray().Select(x => x.GetString() ?? "").Where(x => x.Length > 0)];
 
                 if (region != "Unknown") placeCache[jobId] = server;
                 instances.Add(server);
@@ -516,7 +495,7 @@ namespace Froststrap.Integrations
             var (_, dcMap) = datacentersResult.Value;
 
             using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Froststrap/1.0");
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Spectre/1.0");
             var ipinfoJson = await httpClient.GetStringAsync("https://ipinfo.io/json", cancellationToken);
             var ipinfo = JsonSerializer.Deserialize<IPInfoResponse>(ipinfoJson);
 
@@ -930,7 +909,7 @@ namespace Froststrap.Integrations
                     cookie = await ResolveCookieAsync();
                     if (string.IsNullOrEmpty(cookie))
                     {
-                        await Frontend.ShowMessageBox("No valid cookie found. Log in using account manager or turn on 'Froststrap Account Permission' to use this feature.", MessageBoxImage.Error);
+                        await Frontend.ShowMessageBox("No valid cookie found. Log in using account manager or turn on 'Spectre Account Permission' to use this feature.", MessageBoxImage.Error);
                         return false;
                     }
                 }
@@ -1000,6 +979,12 @@ namespace Froststrap.Integrations
                     value = 0;
                     return false;
             }
+        }
+
+        public void Dispose()
+        {
+            _client.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

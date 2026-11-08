@@ -26,7 +26,9 @@ namespace Froststrap.UI.Elements.ContextMenu
         private NativeMenuItem? VersionMenuItem;
         private NativeMenuItem? PlaytimeMenuItem;
         private NativeMenuItem? RichPresenceMenuItem;
+        private bool _presenceOn = true;
         private NativeMenuItem? AntiAfkMenuItem;
+        private NativeMenuItem? SoftkeyMenuItem;
         private NativeMenuItem? InviteDeeplinkMenuItem;
         private NativeMenuItem? AutoJoinRegionMenuItem;
         private NativeMenuItem? ServerDetailsMenuItem;
@@ -62,12 +64,13 @@ namespace Froststrap.UI.Elements.ContextMenu
             PlaytimeMenuItem = items.ElementAtOrDefault(1);
             RichPresenceMenuItem = items.ElementAtOrDefault(3);
             AntiAfkMenuItem = items.ElementAtOrDefault(4);
-            InviteDeeplinkMenuItem = items.ElementAtOrDefault(5);
-            AutoJoinRegionMenuItem = items.ElementAtOrDefault(6);
-            ServerDetailsMenuItem = items.ElementAtOrDefault(7);
-            RejoinServerMenuItem = items.ElementAtOrDefault(8);
-            GameHistoryMenuItem = items.ElementAtOrDefault(9);
-            CloseRobloxMenuItem = items.ElementAtOrDefault(11);
+            SoftkeyMenuItem = items.ElementAtOrDefault(5);
+            InviteDeeplinkMenuItem = items.ElementAtOrDefault(6);
+            AutoJoinRegionMenuItem = items.ElementAtOrDefault(7);
+            ServerDetailsMenuItem = items.ElementAtOrDefault(8);
+            RejoinServerMenuItem = items.ElementAtOrDefault(9);
+            GameHistoryMenuItem = items.ElementAtOrDefault(10);
+            CloseRobloxMenuItem = items.ElementAtOrDefault(12);
         }
 
         public MenuContainer(Watcher watcher) : this()
@@ -111,10 +114,10 @@ namespace Froststrap.UI.Elements.ContextMenu
 
                     if (RichPresenceMenuItem != null)
                     {
-                        RichPresenceMenuItem.IsVisible = (_watcher?.PlayerRichPresence is not null || _watcher?.StudioRichPresence is not null);
-
-                        _watcher?.PlayerRichPresence?.SetVisibility(RichPresenceMenuItem.IsChecked);
-                        _watcher?.StudioRichPresence?.SetVisibility(RichPresenceMenuItem.IsChecked);
+                        _presenceOn = App.Settings.Prop.UseDiscordRichPresence;
+                        RichPresenceMenuItem.IsVisible = true;
+                        RichPresenceMenuItem.IsChecked = _presenceOn;
+                        _watcher?.SetRichPresenceEnabled(_presenceOn);
                     }
 
                     if (AntiAfkMenuItem != null)
@@ -122,6 +125,8 @@ namespace Froststrap.UI.Elements.ContextMenu
                         AntiAfkMenuItem.IsChecked = App.Settings.Prop.EnableAntiAfk;
                         AntiAfkMenuItem.IsVisible = OperatingSystem.IsWindows();
                     }
+
+                    SetNativeVisible(SoftkeyMenuItem, _watcher?.Softkey is not null);
 
                     if (VersionMenuItem is not null)
                         VersionMenuItem.Header = $"{App.BrandName} v{App.Version}";
@@ -200,13 +205,14 @@ namespace Froststrap.UI.Elements.ContextMenu
 
         private void RichPresenceMenuItem_Click(object? sender, EventArgs e)
         {
-            if (sender is NativeMenuItem item)
-            {
-                bool isChecked = item.IsChecked;
+            if (sender is not NativeMenuItem item)
+                return;
 
-                _watcher?.PlayerRichPresence?.SetVisibility(isChecked);
-                _watcher?.StudioRichPresence?.SetVisibility(isChecked);
-            }
+            // The tray check box sometimes reports the state from before the click.
+            bool next = item.IsChecked == _presenceOn ? !_presenceOn : item.IsChecked;
+            _presenceOn = next;
+            item.IsChecked = next;
+            _watcher?.SetRichPresenceEnabled(next);
         }
 
         private void AntiAfkMenuItem_Click(object? sender, EventArgs e)
@@ -217,6 +223,12 @@ namespace Froststrap.UI.Elements.ContextMenu
             bool enabled = item.IsChecked;
             _watcher?.AntiAfk?.SetEnabled(enabled);
             App.Logger.WriteLine("MenuContainer", $"Anti-AFK toggled via tray: {enabled}");
+        }
+
+        private void SoftkeyMenuItem_Click(object? sender, EventArgs e)
+        {
+            if (sender is NativeMenuItem item)
+                _watcher?.Softkey?.SetEnabled(item.IsChecked);
         }
 
         private async void InviteDeeplinkMenuItem_Click(object? sender, EventArgs e)

@@ -22,7 +22,7 @@ namespace Froststrap.UI.ViewModels.ContextMenu
         public string ServerUptime { get; private set; } = Strings.Common_Loading;
 
         public static bool ServerLocationVisibility => App.Settings.Prop.ShowServerDetails;
-        public static bool ServerUptimeVisibility => App.Settings.Prop.ShowServerDetails;
+        public static bool ServerUptimeVisibility => App.Settings.Prop.ShowServerUptime;
 
         public ICommand CopyInstanceIdCommand => new RelayCommand<Visual>(CopyInstanceId);
 
