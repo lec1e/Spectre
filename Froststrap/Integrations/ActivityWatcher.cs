@@ -67,7 +67,10 @@ namespace Froststrap.Integrations
         private DateTime LastRPCRequest;
 
         private readonly LaunchMode _launchMode;
-        private readonly int _robloxPID;
+        private readonly object _logGate = new();
+        private CancellationTokenSource _logSwitch = new();
+        private int _robloxPID;
+        private int _followedPid;
 
         public string LogLocation = null!;
 
@@ -177,90 +180,134 @@ namespace Froststrap.Integrations
             Data.ServerType = ServerType.Private;
         }
 
+        /// <summary>
+        /// The player process was replaced. Read that client's own log from the start.
+        /// </summary>
+        public void FollowClient(int pid)
+        {
+            if (pid <= 0 || IsDisposed)
+                return;
+
+            string? log = _launchMode == LaunchMode.Player
+                ? Utility.InstallSession.NewestPlayerLog(DateTime.UtcNow.AddMinutes(-3))
+                : null;
+
+            lock (_logGate)
+            {
+                _followedPid = pid;
+                _robloxPID = pid;
+
+                if (string.IsNullOrEmpty(log) || string.Equals(log, LogLocation, StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                App.Logger.WriteLine("ActivityWatcher::FollowClient", $"Reading {log} for PID {pid}");
+
+                if (InGame)
+                {
+                    InGame = false;
+                    OnGameLeave?.Invoke(this, EventArgs.Empty);
+                }
+
+                Data = new();
+                LogLocation = log;
+                _logSwitch.Cancel();
+            }
+        }
+
         public async void Start()
         {
             const string LOG_IDENT = "ActivityWatcher::Start";
+            _followedPid = _robloxPID;
 
-            // okay, here's the process:
-            //
-            // - tail the latest log file from %localappdata%\roblox\logs
-            // - check for specific lines to determine player's game activity as shown below:
-            //
-            // - get the place id, job id and machine address from '! Joining game '{{JOBID}}' place {{PLACEID}} at {{MACHINEADDRESS}}' entry
-            // - confirm place join with 'serverId: {{MACHINEADDRESS}}|{{MACHINEPORT}}' entry
-            // - check for leaves/disconnects with 'Time to disconnect replication data: {{TIME}}' entry
-            //
-            // we'll tail the log file continuously, monitoring for any log entries that we need to determine the current game activity
+            while (!IsDisposed)
+            {
+                CancellationToken token;
+                lock (_logGate)
+                {
+                    if (_logSwitch.IsCancellationRequested)
+                        _logSwitch = new CancellationTokenSource();
+                    token = _logSwitch.Token;
+                }
 
-            FileInfo logFileInfo;
+                try
+                {
+                    await TailLog(token);
+                }
+                catch (OperationCanceledException)
+                {
+                }
+                catch (Exception ex)
+                {
+                    App.Logger.WriteException(LOG_IDENT, ex);
+                    LogLocation = null!;
+                    try { await Task.Delay(1000); } catch { }
+                }
+            }
+        }
 
-            if (!string.IsNullOrEmpty(LogLocation) && LogLocation.Contains("CrashHandler", StringComparison.OrdinalIgnoreCase))
+        private async Task TailLog(CancellationToken token)
+        {
+            const string LOG_IDENT = "ActivityWatcher::Start";
+
+            if (!string.IsNullOrEmpty(LogLocation) &&
+                (LogLocation.Contains("CrashHandler", StringComparison.OrdinalIgnoreCase) || !File.Exists(LogLocation)))
                 LogLocation = null!;
 
-            if (String.IsNullOrEmpty(LogLocation))
+            if (string.IsNullOrEmpty(LogLocation))
             {
                 string logDirectory = Paths.RobloxLogs;
-
-                if (!Directory.Exists(logDirectory))
-                    return;
-
-                // we need to make sure we're fetching the absolute latest log file
-                // if roblox doesn't start quickly enough, we can wind up fetching the previous log file
-                // good rule of thumb is to find a log file that was created in the last 15 seconds or so
-
-                App.Logger.WriteLine(LOG_IDENT, "Opening Roblox log file...");
-
                 string logNameFilter = (InRobloxStudio || _launchMode == LaunchMode.Studio || _launchMode == LaunchMode.StudioAuth)
                     ? "Studio"
                     : "Player";
 
-                while (true)
+                App.Logger.WriteLine(LOG_IDENT, "Opening Roblox log file...");
+
+                while (!token.IsCancellationRequested && !IsDisposed)
                 {
-                    var candidates = new DirectoryInfo(logDirectory)
+                    if (!Directory.Exists(logDirectory))
+                    {
+                        await Task.Delay(1000, token);
+                        continue;
+                    }
+
+                    var newest = new DirectoryInfo(logDirectory)
                         .GetFiles()
                         .Where(x => x.Name.Contains(logNameFilter, StringComparison.OrdinalIgnoreCase)
                             && !x.Name.Contains("CrashHandler", StringComparison.OrdinalIgnoreCase)
                             && x.CreationTime <= DateTime.Now)
                         .OrderByDescending(x => x.CreationTime)
-                        .ToList();
+                        .FirstOrDefault();
 
-                    if (candidates.Count == 0)
+                    if (newest is not null && newest.CreationTime.AddSeconds(15) > DateTime.Now)
                     {
-                        App.Logger.WriteLine(LOG_IDENT, $"No '{logNameFilter}' log files found, waiting...");
-                        await Task.Delay(1000);
-                        continue;
+                        LogLocation = newest.FullName;
+                        break;
                     }
 
-                    logFileInfo = candidates.First();
-
-                    if (logFileInfo.CreationTime.AddSeconds(15) > DateTime.Now)
-                        break;
-
-                    App.Logger.WriteLine(LOG_IDENT, $"Could not find recent enough log file, waiting... (newest is {logFileInfo.Name})");
-                    await Task.Delay(1000);
+                    App.Logger.WriteLine(LOG_IDENT, newest is null
+                        ? $"No '{logNameFilter}' log files found, waiting..."
+                        : $"Could not find recent enough log file, waiting... (newest is {newest.Name})");
+                    await Task.Delay(1000, token);
                 }
+            }
 
-                LogLocation = logFileInfo.FullName;
-            }
-            else
-            {
-                logFileInfo = new FileInfo(LogLocation);
-            }
+            token.ThrowIfCancellationRequested();
+            if (string.IsNullOrEmpty(LogLocation))
+                return;
 
             OnLogOpen?.Invoke(this, EventArgs.Empty);
 
-            var logFileStream = logFileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            await using var logFileStream = new FileStream(LogLocation, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var streamReader = new StreamReader(logFileStream);
 
             App.Logger.WriteLine(LOG_IDENT, $"Opened {LogLocation}");
 
-            using var streamReader = new StreamReader(logFileStream);
-
-            while (!IsDisposed)
+            while (!IsDisposed && !token.IsCancellationRequested)
             {
-                string? log = await streamReader.ReadLineAsync();
+                string? log = await streamReader.ReadLineAsync(token);
 
                 if (log is null)
-                    await Task.Delay(1000);
+                    await Task.Delay(1000, token);
                 else
                     ReadLogEntry(log);
             }
