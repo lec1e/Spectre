@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.37
+
+- Launching Roblox again deletes the installed version and downloads a new copy
+- That install also clears the package cache and Roblox’s cache
+
 ## What’s new in 2.0.36
 
 - The tray stays up while Roblox from the Spectre folder is launching or playing
