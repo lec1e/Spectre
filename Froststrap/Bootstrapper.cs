@@ -385,7 +385,9 @@ namespace Froststrap
 
                 await SetupPackageDictionaries(); // mods also require it
 
-                if (AppData.DistributionState.VersionGuid != _latestVersionGuid || MustUpgrade)
+                bool replaceInstalledPlayer = ShouldReplaceInstalledPlayer();
+
+                if (replaceInstalledPlayer || AppData.DistributionState.VersionGuid != _latestVersionGuid || MustUpgrade)
                 {
                     bool backgroundUpdaterMutexOpen = Utilities.DoesMutexExist(BackgroundUpdaterMutexName);
 
@@ -394,7 +396,7 @@ namespace Froststrap
 
                     App.Logger.WriteLine(LOG_IDENT, $"Background updater running: {backgroundUpdaterMutexOpen}");
 
-                    if (backgroundUpdaterMutexOpen && MustUpgrade)
+                    if (backgroundUpdaterMutexOpen && (MustUpgrade || replaceInstalledPlayer))
                     {
                         // I am Forced Upgrade, killer of Background Updates
                         Utilities.KillBackgroundUpdater();
@@ -403,7 +405,7 @@ namespace Froststrap
 
                     if (!backgroundUpdaterMutexOpen)
                     {
-                        if (IsEligibleForBackgroundUpdate())
+                        if (!replaceInstalledPlayer && IsEligibleForBackgroundUpdate())
                             StartBackgroundUpdater();
                         else
                             await UpgradeRoblox();
@@ -798,6 +800,21 @@ namespace Froststrap
                 _launchMode = isPlayer ? LaunchMode.Player : LaunchMode.Studio;
                 SetupAppData(); // we need to set it up again
             }
+        }
+
+        /// <summary>
+        /// A later Roblox launch, when a player version is already installed, replaces that copy.
+        /// </summary>
+        private bool ShouldReplaceInstalledPlayer()
+        {
+            if (App.LaunchSettings.BackgroundUpdaterFlag.Active || IsStudioLaunch || !OperatingSystem.IsWindows())
+                return false;
+
+            if (string.IsNullOrEmpty(AppData.DistributionState.VersionGuid))
+                return false;
+
+            string current = Path.Combine(Paths.Versions, AppData.DistributionState.VersionGuid);
+            return Directory.Exists(current) || Directory.Exists(_latestVersionDirectory);
         }
 
         private bool IsEligibleForBackgroundUpdate()
@@ -2293,24 +2310,41 @@ exit";
                 return false;
             }
 
-            if (_versionPackageManifest is not null)
+            ClearInstallCaches();
+
+            App.Logger.WriteLine(LOG_IDENT, "Cleared the current Roblox version and caches for a fresh install.");
+            return true;
+        }
+
+        private static void ClearInstallCaches()
+        {
+            ClearDirectoryContents(Paths.Downloads);
+            ClearDirectoryContents(Paths.Cache);
+            ClearDirectoryContents(Paths.RobloxCache);
+
+            if (!OperatingSystem.IsWindows() || string.IsNullOrEmpty(Paths.Roblox))
+                return;
+
+            foreach (string name in new[] { "tmp", "Downloads", "rbx-storage", "rbx-storage-v2", "http", "rbxlcache", "cache" })
+                ClearDirectoryContents(Path.Combine(Paths.Roblox, name));
+        }
+
+        private static void ClearDirectoryContents(string path)
+        {
+            if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
+                return;
+
+            foreach (string file in Directory.GetFiles(path))
             {
-                foreach (var package in _versionPackageManifest)
-                {
-                    try
-                    {
-                        if (!string.IsNullOrEmpty(package.Signature) && File.Exists(package.DownloadPath))
-                            File.Delete(package.DownloadPath);
-                    }
-                    catch (Exception ex)
-                    {
-                        App.Logger.WriteException(LOG_IDENT, ex);
-                    }
-                }
+                try { File.Delete(file); }
+                catch (Exception ex) { App.Logger.WriteException("Bootstrapper::ClearDirectoryContents", ex); }
             }
 
-            App.Logger.WriteLine(LOG_IDENT, "Cleared the current Roblox version for a fresh install.");
-            return true;
+            foreach (string directory in Directory.GetDirectories(path))
+            {
+                try { Directory.Delete(directory, true); }
+                catch (Exception ex) { App.Logger.WriteException("Bootstrapper::ClearDirectoryContents", ex); }
+            }
         }
 
         private static bool TryWipeInstallFolder(string folder)
@@ -2350,7 +2384,7 @@ exit";
         {
             const string LOG_IDENT = "Bootstrapper::UpgradeRoblox";
 
-            bool cancelUpgrade = !App.Settings.Prop.UpdateRoblox;
+            bool cancelUpgrade = !App.Settings.Prop.UpdateRoblox && !ShouldReplaceInstalledPlayer();
 
             if (cancelUpgrade)
             {
@@ -2368,7 +2402,7 @@ exit";
                 }
             }
 
-            SetStatus(string.IsNullOrEmpty(AppData.DistributionState.VersionGuid)
+            SetStatus(string.IsNullOrEmpty(AppData.DistributionState.VersionGuid) || ShouldReplaceInstalledPlayer()
                 ? Strings.Bootstrapper_Status_Installing
                 : Strings.Bootstrapper_Status_Upgrading);
 
@@ -2379,7 +2413,10 @@ exit";
             _isInstalling = true;
 
             if (!App.LaunchSettings.BackgroundUpdaterFlag.Active)
+            {
                 KillRobloxPlayers();
+                await Task.Delay(600);
+            }
 
             if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && !PrepareFreshInstall())
             {
