@@ -39,12 +39,16 @@ namespace Froststrap.UI.ViewModels.ContextMenu
 
         public async void QueryServerLocation()
         {
-            string? location = await _activityWatcher.Data.QueryServerLocation();
-
-            if (String.IsNullOrEmpty(location))
+            try
+            {
+                string? location = await _activityWatcher.Data.QueryServerLocation();
+                ServerLocation = string.IsNullOrEmpty(location) ? Strings.Common_NotAvailable : location;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException("ServerInformationViewModel::QueryServerLocation", ex);
                 ServerLocation = Strings.Common_NotAvailable;
-            else
-                ServerLocation = location;
+            }
 
             OnPropertyChanged(nameof(ServerLocation));
         }

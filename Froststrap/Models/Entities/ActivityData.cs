@@ -111,7 +111,10 @@ namespace Froststrap.Models.Entities
             const string LOG_IDENT = "ActivityData::QueryServerLocation";
 
             if (!MachineAddressValid)
-                throw new InvalidOperationException($"Machine address is invalid ({MachineAddress})");
+            {
+                App.Logger.WriteLine(LOG_IDENT, $"Skipping location query for non-public address ({MachineAddress})");
+                return null;
+            }
 
             await serverQuerySemaphore.WaitAsync();
 

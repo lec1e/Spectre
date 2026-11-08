@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.42
+
+- Joining a game shows a notification with the server region, and Server information no longer closes the tray
+- The tray also follows Roblox started by another launcher
+
 ## What’s new in 2.0.41
 
 - Pressing Play, including from the browser, launches the Roblox that is already installed

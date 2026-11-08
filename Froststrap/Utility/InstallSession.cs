@@ -2,30 +2,30 @@ using Froststrap.Models;
 
 namespace Froststrap.Utility
 {
-    /// <summary>Roblox clients whose executable lives in the Spectre install folder.</summary>
+    /// <summary>
+    /// Roblox clients on this PC. Spectre's own install is preferred, and clients
+    /// started by another launcher are included too.
+    /// </summary>
     public static class InstallSession
     {
         public static IReadOnlyList<Process> Clients(LaunchMode mode)
         {
-            if (!OperatingSystem.IsWindows() || !Paths.Initialized || string.IsNullOrEmpty(Paths.Base))
+            if (!OperatingSystem.IsWindows())
                 return [];
 
             string processName = mode is LaunchMode.Studio or LaunchMode.StudioAuth
                 ? "RobloxStudioBeta"
                 : "RobloxPlayerBeta";
 
-            var matches = new List<Process>();
-            foreach (var process in Process.GetProcessesByName(processName))
-            {
-                if (IsInsideInstall(process))
-                    matches.Add(process);
-            }
-
-            return matches;
+            return Process.GetProcessesByName(processName).ToList();
         }
 
-        public static Process? Newest(LaunchMode mode) =>
-            Clients(mode).OrderByDescending(SafeStart).FirstOrDefault();
+        public static Process? Newest(LaunchMode mode)
+        {
+            var clients = Clients(mode);
+            return clients.Where(IsInsideInstall).OrderByDescending(SafeStart).FirstOrDefault()
+                ?? clients.OrderByDescending(SafeStart).FirstOrDefault();
+        }
 
         /// <summary>
         /// The install-folder client, or a player that just started when its path cannot be read.
@@ -48,6 +48,9 @@ namespace Froststrap.Utility
 
         public static bool IsInsideInstall(Process process)
         {
+            if (!Paths.Initialized || string.IsNullOrEmpty(Paths.Base))
+                return false;
+
             string? path = ExecutablePath(process);
             if (string.IsNullOrEmpty(path))
                 return false;
