@@ -2316,6 +2316,34 @@ exit";
             return true;
         }
 
+        /// <summary>
+        /// Removes the Roblox install data and saved login so the new client starts signed out.
+        /// </summary>
+        private static void ClearRobloxSession()
+        {
+            const string LOG_IDENT = "Bootstrapper::ClearRobloxSession";
+            App.Logger.WriteLine(LOG_IDENT, "Clearing Roblox data and the saved login.");
+
+            void Log(string message) => App.Logger.WriteLine(LOG_IDENT, message);
+
+            try
+            {
+                Utility.BanAsync.CleanupEngine.RunCleanup(new Utility.BanAsync.CleanupEngine.CleanupOptions
+                {
+                    PreserveInGameSettings = true,
+                    PreserveFastFlags = true,
+                    IncludeStudioFolders = false,
+                    CleanMrExVersions = false
+                }, Log);
+
+                Utility.BanAsync.BrowserCookieCleaner.ClearRobloxCookies(Log);
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException(LOG_IDENT, ex);
+            }
+        }
+
         private static void ClearInstallCaches()
         {
             ClearDirectoryContents(Paths.Downloads);
@@ -2416,6 +2444,8 @@ exit";
             {
                 KillRobloxPlayers();
                 await Task.Delay(600);
+                if (!IsStudioLaunch && OperatingSystem.IsWindows())
+                    ClearRobloxSession();
             }
 
             if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && !PrepareFreshInstall())
