@@ -2390,12 +2390,12 @@ exit";
         }
 
         /// <summary>
-        /// Removes the Roblox install data and saved login so the new client starts signed out.
+        /// Removes the local Roblox install data. Browser logins are left alone.
         /// </summary>
         private static void ClearRobloxSession()
         {
             const string LOG_IDENT = "Bootstrapper::ClearRobloxSession";
-            App.Logger.WriteLine(LOG_IDENT, "Clearing Roblox data and the saved login.");
+            App.Logger.WriteLine(LOG_IDENT, "Clearing local Roblox data. Browser login cookies are kept.");
 
             void Log(string message) => App.Logger.WriteLine(LOG_IDENT, message);
 
@@ -2408,8 +2408,6 @@ exit";
                     IncludeStudioFolders = false,
                     CleanMrExVersions = false
                 }, Log);
-
-                Utility.BanAsync.BrowserCookieCleaner.ClearRobloxCookies(Log);
             }
             catch (Exception ex)
             {
