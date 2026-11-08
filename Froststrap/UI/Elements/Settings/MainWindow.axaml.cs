@@ -33,6 +33,8 @@ namespace Froststrap.UI.Elements.Settings
         private bool _isAnimatingOut = false;
 
         private readonly Dictionary<string, Control> _cachedPages = [];
+        private DispatcherTimer? _sessionTimer;
+        private string _playingKey = "";
 
         public MainWindow()
         {
@@ -55,6 +57,11 @@ namespace Froststrap.UI.Elements.Settings
             };
             UpdateCookieStatus();
             UpdateBackdrop();
+            _sessionTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4) };
+            _sessionTimer.Tick += (_, _) => _ = RefreshPlayingAccountsAsync();
+            _sessionTimer.Start();
+            Closed += (_, _) => _sessionTimer.Stop();
+            _ = RefreshPlayingAccountsAsync();
 
             KeyDown += MainWindow_KeyDown;
         }
@@ -111,12 +118,49 @@ namespace Froststrap.UI.Elements.Settings
             CookieStatusText.Text = text;
             CookieStatusDot.Bind(Avalonia.Controls.Shapes.Shape.FillProperty, new DynamicResourceExtension(brush));
 
+            if (!string.IsNullOrEmpty(_playingKey))
+                return;
+
             var user = App.Cookies.State == CookieState.Success ? App.Cookies.User : null;
             SessionNameText.Text = user is null ? "Roblox session" : user.DisplayName;
+            ToolTip.SetTip(SessionText, null);
             if (user is null)
                 SessionAvatar.Source = null;
             else
                 _ = LoadSessionAvatarAsync(user.Id);
+        }
+
+        private async Task RefreshPlayingAccountsAsync()
+        {
+            IReadOnlyList<Froststrap.Utility.PlayingAccount> accounts;
+            try
+            {
+                accounts = await Froststrap.Utility.PlayingAccounts.GetAsync();
+            }
+            catch
+            {
+                return;
+            }
+
+            string key = string.Join(",", accounts.Select(account => account.UserId));
+            if (key == _playingKey)
+                return;
+
+            _playingKey = key;
+            if (accounts.Count == 0)
+            {
+                UpdateCookieStatus();
+                return;
+            }
+
+            string names = string.Join(", ", accounts.Select(account => account.DisplayName));
+            string handles = string.Join(", ", accounts.Select(account => "@" + account.Name));
+            SessionNameText.Text = names;
+            CookieStatusText.Text = accounts.Count == 1 ? "Playing" : $"{accounts.Count} accounts playing";
+            CookieStatusDot.Bind(Avalonia.Controls.Shapes.Shape.FillProperty, new DynamicResourceExtension("WbSuccessBrush"));
+            ToolTip.SetTip(SessionText, handles);
+            if (accounts.Count == 1)
+                _ = LoadSessionAvatarAsync(accounts[0].UserId);
         }
 
         private async Task LoadSessionAvatarAsync(long userId)
@@ -131,7 +175,7 @@ namespace Froststrap.UI.Elements.Settings
                     return;
 
                 var bitmap = await Froststrap.UI.Converters.UrlToBitmapConverter.GetBitmapFromCacheOrDownloadAsync(url);
-                if (bitmap is not null && App.Cookies.User?.Id == userId)
+                if (bitmap is not null)
                     SessionAvatar.Source = bitmap;
             }
             catch (Exception ex)

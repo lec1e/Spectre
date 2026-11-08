@@ -38,6 +38,7 @@ namespace Froststrap.UI.ViewModels.Settings
             LaunchPlayerCommand = new RelayCommand(() => Launch(LaunchMode.Player));
             LaunchStudioCommand = new RelayCommand(() => Launch(LaunchMode.Studio));
             PlayGameCommand = new RelayCommand<HomeRecentGame>(PlayGame);
+            OpenFolderCommand = new RelayCommand(OpenFolder);
 
             Stats = BuildStats();
         }
@@ -46,6 +47,7 @@ namespace Froststrap.UI.ViewModels.Settings
         public ICommand LaunchPlayerCommand { get; }
         public ICommand LaunchStudioCommand { get; }
         public ICommand PlayGameCommand { get; }
+        public ICommand OpenFolderCommand { get; }
 
         public string VersionBadge => $"{App.BrandName.ToUpperInvariant()} v{App.Version}";
 
@@ -258,6 +260,15 @@ namespace Froststrap.UI.ViewModels.Settings
             if (span.TotalDays < 1) return $"{(int)span.TotalHours}h ago";
             if (span.TotalDays < 30) return $"{(int)span.TotalDays}d ago";
             return time.ToString("MMM d", CultureInfo.CurrentCulture);
+        }
+
+        private static void OpenFolder()
+        {
+            string path = Paths.Initialized && Directory.Exists(Paths.Base) ? Paths.Base : Paths.Roblox;
+            if (!Directory.Exists(path))
+                return;
+
+            Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
         }
 
         private void Launch(LaunchMode mode)
