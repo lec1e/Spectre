@@ -194,6 +194,9 @@ namespace Froststrap.Integrations
 
             FileInfo logFileInfo;
 
+            if (!string.IsNullOrEmpty(LogLocation) && LogLocation.Contains("CrashHandler", StringComparison.OrdinalIgnoreCase))
+                LogLocation = null!;
+
             if (String.IsNullOrEmpty(LogLocation))
             {
                 string logDirectory = Paths.RobloxLogs;
@@ -215,7 +218,9 @@ namespace Froststrap.Integrations
                 {
                     var candidates = new DirectoryInfo(logDirectory)
                         .GetFiles()
-                        .Where(x => x.Name.Contains(logNameFilter, StringComparison.OrdinalIgnoreCase) && x.CreationTime <= DateTime.Now)
+                        .Where(x => x.Name.Contains(logNameFilter, StringComparison.OrdinalIgnoreCase)
+                            && !x.Name.Contains("CrashHandler", StringComparison.OrdinalIgnoreCase)
+                            && x.CreationTime <= DateTime.Now)
                         .OrderByDescending(x => x.CreationTime)
                         .ToList();
 

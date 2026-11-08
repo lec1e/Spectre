@@ -566,6 +566,7 @@ public partial class App : Application
             }
             State.Load();
             RobloxInstallListener.Start();
+            Froststrap.Utility.InstallSession.Watch();
             FastFlags.Load();
             AppStorage.Load();
             GlobalSettings.Load();
