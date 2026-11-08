@@ -1,5 +1,3 @@
-using Froststrap.UI.Elements.Dialogs;
-
 namespace Froststrap
 {
     /// <summary>
@@ -81,23 +79,7 @@ namespace Froststrap
                 if (string.Equals(current, name, StringComparison.OrdinalIgnoreCase))
                     return;
 
-                App.Logger.WriteLine("RobloxInstallListener", $"Roblox installation detected: {name}");
-                App.State.Prop.ForceReinstall = true;
-                App.State.Save();
-
-                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-                {
-                    try
-                    {
-                        DesktopToastWindow.ShowToast(
-                            "Roblox installation",
-                            $"Spectre noticed {name}. The next launch replaces it with a fresh install.");
-                    }
-                    catch (Exception ex)
-                    {
-                        App.Logger.WriteException("RobloxInstallListener", ex);
-                    }
-                });
+                App.Logger.WriteLine("RobloxInstallListener", $"Roblox installation detected: {name}. Leaving the current client and its settings in place.");
             }
             catch (Exception ex)
             {

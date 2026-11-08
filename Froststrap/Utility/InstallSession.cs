@@ -17,7 +17,18 @@ namespace Froststrap.Utility
                 ? "RobloxStudioBeta"
                 : "RobloxPlayerBeta";
 
-            return Process.GetProcessesByName(processName).ToList();
+            var running = new List<Process>();
+            foreach (var process in Process.GetProcessesByName(processName))
+            {
+                try
+                {
+                    if (!process.HasExited)
+                        running.Add(process);
+                }
+                catch { }
+            }
+
+            return running;
         }
 
         public static Process? Newest(LaunchMode mode)

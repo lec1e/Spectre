@@ -213,13 +213,13 @@ namespace Froststrap
             }
             catch (Exception ex)
             {
-                App.Logger.WriteLine(LOG_IDENT, "Failed to load, recreating template...");
+                App.Logger.WriteLine(LOG_IDENT, "Failed to load the existing Roblox settings. They were left unchanged.");
                 App.Logger.WriteException(LOG_IDENT, ex);
 
                 if (File.Exists(FileLocation))
                 {
-                    try { File.Delete(FileLocation); }
-                    catch { /* Ignore delete errors */ }
+                    Loaded = false;
+                    return;
                 }
 
                 CreateTemplate();

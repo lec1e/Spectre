@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.43
+
+- The tray closes once Roblox has fully exited
+- Playing no longer replaces Roblox graphics and in-game settings
+
 ## What’s new in 2.0.42
 
 - Joining a game shows a notification with the server region, and Server information no longer closes the tray

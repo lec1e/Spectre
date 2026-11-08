@@ -376,12 +376,12 @@ namespace Froststrap
 
                     if (!processExists && OperatingSystem.IsWindows())
                     {
-                        var replacement = Froststrap.Utility.InstallSession.NewestOrRecent(_watcherData.LaunchMode);
-                        if (replacement is not null)
+                        var replacement = Froststrap.Utility.InstallSession.Newest(_watcherData.LaunchMode);
+                        if (replacement is not null && !replacement.HasExited)
                         {
                             if (replacement.Id != _watcherData.ProcessId)
                             {
-                                App.Logger.WriteLine("Watcher", $"Following Roblox in the install folder (PID {replacement.Id})");
+                                App.Logger.WriteLine("Watcher", $"Following Roblox (PID {replacement.Id})");
                                 _watcherData.ProcessId = replacement.Id;
                                 ProcessId = replacement.Id;
                                 ActivityWatcher?.FollowClient(replacement.Id);
@@ -394,12 +394,13 @@ namespace Froststrap
                     {
                         if (missingSince == default)
                             missingSince = DateTime.UtcNow;
-                        if (DateTime.UtcNow - missingSince < TimeSpan.FromSeconds(15))
+                        if (DateTime.UtcNow - missingSince < TimeSpan.FromSeconds(3))
                         {
                             await Task.Delay(1000, _cancellationTokenSource.Token);
                             continue;
                         }
 
+                        App.Logger.WriteLine("Watcher", "Roblox has closed. Closing the tray.");
                         break;
                     }
 
