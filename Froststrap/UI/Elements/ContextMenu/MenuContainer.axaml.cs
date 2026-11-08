@@ -154,6 +154,9 @@ namespace Froststrap.UI.Elements.ContextMenu
             else
                 statusText = $"{Strings.Common_Total}: {FormatTimeSpan(total)}";
 
+            if (!ActivityWatcher.InRobloxStudio)
+                SetInGameMenuVisible(ActivityWatcher.InGame);
+
             PlaytimeMenuItem.Header = statusText;
         }
 

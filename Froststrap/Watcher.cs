@@ -379,9 +379,13 @@ namespace Froststrap
                         var replacement = Froststrap.Utility.InstallSession.NewestOrRecent(_watcherData.LaunchMode);
                         if (replacement is not null)
                         {
-                            App.Logger.WriteLine("Watcher", $"Following Roblox in the install folder (PID {replacement.Id})");
-                            _watcherData.ProcessId = replacement.Id;
-                            ProcessId = replacement.Id;
+                            if (replacement.Id != _watcherData.ProcessId)
+                            {
+                                App.Logger.WriteLine("Watcher", $"Following Roblox in the install folder (PID {replacement.Id})");
+                                _watcherData.ProcessId = replacement.Id;
+                                ProcessId = replacement.Id;
+                                ActivityWatcher?.FollowClient(replacement.Id);
+                            }
                             processExists = true;
                         }
                     }

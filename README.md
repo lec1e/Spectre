@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.41
+
+- Pressing Play, including from the browser, launches the Roblox that is already installed
+- The tray follows the running game and shows invite, server, rejoin, and region while you are playing
+
 ## What’s new in 2.0.40
 
 - Launching Roblox no longer deletes the Roblox login cookie in your browser

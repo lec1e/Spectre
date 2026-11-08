@@ -803,19 +803,9 @@ namespace Froststrap
         }
 
         /// <summary>
-        /// A later Roblox launch, when a player version is already installed, replaces that copy.
+        /// Play and browser joins use the client that is already installed.
         /// </summary>
-        private bool ShouldReplaceInstalledPlayer()
-        {
-            if (App.LaunchSettings.BackgroundUpdaterFlag.Active || IsStudioLaunch || !OperatingSystem.IsWindows())
-                return false;
-
-            if (string.IsNullOrEmpty(AppData.DistributionState.VersionGuid))
-                return false;
-
-            string current = Path.Combine(Paths.Versions, AppData.DistributionState.VersionGuid);
-            return Directory.Exists(current) || Directory.Exists(_latestVersionDirectory);
-        }
+        private bool ShouldReplaceInstalledPlayer() => false;
 
         private bool IsEligibleForBackgroundUpdate()
         {
@@ -2511,21 +2501,20 @@ exit";
 
             _isInstalling = true;
 
-            if (!App.LaunchSettings.BackgroundUpdaterFlag.Active)
+            // A normal Play leaves the installed client in place. A forced reinstall still replaces it.
+            if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && MustUpgrade)
             {
                 KillRobloxPlayers();
                 await Task.Delay(600);
-                if (!IsStudioLaunch && OperatingSystem.IsWindows())
-                    ClearRobloxSession();
-            }
 
-            if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && !PrepareFreshInstall())
-            {
-                await Frontend.ShowMessageBox(
-                    "Spectre could not clear the current Roblox version folder. Close Roblox completely, including the system tray, and launch again.",
-                    MessageBoxImage.Error);
-                App.Terminate(ErrorCode.ERROR_INSTALL_FAILURE);
-                return;
+                if (!PrepareFreshInstall())
+                {
+                    await Frontend.ShowMessageBox(
+                        "Spectre could not clear the current Roblox version folder. Close Roblox completely, including the system tray, and launch again.",
+                        MessageBoxImage.Error);
+                    App.Terminate(ErrorCode.ERROR_INSTALL_FAILURE);
+                    return;
+                }
             }
 
             Directory.CreateDirectory(_latestVersionDirectory);
