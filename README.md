@@ -12,13 +12,19 @@
 </p>
 
 <p align="center">
-  <strong>Spectre</strong> is a Roblox launcher with a dark crimson liquid-glass shell —
-  Versions Manager, LIVE channel lock, VIP, BanAsync, multi-instance, and more.
+  <strong>Spectre</strong> is a Roblox launcher with a dark glass window —
+  Versions, mods, fast flags, and multi-instance.
 </p>
 
 <p align="center">
-  <img src="./.github/preview/app-preview.png" width="920" alt="Spectre application preview — Home, Games, Library, Mods, Settings"/>
+  <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
+
+## What’s new in 2.0.35
+
+- Search results and the home actions are smaller
+- Open folder sits next to Launch
+- The session card lists every account that is in a Roblox window
 
 ## What’s new in 2.0.34
 

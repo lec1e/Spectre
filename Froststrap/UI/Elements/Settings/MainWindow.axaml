@@ -113,7 +113,7 @@
                                          Stroke="{DynamicResource WbDeepBrush}" StrokeThickness="2"
                                          Fill="{DynamicResource WbFgFaintBrush}" />
                             </Panel>
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
+                            <StackPanel x:Name="SessionText" Grid.Column="1" VerticalAlignment="Center" Spacing="1">
                                 <TextBlock x:Name="SessionNameText" Text="Roblox session" FontSize="12.5" FontWeight="SemiBold"
                                            Foreground="{DynamicResource WbFgBrightBrush}" TextTrimming="CharacterEllipsis" />
                                 <TextBlock x:Name="CookieStatusText" Classes="wb-faint" FontSize="11" TextTrimming="CharacterEllipsis" />

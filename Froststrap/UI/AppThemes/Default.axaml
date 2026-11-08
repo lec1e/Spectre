@@ -740,9 +740,10 @@
         <Setter Property="Background" Value="{DynamicResource WbTileIconBrush}" />
     </Style>
     <Style Selector="Button.hero">
-        <Setter Property="Height" Value="38" />
-        <Setter Property="Padding" Value="16,0" />
-        <Setter Property="CornerRadius" Value="11" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Padding" Value="10,0" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
@@ -751,7 +752,7 @@
     <Style Selector="Button.hero.accent">
         <Setter Property="Background" Value="{DynamicResource WbAccentBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource WbAccentBrush}" />
-        <Setter Property="Padding" Value="20,0" />
+        <Setter Property="Padding" Value="12,0" />
     </Style>
     <Style Selector="Button.home-action">
         <Setter Property="Padding" Value="14,12" />

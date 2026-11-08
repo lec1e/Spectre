@@ -13,8 +13,8 @@
             <Border Classes="home-hero">
                 <Panel>
                     <Border CornerRadius="18" Background="{DynamicResource WbHeroBrush}" />
-                    <Grid ColumnDefinitions="*,Auto" Margin="30,28,30,28" ColumnSpacing="24">
-                        <StackPanel Spacing="10" VerticalAlignment="Center">
+                    <Grid ColumnDefinitions="*,Auto" Margin="22,18,22,18" ColumnSpacing="18">
+                        <StackPanel Spacing="6" VerticalAlignment="Center">
                             <Border Classes="wb-chip" HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <Ellipse Width="6" Height="6" Fill="{DynamicResource WbAccentBrush}" VerticalAlignment="Center" />
@@ -22,36 +22,42 @@
                                                LetterSpacing="0.6" Foreground="{DynamicResource WbFgMutedBrush}" />
                                 </StackPanel>
                             </Border>
-                            <TextBlock Text="{Binding HeroTitle}" FontSize="30" FontWeight="Bold"
+                            <TextBlock Text="{Binding HeroTitle}" FontSize="24" FontWeight="Bold"
                                        Foreground="{DynamicResource WbFgBrightBrush}" TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding HeroSubtitle}" FontSize="13.5" MaxWidth="560" HorizontalAlignment="Left"
-                                       Foreground="{DynamicResource WbFgMutedBrush}" TextWrapping="Wrap" LineHeight="20" />
+                            <TextBlock Text="{Binding HeroSubtitle}" FontSize="12.5" MaxWidth="520" HorizontalAlignment="Left"
+                                       Foreground="{DynamicResource WbFgMutedBrush}" TextWrapping="Wrap" LineHeight="18" />
 
-                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,10,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,8,0,0">
                                 <Button Classes="accent hero" Command="{Binding LaunchPlayerCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ic:Lucide Icon="Play" Width="15" Height="15" StrokeBrush="{DynamicResource WbOnAccentBrush}" />
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ic:Lucide Icon="Play" Width="13" Height="13" StrokeBrush="{DynamicResource WbOnAccentBrush}" />
                                         <TextBlock Text="{Binding PlayerLaunchText}" />
                                     </StackPanel>
                                 </Button>
                                 <Button Classes="hero" Command="{Binding LaunchStudioCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ic:Lucide Icon="Wrench" Width="15" Height="15" />
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ic:Lucide Icon="Wrench" Width="13" Height="13" />
                                         <TextBlock Text="{Binding StudioLaunchText}" />
                                     </StackPanel>
                                 </Button>
                                 <Button Classes="hero" Command="{Binding NavigateCommand}" CommandParameter="quickplay">
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ic:Lucide Icon="Gamepad2" Width="15" Height="15" />
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ic:Lucide Icon="Gamepad2" Width="13" Height="13" />
                                         <TextBlock Text="Quick Play" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="hero" Command="{Binding OpenFolderCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ic:Lucide Icon="FolderOpen" Width="13" Height="13" />
+                                        <TextBlock Text="Open folder" />
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
                         </StackPanel>
 
-                        <Panel Grid.Column="1" Width="112" Height="112" VerticalAlignment="Center">
+                        <Panel Grid.Column="1" Width="84" Height="84" VerticalAlignment="Center">
                             <Ellipse Fill="{DynamicResource WbTileIconBrush}" Stroke="{DynamicResource WbLineStrongBrush}" StrokeThickness="1" />
-                            <controls:SpectreLogo Width="62" Height="62" Glow="0.65" IsVisible="{Binding !HasAvatar}" />
+                            <controls:SpectreLogo Width="46" Height="46" Glow="0.65" IsVisible="{Binding !HasAvatar}" />
                             <Border CornerRadius="56" ClipToBounds="True" Margin="4" IsVisible="{Binding HasAvatar}">
                                 <Image Source="{Binding Avatar}" Stretch="UniformToFill" />
                             </Border>
