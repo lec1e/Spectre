@@ -87,7 +87,7 @@ jobs:
           path: Froststrap-linux-x64.flatpak
 
   release:
-    needs: [build-windows]
+    needs: [build-windows, build-macos, build-linux, build-flatpak]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
@@ -100,11 +100,33 @@ jobs:
         with:
           name: froststrap-release-win-x64-${{ env.SHORT_SHA }}
           path: release
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: froststrap-release-macos-universal-${{ env.SHORT_SHA }}
+          path: release
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: froststrap-release-linux-x64-${{ env.SHORT_SHA }}
+          path: release
+      - name: Download Flatpak artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: froststrap-flatpak-x64-${{ env.SHORT_SHA }}
+          path: release
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           prerelease: ${{ contains(github.ref_name, '-') }}
-          draft: false
-          files: release/Spectre.exe
-          name: Spectre ${{ github.ref_name }}
+          draft: true
+          files: |
+            release/Froststrap-Setup.exe
+            release/Froststrap-SelfContained-Setup.exe
+            release/Froststrap-macOS.dmg
+            release/Froststrap-linux-x64.AppImage
+            release/Froststrap-linux-x64.deb
+            release/Froststrap-linux-x64.rpm
+            release/Froststrap-linux-x64.flatpak
+          name: Froststrap ${{ github.ref_name }}
           fail_on_unmatched_files: true
