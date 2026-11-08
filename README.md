@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.38
+
+- Launching Roblox clears the local Roblox data and the saved login, so the client opens signed out
+- Roblox cookies in installed browsers are cleared as part of that launch
+
 ## What’s new in 2.0.37
 
 - Launching Roblox again deletes the installed version and downloads a new copy
