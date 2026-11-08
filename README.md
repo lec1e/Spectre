@@ -20,6 +20,10 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.40
+
+- Launching Roblox no longer deletes the Roblox login cookie in your browser
+
 ## What’s new in 2.0.39
 
 - The tray menu fills in as soon as a game starts: invite, server, rejoin, and region
