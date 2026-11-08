@@ -364,7 +364,8 @@ flatpak/repo/
 publish/
 
 # User/runtime data (never commit cookies or account stores)
-**/AltMan/
+**/accounts.key
+**/AccountManager.json
 **/Settings.json
 **/State.json
 **/*.cookie

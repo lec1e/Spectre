@@ -12,7 +12,7 @@
                  Text="Full identity pipeline (Ghost420): Roblox wipe, UUID, memory profile, EDID, SystemReg. MAC tools stay below." />
 
       <Border Padding="12" CornerRadius="8" BorderThickness="0"
-              Background="#331A060A" BorderBrush="Transparent">
+              Background="{DynamicResource WbSurfaceBrush}" BorderBrush="{DynamicResource WbLineBrush}">
         <StackPanel Spacing="8">
           <Grid ColumnDefinitions="*,Auto">
             <StackPanel>

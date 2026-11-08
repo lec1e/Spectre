@@ -3,71 +3,136 @@ using Avalonia.Media;
 using Avalonia.Styling;
 using FluentAvalonia.Styling;
 using Froststrap.Models;
+using FontFamily = Avalonia.Media.FontFamily;
+using GradientStop = Avalonia.Media.GradientStop;
 
 namespace Froststrap.Utility
 {
+    /// <summary>
+    /// Flat "workbench" theming. Every surface, line and text colour in the UI is a <c>Wb*</c>
+    /// resource written here; the Fluent keys stock controls read are remapped to the same palette.
+    /// </summary>
     public static class ThemeManager
     {
+        public const string DefaultFontName = "Sora";
+
         public static event Action? ThemeChanged;
 
-        public static readonly Dictionary<string, ThemePalette> Presets = new()
+        /// <summary>Raised when only the animated backdrop (dim, motion) needs refreshing.</summary>
+        public static event Action? BackdropChanged;
+
+        public static void NotifyBackdropChanged() => BackdropChanged?.Invoke();
+
+        public static IReadOnlyList<WorkbenchPalette> Palettes { get; } =
+        [
+            Dark("Graphite", "Neutral monochrome",
+                deep: "#0A0A0A", canvas: "#0F0F0F", surface: "#111111", raised: "#1A1A1A", raisedHover: "#1F1F1F", overlay: "#141414",
+                line: "#1C1C1C", lineStrong: "#282828",
+                fg: "#CCCCCC", muted: "#A3A3A3", faint: "#808080", bright: "#FFFFFF",
+                accent: "#FFFFFF", accentHover: "#E5E5E5", onAccent: "#000000"),
+            Dark("Spectre", "Crimson accent",
+                deep: "#0B0909", canvas: "#100D0E", surface: "#131011", raised: "#1C1718", raisedHover: "#221C1D", overlay: "#161213",
+                line: "#211A1B", lineStrong: "#302627",
+                fg: "#D4CBCC", muted: "#A89C9E", faint: "#85797B", bright: "#FFFFFF",
+                accent: "#E11D48", accentHover: "#F43F5E", onAccent: "#FFFFFF"),
+            Dark("OLED", "Pure black",
+                deep: "#000000", canvas: "#000000", surface: "#050505", raised: "#101010", raisedHover: "#171717", overlay: "#0A0A0A",
+                line: "#161616", lineStrong: "#232323",
+                fg: "#CCCCCC", muted: "#A3A3A3", faint: "#7A7A7A", bright: "#FFFFFF",
+                accent: "#FFFFFF", accentHover: "#E5E5E5", onAccent: "#000000"),
+            Dark("Midnight", "Deep blue",
+                deep: "#080B10", canvas: "#0C1016", surface: "#0F141B", raised: "#161D27", raisedHover: "#1B2330", overlay: "#121822",
+                line: "#1A2230", lineStrong: "#263244",
+                fg: "#C9D2DE", muted: "#98A4B5", faint: "#75818F", bright: "#FFFFFF",
+                accent: "#60A5FA", accentHover: "#93C5FD", onAccent: "#06101C"),
+            Dark("Nord", "Arctic slate",
+                deep: "#1F232B", canvas: "#242933", surface: "#272C36", raised: "#2E3440", raisedHover: "#343B48", overlay: "#2A2F3A",
+                line: "#323845", lineStrong: "#3B4252",
+                fg: "#D8DEE9", muted: "#AEB6C4", faint: "#8790A0", bright: "#ECEFF4",
+                accent: "#88C0D0", accentHover: "#8FBCBB", onAccent: "#1F232B"),
+            Light("Paper", "Light neutral",
+                deep: "#EDEDED", canvas: "#F5F5F5", surface: "#FFFFFF", raised: "#F0F0F0", raisedHover: "#E8E8E8", overlay: "#FFFFFF",
+                line: "#E3E3E3", lineStrong: "#D2D2D2",
+                fg: "#262626", muted: "#5C5C5C", faint: "#858585", bright: "#0A0A0A",
+                accent: "#111111", accentHover: "#333333", onAccent: "#FFFFFF"),
+            Light("Daylight", "Light with blue accent",
+                deep: "#EBEEF2", canvas: "#F4F6F9", surface: "#FFFFFF", raised: "#EEF1F5", raisedHover: "#E5E9EF", overlay: "#FFFFFF",
+                line: "#E0E4EA", lineStrong: "#CDD3DC",
+                fg: "#1F2733", muted: "#566273", faint: "#7F8A99", bright: "#0B1220",
+                accent: "#2563EB", accentHover: "#1D4ED8", onAccent: "#FFFFFF"),
+        ];
+
+        public static IReadOnlyList<string> FontNames { get; } = ["Sora", "Segoe UI", "Inter", "System"];
+
+        public static WorkbenchPalette Current { get; private set; } = Palettes[0];
+
+        /// <summary>UI palette for a background: plain scenes (and Spectre) use their tuned palette, the rest are derived from the scene's tint and accent.</summary>
+        public static WorkbenchPalette FromScene(SceneSpec spec)
         {
-            ["Eclipse"] = P("#E11D48", "#7F1D1D", "#BE123C", "#FB7185", "#C41E3A", "#0A0406", "#140808", "#4A1518"),
-            ["Purple Haze"] = P("#A855F7", "#A855F7", "#22D3EE", "#EC4899", "#A855F7", "#0A0614", "#16101F", "#3B2A55"),
-            ["Midnight"] = P("#60A5FA", "#1D4ED8", "#38BDF8", "#93C5FD", "#3B82F6", "#061018", "#0B1A2C", "#1E3A5F"),
-            ["Obsidian"] = P("#A1A1AA", "#71717A", "#D4D4D8", "#A78BFA", "#71717A", "#09090B", "#18181B", "#3F3F46"),
-            ["Blood Red"] = P("#FF4D4D", "#FF4D4D", "#FF9838", "#FB7185", "#FF4D4D", "#0F0A0A", "#1C1212", "#4A2020"),
-            ["Crimson"] = P("#E11D48", "#7F1D1D", "#BE123C", "#FB7185", "#C41E3A", "#0A0406", "#140808", "#4A1518"),
-            ["Rose"] = P("#FB7185", "#F43F5E", "#F472B6", "#FDA4AF", "#F43F5E", "#12080C", "#1F1218", "#5B2840"),
-            ["Ocean"] = P("#38BDF8", "#38BDF8", "#818CF8", "#818CF8", "#38BDF8", "#0A0F14", "#121821", "#1E3A4A"),
-            ["Abyss"] = P("#22D3EE", "#06B6D4", "#3B82F6", "#67E8F9", "#06B6D4", "#040B10", "#0B1520", "#164E63"),
-            ["Arctic"] = P("#7DD3FC", "#38BDF8", "#E0F2FE", "#A5F3FC", "#38BDF8", "#071018", "#0F1C28", "#1E4055"),
-            ["Emerald"] = P("#34D399", "#34D399", "#A3E635", "#22D3EE", "#34D399", "#0A0F0C", "#121C16", "#1F3D2E"),
-            ["Forest"] = P("#4ADE80", "#22C55E", "#86EFAC", "#A3E635", "#22C55E", "#07140C", "#102016", "#245C3B"),
-            ["Mint"] = P("#2DD4BF", "#14B8A6", "#5EEAD4", "#99F6E4", "#14B8A6", "#071412", "#10201C", "#115E59"),
-            ["Sunset"] = P("#FB923C", "#FB923C", "#F472B6", "#F472B6", "#FB923C", "#0F0A0C", "#1C1418", "#5B3A28"),
-            ["Amber"] = P("#FBBF24", "#F59E0B", "#F97316", "#FDE68A", "#F59E0B", "#120E06", "#1F1A0C", "#5B4A18"),
-            ["Neon"] = P("#D946EF", "#A855F7", "#22D3EE", "#F0ABFC", "#D946EF", "#0A0510", "#160A22", "#4A1D6A"),
-            ["Cyber"] = P("#22D3EE", "#06B6D4", "#A855F7", "#67E8F9", "#22D3EE", "#050B10", "#0A1520", "#155E75"),
-            ["Vapor"] = P("#E879F9", "#C026D3", "#22D3EE", "#F0ABFC", "#E879F9", "#0C0612", "#1A0C24", "#6B2180"),
-            ["Lavender"] = P("#C4B5FD", "#A78BFA", "#DDD6FE", "#E9D5FF", "#A78BFA", "#0C0A14", "#181422", "#3B2F55"),
-            ["Indigo"] = P("#818CF8", "#4F46E5", "#6366F1", "#A5B4FC", "#4F46E5", "#080814", "#12122A", "#312E81"),
-            ["Sky"] = P("#38BDF8", "#0EA5E9", "#7DD3FC", "#BAE6FD", "#0EA5E9", "#061018", "#0E1C28", "#075985"),
-            ["Mono"] = P("#E5E7EB", "#E5E7EB", "#9CA3AF", "#9CA3AF", "#E5E7EB", "#0B0B0B", "#161616", "#3F3F46"),
-            ["Steel"] = P("#94A3B8", "#64748B", "#CBD5E1", "#E2E8F0", "#64748B", "#0A0C10", "#151922", "#334155"),
-            ["Gold"] = P("#FBBF24", "#EAB308", "#FDE68A", "#FCD34D", "#EAB308", "#100E06", "#1C180C", "#713F12"),
-            ["Copper"] = P("#F59E0B", "#D97706", "#FB923C", "#FDBA74", "#D97706", "#120C08", "#1F1610", "#7C2D12"),
-            ["Cherry"] = P("#F472B6", "#DB2777", "#FB7185", "#F9A8D4", "#DB2777", "#12080E", "#1F1018", "#9D174D"),
-            ["Grape"] = P("#A78BFA", "#7C3AED", "#C4B5FD", "#DDD6FE", "#7C3AED", "#0A0614", "#160F24", "#5B21B6"),
-            ["Teal"] = P("#2DD4BF", "#0D9488", "#5EEAD4", "#99F6E4", "#0D9488", "#061210", "#0E1F1C", "#134E4A"),
-            ["Lime"] = P("#A3E635", "#84CC16", "#BEF264", "#D9F99D", "#84CC16", "#0A1006", "#141C0C", "#3F6212"),
-            ["Ice"] = P("#E0F2FE", "#7DD3FC", "#F0F9FF", "#BAE6FD", "#7DD3FC", "#080C10", "#121820", "#1E3A5F"),
-        };
+            if (!spec.IsAnimated || spec.Id == SceneCatalog.DefaultId)
+            {
+                var named = Palettes.FirstOrDefault(p => string.Equals(p.Name, spec.Name, StringComparison.OrdinalIgnoreCase));
+                if (named is not null)
+                    return named;
+            }
 
-        private static ThemePalette P(
-            string accent, string gStart, string gEnd, string purple, string glow,
-            string bg, string surface, string hairline) => new()
-        {
-            Accent = accent,
-            GradientStart = gStart,
-            GradientEnd = gEnd,
-            Purple = purple,
-            Glow = glow,
-            Background = bg,
-            Surface = surface,
-            Hairline = hairline
-        };
+            Color tint = Color.Parse(spec.Tint);
+            Color accent = Color.Parse(spec.Accent);
 
-        private static string _lastSignature = "";
+            if (spec.IsLight)
+            {
+                return new WorkbenchPalette
+                {
+                    Name = spec.Name,
+                    Description = spec.Description,
+                    IsLight = true,
+                    Deep = Lerp(tint, Colors.Black, 0.04),
+                    Canvas = tint,
+                    Surface = Lerp(tint, Colors.White, 0.7),
+                    Raised = Lerp(tint, Colors.Black, 0.035),
+                    RaisedHover = Lerp(tint, Colors.Black, 0.07),
+                    Overlay = Lerp(tint, Colors.White, 0.8),
+                    Line = Lerp(tint, Colors.Black, 0.09),
+                    LineStrong = Lerp(tint, Colors.Black, 0.17),
+                    Fg = Lerp(Color.Parse("#26262B"), accent, 0.08),
+                    FgMuted = Lerp(Color.Parse("#5C5C66"), accent, 0.08),
+                    FgFaint = Lerp(Color.Parse("#85858F"), accent, 0.06),
+                    FgBright = Color.Parse("#0A0A0C"),
+                    Accent = accent,
+                    AccentHover = Lerp(accent, Colors.Black, 0.15),
+                    OnAccent = Luminance(accent) > 0.6 ? Color.FromRgb(0x0A, 0x0A, 0x0A) : Colors.White
+                };
+            }
 
-        public static IReadOnlyList<string> PresetNames { get; } = Presets.Keys.OrderBy(k => k == "Crimson" ? "" : k).ToList();
-
-        public static Color Parse(string? hex, Color fallback)
-        {
-            if (!string.IsNullOrWhiteSpace(hex) && Color.TryParse(hex.Trim(), out var color))
-                return color;
-            return fallback;
+            return new WorkbenchPalette
+            {
+                Name = spec.Name,
+                Description = spec.Description,
+                Deep = Lerp(tint, Colors.Black, 0.3),
+                Canvas = tint,
+                Surface = Lerp(tint, Colors.White, 0.025),
+                Raised = Lerp(tint, Colors.White, 0.065),
+                RaisedHover = Lerp(tint, Colors.White, 0.095),
+                Overlay = Lerp(tint, Colors.White, 0.045),
+                Line = Lerp(tint, Colors.White, 0.075),
+                LineStrong = Lerp(tint, Colors.White, 0.13),
+                Fg = Lerp(Color.Parse("#D4D4D8"), accent, 0.07),
+                FgMuted = Lerp(Color.Parse("#A1A1AA"), accent, 0.07),
+                FgFaint = Lerp(Color.Parse("#7E7E87"), accent, 0.06),
+                FgBright = Colors.White,
+                Accent = accent,
+                AccentHover = Lerp(accent, Colors.White, 0.18),
+                OnAccent = Luminance(accent) > 0.55 ? Color.FromRgb(0x0A, 0x0A, 0x0A) : Colors.White
+            };
         }
+
+        /// <summary>Brush painted behind the shell when the user picked a custom gradient/image background.</summary>
+        public static IBrush? CustomBackground { get; set; }
+
+        /// <summary>True when panels are drawn translucent so the animated scene or custom background shows through.</summary>
+        public static bool GlassActive { get; private set; }
+
+        public static SceneSpec Scene { get; private set; } = SceneCatalog.Get(SceneCatalog.DefaultId);
 
         public static void ApplyFromSettings()
         {
@@ -75,207 +140,324 @@ namespace Froststrap.Utility
             if (settings is null)
                 return;
 
-            ThemePalette palette = settings.Palette ?? new ThemePalette();
-
-            // Light frost + ice/navy tints wash out on Windows acrylic. Dark crimson needs a heavier veil.
-            if ((Math.Abs(settings.GlassTintOpacity - 0.28) < 0.0001
-                 && Math.Abs(settings.GlassMaterialOpacity - 0.45) < 0.0001)
-                || (Math.Abs(settings.GlassTintOpacity - 0.18) < 0.0001
-                    && Math.Abs(settings.GlassMaterialOpacity - 0.30) < 0.0001)
-                || (Math.Abs(settings.GlassTintOpacity - 0.48) < 0.0001
-                    && Math.Abs(settings.GlassMaterialOpacity - 0.42) < 0.0001)
-                || (Math.Abs(settings.GlassTintOpacity - 0.62) < 0.0001
-                    && Math.Abs(settings.GlassMaterialOpacity - 0.52) < 0.0001))
-            {
-                settings.GlassTintOpacity = 0.58;
-                settings.GlassMaterialOpacity = 0.46;
-            }
-
-            // Inner glass rounding inside DWM-rounded HWNDs leaves a black corner gap.
-            if (settings.SelectedThemePreset is "Eclipse" or "Midnight")
-                settings.SelectedThemePreset = "Crimson";
-
             if (settings.BootstrapperTitle is "Eclipse" or "Eclipse-QA" or "Froststrap" or "Bloxstrap" or "FROSTBITE")
                 settings.BootstrapperTitle = App.BrandName;
 
-            if (!string.IsNullOrEmpty(settings.SelectedThemePreset)
-                && Presets.TryGetValue(settings.SelectedThemePreset, out var preset)
-                && settings.SelectedThemePreset != "Custom")
+            if (settings.AppearanceRevision < 2)
             {
-                palette = preset.Clone();
-                settings.Palette = palette;
+                settings.BackgroundId = SceneCatalog.DefaultId;
+                settings.AppearanceRevision = 2;
             }
 
-            string signature = Signature(palette);
-            if (signature == _lastSignature)
-                return;
+            Scene = SceneCatalog.Get(settings.BackgroundId);
+            GlassActive = settings.GlassPanels && (CustomBackground is not null || Scene.IsAnimated);
 
-            Apply(palette);
-            _lastSignature = signature;
+            Apply(FromScene(Scene), settings.WorkbenchAccent, settings.WorkbenchFont);
         }
 
-        public static void ApplyPreset(string name)
-        {
-            if (!Presets.TryGetValue(name, out var preset))
-                return;
-
-            App.Settings.Prop.SelectedThemePreset = name;
-            App.Settings.Prop.Palette = preset.Clone();
-            Apply(App.Settings.Prop.Palette);
-            _lastSignature = Signature(App.Settings.Prop.Palette);
-        }
-
-        public static void Apply(ThemePalette p)
+        public static void Apply(WorkbenchPalette palette, string? accentOverride, string? fontName)
         {
             if (Application.Current is null)
                 return;
 
+            Current = palette;
             var res = Application.Current.Resources;
 
-            Color accent = Parse(p.Accent, Color.FromRgb(0xE1, 0x1D, 0x48));
-            Color gStart = Parse(p.GradientStart, accent);
-            Color gEnd = Parse(p.GradientEnd, Color.FromRgb(0xBE, 0x12, 0x3C));
-            Color purple = Parse(p.Purple, Color.FromRgb(0xFB, 0x71, 0x85));
-            Color ink = Parse(p.Background, Color.FromRgb(0x0A, 0x04, 0x06));
-            Color surface = Parse(p.Surface, Color.FromRgb(0x14, 0x08, 0x08));
-            Color hairline = Parse(p.Hairline, Color.FromRgb(0x4A, 0x15, 0x18));
-            Color glow = Parse(p.Glow, accent);
+            Color accent = palette.Accent;
+            Color accentHover = palette.AccentHover;
+            Color onAccent = palette.OnAccent;
+            if (!string.IsNullOrWhiteSpace(accentOverride) && Color.TryParse(accentOverride.Trim(), out var custom))
+            {
+                accent = WithAlpha(custom, 0xFF);
+                accentHover = Lerp(accent, palette.IsLight ? Colors.Black : Colors.White, 0.18);
+                onAccent = Luminance(accent) > 0.55 ? Color.FromRgb(0x0A, 0x0A, 0x0A) : Colors.White;
+            }
 
-            bool glass = App.Settings?.Prop?.EnableGlass ?? true;
-            Color glassTint = MixGlassTint(ink, purple, accent);
+            Color ink = palette.IsLight ? Colors.Black : Colors.White;
+            bool light = palette.IsLight;
 
-            res["BrandAccentColor"] = accent;
-            res["BrandPurpleColor"] = purple;
-            res["BrandInkColor"] = ink;
-            res["BrandSurfaceColor"] = surface;
-            res["BrandHairlineColor"] = hairline;
-            res["BrandGlowColor"] = glow;
-            res["BrandGradientStart"] = gStart;
-            res["BrandGradientEnd"] = gEnd;
-            res["BrandGlassTintColor"] = glassTint;
+            Color deep = palette.Deep, canvas = palette.Canvas, surface = palette.Surface;
+            Color raised = palette.Raised, raisedHover = palette.RaisedHover;
+            Color line = palette.Line, lineStrong = palette.LineStrong;
+            if (GlassActive)
+            {
+                deep = WithAlpha(palette.Deep, light ? (byte)0xC4 : (byte)0x99);
+                canvas = WithAlpha(palette.Canvas, light ? (byte)0x8C : (byte)0x40);
+                surface = WithAlpha(palette.Surface, light ? (byte)0xB0 : (byte)0x7A);
+                raised = WithAlpha(palette.Raised, light ? (byte)0xD0 : (byte)0xA8);
+                raisedHover = WithAlpha(palette.RaisedHover, light ? (byte)0xE4 : (byte)0xC4);
+                line = WithAlpha(ink, light ? (byte)0x18 : (byte)0x14);
+                lineStrong = WithAlpha(ink, light ? (byte)0x26 : (byte)0x22);
+            }
 
-            res["BrandAccentBrush"] = new SolidColorBrush(accent);
-            res["BrandPurpleBrush"] = new SolidColorBrush(purple);
-            res["BrandInkBrush"] = new SolidColorBrush(ink);
-            res["BrandSurfaceBrush"] = new SolidColorBrush(surface);
-            res["BrandHairlineBrush"] = new SolidColorBrush(hairline);
+            Color fill = WithAlpha(ink, 0x08);
+            Color hover = WithAlpha(ink, palette.IsLight ? (byte)0x0F : (byte)0x12);
+            Color active = WithAlpha(ink, palette.IsLight ? (byte)0x14 : (byte)0x0B);
+            Color lineSubtle = WithAlpha(ink, palette.IsLight ? (byte)0x12 : (byte)0x0F);
+            Color lineFocus = WithAlpha(ink, palette.IsLight ? (byte)0x4D : (byte)0x38);
+            Color focus = WithAlpha(ink, palette.IsLight ? (byte)0x80 : (byte)0x66);
+            Color scrollbar = WithAlpha(palette.FgMuted, 0x38);
+            Color accentSoft = WithAlpha(accent, palette.IsLight ? (byte)0x1A : (byte)0x24);
 
-            // Translucent purple frost — never a near-opaque ink slab.
-            res["GlassFillBrush"] = glass
-                ? new LinearGradientBrush
-                {
-                    StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
-                    EndPoint = new RelativePoint(1, 1, RelativeUnit.Relative),
-                    GradientStops =
-                    [
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0x66, glassTint.R, glassTint.G, glassTint.B), 0),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0x55, 0x1A, 0x06, 0x0A), 0.55),
-                        new Avalonia.Media.GradientStop(Color.FromArgb(0x77, ink.R, ink.G, ink.B), 1)
-                    ]
-                }
-                : new SolidColorBrush(surface);
-            res["GlassRailBrush"] = glass
-                ? new SolidColorBrush(Color.FromArgb(0x3A, glassTint.R, glassTint.G, glassTint.B))
-                : new SolidColorBrush(ink);
-            res["GlassHeaderBrush"] = glass
-                ? new SolidColorBrush(Color.FromArgb(0x28, glassTint.R, glassTint.G, glassTint.B))
-                : new SolidColorBrush(Color.FromArgb(0xEE, ink.R, ink.G, ink.B));
-            res["GlassStageBrush"] = glass
-                ? new SolidColorBrush(Color.FromArgb(0x22, glassTint.R, glassTint.G, glassTint.B))
-                : new SolidColorBrush(surface);
-            res["GlassCardBrush"] = glass
-                ? new SolidColorBrush(Color.FromArgb(0x38, glassTint.R, glassTint.G, glassTint.B))
-                : new SolidColorBrush(surface);
-            res["GlassBorderBrush"] = new SolidColorBrush(Color.FromArgb(0x33, accent.R, accent.G, accent.B));
-            res["CardBackgroundFillColorDefaultBrush"] = glass
-                ? new SolidColorBrush(Color.FromArgb(0x99, 0x1A, 0x06, 0x0A))
-                : new SolidColorBrush(surface);
-            res["CardStrokeColorDefaultBrush"] = new SolidColorBrush(Color.FromArgb(0x00, 0, 0, 0));
-            res["ControlStrokeColorDefaultBrush"] = new SolidColorBrush(Color.FromArgb(0x00, 0, 0, 0));
-            res["ControlElevationBorderBrush"] = new SolidColorBrush(Color.FromArgb(0x22, accent.R, accent.G, accent.B));
-            res["ControlFillColorDefaultBrush"] = new SolidColorBrush(Color.FromArgb(0x88, 0x1A, 0x06, 0x0A));
-            res["ControlFillColorSecondaryBrush"] = new SolidColorBrush(Color.FromArgb(0xAA, 0x3A, 0x0A, 0x12));
-            res["ControlFillColorTertiaryBrush"] = new SolidColorBrush(Color.FromArgb(0xCC, 0x5C, 0x10, 0x1C));
-            res["AccentFillColorDefaultBrush"] = new SolidColorBrush(accent);
-            res["SubtleFillColorSecondaryBrush"] = new SolidColorBrush(Color.FromArgb(0x44, 0xC4, 0x1E, 0x3A));
+            Color success = palette.IsLight ? Color.Parse("#2F8A4A") : Color.Parse("#66A978");
+            Color warning = palette.IsLight ? Color.Parse("#A86B12") : Color.Parse("#D2A15A");
+            Color danger = palette.IsLight ? Color.Parse("#B23A31") : Color.Parse("#C95C54");
+            Color online = palette.IsLight ? Color.Parse("#3B78A0") : Color.Parse("#7D9FB5");
+            Color inGame = palette.IsLight ? Color.Parse("#2F8A4A") : Color.Parse("#70A981");
+            Color studio = palette.IsLight ? Color.Parse("#9A7231") : Color.Parse("#B99A69");
 
-            // Text stays solid white so it never fades into the dark shell.
-            var textPrimary = Colors.White;
-            var textSecondary = Color.FromRgb(0xF5, 0xF5, 0xF5);
-            res["TextFillColorPrimary"] = textPrimary;
-            res["TextFillColorSecondary"] = textSecondary;
-            res["TextFillColorTertiary"] = Color.FromRgb(0xE5, 0xE5, 0xE5);
-            res["TextFillColorPrimaryBrush"] = Brushes.White;
-            res["TextFillColorSecondaryBrush"] = new SolidColorBrush(textSecondary);
-            res["TextFillColorTertiaryBrush"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE5, 0xE5));
+            void Put(string key, Color color)
+            {
+                res[key + "Color"] = color;
+                res[key + "Brush"] = new SolidColorBrush(color);
+            }
 
-            res["BrandGradientBrush"] = new LinearGradientBrush
+            Put("WbDeep", deep);
+            Put("WbCanvas", canvas);
+            Put("WbSurface", surface);
+            Put("WbRaised", raised);
+            Put("WbRaisedHover", raisedHover);
+            Put("WbOverlay", palette.Overlay);
+            Put("WbFill", fill);
+            Put("WbHover", hover);
+            Put("WbActive", active);
+            Put("WbFg", palette.Fg);
+            Put("WbFgMuted", palette.FgMuted);
+            Put("WbFgFaint", palette.FgFaint);
+            Put("WbFgBright", palette.FgBright);
+            Put("WbAccent", accent);
+            Put("WbAccentHover", accentHover);
+            Put("WbOnAccent", onAccent);
+            Put("WbAccentSoft", accentSoft);
+            Put("WbLineSubtle", lineSubtle);
+            Put("WbLine", line);
+            Put("WbLineStrong", lineStrong);
+            Put("WbLineFocus", lineFocus);
+            Put("WbFocus", focus);
+            Put("WbScrollbar", scrollbar);
+            Put("WbSuccess", success);
+            Put("WbWarning", warning);
+            Put("WbDanger", danger);
+            Put("WbDangerSoft", WithAlpha(danger, 0x26));
+            Put("WbOnline", online);
+            Put("WbInGame", inGame);
+            Put("WbStudio", studio);
+
+            Put("WbSidebar", GlassActive ? WithAlpha(palette.Deep, light ? (byte)0xB8 : (byte)0x8C) : palette.Deep);
+            Put("WbDock", GlassActive ? WithAlpha(palette.Overlay, light ? (byte)0xD8 : (byte)0xB8) : palette.Raised);
+            Put("WbNavSelected", WithAlpha(ink, light ? (byte)0x12 : (byte)0x14));
+            Put("WbTileIcon", WithAlpha(accent, light ? (byte)0x1F : (byte)0x2E));
+            res["WbHeroBrush"] = new LinearGradientBrush
             {
                 StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
                 EndPoint = new RelativePoint(1, 1, RelativeUnit.Relative),
                 GradientStops =
-                [
-                    new Avalonia.Media.GradientStop(accent, 0),
-                    new Avalonia.Media.GradientStop(Color.FromRgb(0x4A, 0x15, 0x18), 0.48),
-                    new Avalonia.Media.GradientStop(Colors.Black, 1)
-                ]
+                {
+                    new GradientStop(WithAlpha(accent, light ? (byte)0x2A : (byte)0x40), 0),
+                    new GradientStop(WithAlpha(accent, light ? (byte)0x0A : (byte)0x10), 0.55),
+                    new GradientStop(WithAlpha(accent, 0), 1),
+                }
             };
+
+            string[] logo = SceneCatalog.LogoColors(Scene);
+            res["WbLogoBrush"] = new LinearGradientBrush
+            {
+                StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
+                EndPoint = new RelativePoint(1, 0, RelativeUnit.Relative),
+                GradientStops = Scene.IsLight
+                    ? [new GradientStop(Color.Parse(logo[0]), 0), new GradientStop(Color.Parse(logo[1]), 0.6), new GradientStop(Color.Parse(logo[2]), 1)]
+                    : [new GradientStop(Color.Parse(logo[1]), 0), new GradientStop(Color.Parse(logo[2]), 0.6), new GradientStop(Color.Parse(logo[3]), 1)]
+            };
+
+            res["WbFontFamily"] = ResolveFont(fontName);
+
+            IBrush window = CustomBackground ?? new SolidColorBrush(palette.Canvas);
+            res["WbWindowBackgroundBrush"] = window;
+            res["ApplicationBackgroundColor"] = window;
+            res["PrimaryBackgroundColor"] = new SolidColorBrush(palette.Surface);
+            res["NormalDarkAndLightBackground"] = new SolidColorBrush(palette.Surface);
+            res["NotificationBackgroundColor"] = new SolidColorBrush(palette.Overlay);
+            res["NewTextEditorBackground"] = new SolidColorBrush(palette.Deep);
+            res["NewTextEditorForeground"] = new SolidColorBrush(palette.Fg);
+            res["NewTextEditorLink"] = new SolidColorBrush(accent);
+            res["CompletionListBackgroundBrush"] = new SolidColorBrush(palette.Overlay);
+
+            // Legacy brand keys still read by bootstrapper dialogs and custom themes.
+            res["BrandAccentColor"] = accent;
+            res["BrandAccentBrush"] = new SolidColorBrush(accent);
+            res["BrandInkBrush"] = new SolidColorBrush(palette.Deep);
+            res["BrandSurfaceBrush"] = new SolidColorBrush(palette.Surface);
+            res["BrandHairlineBrush"] = new SolidColorBrush(palette.LineStrong);
+            res["BrandPurpleBrush"] = new SolidColorBrush(accentHover);
+            res["BrandGradientBrush"] = new SolidColorBrush(accent);
+            res["GlassHeaderBrush"] = new SolidColorBrush(palette.Deep);
+            res["GlassRailBrush"] = new SolidColorBrush(palette.Surface);
+            res["GlassStageBrush"] = new SolidColorBrush(palette.Canvas);
+            res["GlassFillBrush"] = new SolidColorBrush(palette.Surface);
+            res["GlassCardBrush"] = new SolidColorBrush(palette.Surface);
+            res["GlassBorderBrush"] = new SolidColorBrush(palette.LineStrong);
+
+            // Fluent keys used by stock control templates.
+            Put("TextFillColorPrimary", palette.Fg);
+            Put("TextFillColorSecondary", palette.FgMuted);
+            Put("TextFillColorTertiary", palette.FgFaint);
+            Put("TextFillColorDisabled", WithAlpha(palette.FgFaint, 0xA0));
+            Put("TextOnAccentFillColorPrimary", onAccent);
+            Put("TextOnAccentFillColorSecondary", WithAlpha(onAccent, 0xB3));
+            Put("AccentFillColorDefault", accent);
+            Put("AccentFillColorSecondary", accentHover);
+            Put("AccentFillColorTertiary", WithAlpha(accent, 0xCC));
+            Put("AccentTextFillColorPrimary", accent);
+            Put("ControlFillColorDefault", raised);
+            Put("ControlFillColorSecondary", raisedHover);
+            Put("ControlFillColorTertiary", palette.Overlay);
+            Put("ControlFillColorDisabled", WithAlpha(palette.Raised, 0x80));
+            Put("ControlFillColorInputActive", deep);
+            Put("ControlStrokeColorDefault", lineStrong);
+            Put("ControlStrokeColorSecondary", lineStrong);
+            Put("ControlStrongStrokeColorDefault", palette.FgFaint);
+            Put("CardBackgroundFillColorDefault", surface);
+            Put("CardBackgroundFillColorSecondary", raised);
+            Put("CardStrokeColorDefault", line);
+            Put("SolidBackgroundFillColorBase", palette.Canvas);
+            Put("SolidBackgroundFillColorSecondary", palette.Surface);
+            Put("SolidBackgroundFillColorTertiary", palette.Raised);
+            Put("SolidBackgroundFillColorQuarternary", palette.RaisedHover);
+            Put("LayerFillColorDefault", palette.Surface);
+            Put("SubtleFillColorSecondary", hover);
+            Put("SubtleFillColorTertiary", active);
+            Put("DividerStrokeColorDefault", line);
+            Put("SurfaceStrokeColorFlyout", palette.LineStrong);
+            Put("SystemFillColorSuccess", success);
+            Put("SystemFillColorCaution", warning);
+            Put("SystemFillColorCritical", danger);
+            res["ControlElevationBorderBrush"] = new SolidColorBrush(lineStrong);
+            res["TextControlElevationBorderBrush"] = new SolidColorBrush(lineStrong);
+            res["TextControlElevationBorderFocusedBrush"] = new SolidColorBrush(lineFocus);
+            res["CircleElevationBorderBrush"] = new SolidColorBrush(palette.LineStrong);
+            res["FlyoutPresenterBackground"] = new SolidColorBrush(palette.Overlay);
+            void Brush(string key, Color color) => res[key] = new SolidColorBrush(color);
+
+            // NavigationView aliases are StaticResources in the FA theme, so they must be overridden directly.
+            Brush("NavigationViewDefaultPaneBackground", palette.Deep);
+            Brush("NavigationViewExpandedPaneBackground", palette.Deep);
+            Brush("NavigationViewTopPaneBackground", palette.Deep);
+            Brush("NavigationViewContentBackground", palette.Canvas);
+            Brush("NavigationViewContentGridBorderBrush", palette.Line);
+            Brush("NavigationViewItemSeparatorForeground", palette.Line);
+            Brush("NavigationViewItemHeaderForeground", palette.FgFaint);
+            Brush("NavigationViewSelectionIndicatorForeground", accent);
+            foreach (string state in new[] { "", "Checked" })
+            {
+                Brush($"NavigationViewItemBackground{state}", Colors.Transparent);
+                Brush($"NavigationViewItemBackground{state}PointerOver", hover);
+                Brush($"NavigationViewItemBackground{state}Pressed", active);
+                Brush($"NavigationViewItemBorderBrush{state}", Colors.Transparent);
+                Brush($"NavigationViewItemBorderBrush{state}PointerOver", hover);
+                Brush($"NavigationViewItemBorderBrush{state}Pressed", active);
+            }
+            Brush("NavigationViewItemBackgroundSelected", active);
+            Brush("NavigationViewItemBackgroundSelectedPointerOver", active);
+            Brush("NavigationViewItemBackgroundSelectedPressed", hover);
+            Brush("NavigationViewItemBorderBrushSelected", active);
+            Brush("NavigationViewItemBorderBrushSelectedPointerOver", active);
+            Brush("NavigationViewItemBorderBrushSelectedPressed", hover);
+            foreach (string state in new[] { "", "Checked", "Selected" })
+            {
+                Brush($"NavigationViewItemForeground{state}", palette.FgMuted);
+                Brush($"NavigationViewItemForeground{state}PointerOver", palette.Fg);
+                Brush($"NavigationViewItemForeground{state}Pressed", palette.FgMuted);
+                Brush($"NavigationViewItemForeground{state}Disabled", WithAlpha(palette.FgFaint, 0xA0));
+            }
+            Brush("NavigationViewItemForegroundSelected", palette.FgBright);
+            Brush("NavigationViewItemForegroundSelectedPointerOver", palette.FgBright);
+            Brush("NavigationViewButtonBackgroundPointerOver", hover);
+            Brush("NavigationViewButtonBackgroundPressed", active);
+            Brush("NavigationViewButtonForegroundPointerOver", palette.Fg);
+            Brush("NavigationViewButtonForegroundPressed", palette.FgMuted);
+
+            res["SystemAccentColor"] = accent;
+            res["SystemAccentColorLight1"] = accentHover;
+            res["SystemAccentColorDark1"] = Lerp(accent, Colors.Black, 0.15);
+
+            Application.Current.RequestedThemeVariant = palette.IsLight ? ThemeVariant.Light : ThemeVariant.Dark;
 
             var faTheme = Application.Current.Styles.OfType<FluentAvaloniaTheme>().FirstOrDefault();
             if (faTheme is not null)
             {
-                faTheme.CustomAccentColor = accent;
+                faTheme.PreferSystemTheme = false;
                 faTheme.PreferUserAccentColor = false;
-            }
+                faTheme.CustomAccentColor = accent;
 
-            if (App.Settings.Prop.Theme.GetFinal() == Enums.Theme.Dark)
-            {
-                // Keep dialogs readable, but never paint an opaque window fill over acrylic.
-                res["ApplicationBackgroundColor"] = Brushes.Transparent;
-                res["PrimaryBackgroundColor"] = new SolidColorBrush(Color.FromArgb(0x66, glassTint.R, glassTint.G, glassTint.B));
+                // FA's accent brushes resolve these from its own dictionary first, and its generated ramp lightens the fill.
+                var faRes = faTheme.Resources;
+                faRes["SystemAccentColor"] = accent;
+                faRes["SystemAccentColorLight1"] = accentHover;
+                faRes["SystemAccentColorLight2"] = accent;
+                faRes["SystemAccentColorLight3"] = Lerp(accent, Colors.White, 0.35);
+                faRes["SystemAccentColorDark1"] = accent;
+                faRes["SystemAccentColorDark2"] = Lerp(accent, Colors.Black, 0.18);
+                faRes["SystemAccentColorDark3"] = Lerp(accent, Colors.Black, 0.32);
             }
 
             ThemeChanged?.Invoke();
         }
 
-        /// Dark but still crimson. Near-black tints read as gray on Windows acrylic.
-        public static Color MixGlassTint(Color ink, Color purple, Color accent)
+        private static FontFamily ResolveFont(string? name) => name switch
         {
-            var dark = Color.FromRgb(0x5C, 0x10, 0x1C);
-            return Color.FromRgb(
-                Mix(ink.R, dark.R, accent.R, 0.10, 0.42, 0.48),
-                Mix(ink.G, dark.G, (byte)(accent.G * 0.45), 0.16, 0.58, 0.26),
-                Mix(ink.B, dark.B, (byte)(accent.B * 0.40), 0.16, 0.60, 0.24));
-        }
+            "Segoe UI" => new FontFamily("Segoe UI Variable Text, Segoe UI, Inter, sans-serif"),
+            "Inter" => new FontFamily("Inter, Segoe UI, sans-serif"),
+            "System" => FontFamily.Default,
+            _ => new FontFamily("avares://Spectre/Resources/Fonts/Sora-VariableFont_wght.ttf#Sora")
+        };
 
-        public static Color CurrentGlassTint()
+        private static Color WithAlpha(Color c, byte a) => Color.FromArgb(a, c.R, c.G, c.B);
+
+        private static Color Lerp(Color a, Color b, double t) => Color.FromArgb(
+            0xFF,
+            (byte)Math.Round(a.R + (b.R - a.R) * t),
+            (byte)Math.Round(a.G + (b.G - a.G) * t),
+            (byte)Math.Round(a.B + (b.B - a.B) * t));
+
+        private static double Luminance(Color c) => (0.2126 * c.R + 0.7152 * c.G + 0.0722 * c.B) / 255.0;
+
+        private static WorkbenchPalette Dark(string name, string description,
+            string deep, string canvas, string surface, string raised, string raisedHover, string overlay,
+            string line, string lineStrong, string fg, string muted, string faint, string bright,
+            string accent, string accentHover, string onAccent)
+            => Make(name, description, false, deep, canvas, surface, raised, raisedHover, overlay,
+                line, lineStrong, fg, muted, faint, bright, accent, accentHover, onAccent);
+
+        private static WorkbenchPalette Light(string name, string description,
+            string deep, string canvas, string surface, string raised, string raisedHover, string overlay,
+            string line, string lineStrong, string fg, string muted, string faint, string bright,
+            string accent, string accentHover, string onAccent)
+            => Make(name, description, true, deep, canvas, surface, raised, raisedHover, overlay,
+                line, lineStrong, fg, muted, faint, bright, accent, accentHover, onAccent);
+
+        private static WorkbenchPalette Make(string name, string description, bool isLight,
+            string deep, string canvas, string surface, string raised, string raisedHover, string overlay,
+            string line, string lineStrong, string fg, string muted, string faint, string bright,
+            string accent, string accentHover, string onAccent) => new()
         {
-            var res = Application.Current?.Resources;
-            if (res is not null && res.TryGetValue("BrandGlassTintColor", out var v) && v is Color tint)
-                return tint;
-
-            Color purple = Color.FromRgb(0xFB, 0x71, 0x85);
-            Color accent = Color.FromRgb(0xE1, 0x1D, 0x48);
-            Color ink = Color.FromRgb(0x0A, 0x04, 0x06);
-            if (res is not null)
-            {
-                if (res.TryGetValue("BrandPurpleColor", out var p) && p is Color pc) purple = pc;
-                if (res.TryGetValue("BrandAccentColor", out var a) && a is Color ac) accent = ac;
-                if (res.TryGetValue("BrandInkColor", out var i) && i is Color ic) ink = ic;
-            }
-            return MixGlassTint(ink, purple, accent);
-        }
-
-        private static byte Mix(byte a, byte b, byte c, double wa, double wb, double wc) =>
-            (byte)Math.Clamp((int)(a * wa + b * wb + c * wc), 0, 255);
-
-        private static string Signature(ThemePalette p)
-        {
-            var s = App.Settings?.Prop;
-            return string.Join("|", p.Accent, p.GradientStart, p.GradientEnd, p.Purple, p.Background,
-                p.Surface, p.Hairline, p.Glow, s?.EnableAurora, s?.EnableGlass, s?.EnableGlow,
-                s?.EnableLiquidCursor, s?.SelectedThemePreset,
-                s?.GlassTintOpacity, s?.GlassMaterialOpacity, s?.GlassCornerRadius);
-        }
+            Name = name,
+            Description = description,
+            IsLight = isLight,
+            Deep = Color.Parse(deep),
+            Canvas = Color.Parse(canvas),
+            Surface = Color.Parse(surface),
+            Raised = Color.Parse(raised),
+            RaisedHover = Color.Parse(raisedHover),
+            Overlay = Color.Parse(overlay),
+            Line = Color.Parse(line),
+            LineStrong = Color.Parse(lineStrong),
+            Fg = Color.Parse(fg),
+            FgMuted = Color.Parse(muted),
+            FgFaint = Color.Parse(faint),
+            FgBright = Color.Parse(bright),
+            Accent = Color.Parse(accent),
+            AccentHover = Color.Parse(accentHover),
+            OnAccent = Color.Parse(onAccent)
+        };
     }
 }

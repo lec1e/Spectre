@@ -1,4 +1,4 @@
-﻿<UserControl
+<UserControl
     x:Class="Froststrap.UI.Elements.Settings.Pages.AppearancePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,7 +8,10 @@
     xmlns:colorPicker="clr-namespace:ColorPicker;assembly=ColorPicker.AvaloniaUI"
     xmlns:resources="using:Froststrap.Resources"
     xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
+    xmlns:models="clr-namespace:Froststrap.Models"
     xmlns:app="clr-namespace:Froststrap"
+    xmlns:media="using:Avalonia.Media"
+    xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
     d:DesignHeight="2500"
     d:DesignWidth="1200"
     x:DataType="vm:AppearanceViewModel"
@@ -22,57 +25,148 @@
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch">
             <StackPanel Margin="14">
-                <controls:OptionControl
-                    Header="Animated background"
-                    Description="Deep-ocean abyss with gleaming bioluminescent lights behind the UI.">
-                    <ToggleSwitch IsChecked="{Binding EnableAurora}" />
+                <Grid ColumnDefinitions="*,Auto" Margin="2,0,0,10">
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Classes="wb-label" Text="BACKGROUND" />
+                        <TextBlock Classes="wb-faint" Text="The whole interface takes its colours from the background you pick." />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <RadioButton Classes="chip" GroupName="BackgroundFilter" IsChecked="{Binding FilterAll, Mode=TwoWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="All" />
+                                <TextBlock Classes="chip-count" Text="{Binding AllBackgrounds.Count}" />
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton Classes="chip" GroupName="BackgroundFilter" IsChecked="{Binding FilterAnimated, Mode=TwoWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <ic:Lucide Icon="Sparkles" Width="12" Height="12" />
+                                <TextBlock Text="Animated" />
+                                <TextBlock Classes="chip-count" Text="{Binding AnimatedBackgroundCount}" />
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton Classes="chip" GroupName="BackgroundFilter" IsChecked="{Binding FilterPlain, Mode=TwoWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="Plain" />
+                                <TextBlock Classes="chip-count" Text="{Binding PlainBackgroundCount}" />
+                            </StackPanel>
+                        </RadioButton>
+                    </StackPanel>
+                </Grid>
+
+                <ListBox Classes="wb-cards"
+                         ItemsSource="{Binding BackgroundOptions}"
+                         SelectedItem="{Binding SelectedBackground, Mode=TwoWay}" AutoScrollToSelectedItem="False"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:BackgroundOption">
+                            <Border Classes="pick-card" Cursor="Hand">
+                                <StackPanel Spacing="9">
+                                    <Panel Height="118">
+                                        <Border CornerRadius="9" ClipToBounds="True">
+                                            <controls:AnimatedBackground SceneId="{Binding Id}" IsPreview="True"
+                                                                         IsAnimated="{Binding $parent[ListBoxItem].IsPointerOver}" />
+                                        </Border>
+                                        <Border Classes="pick-check" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="7"
+                                                Width="22" Height="22" CornerRadius="11" Background="{DynamicResource WbAccentBrush}">
+                                            <ic:Lucide Icon="Check" Width="12" Height="12" StrokeThickness="2.5"
+                                                       StrokeBrush="{DynamicResource WbOnAccentBrush}" />
+                                        </Border>
+                                    </Panel>
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="3,0,3,2">
+                                        <StackPanel Spacing="1">
+                                            <StackPanel Orientation="Horizontal" Spacing="7">
+                                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12.5" VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource WbFgBrightBrush}" />
+                                                <Border Classes="anim-badge" IsVisible="{Binding IsAnimated}" VerticalAlignment="Center">
+                                                    <TextBlock Text="Animated" />
+                                                </Border>
+                                            </StackPanel>
+                                            <TextBlock Classes="wb-faint" Text="{Binding Description}" TextTrimming="CharacterEllipsis" />
+                                        </StackPanel>
+                                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Swatches}" VerticalAlignment="Center">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="3" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="media:IBrush">
+                                                    <Ellipse Width="9" Height="9" Fill="{Binding}"
+                                                             Stroke="{DynamicResource WbLineStrongBrush}" StrokeThickness="1" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <controls:OptionControl Header="Animate background" Description="Let the scene flow and sparkle. Turn it off to keep a still frame and save GPU time.">
+                    <ToggleSwitch IsChecked="{Binding AnimateBackground, Mode=TwoWay}" />
                 </controls:OptionControl>
 
-                <controls:CardExpander Classes="NoUserExpansion" Header="Spectre theme presets" Description="Pick a brand palette — shell tint, accents, and pointer parallax update live." IsExpanded="True">
-                    <controls:CardExpander.HeaderContent>
-                        <ComboBox MinWidth="220" Padding="10,5,10,5"
-                                  ItemsSource="{Binding ThemePresets}"
-                                  SelectedItem="{Binding SelectedThemePreset, Mode=TwoWay}" />
-                    </controls:CardExpander.HeaderContent>
-                    <StackPanel Spacing="8">
-                        <controls:OptionControl Header="Glass surfaces" Description="Dark frosted acrylic shell.">
-                            <ToggleSwitch IsChecked="{Binding EnableGlass}" />
-                        </controls:OptionControl>
-                        <controls:OptionControl Header="Cursor ribbon" Description="A light-beam ribbon that tails the pointer.">
-                            <ToggleSwitch IsChecked="{Binding EnableLiquidCursor}" />
-                        </controls:OptionControl>
-                        <controls:OptionControl Header="Glow accents" Description="Accent glow on highlights and abyss gleams.">
-                            <ToggleSwitch IsChecked="{Binding EnableGlow}" />
-                        </controls:OptionControl>
-                        <controls:OptionControl Header="Glass tint" Description="How strongly the shell tints the desktop blur. Lower = more glass.">
-                            <Slider Width="180" Minimum="0.05" Maximum="0.85" TickFrequency="0.01"
-                                    Value="{Binding GlassTintOpacity, Mode=TwoWay}" />
-                        </controls:OptionControl>
-                        <controls:OptionControl Header="Glass material" Description="Frost density. Lower lets wallpaper show through.">
-                            <Slider Width="180" Minimum="0.10" Maximum="0.90" TickFrequency="0.01"
-                                    Value="{Binding GlassMaterialOpacity, Mode=TwoWay}" />
-                        </controls:OptionControl>
-                        <controls:OptionControl Header="Corner radius" Description="Does not round the main window. Windows already rounds the frame so the glass can fill the corners with no black gap.">
-                            <Slider Width="180" Minimum="0" Maximum="40" TickFrequency="1" IsSnapToTickEnabled="True"
-                                    Value="{Binding GlassCornerRadius, Mode=TwoWay}" />
-                        </controls:OptionControl>
+                <controls:OptionControl Header="Background dim" Description="Darken the scene so text stays easy to read.">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Slider Width="180" Minimum="0" Maximum="0.8" VerticalAlignment="Center"
+                                Value="{Binding BackgroundDim, Mode=TwoWay}" />
+                        <TextBlock Width="36" VerticalAlignment="Center" TextAlignment="Right"
+                                   Foreground="{DynamicResource WbFgMutedBrush}"
+                                   Text="{Binding BackgroundDim, StringFormat={}{0:P0}}" />
                     </StackPanel>
-                </controls:CardExpander>
+                </controls:OptionControl>
 
-                <controls:CardExpander Classes="NoUserExpansion" Header="{x:Static resources:Strings.Menu_Appearance_Custom_Theme_Title}" Description="{x:Static resources:Strings.Menu_Appearance_Custom_Theme_Description}" IsExpanded="{Binding CustomThemeExpanded, Mode=OneWay}">
-                    <controls:CardExpander.HeaderContent>
-                        <ComboBox
-                            Grid.Column="1"
-                            MinWidth="200"
-                            Padding="10,5,10,5"
-                            ItemsSource="{Binding Themes}"
-                            SelectedItem="{Binding Theme, Mode=TwoWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumNameConverter}}" />
+                <controls:OptionControl Header="Glass panels" Description="Make the sidebar, cards and controls translucent so the background shows through.">
+                    <ToggleSwitch IsChecked="{Binding GlassPanels, Mode=TwoWay}" />
+                </controls:OptionControl>
+
+                <controls:OptionControl Header="Accent colour" Description="Override the accent taken from the background. Leave empty to follow the background.">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <ItemsControl ItemsSource="{x:Static vm:AppearanceViewModel.AccentPresets}" VerticalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="5" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:AccentSwatch">
+                                    <Button Width="20" Height="20" Padding="0" MinWidth="0" MinHeight="0"
+                                            CornerRadius="10"
+                                            Background="{Binding Brush}"
+                                            BorderBrush="{DynamicResource WbLineStrongBrush}"
+                                            BorderThickness="1"
+                                            ToolTip.Tip="{Binding Hex}"
+                                            Command="{Binding $parent[ItemsControl].((vm:AppearanceViewModel)DataContext).SetAccentCommand}"
+                                            CommandParameter="{Binding Hex}" />
                                 </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBox Width="96" Margin="6,0,0,0" PlaceholderText="#RRGGBB"
+                                 Text="{Binding AccentOverride, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                        <Button Classes="ghost" Content="Reset" Command="{Binding ResetAccentCommand}"
+                                IsEnabled="{Binding HasAccentOverride}" />
+                    </StackPanel>
+                </controls:OptionControl>
+
+                <controls:OptionControl Header="Interface font" Description="Typeface used across the whole interface.">
+                    <ComboBox MinWidth="200" Padding="10,5,10,5"
+                              ItemsSource="{Binding WorkbenchFonts}"
+                              SelectedItem="{Binding SelectedWorkbenchFont, Mode=TwoWay}" />
+                </controls:OptionControl>
+
+                <controls:OptionControl Header="Disable animations" Description="Turn off page transitions and control animations.">
+                    <ToggleSwitch IsChecked="{Binding DisableAnimations, Mode=TwoWay}" />
+                </controls:OptionControl>
+
+                <controls:CardExpander Classes="NoUserExpansion" Header="Custom window background" Description="Paint the window with your own gradient or image instead of the theme canvas." IsExpanded="{Binding UseCustomBackground, Mode=OneWay}">
+                    <controls:CardExpander.HeaderContent>
+                        <ToggleSwitch IsChecked="{Binding UseCustomBackground, Mode=TwoWay}" />
                     </controls:CardExpander.HeaderContent>
                     <StackPanel Spacing="15">
                         <StackPanel Spacing="5">
@@ -190,17 +284,6 @@
                         </StackPanel>
                     </StackPanel>
                 </controls:CardExpander>
-
-                <controls:OptionControl
-                    Header="{x:Static resources:Strings.Menu_Appearance_WindowsBackdrop_Title}"
-                    Description="{x:Static resources:Strings.Menu_Appearance_WindowsBackdrop_Description}">
-                    <ComboBox
-                        MinWidth="200"
-                        Margin="5,0,0,0"
-                        Padding="10,5,10,5"
-                        ItemsSource="{Binding BackdropOptions}"
-                        SelectedItem="{Binding SelectedBackdrop, Mode=TwoWay}"/>
-                </controls:OptionControl>
 
                 <controls:OptionControl Description="{x:Static resources:Strings.Menu_Appearance_Language_Description}" Header="{x:Static resources:Strings.Menu_Appearance_Language_Title}">
                     <ComboBox

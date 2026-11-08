@@ -20,6 +20,15 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre application preview — Home, Games, Library, Mods, Settings"/>
 </p>
 
+## What’s new in 2.0.34
+
+- The ribbon logo follows the animated background
+- Installing Roblox, or a Versions profile, deletes the current version folder and downloads a fresh copy
+- Spectre notices an official Roblox install and refreshes on the next launch
+- Discord presence can be toggled from the tray while Spectre is minimized
+- Taskbar and tray icons are white
+- Prompts, the installer, and join notifications use the animated background
+
 ## What’s new in 2.0.33
 
 - Toasts sit above the tray, next to the clock, without covering the taskbar

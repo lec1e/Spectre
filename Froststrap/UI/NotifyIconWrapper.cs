@@ -4,7 +4,9 @@ using Avalonia.Controls.Notifications;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using Froststrap.Integrations;
+using Froststrap.Models.Entities;
 using Froststrap.UI.Elements.ContextMenu;
+using Froststrap.UI.Elements.Controls;
 using Froststrap.UI.Elements.Dialogs;
 
 namespace Froststrap.UI
@@ -31,7 +33,8 @@ namespace Froststrap.UI
 
             _trayIcon = new TrayIcon
             {
-                Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://Spectre/SpectreMark.png"))),
+                Icon = SpectreLogo.CreateBrandIcon()
+                    ?? new WindowIcon(AssetLoader.Open(new Uri("avares://Spectre/Spectre.ico"))),
                 ToolTipText = App.BrandName,
                 Menu = nativeMenu
             };
@@ -107,12 +110,13 @@ namespace Froststrap.UI
         {
             if (ActivityWatcher?.Data == null) return;
 
-            string title = ActivityWatcher.Data.ServerType switch
+            var activity = ActivityWatcher.Data;
+            string kind = activity.ServerType switch
             {
-                ServerType.Public => Strings.ContextMenu_ServerInformation_Notification_Title_Public,
-                ServerType.Private => Strings.ContextMenu_ServerInformation_Notification_Title_Private,
-                ServerType.Reserved => Strings.ContextMenu_ServerInformation_Notification_Title_Reserved,
-                _ => "Connected to server"
+                ServerType.Public => "Public server",
+                ServerType.Private => "Private server",
+                ServerType.Reserved => "Reserved server",
+                _ => "Server"
             };
 
             string? serverLocation = null;
@@ -143,23 +147,18 @@ namespace Froststrap.UI
                 serverUptime = "0 minutes";
             }
 
-            if (string.IsNullOrEmpty(serverLocation))
-            {
-                ShowAlert(
-                    title,
-                    $"Location unavailable · uptime {serverUptime}");
-                return;
-            }
+            string location = string.IsNullOrEmpty(serverLocation) ? "Location unavailable" : serverLocation;
+            string detail = App.Settings.Prop.ShowServerUptime
+                ? $"{kind} · {location} · up {serverUptime}"
+                : $"{kind} · {location}";
 
-            ShowAlert(
-                title,
-                string.Format(Strings.ContextMenu_ServerDetails_Notification_Text, serverLocation, serverUptime));
+            ShowAlert(kind, detail, activity: activity);
         }
 
-        public void ShowAlert(string title, string message, int duration = 8, NotificationType category = NotificationType.Information)
+        public void ShowAlert(string title, string message, int duration = 8, NotificationType category = NotificationType.Information, ActivityData? activity = null)
         {
             if (_isDisposed) return;
-            DesktopToastWindow.ShowToast(title, message, duration);
+            DesktopToastWindow.ShowToast(title, message, duration, activity);
         }
 
         public void Dispose()

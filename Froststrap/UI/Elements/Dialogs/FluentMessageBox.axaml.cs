@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using LucideAvalonia.Enum;
@@ -14,24 +15,8 @@ namespace Froststrap.UI.Elements.Dialogs
         public FluentMessageBox()
         {
             InitializeComponent();
-            TransparencyLevelHint =
-            [
-                WindowTransparencyLevel.AcrylicBlur,
-                WindowTransparencyLevel.Mica,
-                WindowTransparencyLevel.Blur,
-                WindowTransparencyLevel.None
-            ];
-            Background = Brushes.Transparent;
-            PointerMoved += OnWindowPointerMoved;
-            PointerExited += (_, _) => AbyssBackground?.SetPointer(new Point(-40, -40), false);
-
-            Dispatcher.UIThread.Post(() =>
-            {
-                ShellGlass?.SyncTintFromTheme();
-                ShellGlass?.ApplyFromSettings();
-                AbyssBackground?.SyncFromTheme();
-                AbyssBackground?.SyncFromSettings();
-            }, DispatcherPriority.Loaded);
+            UI.Utility.SpectreChrome.Apply(this);
+            Backdrop.ApplyFromSettings();
         }
 
         public FluentMessageBox(string message, MessageBoxImage image, MessageBoxButton buttons) : this()
@@ -114,19 +99,6 @@ namespace Froststrap.UI.Elements.Dialogs
             {
                 desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             }
-
-            Loaded += (s, e) =>
-            {
-                ShellGlass?.ApplyFromSettings();
-                AbyssBackground?.SyncFromTheme();
-            };
-        }
-
-        private void OnWindowPointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
-        {
-            if (AbyssBackground is null)
-                return;
-            AbyssBackground.SetPointer(e.GetPosition(AbyssBackground), true);
         }
 
         private static string GetTextForResult(MessageBoxResult result)
@@ -145,6 +117,13 @@ namespace Froststrap.UI.Elements.Dialogs
                     Debug.Assert(false);
                     return result.ToString();
             }
+        }
+
+        private void Close_Click(object? sender, RoutedEventArgs e)
+        {
+            if (Result == MessageBoxResult.None)
+                Result = MessageBoxResult.Cancel;
+            Close();
         }
 
         public void SetButton(Button button, MessageBoxResult result)

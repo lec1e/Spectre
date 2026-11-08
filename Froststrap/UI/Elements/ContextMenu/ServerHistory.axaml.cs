@@ -9,8 +9,7 @@ namespace Froststrap.UI.Elements.ContextMenu
         public ServerHistory()
         {
             InitializeComponent();
-            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-            SpectreChrome.AttachPointer(this, AbyssBackground);
+            SpectreChrome.Apply(this);
         }
 
         public ServerHistory(ActivityWatcher watcher) : this()

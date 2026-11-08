@@ -1,9 +1,10 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 using Froststrap.RobloxInterfaces;
+using Froststrap.UI.Elements.Dialogs;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -51,6 +52,138 @@ namespace Froststrap.UI.ViewModels.Settings
         public ICommand ImportSettingsCommand => new AsyncRelayCommand<object?>(ImportSettingsAsync);
         public ICommand ExportSettingsCommand => new AsyncRelayCommand<object?>(ExportSettingsAsync);
         public ICommand ResetSettingsToDefaultCommand => new RelayCommand(ResetSettingsToDefault);
+        public ICommand BrowseStudioVersionHashCommand => new AsyncRelayCommand<object?>(BrowseStudioVersionHashAsync);
+        public ICommand CheckForUpdatesCommand => new AsyncRelayCommand(CheckForUpdatesAsync);
+
+        private string _updateStatus = string.Empty;
+        private bool _isCheckingForUpdates;
+
+        public string UpdateStatus
+        {
+            get => _updateStatus;
+            private set
+            {
+                _updateStatus = value;
+                OnPropertyChanged(nameof(UpdateStatus));
+                OnPropertyChanged(nameof(HasUpdateStatus));
+            }
+        }
+
+        public bool HasUpdateStatus => !string.IsNullOrEmpty(UpdateStatus);
+
+        public bool CanCheckForUpdates => !_isCheckingForUpdates;
+
+        private void SetCheckingForUpdates(bool value)
+        {
+            _isCheckingForUpdates = value;
+            OnPropertyChanged(nameof(CanCheckForUpdates));
+        }
+
+        private async Task CheckForUpdatesAsync()
+        {
+            const string LOG_IDENT = "ChannelViewModel::CheckForUpdatesAsync";
+
+            if (_isCheckingForUpdates)
+                return;
+
+            SetCheckingForUpdates(true);
+            UpdateStatus = "Checking for updates...";
+
+            try
+            {
+                var release = await App.GetLatestRelease();
+                if (release is null || string.IsNullOrEmpty(release.TagName))
+                {
+                    UpdateStatus = "Couldn't reach GitHub. Try again later.";
+                    return;
+                }
+
+                VersionComparison comparison;
+                try
+                {
+                    comparison = Utilities.CompareVersions(App.Version, release.TagName);
+                }
+                catch
+                {
+                    UpdateStatus = $"Couldn't read the latest release tag ({release.TagName}).";
+                    return;
+                }
+
+                if (comparison != VersionComparison.LessThan)
+                {
+                    UpdateStatus = $"You're on the latest version (v{App.Version}).";
+                    return;
+                }
+
+                var asset = OperatingSystem.IsLinux() ? null : Froststrap.Bootstrapper.FindPlatformAsset(release.Assets);
+                if (asset is null)
+                {
+                    UpdateStatus = $"Version {release.TagName} is available.";
+                    var open = await Frontend.ShowMessageBox(
+                        $"{App.BrandName} {release.TagName} is available, but it can't be installed automatically on this system.\n\nOpen the releases page?",
+                        MessageBoxImage.Information,
+                        MessageBoxButton.YesNo);
+
+                    if (open == MessageBoxResult.Yes)
+                        Utilities.ShellExecute(App.ProjectDownloadLink);
+                    return;
+                }
+
+                var result = await Frontend.ShowMessageBox(
+                    $"{App.BrandName} {release.TagName} is available (you're on v{App.Version}).\n\nDownload and install it now? {App.BrandName} will restart, and any unsaved settings are saved first.",
+                    MessageBoxImage.Question,
+                    MessageBoxButton.YesNo);
+
+                if (result != MessageBoxResult.Yes)
+                {
+                    UpdateStatus = $"Version {release.TagName} is available.";
+                    return;
+                }
+
+                UpdateStatus = $"Downloading {release.TagName}...";
+
+                Directory.CreateDirectory(Paths.TempUpdates);
+                string downloadPath = Path.Combine(Paths.TempUpdates, asset.Name);
+
+                await using (var source = await App.HttpClient.GetStreamAsync(asset.BrowserDownloadUrl))
+                await using (var destination = File.Create(downloadPath))
+                    await source.CopyToAsync(destination);
+
+                UpdateStatus = $"Installing {release.TagName}...";
+
+                if (!await Froststrap.Bootstrapper.ApplyUpdate(downloadPath))
+                {
+                    UpdateStatus = "The update couldn't be installed. Opening the releases page instead.";
+                    Utilities.ShellExecute(App.ProjectDownloadLink);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException(LOG_IDENT, ex);
+                UpdateStatus = $"Update check failed: {ex.Message}";
+            }
+            finally
+            {
+                SetCheckingForUpdates(false);
+            }
+        }
+
+        private async Task BrowseStudioVersionHashAsync(object? parameter)
+        {
+            var owner = (parameter is Control control ? TopLevel.GetTopLevel(control) as Window : null) ?? GetMainWindow();
+            if (owner is null)
+                return;
+
+            var dialog = new VersionOverrideDialog(LaunchMode.Studio);
+            await dialog.ShowDialog(owner);
+
+            if (!string.IsNullOrEmpty(dialog.SelectedHash))
+            {
+                StudioVersionOverrideHash = dialog.SelectedHash;
+                if (!StudioVersionOverrideEnabled)
+                    StudioVersionOverrideEnabled = true;
+            }
+        }
 
         // Pre-release auto-updates removed — Eclipse only tracks stable releases.
         public bool PreReleaseUpdatesEnabled

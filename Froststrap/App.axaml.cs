@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -169,6 +170,33 @@ public partial class App : Application
         Environment.Exit(exitCodeNum);
     }
 
+    private static List<Style>? _disableAnimationStyles;
+
+    public static void ApplyAnimationSettings()
+    {
+        var app = Application.Current;
+        if (app == null) return;
+
+        RemoveAnimationSettings();
+
+        var styleTransitions = new Style(x => x.Is<Control>());
+        styleTransitions.Setters.Add(new Setter(Animatable.TransitionsProperty, null));
+        _disableAnimationStyles = [styleTransitions];
+        app.Styles.Add(styleTransitions);
+
+        Logger.WriteLine("App::ApplyAnimationSettings", "Animations disabled globally");
+    }
+
+    public static void RemoveAnimationSettings()
+    {
+        var app = Application.Current;
+        if (app == null || _disableAnimationStyles == null) return;
+
+        foreach (var style in _disableAnimationStyles)
+            app.Styles.Remove(style);
+        _disableAnimationStyles = null;
+    }
+
     public static void SoftTerminate(ErrorCode exitCode = ErrorCode.ERROR_SUCCESS)
     {
         int exitCodeNum = (int)exitCode;
@@ -274,6 +302,7 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        Utility.ThemeManager.Apply(Utility.ThemeManager.FromScene(Utility.SceneCatalog.Get(null)), null, null);
 
         AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
@@ -536,6 +565,7 @@ public partial class App : Application
                 Settings.Save();
             }
             State.Load();
+            RobloxInstallListener.Start();
             FastFlags.Load();
             AppStorage.Load();
             GlobalSettings.Load();
@@ -573,8 +603,10 @@ public partial class App : Application
             }
 
             AvaloniaWindow.ApplyTheme();
-            Utility.ThemeManager.ApplyFromSettings();
             Locale.Set(Settings.Prop.Locale);
+
+            if (Settings.Prop.DisableAnimations)
+                ApplyAnimationSettings();
 
             MigrateVersionProfilesIfNeeded();
 

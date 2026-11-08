@@ -1,4 +1,4 @@
-﻿using Froststrap.AppData;
+using Froststrap.AppData;
 using Froststrap.Integrations;
 
 namespace Froststrap
@@ -15,10 +15,12 @@ namespace Froststrap
 
         public readonly IntegrationWatcher? IntegrationWatcher;
 
-        public readonly PlayerDiscordRichPresence? PlayerRichPresence;
-        public readonly StudioDiscordRichPresence? StudioRichPresence;
+        public PlayerDiscordRichPresence? PlayerRichPresence { get; private set; }
+        public StudioDiscordRichPresence? StudioRichPresence { get; private set; }
 
         public readonly AntiAfkService? AntiAfk;
+
+        public readonly Softkey? Softkey;
 
         private readonly CancellationTokenSource _cancellationTokenSource = new();
         private bool _isDisposed = false;
@@ -62,6 +64,9 @@ namespace Froststrap
 
             ProcessId = _watcherData.ProcessId;
 
+            if (_watcherData.LaunchMode == LaunchMode.Player && App.Settings.Prop.SoftKeyEnabled && OperatingSystem.IsWindows())
+                Softkey = new Softkey(_watcherData.ProcessId);
+
             if (OperatingSystem.IsLinux() && App.Settings.Prop.StudioGameMode && (_watcherData.LaunchMode == LaunchMode.Studio || _watcherData.LaunchMode == LaunchMode.StudioAuth))
             {
                 _ = Task.Run(async () =>
@@ -104,6 +109,7 @@ namespace Froststrap
                 }
 
                 _notifyIcon = new(this);
+                RobloxInstallListener.Start();
             }
 
             if (_watcherData.LaunchMode == LaunchMode.Player)
@@ -150,6 +156,43 @@ namespace Froststrap
                         App.Logger.WriteLine(LOG_IDENT, $"Post-launch task error: {ex.Message}");
                     }
                 });
+            }
+        }
+
+        /// <summary>Turns Discord presence on or off while the tray watcher is already running.</summary>
+        public void SetRichPresenceEnabled(bool enabled)
+        {
+            App.Settings.Prop.UseDiscordRichPresence = enabled;
+            App.Settings.Save();
+
+            if (ActivityWatcher is null || _watcherData is null)
+                return;
+
+            if (_watcherData.LaunchMode == LaunchMode.Player)
+            {
+                if (enabled)
+                {
+                    PlayerRichPresence ??= new PlayerDiscordRichPresence(ActivityWatcher);
+                    PlayerRichPresence.SetVisibility(true);
+                }
+                else
+                {
+                    PlayerRichPresence?.SetVisibility(false);
+                }
+                return;
+            }
+
+            if (!App.Settings.Prop.StudioRPC)
+                return;
+
+            if (enabled)
+            {
+                StudioRichPresence ??= new StudioDiscordRichPresence(ActivityWatcher);
+                StudioRichPresence.SetVisibility(true);
+            }
+            else
+            {
+                StudioRichPresence?.SetVisibility(false);
             }
         }
 
@@ -400,6 +443,7 @@ namespace Froststrap
 
             IntegrationWatcher?.Dispose();
             AntiAfk?.Dispose();
+            Softkey?.Dispose();
             _notifyIcon?.Dispose();
             PlayerRichPresence?.Dispose();
             StudioRichPresence?.Dispose();

@@ -1,25 +1,13 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Styling;
-using FluentAvalonia.Styling;
-using System.Runtime.InteropServices;
+using Froststrap.UI.Utility;
 
 namespace Froststrap.UI.Elements.Base
 {
     public abstract class AvaloniaWindow : Window
     {
-        private const int DwmwaWindowCornerPreference = 33;
-        private const int DwmwcpRound = 2;
-
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmSetWindowAttribute(nint hwnd, int attr, ref int attrValue, int attrSize);
-        private static IStyle? _activeColorStyle;
-        private static ResourceDictionary? _activeThemeDictionary;
-
         public AvaloniaWindow()
         {
             if (!OperatingSystem.IsMacOS())
@@ -32,6 +20,7 @@ namespace Froststrap.UI.Elements.Base
                 this.WindowDecorations = WindowDecorations.Full;
             }
 
+            TransparencyLevelHint = SpectreChrome.Opaque;
             TextOptions.SetTextRenderingMode(this, TextRenderingMode.Antialias);
             ApplyTheme();
         }
@@ -40,154 +29,54 @@ namespace Froststrap.UI.Elements.Base
         {
             if (Application.Current == null) return;
 
-            var finalTheme = App.Settings.Prop.Theme.GetFinal();
-            string themeName = Enum.GetName(finalTheme) ?? "Dark";
-
-            Application.Current.RequestedThemeVariant = finalTheme == Enums.Theme.Light
-                ? ThemeVariant.Light
-                : ThemeVariant.Dark;
-
-            var faTheme = Application.Current.Styles.OfType<FluentAvaloniaTheme>().FirstOrDefault();
-            if (faTheme != null)
-            {
-                faTheme.PreferSystemTheme = false;
-                faTheme.PreferUserAccentColor = true;
-            }
-
-            if (_activeThemeDictionary != null)
-            {
-                Application.Current.Resources.MergedDictionaries.Remove(_activeThemeDictionary);
-                _activeThemeDictionary = null;
-            }
-
-            if (_activeColorStyle != null)
-            {
-                Application.Current.Styles.Remove(_activeColorStyle);
-                _activeColorStyle = null;
-            }
-
-            if (finalTheme != Enums.Theme.Custom)
-            {
-                try
-                {
-                    Application.Current.Resources.Remove("ApplicationBackgroundColor");
-
-                    var themeUri = new Uri($"avares://Spectre/UI/AppThemes/ResourceDictionarys/{themeName}.axaml");
-                    var loadedTheme = AvaloniaXamlLoader.Load(themeUri);
-                    if (loadedTheme is ResourceDictionary dict)
-                    {
-                        _activeThemeDictionary = dict;
-                        Application.Current.Resources.MergedDictionaries.Add(dict);
-                    }
-
-                    var styleUri = new Uri($"avares://Spectre/UI/AppThemes/Styles/{themeName}.axaml");
-                    var loadedStyle = AvaloniaXamlLoader.Load(styleUri);
-                    if (loadedStyle is Styles loadedStyles)
-                    {
-                        _activeColorStyle = loadedStyles;
-                        Application.Current.Styles.Insert(1, loadedStyles);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    App.Logger.WriteLine("AvaloniaWindow", $"Theme/Style loading error for {themeName}: {ex.Message}");
-                }
-            }
-            else
-            {
-                IBrush? customBackground = null;
-
-                if (App.Settings.Prop.BackgroundType == BackgroundMode.Gradient)
-                {
-                    var avaloniaStops = new Avalonia.Media.GradientStops();
-
-                    foreach (var s in App.Settings.Prop.CustomGradientStops)
-                    {
-                        if (Color.TryParse(s.Color, out var color))
-                        {
-                            avaloniaStops.Add(new Avalonia.Media.GradientStop(color, s.Offset));
-                        }
-                    }
-
-                    double angleRad = (Math.PI / 180.0) * (App.Settings.Prop.GradientAngle - 90);
-                    var startPoint = new RelativePoint(
-                        0.5 - Math.Cos(angleRad) * 0.5,
-                        0.5 - Math.Sin(angleRad) * 0.5,
-                        RelativeUnit.Relative);
-                    var endPoint = new RelativePoint(
-                        0.5 + Math.Cos(angleRad) * 0.5,
-                        0.5 + Math.Sin(angleRad) * 0.5,
-                        RelativeUnit.Relative);
-
-                    customBackground = new LinearGradientBrush
-                    {
-                        GradientStops = avaloniaStops,
-                        StartPoint = startPoint,
-                        EndPoint = endPoint
-                    };
-                }
-                else if (App.Settings.Prop.BackgroundType == BackgroundMode.Image)
-                {
-                    string path = App.Settings.Prop.BackgroundImagePath ?? string.Empty;
-                    if (!string.IsNullOrEmpty(path) && System.IO.File.Exists(path))
-                    {
-                        try
-                        {
-                            var bitmap = new Bitmap(path);
-                            customBackground = new ImageBrush(bitmap)
-                            {
-                                Stretch = (Stretch)App.Settings.Prop.BackgroundStretch,
-                                Opacity = App.Settings.Prop.BackgroundOpacity
-                            };
-                        }
-                        catch (Exception ex)
-                        {
-                            App.Logger.WriteLine("AvaloniaWindow", $"Image load error: {ex.Message}");
-                        }
-                    }
-                }
-
-                if (customBackground != null)
-                {
-                    Application.Current.Resources["ApplicationBackgroundColor"] = customBackground;
-                }
-                else
-                {
-                    Application.Current.Resources["ApplicationBackgroundColor"] = Brushes.Transparent;
-                }
-            }
-
-            UpdateBackdropForAllWindows();
+            global::Froststrap.Utility.ThemeManager.CustomBackground =
+                App.Settings.Prop.Theme == Enums.Theme.Custom ? BuildCustomBackground() : null;
             global::Froststrap.Utility.ThemeManager.ApplyFromSettings();
         }
 
-        public static void UpdateBackdropForAllWindows()
+        private static IBrush? BuildCustomBackground()
         {
-            if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
-                return;
+            var settings = App.Settings.Prop;
 
-            var selectedBackdrop = App.Settings.Prop.SelectedBackdrop;
-            if (selectedBackdrop == Enums.WindowsBackdrops.None)
-                selectedBackdrop = Enums.WindowsBackdrops.Acrylic;
-
-            foreach (var window in desktop.Windows)
+            if (settings.BackgroundType == BackgroundMode.Gradient)
             {
-                if (selectedBackdrop != Enums.WindowsBackdrops.None)
+                var stops = new Avalonia.Media.GradientStops();
+                foreach (var s in settings.CustomGradientStops)
                 {
-                    window.TransparencyLevelHint = selectedBackdrop switch
-                    {
-                        Enums.WindowsBackdrops.Acrylic => [WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.Mica, WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
-                        Enums.WindowsBackdrops.Mica => [WindowTransparencyLevel.Mica, WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None],
-                        Enums.WindowsBackdrops.Aero => [WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
-                        _ => [WindowTransparencyLevel.None]
-                    };
-                    window.Background = Brushes.Transparent;
+                    if (Color.TryParse(s.Color, out var color))
+                        stops.Add(new Avalonia.Media.GradientStop(color, s.Offset));
                 }
-                else
+
+                double angleRad = (Math.PI / 180.0) * (settings.GradientAngle - 90);
+                return new LinearGradientBrush
                 {
-                    window.TransparencyLevelHint = [WindowTransparencyLevel.None];
+                    GradientStops = stops,
+                    StartPoint = new RelativePoint(0.5 - Math.Cos(angleRad) * 0.5, 0.5 - Math.Sin(angleRad) * 0.5, RelativeUnit.Relative),
+                    EndPoint = new RelativePoint(0.5 + Math.Cos(angleRad) * 0.5, 0.5 + Math.Sin(angleRad) * 0.5, RelativeUnit.Relative)
+                };
+            }
+
+            if (settings.BackgroundType == BackgroundMode.Image)
+            {
+                string path = settings.BackgroundImagePath ?? string.Empty;
+                if (string.IsNullOrEmpty(path) || !File.Exists(path))
+                    return null;
+
+                try
+                {
+                    return new ImageBrush(new Bitmap(path))
+                    {
+                        Stretch = (Stretch)settings.BackgroundStretch,
+                        Opacity = settings.BackgroundOpacity
+                    };
+                }
+                catch (Exception ex)
+                {
+                    App.Logger.WriteLine("AvaloniaWindow", $"Image load error: {ex.Message}");
                 }
             }
+
+            return null;
         }
 
         protected override void OnOpened(EventArgs e)
@@ -198,22 +87,8 @@ namespace Froststrap.UI.Elements.Base
             this.BorderThickness = new Thickness(4);
 #endif
 
-            UpdateBackdropForAllWindows();
             Locale.ApplyLocaleToWindow(this);
-            RoundWindowCorners();
-        }
-
-        private void RoundWindowCorners()
-        {
-            if (!OperatingSystem.IsWindows())
-                return;
-
-            nint hwnd = TryGetPlatformHandle()?.Handle ?? nint.Zero;
-            if (hwnd == nint.Zero)
-                return;
-
-            int pref = DwmwcpRound;
-            _ = DwmSetWindowAttribute(hwnd, DwmwaWindowCornerPreference, ref pref, sizeof(int));
+            SpectreChrome.RoundCorners(this);
         }
     }
 }

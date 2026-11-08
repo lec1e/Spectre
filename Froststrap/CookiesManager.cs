@@ -28,6 +28,8 @@ namespace Froststrap
 
         public string GetAuthCookie() => AuthCookie;
 
+        public AuthenticatedUser? User { get; private set; }
+
         private static string CookiesPath => OperatingSystem.IsMacOS()
             ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "HTTPStorages", "com.roblox.RobloxPlayer.binarycookies")
             : OperatingSystem.IsLinux()
@@ -128,6 +130,7 @@ namespace Froststrap
 
                 AuthCookie = authCookie;
                 AuthenticatedUser? user = await GetAuthenticated();
+                User = user;
                 State = (user != null && user.Id != 0) ? CookieState.Success : CookieState.Invalid;
             }
             catch (Exception ex)

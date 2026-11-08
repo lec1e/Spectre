@@ -684,7 +684,7 @@ namespace Froststrap
                 && App.LaunchSettings.VersionFlag.Active
                 && !string.IsNullOrEmpty(App.LaunchSettings.VersionFlag.Data))
             {
-                // Explicit -version always wins (AltMan joins pass the selected/installed GUID here).
+                // Explicit -version always wins (account joins pass the selected/installed GUID here).
                 _latestVersionGuid = App.LaunchSettings.VersionFlag.Data;
                 App.Logger.WriteLine(LOG_IDENT, $"Version set to {_latestVersionGuid} from arguments");
             }
@@ -1875,7 +1875,7 @@ namespace Froststrap
             }
         }
 
-        private static GithubReleaseAsset? FindPlatformAsset(List<GithubReleaseAsset>? assets)
+        internal static GithubReleaseAsset? FindPlatformAsset(List<GithubReleaseAsset>? assets)
         {
             if (assets is null || assets.Count == 0)
                 return null;
@@ -1927,7 +1927,7 @@ namespace Froststrap
             return "Unknown";
         }
 
-        private static async Task<bool> ApplyUpdate(string updatePath)
+        internal static async Task<bool> ApplyUpdate(string updatePath)
         {
             const string LOG_IDENT = "Bootstrapper::ApplyUpdate";
 
@@ -2262,6 +2262,87 @@ exit";
             }
         }
 
+        /// <summary>
+        /// Deletes the version being installed and the one currently on disk, then drops the
+        /// cached packages so the next extract is a full download.
+        /// </summary>
+        private bool PrepareFreshInstall()
+        {
+            const string LOG_IDENT = "Bootstrapper::PrepareFreshInstall";
+
+            var folders = new List<string>();
+            if (!string.IsNullOrEmpty(_latestVersionDirectory))
+                folders.Add(_latestVersionDirectory);
+
+            if (!string.IsNullOrEmpty(AppData.DistributionState.VersionGuid))
+            {
+                string current = Path.Combine(Paths.Versions, AppData.DistributionState.VersionGuid);
+                if (!folders.Any(folder => string.Equals(folder, current, StringComparison.OrdinalIgnoreCase)))
+                    folders.Add(current);
+            }
+
+            foreach (string folder in folders)
+            {
+                if (TryWipeInstallFolder(folder))
+                    continue;
+
+                App.Logger.WriteLine(LOG_IDENT, $"Could not clear {folder}");
+                return false;
+            }
+
+            if (_versionPackageManifest is not null)
+            {
+                foreach (var package in _versionPackageManifest)
+                {
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(package.Signature) && File.Exists(package.DownloadPath))
+                            File.Delete(package.DownloadPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Logger.WriteException(LOG_IDENT, ex);
+                    }
+                }
+            }
+
+            App.Logger.WriteLine(LOG_IDENT, "Cleared the current Roblox version for a fresh install.");
+            return true;
+        }
+
+        private static bool TryWipeInstallFolder(string folder)
+        {
+            if (string.IsNullOrEmpty(folder) || !Directory.Exists(folder))
+                return true;
+
+            string target = folder;
+            bool junction = VersionJunctionManager.IsJunction(folder);
+            if (junction)
+            {
+                target = VersionJunctionManager.GetJunctionTargetName(folder) ?? "";
+                if (string.IsNullOrEmpty(target) || !Directory.Exists(target))
+                    return true;
+            }
+
+            for (int attempt = 0; attempt < 3; attempt++)
+            {
+                try
+                {
+                    Directory.Delete(target, true);
+                    if (junction)
+                        Directory.CreateDirectory(target);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    App.Logger.WriteException("Bootstrapper::TryWipeInstallFolder", ex);
+                    Thread.Sleep(400);
+                }
+            }
+
+            return !Directory.Exists(target);
+        }
+
         private async Task UpgradeRoblox()
         {
             const string LOG_IDENT = "Bootstrapper::UpgradeRoblox";
@@ -2297,10 +2378,13 @@ exit";
             if (!App.LaunchSettings.BackgroundUpdaterFlag.Active)
                 KillRobloxPlayers();
 
-            if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && Directory.Exists(_latestVersionDirectory))
+            if (!App.LaunchSettings.BackgroundUpdaterFlag.Active && !PrepareFreshInstall())
             {
-                try { Directory.Delete(_latestVersionDirectory, true); }
-                catch (Exception ex) { App.Logger.WriteException(LOG_IDENT, ex); }
+                await Frontend.ShowMessageBox(
+                    "Spectre could not clear the current Roblox version folder. Close Roblox completely, including the system tray, and launch again.",
+                    MessageBoxImage.Error);
+                App.Terminate(ErrorCode.ERROR_INSTALL_FAILURE);
+                return;
             }
 
             Directory.CreateDirectory(_latestVersionDirectory);
@@ -2595,7 +2679,7 @@ exit";
                 App.Logger.WriteLine(LOG_IDENT, "Flatpak not found.");
                 App.Logger.WriteException(LOG_IDENT, ex);
                 await Frontend.ShowMessageBox(
-                    "Flatpak is required on Linux.\n\nPlease install Flatpak first, then launch Froststrap again.",
+                    "Flatpak is required on Linux.\n\nPlease install Flatpak first, then launch Spectre again.",
                     MessageBoxImage.Error
                 );
                 App.Terminate(ErrorCode.ERROR_CANCELLED);

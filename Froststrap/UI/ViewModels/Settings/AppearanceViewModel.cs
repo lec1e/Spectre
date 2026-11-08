@@ -12,6 +12,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using ThemeManager = Froststrap.Utility.ThemeManager;
 
 namespace Froststrap.UI.ViewModels.Settings
 {
@@ -119,22 +120,6 @@ namespace Froststrap.UI.ViewModels.Settings
         }
 
         public bool IsCustomIconSelected => App.Settings.Prop.BootstrapperIcon == BootstrapperIcon.IconCustom;
-
-        public static IEnumerable<WindowsBackdrops> BackdropOptions => Enum.GetValues<WindowsBackdrops>();
-
-        public WindowsBackdrops SelectedBackdrop
-        {
-            get => App.Settings.Prop.SelectedBackdrop;
-            set
-            {
-                if (App.Settings.Prop.SelectedBackdrop != value)
-                {
-                    App.Settings.Prop.SelectedBackdrop = value;
-                    OnPropertyChanged(nameof(SelectedBackdrop));
-                    AvaloniaWindow.UpdateBackdropForAllWindows();
-                }
-            }
-        }
 
         public static string Title
         {
@@ -577,137 +562,176 @@ namespace Froststrap.UI.ViewModels.Settings
         #region Custom App Themes
         public IEnumerable<Theme> Themes { get; } = Enum.GetValues<Theme>();
 
-        public IEnumerable<string> ThemePresets { get; } = global::Froststrap.Utility.ThemeManager.PresetNames;
+        public IReadOnlyList<BackgroundOption> AllBackgrounds { get; } = [.. SceneCatalog.All.Select(s => new BackgroundOption(s))];
 
-        public string SelectedThemePreset
+        public IReadOnlyList<BackgroundOption> BackgroundOptions => _backgroundFilter switch
         {
-            get => App.Settings.Prop.SelectedThemePreset;
-            set
-            {
-                if (string.IsNullOrEmpty(value)) return;
-                if (App.Settings.Prop.SelectedThemePreset == value
-                    && global::Froststrap.Utility.ThemeManager.Presets.ContainsKey(value))
-                {
-                    // Re-apply so toggles / stuck state can recover
-                    global::Froststrap.Utility.ThemeManager.ApplyPreset(value);
-                    OnPropertyChanged(nameof(SelectedThemePreset));
-                    ApplyThemeUpdate();
-                    return;
-                }
+            "animated" => [.. AllBackgrounds.Where(b => b.IsAnimated)],
+            "plain" => [.. AllBackgrounds.Where(b => !b.IsAnimated)],
+            _ => AllBackgrounds
+        };
 
-                App.Settings.Prop.SelectedThemePreset = value;
-                global::Froststrap.Utility.ThemeManager.ApplyPreset(value);
-                OnPropertyChanged(nameof(SelectedThemePreset));
-                OnPropertyChanged(nameof(EnableGlass));
-                OnPropertyChanged(nameof(EnableGlow));
-                OnPropertyChanged(nameof(EnableAurora));
-                OnPropertyChanged(nameof(EnableLiquidCursor));
-                ApplyThemeUpdate();
-            }
-        }
+        public int AnimatedBackgroundCount => AllBackgrounds.Count(b => b.IsAnimated);
+        public int PlainBackgroundCount => AllBackgrounds.Count(b => !b.IsAnimated);
 
-        public bool EnableGlass
+        private string _backgroundFilter = "all";
+
+        public bool FilterAll { get => _backgroundFilter == "all"; set { if (value) SetBackgroundFilter("all"); } }
+        public bool FilterAnimated { get => _backgroundFilter == "animated"; set { if (value) SetBackgroundFilter("animated"); } }
+        public bool FilterPlain { get => _backgroundFilter == "plain"; set { if (value) SetBackgroundFilter("plain"); } }
+
+        private void SetBackgroundFilter(string filter)
         {
-            get => App.Settings.Prop.EnableGlass;
-            set
-            {
-                App.Settings.Prop.EnableGlass = value;
-                global::Froststrap.Utility.ThemeManager.ApplyFromSettings();
-                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
-                OnPropertyChanged(nameof(EnableGlass));
-                ApplyLiveGlass();
-            }
-        }
-
-        public bool EnableGlow
-        {
-            get => App.Settings.Prop.EnableGlow;
-            set
-            {
-                App.Settings.Prop.EnableGlow = value;
-                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
-                OnPropertyChanged(nameof(EnableGlow));
-                ApplyLiveGlass();
-            }
-        }
-
-        public double GlassTintOpacity
-        {
-            get => App.Settings.Prop.GlassTintOpacity;
-            set
-            {
-                App.Settings.Prop.GlassTintOpacity = Math.Clamp(value, 0.05, 0.85);
-                OnPropertyChanged(nameof(GlassTintOpacity));
-                ApplyLiveGlass();
-            }
-        }
-
-        public double GlassMaterialOpacity
-        {
-            get => App.Settings.Prop.GlassMaterialOpacity;
-            set
-            {
-                App.Settings.Prop.GlassMaterialOpacity = Math.Clamp(value, 0.10, 0.90);
-                OnPropertyChanged(nameof(GlassMaterialOpacity));
-                ApplyLiveGlass();
-            }
-        }
-
-        public double GlassCornerRadius
-        {
-            get => App.Settings.Prop.GlassCornerRadius;
-            set
-            {
-                App.Settings.Prop.GlassCornerRadius = Math.Clamp(value, 0, 40);
-                OnPropertyChanged(nameof(GlassCornerRadius));
-                ApplyLiveGlass();
-            }
-        }
-
-        private static void ApplyLiveGlass()
-        {
-            if (Avalonia.Application.Current?.ApplicationLifetime is not Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+            if (_backgroundFilter == filter)
                 return;
 
-            foreach (var window in desktop.Windows)
+            _backgroundFilter = filter;
+            OnPropertyChanged(nameof(FilterAll));
+            OnPropertyChanged(nameof(FilterAnimated));
+            OnPropertyChanged(nameof(FilterPlain));
+            OnPropertyChanged(nameof(BackgroundOptions));
+            OnPropertyChanged(nameof(SelectedBackground));
+        }
+
+        public BackgroundOption? SelectedBackground
+        {
+            get
             {
-                foreach (var glass in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.LiquidGlassPanel>())
-                    glass.ApplyFromSettings();
-                foreach (var abyss in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.AbyssGlowBackground>())
-                    abyss.SyncFromSettings();
+                var spec = SceneCatalog.Get(App.Settings.Prop.BackgroundId);
+                return AllBackgrounds.FirstOrDefault(b => b.Id == spec.Id);
+            }
+            set
+            {
+                if (value is null || App.Settings.Prop.BackgroundId == value.Id)
+                    return;
+
+                App.Settings.Prop.BackgroundId = value.Id;
+                ThemeManager.ApplyFromSettings();
+                OnPropertyChanged(nameof(SelectedBackground));
+                OnPropertyChanged(nameof(SelectedBackgroundName));
             }
         }
 
-        public bool EnableAurora
+        public string SelectedBackgroundName => SelectedBackground?.Name ?? "";
+
+        public bool AnimateBackground
         {
-            get => App.Settings.Prop.EnableAurora;
+            get => App.Settings.Prop.AnimateBackground;
             set
             {
-                App.Settings.Prop.EnableAurora = value;
-                global::Froststrap.Utility.ThemeManager.Apply(App.Settings.Prop.Palette);
-                OnPropertyChanged(nameof(EnableAurora));
+                if (App.Settings.Prop.AnimateBackground == value)
+                    return;
 
-                if (Avalonia.Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
-                {
-                    foreach (var window in desktop.Windows)
-                    {
-                        foreach (var aurora in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.AnimatedAuroraBackground>())
-                            aurora.SyncFromSettings();
-                        foreach (var abyss in window.GetVisualDescendants().OfType<Froststrap.UI.Elements.Controls.AbyssGlowBackground>())
-                            abyss.SyncFromSettings();
-                    }
-                }
+                App.Settings.Prop.AnimateBackground = value;
+                ThemeManager.NotifyBackdropChanged();
+                OnPropertyChanged(nameof(AnimateBackground));
             }
         }
 
-        public bool EnableLiquidCursor
+        public double BackgroundDim
         {
-            get => App.Settings.Prop.EnableLiquidCursor;
+            get => App.Settings.Prop.BackgroundDim;
             set
             {
-                App.Settings.Prop.EnableLiquidCursor = value;
-                OnPropertyChanged(nameof(EnableLiquidCursor));
-                Froststrap.UI.Elements.Settings.MainWindow.Instance?.SyncPointerEffects();
+                double dim = Math.Round(Math.Clamp(value, 0, 0.8), 2);
+                if (App.Settings.Prop.BackgroundDim == dim)
+                    return;
+
+                App.Settings.Prop.BackgroundDim = dim;
+                ThemeManager.NotifyBackdropChanged();
+                OnPropertyChanged(nameof(BackgroundDim));
+            }
+        }
+
+        public bool GlassPanels
+        {
+            get => App.Settings.Prop.GlassPanels;
+            set
+            {
+                if (App.Settings.Prop.GlassPanels == value)
+                    return;
+
+                App.Settings.Prop.GlassPanels = value;
+                ThemeManager.ApplyFromSettings();
+                OnPropertyChanged(nameof(GlassPanels));
+            }
+        }
+
+        public static IReadOnlyList<AccentSwatch> AccentPresets { get; } =
+            [.. new[] { "#3B82F6", "#E11D48", "#10B981", "#F59E0B", "#8B5CF6", "#EC4899", "#06B6D4", "#F97316", "#94A3B8" }
+                .Select(hex => new AccentSwatch(hex))];
+
+        public string AccentOverride
+        {
+            get => App.Settings.Prop.WorkbenchAccent;
+            set
+            {
+                string hex = (value ?? "").Trim();
+                if (hex.Length > 0 && !hex.StartsWith('#'))
+                    hex = "#" + hex;
+
+                if (hex.Length > 0 && !Avalonia.Media.Color.TryParse(hex, out _))
+                    return;
+
+                App.Settings.Prop.WorkbenchAccent = hex;
+                ThemeManager.ApplyFromSettings();
+                OnPropertyChanged(nameof(AccentOverride));
+                OnPropertyChanged(nameof(HasAccentOverride));
+            }
+        }
+
+        public bool HasAccentOverride => !string.IsNullOrEmpty(App.Settings.Prop.WorkbenchAccent);
+
+        public ICommand SetAccentCommand => new RelayCommand<string>(hex => AccentOverride = hex ?? "");
+
+        public ICommand ResetAccentCommand => new RelayCommand(() => AccentOverride = "");
+
+        public IReadOnlyList<string> WorkbenchFonts => ThemeManager.FontNames;
+
+        public string SelectedWorkbenchFont
+        {
+            get => App.Settings.Prop.WorkbenchFont;
+            set
+            {
+                if (string.IsNullOrEmpty(value) || App.Settings.Prop.WorkbenchFont == value)
+                    return;
+
+                App.Settings.Prop.WorkbenchFont = value;
+                ThemeManager.ApplyFromSettings();
+                OnPropertyChanged(nameof(SelectedWorkbenchFont));
+            }
+        }
+
+        public bool DisableAnimations
+        {
+            get => App.Settings.Prop.DisableAnimations;
+            set
+            {
+                if (App.Settings.Prop.DisableAnimations == value)
+                    return;
+
+                App.Settings.Prop.DisableAnimations = value;
+
+                if (value)
+                    App.ApplyAnimationSettings();
+                else
+                    App.RemoveAnimationSettings();
+
+                ThemeManager.NotifyBackdropChanged();
+                OnPropertyChanged(nameof(DisableAnimations));
+            }
+        }
+
+        public bool UseCustomBackground
+        {
+            get => App.Settings.Prop.Theme == Theme.Custom;
+            set
+            {
+                if (value && App.Settings.Prop.Theme != Theme.Custom && GradientStops.Count == 0)
+                    ResetGradient();
+
+                Theme = value ? Theme.Custom : Theme.Default;
+                OnPropertyChanged(nameof(UseCustomBackground));
             }
         }
 
@@ -909,7 +933,7 @@ namespace Froststrap.UI.ViewModels.Settings
             {
                 Title = "Export Gradient",
                 FileTypeChoices = [new FilePickerFileType("JSON Files") { Patterns = JsonPatterns }],
-                SuggestedFileName = "Froststrap Gradient Background.json"
+                SuggestedFileName = "Spectre Gradient Background.json"
             });
 
             if (file == null) return;
@@ -983,7 +1007,6 @@ namespace Froststrap.UI.ViewModels.Settings
             App.Settings.Prop.GradientAngle = GradientAngle;
 
             AvaloniaWindow.ApplyTheme();
-            ApplyLiveGlass();
         }
 
         private void InitializeGradientStops()
@@ -1012,6 +1035,28 @@ namespace Froststrap.UI.ViewModels.Settings
             }
         }
         #endregion
+    }
+
+    public sealed class AccentSwatch(string hex)
+    {
+        public string Hex { get; } = hex;
+        public Avalonia.Media.IBrush Brush { get; } = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse(hex));
+    }
+
+    public sealed class BackgroundOption(SceneSpec spec)
+    {
+        public SceneSpec Spec { get; } = spec;
+        public string Id => Spec.Id;
+        public string Name => Spec.Name;
+        public string Description => Spec.Description;
+        public bool IsAnimated => Spec.IsAnimated;
+
+        public IReadOnlyList<Avalonia.Media.IBrush> Swatches { get; } =
+            [.. new[] { spec.Colors[1], spec.Colors[2], spec.Accent }
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .Select(hex => (Avalonia.Media.IBrush)new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse(hex)))];
+
+        public override string ToString() => Name;
     }
 
     public class CustomThemeCycleSelectionWrapper : NotifyPropertyChangedViewModel

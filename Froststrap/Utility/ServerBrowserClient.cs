@@ -2,7 +2,7 @@ using Froststrap.Integrations;
 
 namespace Froststrap.Utility
 {
-    // Backs the Server Browser page: public games API + optional region lookup via an AltMan cookie.
+    // Backs the Server Browser page: public games API + optional region lookup via a saved account cookie.
     public static class ServerBrowserClient
     {
         private const string LOG_IDENT = "ServerBrowserClient";
@@ -36,16 +36,14 @@ namespace Froststrap.Utility
                 .FirstOrDefault();
         }
 
-        public static bool CanResolveRegions =>
-            AccountManager.Shared.Accounts.Any(a => !string.IsNullOrEmpty(a.Cookie));
+        public static bool CanResolveRegions => App.Cookies.Loaded;
 
         public static async Task<string?> ResolveServerIpAsync(long placeId, string jobId)
         {
-            var account = AccountManager.Shared.Accounts.FirstOrDefault(a => !string.IsNullOrEmpty(a.Cookie));
-            if (account is null)
+            if (!App.Cookies.Loaded)
                 return null;
 
-            string cookie = account.Cookie;
+            string cookie = App.Cookies.GetAuthCookie();
             try
             {
                 string body = JsonSerializer.Serialize(new

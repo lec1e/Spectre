@@ -6,7 +6,6 @@ using CommunityToolkit.Mvvm.Input;
 namespace Froststrap.UI.ViewModels.Settings
 {
     // Multi-instance mutex + window tiling + live Roblox process list.
-    // Account launch/bulk launch lives on AltMan ù this page does not duplicate it.
     public class MultiInstanceViewModel : NotifyPropertyChangedViewModel
     {
         private const string LOG_IDENT = "MultiInstanceViewModel";

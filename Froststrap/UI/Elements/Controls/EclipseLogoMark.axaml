@@ -1,9 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Froststrap.UI.Elements.Controls"
              x:Class="Froststrap.UI.Elements.Controls.EclipseLogoMark"
              Width="28" Height="28">
-  <!-- Spectre S mark -->
-  <Image Width="28" Height="28"
-         Source="avares://Spectre/SpectreMark.png"
-         RenderOptions.BitmapInterpolationMode="HighQuality" />
+  <local:SpectreLogo Width="22" Height="22" />
 </UserControl>

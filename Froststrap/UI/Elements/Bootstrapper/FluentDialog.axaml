@@ -11,90 +11,70 @@
     mc:Ignorable="d"
     x:Class="Froststrap.UI.Elements.Bootstrapper.FluentDialog"
     x:DataType="vm:FluentDialogViewModel"
-    Width="440"
-    Height="300"
-    MinWidth="440"
-    MaxWidth="440"
-    MinHeight="300"
-    MaxHeight="300"
+    Width="420"
+    Height="360"
+    MinWidth="420"
+    MaxWidth="420"
+    MinHeight="360"
+    MaxHeight="360"
     CanResize="False"
     Title="{x:Static app:App.BrandName}"
     WindowStartupLocation="CenterScreen"
     ExtendClientAreaToDecorationsHint="True"
     TransparencyLevelHint="{Binding WindowBackdropType}"
-    Background="Transparent">
+    Background="{DynamicResource WbWindowBackgroundBrush}">
 
     <Panel>
-        <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="0"
-                                   CornerRadius="0"
-                                   TintOpacity="0.58"
-                                   MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False"
-                                   ClipToBounds="True">
-            <Panel>
-                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
-                <Grid RowDefinitions="Auto,*">
-                    <controls:TitleBar VerticalAlignment="Top"
-                                       ShowMaximize="False"
-                                       ShowMinimize="False"
-                                       Title=""
-                                       Icon="{x:Null}" />
-                    <TextBlock Grid.Row="0" Margin="12,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
-                               FontSize="11" Text="{Binding VersionText}" Foreground="#99FDA4AF"
-                               IsHitTestVisible="False"
+        <controls:AnimatedBackground x:Name="Backdrop" />
+
+        <Grid RowDefinitions="36,*,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="14,0,0,0">
+                <Panel WindowDecorationProperties.ElementRole="TitleBar" Background="Transparent" />
+                <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" IsHitTestVisible="False">
+                    <TextBlock FontSize="11" Text="{Binding VersionText}" Foreground="{DynamicResource WbFgFaintBrush}"
                                IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
-                    <TextBlock Grid.Row="0" Margin="0,8,40,0" VerticalAlignment="Top" HorizontalAlignment="Right"
-                               FontSize="11" Text="{Binding ChannelText}" Foreground="#99FDA4AF"
-                               IsHitTestVisible="False"
+                    <TextBlock FontSize="11" Text="{Binding ChannelText}" Foreground="{DynamicResource WbFgFaintBrush}"
                                IsVisible="{x:Static gv:GlobalViewModel.IsWindowsOrMacOS}"/>
+                </StackPanel>
+                <controls:IconButton Grid.Column="1" Classes="TitleBarButton Close"
+                                     Icon="X" Command="{Binding CancelInstallCommand}" />
+            </Grid>
 
-                    <StackPanel Grid.Row="1" Margin="28,0,28,20" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12" Margin="0,0,0,12">
-                            <Border Width="52" Height="52" CornerRadius="16" ClipToBounds="True">
-                                <Image Width="52" Height="52" Source="avares://Spectre/SpectreMark.png"
-                                       RenderOptions.BitmapInterpolationMode="HighQuality" />
-                            </Border>
-                            <StackPanel VerticalAlignment="Center" Spacing="2">
-                                <TextBlock Text="{x:Static app:App.BrandName}" FontSize="24" FontWeight="Bold"
-                                           Foreground="White" />
-                                <TextBlock Text="{Binding ProductVersion}" FontSize="12" Foreground="White" />
-                            </StackPanel>
-                        </StackPanel>
+            <StackPanel Grid.Row="1" Margin="28,4,28,0" Spacing="14" VerticalAlignment="Center">
+                <controls:SpectreLogo Width="64" Height="64" Glow="0.65" HorizontalAlignment="Center" />
 
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            TextAlignment="Center"
-                            FontSize="15"
-                            Foreground="White"
-                            TextTrimming="CharacterEllipsis"
-                            Text="{Binding Message}"/>
+                <StackPanel Spacing="3">
+                    <TextBlock Text="{x:Static app:App.BrandName}" FontSize="22" FontWeight="Bold"
+                               HorizontalAlignment="Center" Foreground="{DynamicResource WbLogoBrush}" />
+                    <TextBlock Text="{Binding ProductVersion}" FontSize="12" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource WbFgMutedBrush}" />
+                </StackPanel>
 
-                        <ProgressBar
-                            Width="360"
-                            Height="7"
-                            Margin="0,12,0,12"
-                            CornerRadius="50"
-                            Foreground="#E11D48"
-                            Background="#33FFFFFF"
-                            IsIndeterminate="{Binding ProgressIndeterminate}"
-                            Maximum="{Binding ProgressMaximum}"
-                            Value="{Binding ProgressValue}"/>
+                <TextBlock HorizontalAlignment="Center" TextAlignment="Center"
+                           FontSize="14" FontWeight="SemiBold"
+                           Foreground="{DynamicResource WbFgBrightBrush}"
+                           TextTrimming="CharacterEllipsis"
+                           Text="{Binding Message}"/>
 
-                        <controls:IconButton Classes="Primary"
-                                             Width="148"
-                                             Height="38"
-                                             HorizontalAlignment="Center"
-                                             CornerRadius="14"
-                                             Icon="X"
-                                             IconSize="16"
-                                             Content="{Binding CancelButtonText}"
-                                             Padding="16,0"
-                                             IsEnabled="{Binding CancelEnabled}"
-                                             Command="{Binding CancelInstallCommand}" />
-                    </StackPanel>
-                </Grid>
-            </Panel>
-        </controls:LiquidGlassPanel>
+                <ProgressBar Height="6" CornerRadius="50"
+                             Foreground="{DynamicResource WbAccentBrush}"
+                             Background="{DynamicResource WbFillBrush}"
+                             IsIndeterminate="{Binding ProgressIndeterminate}"
+                             Maximum="{Binding ProgressMaximum}"
+                             Value="{Binding ProgressValue}"/>
+            </StackPanel>
+
+            <controls:IconButton Grid.Row="2" Classes="ghost"
+                                 Margin="28,0,28,22"
+                                 HorizontalAlignment="Stretch"
+                                 Height="40"
+                                 CornerRadius="12"
+                                 Icon="X"
+                                 IconSize="14"
+                                 Content="{Binding CancelButtonText}"
+                                 Padding="16,0"
+                                 IsEnabled="{Binding CancelEnabled}"
+                                 Command="{Binding CancelInstallCommand}" />
+        </Grid>
     </Panel>
 </base:AvaloniaDialogBase>

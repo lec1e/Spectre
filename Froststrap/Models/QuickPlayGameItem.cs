@@ -14,5 +14,7 @@
         public UniverseDetails? OriginalDetails { get; set; }
         public GameSource Source { get; set; }
         public long LastPlayedTicks { get; set; }
+        public bool IsVerified { get; set; }
+        public Avalonia.Media.Imaging.Bitmap? ThumbnailBitmap { get; set; }
     }
 }

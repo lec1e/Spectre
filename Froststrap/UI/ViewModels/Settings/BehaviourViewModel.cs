@@ -82,6 +82,28 @@
             set => App.Settings.Prop.ConfirmLaunches = value;
         }
 
+        public static IEnumerable<SoftKeyProfile> SoftKeyProfiles => Enum.GetValues<SoftKeyProfile>();
+
+        public bool SoftKeyEnabled
+        {
+            get => App.Settings.Prop.SoftKeyEnabled;
+            set
+            {
+                App.Settings.Prop.SoftKeyEnabled = value;
+                OnPropertyChanged(nameof(SoftKeyEnabled));
+            }
+        }
+
+        public SoftKeyProfile SoftKeyProfile
+        {
+            get => App.Settings.Prop.SoftKeyProfile;
+            set
+            {
+                App.Settings.Prop.SoftKeyProfile = value;
+                OnPropertyChanged(nameof(SoftKeyProfile));
+            }
+        }
+
         public System.Collections.ObjectModel.ObservableCollection<VersionProfile> VersionProfiles => App.Settings.Prop.VersionProfiles;
 
         public VersionProfile? SelectedVersionProfile

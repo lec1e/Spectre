@@ -19,8 +19,7 @@ namespace Froststrap.UI.Elements.Dialogs
 
             _vm = new VipServerPickerViewModel(placeId);
             DataContext = _vm;
-            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-            SpectreChrome.AttachPointer(this, AbyssBackground);
+            SpectreChrome.Apply(this);
         }
 
         public string? PickedAccessCode => _vm.SelectedServer?.AccessCode;

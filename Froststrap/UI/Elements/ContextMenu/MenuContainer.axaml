@@ -17,6 +17,7 @@ Opacity="0">
             <NativeMenuItemSeparator />
             <NativeMenuItem Header="{x:Static resources:Strings.Common_DiscordRichPresence}" IsVisible="False" Click="RichPresenceMenuItem_Click" ToggleType="CheckBox" IsChecked="True" />
             <NativeMenuItem Header="Anti-AFK" Click="AntiAfkMenuItem_Click" ToggleType="CheckBox" IsChecked="False" />
+            <NativeMenuItem Header="SoftKey (snap tap)" IsVisible="False" Click="SoftkeyMenuItem_Click" ToggleType="CheckBox" IsChecked="True" />
             <NativeMenuItem Header="{x:Static resources:Strings.ContextMenu_CopyDeeplinkInvite}" IsVisible="False" Click="InviteDeeplinkMenuItem_Click" />
             <NativeMenuItem Header="{x:Static resources:Strings.Menu_ContextMenu_RegionJoin}" IsVisible="False" Click="AutoJoinRegionMenuItem_Click"/>
             <NativeMenuItem Header="{x:Static resources:Strings.ContextMenu_ServerInformation_Title}" IsVisible="False" Click="ServerDetailsMenuItem_Click" />

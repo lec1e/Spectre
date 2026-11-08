@@ -1,138 +1,71 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ui="using:FluentAvalonia.UI.Controls"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
-        xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
-        xmlns:converters="clr-namespace:Froststrap.UI.Converters">
+        xmlns:ic="clr-namespace:LucideAvalonia;assembly=LucideAvalonia">
 
     <Style Selector="controls|CardAction">
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="Padding" Value="16,12" />
-        <Setter Property="CornerRadius" Value="14" />
-        <Setter Property="IconSize" Value="22" />
+        <Setter Property="Foreground" Value="{DynamicResource WbFgBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="14,11" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WbRadius}" />
+        <Setter Property="IconSize" Value="18" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                <GradientStop Color="#E8E11D48" Offset="0" />
-                <GradientStop Color="#C44A1518" Offset="0.5" />
-                <GradientStop Color="#F2000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="PART_Shadow"
-                        Margin="0,4"
-                        Background="Transparent"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        BoxShadow="0 8 22 0 #40000000">
-                    <Border Name="PART_Clip"
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            ClipToBounds="True"
-                            UseLayoutRounding="True"
-                            BorderThickness="1">
-                        <Border.BorderBrush>
-                            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                                <GradientStop Color="#55FFFFFF" Offset="0" />
-                                <GradientStop Color="#33E11D48" Offset="0.45" />
-                                <GradientStop Color="#22000000" Offset="1" />
-                            </LinearGradientBrush>
-                        </Border.BorderBrush>
-                        <Panel>
-                            <Border Name="PART_Fill"
-                                    Background="{TemplateBinding Background}" />
-
-                            <Border Name="PART_Sheen"
-                                    IsHitTestVisible="False"
-                                    Opacity="0.2">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                                        <GradientStop Color="#55FFFFFF" Offset="0" />
-                                        <GradientStop Color="#10FFFFFF" Offset="0.3" />
-                                        <GradientStop Color="#00000000" Offset="0.58" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                            </Border>
-
-                            <Border Name="PART_Gloss"
-                                    IsHitTestVisible="False"
-                                    Height="14"
-                                    VerticalAlignment="Top"
-                                    Opacity="0.48">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                                        <GradientStop Color="#88FFFFFF" Offset="0" />
-                                        <GradientStop Color="#22FFFFFF" Offset="0.55" />
-                                        <GradientStop Color="#00FFFFFF" Offset="1" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                            </Border>
-
-                            <Border Name="PART_Depth"
-                                    IsHitTestVisible="False"
-                                    Height="10"
-                                    VerticalAlignment="Bottom"
-                                    Opacity="0.32">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
-                                        <GradientStop Color="#00000000" Offset="0" />
-                                        <GradientStop Color="#66000000" Offset="1" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                            </Border>
-
-                            <Grid ColumnDefinitions="Auto,*"
-                                  Margin="{TemplateBinding Padding}">
-                                <ic:Lucide StrokeBrush="White"
-                                           Icon="{TemplateBinding Icon}"
-                                           Grid.Column="0"
-                                           Width="{TemplateBinding IconSize}"
-                                           Height="{TemplateBinding IconSize}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Margin="14,0,0,0"
-                                            Spacing="2">
-                                    <TextBlock Text="{TemplateBinding Header}"
-                                               FontSize="14"
-                                               FontWeight="SemiBold"
-                                               Foreground="White" />
-                                    <controls:MarkdownTextBlock MarkdownText="{TemplateBinding Description}"
-                                                                FontSize="12"
-                                                                Foreground="White"
-                                                                Opacity="0.75"
-                                                                TextWrapping="Wrap"
-                                                                IsVisible="{TemplateBinding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
-                                </StackPanel>
-                            </Grid>
-                        </Panel>
-                    </Border>
+                <Border Name="PART_Fill"
+                        Margin="0,0,0,8"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="{TemplateBinding Padding}">
+                        <Border Width="32" Height="32"
+                                CornerRadius="{DynamicResource WbRadius}"
+                                Background="{DynamicResource WbRaisedBrush}"
+                                BorderBrush="{DynamicResource WbLineStrongBrush}"
+                                BorderThickness="1"
+                                VerticalAlignment="Center">
+                            <ic:Lucide Icon="{TemplateBinding Icon}"
+                                       StrokeBrush="{DynamicResource WbFgBrush}"
+                                       Width="{TemplateBinding IconSize}"
+                                       Height="{TemplateBinding IconSize}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Border>
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Margin="12,0,0,0"
+                                    Spacing="2">
+                            <TextBlock Text="{TemplateBinding Header}"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource WbFgBrightBrush}" />
+                            <controls:MarkdownTextBlock MarkdownText="{TemplateBinding Description}"
+                                                        FontSize="12"
+                                                        Foreground="{DynamicResource WbFgMutedBrush}"
+                                                        TextWrapping="Wrap"
+                                                        IsVisible="{TemplateBinding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        </StackPanel>
+                        <ic:Lucide Grid.Column="2"
+                                   Icon="ChevronRight"
+                                   Width="14" Height="14"
+                                   Margin="12,0,0,0"
+                                   StrokeBrush="{DynamicResource WbFgFaintBrush}"
+                                   VerticalAlignment="Center" />
+                    </Grid>
                 </Border>
             </ControlTemplate>
         </Setter>
     </Style>
 
     <Style Selector="controls|CardAction:pointerover /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#F43F5E" Offset="0" />
-                <GradientStop Color="#E11D48" Offset="0.35" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-    <Style Selector="controls|CardAction:pointerover /template/ Border#PART_Gloss">
-        <Setter Property="Opacity" Value="0.7" />
+        <Setter Property="Background" Value="{DynamicResource WbRaisedBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WbLineStrongBrush}" />
     </Style>
     <Style Selector="controls|CardAction:pressed /template/ Border#PART_Fill">
-        <Setter Property="Background">
-            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Color="#BE123C" Offset="0" />
-                <GradientStop Color="#000000" Offset="1" />
-            </LinearGradientBrush>
-        </Setter>
-    </Style>
-    <Style Selector="controls|CardAction:pressed /template/ Border#PART_Gloss">
-        <Setter Property="Opacity" Value="0.28" />
+        <Setter Property="Background" Value="{DynamicResource WbOverlayBrush}" />
     </Style>
 </Styles>

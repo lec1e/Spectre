@@ -1,4 +1,4 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ui="using:FluentAvalonia.UI.Controls"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls">
@@ -9,10 +9,10 @@
             <ControlTemplate>
                 <controls:Card Name="PART_RootCard" 
                                Padding="0" 
-                               Margin="0,4">
+                               Margin="0,0,0,6">
                     <StackPanel>
                         <ToggleButton Name="HeaderButton" 
-                                      Padding="16,12" 
+                                      Padding="14,10" 
                                       Background="Transparent" 
                                       BorderThickness="0"
                                       HorizontalAlignment="Stretch"
@@ -24,13 +24,13 @@
                                         <Grid ColumnDefinitions="*,Auto,Auto">
                                             <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="2">
                                                 <TextBlock Text="{Binding $parent[controls:CardExpander].Header}" 
-                                                           FontSize="14" 
+                                                           FontSize="13" 
                                                            FontWeight="SemiBold" 
-                                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}" 
+                                                           Foreground="{DynamicResource WbFgBrightBrush}" 
                                                            TextWrapping="Wrap" />
                                                 <controls:MarkdownTextBlock MarkdownText="{Binding $parent[controls:CardExpander].Description}" 
                                                                            FontSize="12"
-                                                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                                           Foreground="{DynamicResource WbFgMutedBrush}"
                                                                            IsVisible="{Binding $parent[controls:CardExpander].Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
                                             </StackPanel>
 
@@ -39,11 +39,11 @@
                                                               Margin="0,0,12,0"
                                                               VerticalAlignment="Center" />
 
-                                            <ui:FASymbolIcon Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                            <ui:FASymbolIcon Foreground="{DynamicResource WbFgBrightBrush}"
                                                            Name="ExpanderIcon" 
                                                            Grid.Column="2" 
                                                            Symbol="ChevronDown"
-                                                           FontSize="18">
+                                                           FontSize="14">
                                                 <ui:FASymbolIcon.Transitions>
                                                     <Transitions>
                                                         <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2" Easing="CubicEaseOut"/>
@@ -57,17 +57,17 @@
                         </ToggleButton>
 
                         <Border Name="PART_ContentContainer"
-                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                BorderBrush="{DynamicResource WbLineBrush}"
                                 ClipToBounds="True">
                             <Border.Transitions>
                                 <Transitions>
-                                    <DoubleTransition Property="Height" Duration="0:0:0.25" Easing="CubicEaseOut"/>
+                                    <DoubleTransition Property="Height" Duration="0:0:0.15" Easing="CubicEaseOut"/>
                                 </Transitions>
                             </Border.Transitions>
 
                             <ContentPresenter Name="PART_ContentPresenter"
                                               Content="{TemplateBinding Content}"
-                                              Padding="16"/>
+                                              Padding="14"/>
                         </Border>
                     </StackPanel>
                 </controls:Card>
@@ -76,7 +76,7 @@
     </Style>
 
     <Style Selector="controls|CardExpander ToggleButton#HeaderButton:pointerover">
-        <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
     </Style>
 
     <Style Selector="controls|CardExpander[IsExpanded=True] ui|FASymbolIcon#ExpanderIcon">

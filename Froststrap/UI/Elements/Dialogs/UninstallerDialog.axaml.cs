@@ -1,4 +1,4 @@
-﻿using Froststrap.UI.Elements.Base;
+using Froststrap.UI.Elements.Base;
 using Froststrap.UI.Utility;
 using Froststrap.UI.ViewModels.Dialogs;
 
@@ -29,8 +29,8 @@ namespace Froststrap.UI.Elements.Dialogs
             };
 
             DataContext = viewModel;
-            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-            SpectreChrome.AttachPointer(this, AbyssBackground);
+            SpectreChrome.Apply(this);
+            Backdrop.ApplyFromSettings();
 
             App.FrostRPC?.SetDialog("Uninstaller");
         }

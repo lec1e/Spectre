@@ -58,6 +58,23 @@
             </controls:CardExpander>
 
             <controls:OptionControl
+                Header="Check for updates"
+                Description="Look for a newer release on GitHub right now and install it if you want.">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock VerticalAlignment="Center"
+                               MaxWidth="320"
+                               TextWrapping="Wrap"
+                               Classes="wb-faint"
+                               Text="{Binding UpdateStatus}"
+                               IsVisible="{Binding HasUpdateStatus}" />
+                    <controls:IconButton Icon="RefreshCw"
+                                         Content="Check now"
+                                         Command="{Binding CheckForUpdatesCommand}"
+                                         IsEnabled="{Binding CanCheckForUpdates}" />
+                </StackPanel>
+            </controls:OptionControl>
+
+            <controls:OptionControl
                 Description="{x:Static resources:Strings.Menu_TestMode_Description}"
                 Header="{x:Static resources:Strings.Menu_TestMode}">
                 <ToggleSwitch IsChecked="{Binding TestModeEnabled, Mode=TwoWay}"/>
@@ -239,13 +256,18 @@
                     Header="{x:Static resources:Strings.Menu_Deployment_VersionHash_Title}"
                     Description="{x:Static resources:Strings.Menu_Deployment_VersionHash_Description}">
                     <StackPanel Spacing="6">
-                        <TextBox
-                            Width="280"
-                            Margin="8,0,0,0"
-                            Padding="10,5"
-                            IsEnabled="{Binding StudioVersionOverrideEnabled}"
-                            PlaceholderText="version-xxxxxxxxxxxxxxxx"
-                            Text="{Binding StudioVersionOverrideHash, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <StackPanel Orientation="Horizontal" Spacing="6" Margin="8,0,0,0">
+                            <TextBox
+                                Width="280"
+                                Padding="10,5"
+                                IsEnabled="{Binding StudioVersionOverrideEnabled}"
+                                PlaceholderText="version-xxxxxxxxxxxxxxxx"
+                                Text="{Binding StudioVersionOverrideHash, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <controls:IconButton Icon="History"
+                                                 Content="Browse"
+                                                 Command="{Binding BrowseStudioVersionHashCommand}"
+                                                 CommandParameter="{Binding $parent[UserControl]}" />
+                        </StackPanel>
 
                         <StackPanel
                             Orientation="Horizontal"

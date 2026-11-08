@@ -1,12 +1,12 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls">
 
     
 	<Style Selector="controls|SquareCard">
-		<Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
-		<Setter Property="BorderBrush" Value="Transparent" />
-		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Background" Value="{DynamicResource WbSurfaceBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource WbLineBrush}" />
+		<Setter Property="BorderThickness" Value="1" />
 		<Setter Property="Padding" Value="14" />
 
 		<Setter Property="Template">
@@ -16,21 +16,22 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Padding="{TemplateBinding Padding}"
                         Margin="0,6,6,6"
-                        CornerRadius="4">
+                        CornerRadius="{DynamicResource WbRadius}">
 
 					<Grid MinHeight="140" RowDefinitions="Auto,Auto,*">
 						<TextBlock Grid.Row="0"
-                                   FontSize="18"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
                                    TextWrapping="Wrap"
-                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   Foreground="{DynamicResource WbFgBrightBrush}"
                                    Text="{TemplateBinding Header}"
                                    IsVisible="{TemplateBinding Header, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 
 						<controls:MarkdownTextBlock Grid.Row="1"
-                                              FontSize="14"
+                                              FontSize="12"
                                               TextWrapping="Wrap"
                                               Margin="0,6,0,0"
-                                              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                              Foreground="{DynamicResource WbFgMutedBrush}"
                                               MarkdownText="{TemplateBinding Description}"
                                               IsVisible="{TemplateBinding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 

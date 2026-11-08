@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Threading;
 using Froststrap.UI.Utility;
 using Froststrap.UI.ViewModels.Bootstrapper;
@@ -84,8 +85,8 @@ namespace Froststrap.UI.Elements.Bootstrapper.Base
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             CanResize = false;
-            Background = Brushes.Transparent;
-            TransparencyLevelHint = SpectreChrome.Acrylic;
+            this.Bind(BackgroundProperty, new DynamicResourceExtension("WbWindowBackgroundBrush"));
+            TransparencyLevelHint = SpectreChrome.Opaque;
 
             this.WindowDecorations = WindowDecorations.None;
 

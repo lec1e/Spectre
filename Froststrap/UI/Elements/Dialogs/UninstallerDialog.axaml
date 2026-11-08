@@ -13,19 +13,13 @@
     MaxWidth="480"
     SizeToContent="Height"
     x:DataType="vm:UninstallerViewModel"
-    Background="Transparent"
+    Background="{DynamicResource WbWindowBackgroundBrush}"
     WindowStartupLocation="CenterScreen">
 
     <Panel>
-        <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="0"
-                                   CornerRadius="0"
-                                   TintOpacity="0.58"
-                                   MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False"
-                                   ClipToBounds="True">
+        <controls:AnimatedBackground x:Name="Backdrop" />
+        <Panel ClipToBounds="True">
             <Panel>
-                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
                 <Grid RowDefinitions="Auto,*,Auto">
                     <controls:TitleBar Grid.Row="0"
                                        Title=""
@@ -36,24 +30,23 @@
                     <StackPanel Grid.Row="1" Margin="28,8,28,16">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="14" Margin="0,0,0,18">
                             <Border Width="56" Height="56" CornerRadius="16" ClipToBounds="True">
-                                <Image Width="56" Height="56" Source="avares://Spectre/SpectreMark.png"
-                                       RenderOptions.BitmapInterpolationMode="HighQuality" />
+                                <controls:SpectreLogo Width="44" Height="44" />
                             </Border>
                             <StackPanel VerticalAlignment="Center" Spacing="3">
                                 <TextBlock Text="{x:Static app:App.BrandName}" FontSize="24" FontWeight="Bold"
-                                           Foreground="White" />
-                                <TextBlock Text="{Binding Version}" FontSize="12.5" Foreground="White" />
+                                           Foreground="{DynamicResource WbLogoBrush}" />
+                                <TextBlock Text="{Binding Version}" FontSize="12.5" Foreground="{DynamicResource WbFgBrush}" />
                             </StackPanel>
                         </StackPanel>
 
-                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="White"
+                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource WbFgBrush}"
                                    Text="{x:Static resources:Strings.Uninstaller_Title}" />
-                        <controls:MarkdownTextBlock FontSize="14" Margin="0,8,0,16" Foreground="White"
+                        <controls:MarkdownTextBlock FontSize="14" Margin="0,8,0,16" Foreground="{DynamicResource WbFgBrush}"
                                                     MarkdownText="{Binding Text, Mode=OneTime}" TextWrapping="Wrap" />
                         <CheckBox Content="{x:Static resources:Strings.Uninstaller_KeepData_Label}"
                                   IsChecked="{Binding KeepData, Mode=TwoWay}"
-                                  Foreground="White" />
-                        <TextBlock FontSize="13" Margin="0,6,0,0" Foreground="#CCFFFFFF" TextWrapping="Wrap"
+                                  Foreground="{DynamicResource WbFgBrush}" />
+                        <TextBlock FontSize="13" Margin="0,6,0,0" Foreground="{DynamicResource WbFgMutedBrush}" TextWrapping="Wrap"
                                    Text="{x:Static resources:Strings.Uninstaller_KeepData_Description}"
                                    IsVisible="{Binding KeepData, Mode=OneWay}"/>
                     </StackPanel>
@@ -81,6 +74,6 @@
                     </StackPanel>
                 </Grid>
             </Panel>
-        </controls:LiquidGlassPanel>
+        </Panel>
     </Panel>
 </base:AvaloniaWindow>

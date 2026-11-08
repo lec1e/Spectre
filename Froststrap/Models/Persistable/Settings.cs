@@ -1,5 +1,6 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using Froststrap.Models;
+using Froststrap.Utility;
 
 namespace Froststrap.Models.Persistable
 {
@@ -9,6 +10,7 @@ namespace Froststrap.Models.Persistable
         // Integration Page
         public bool EnableActivityTracking { get; set; } = true;
         public bool ShowServerDetails { get; set; } = true;
+        public bool ShowServerUptime { get; set; } = true;
         public bool AutoRejoin { get; set; } = false;
         public bool ShowGameHistoryMenu { get; set; } = true;
         public bool PlaytimeCounter { get; set; } = true;
@@ -38,6 +40,8 @@ namespace Froststrap.Models.Persistable
         public CleanerOptions CleanerOptions { get; set; } = CleanerOptions.Never;
         public List<string> CleanerDirectories { get; set; } = [];
         public bool BackgroundUpdatesEnabled { get; set; } = false;
+        public bool SoftKeyEnabled { get; set; } = false;
+        public SoftKeyProfile SoftKeyProfile { get; set; } = SoftKeyProfile.WASD;
         public bool EnableBetterMatchmaking { get; set; } = false;
         public bool EnableAntiAfk { get; set; } = false;
         public bool JoinSmallerServer { get; set; } = false;
@@ -60,7 +64,6 @@ namespace Froststrap.Models.Persistable
         public int CycleCurrentIndex { get; set; }
         public DateTime CycleLastCycleTime { get; set; } = DateTime.MinValue;
         public BootstrapperIcon BootstrapperIcon { get; set; } = BootstrapperIcon.IconFroststrap;
-        public WindowsBackdrops SelectedBackdrop { get; set; } = WindowsBackdrops.Acrylic;
         public NavigationViewPaneDisplayMode NavigationPaneDisplayMode { get; set; } = NavigationViewPaneDisplayMode.Auto;
         public string Locale { get; set; } = "nil";
         public List<GradientStops> CustomGradientStops { get; set; } =
@@ -79,13 +82,14 @@ namespace Froststrap.Models.Persistable
         public int MaxThreadDownload { get; set; } = 3;
         public Theme Theme { get; set; } = Theme.Dark;
 
-        // Eclipse brand theming (ported from MrEx ThemeManager)
-        public ThemePalette Palette { get; set; } = new();
-        public string SelectedThemePreset { get; set; } = "Crimson";
-        public bool EnableAurora { get; set; } = true;
-        public bool EnableGlass { get; set; } = true;
-        public bool EnableGlow { get; set; } = true;
-        public bool EnableLiquidCursor { get; set; } = true;
+        // Workbench UI theme
+        public string WorkbenchAccent { get; set; } = "";
+        public string WorkbenchFont { get; set; } = ThemeManager.DefaultFontName;
+        public string BackgroundId { get; set; } = SceneCatalog.DefaultId;
+        public bool AnimateBackground { get; set; } = true;
+        public double BackgroundDim { get; set; } = 0.2;
+        public bool GlassPanels { get; set; } = true;
+        public int AppearanceRevision { get; set; } = 0;
 
         // Versions Manager (MrEx port)
         public bool UseCustomVersion { get; set; } = false;
@@ -109,11 +113,6 @@ namespace Froststrap.Models.Persistable
         public bool EnableVipServerPrompt { get; set; } = false;
         public bool BanAsyncRelaunchAfterSpoof { get; set; } = false;
         public bool BanAsyncFullWipe { get; set; } = false;
-
-        // Liquid glass customizability
-        public double GlassTintOpacity { get; set; } = 0.58;
-        public double GlassMaterialOpacity { get; set; } = 0.46;
-        public double GlassCornerRadius { get; set; } = 0;
 
         // BanAsync (Windows-only)
         public bool BanAsyncPersistent { get; set; } = true;
@@ -141,21 +140,8 @@ namespace Froststrap.Models.Persistable
         public List<string> HwidSpoofedAdapterGuids { get; set; } = [];
         public Dictionary<string, string> HwidOriginalMacByGuid { get; set; } = [];
 
-        // AltMan
-        public bool AltManKillRobloxOnLaunch { get; set; } = false;
-        public bool AltManClearCacheOnLaunch { get; set; } = false;
-        public int AltManStatusRefreshIntervalMinutes { get; set; } = 5;
-        public List<string> AltManFavoriteGames { get; set; } = [];
-        public List<string> AltManFavoriteGameNames { get; set; } = [];
-        public string AltManBackupPasswordHint { get; set; } = "";
-
         public bool WindowTilingEnabled { get; set; } = false;
         public WindowTilingLayout WindowTilingLayout { get; set; } = WindowTilingLayout.Auto;
-        public string LastBulkPlaceId { get; set; } = "";
-        public string LastBulkJobId { get; set; } = "";
-        public int BulkLaunchDelaySeconds { get; set; } = 5;
-        public bool JoinEmptiestServerOnLaunch { get; set; } = false;
-        public string BloxGenApiKey { get; set; } = "";
         public string LuaObfuscatorApiKey { get; set; } = "";
         public string BypassToolsApiKey { get; set; } = "";
 
@@ -170,6 +156,9 @@ namespace Froststrap.Models.Persistable
         public ChannelChangeMode ChannelChangeMode { get; set; } = ChannelChangeMode.Prompt;
         public bool StudioVersionOverrideEnabled { get; set; } = false;
         public string StudioVersionOverrideHash { get; set; } = string.Empty;
+        public bool PlayerVersionOverrideEnabled { get; set; } = false;
+        public string PlayerVersionOverrideHash { get; set; } = string.Empty;
+        public bool DisableAnimations { get; set; } = false;
 
         // Linux Settings page
         public bool EnableWebView2 { get; set; } = true;

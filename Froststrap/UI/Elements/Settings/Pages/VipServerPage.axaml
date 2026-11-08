@@ -32,7 +32,7 @@
                  Opacity="0.7"
                  TextWrapping="Wrap" />
 
-      <Border IsVisible="{Binding IsLoading}" Background="#44000000" MinHeight="140" CornerRadius="12">
+      <Border IsVisible="{Binding IsLoading}" Background="{DynamicResource WbFillBrush}" MinHeight="140" CornerRadius="12">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
           <ui:FAProgressRing IsActive="{Binding IsLoading}" Width="40" Height="40" />
           <TextBlock Text="Loading VIP games..." Opacity="0.75" />
@@ -83,7 +83,7 @@
       </ItemsControl>
 
       <Border Padding="12" CornerRadius="12" BorderThickness="1"
-              Background="#3312101A" BorderBrush="#33FFFFFF">
+              Background="{DynamicResource WbSurfaceBrush}" BorderBrush="{DynamicResource WbLineBrush}">
         <StackPanel Spacing="4">
           <TextBlock Text="Heads up" FontWeight="SemiBold" FontSize="13" />
           <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.75"

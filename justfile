@@ -46,7 +46,6 @@ publish-flatpak:
 # CI Aliases
 ci-publish-windows:
     @just publish-windows
-    @just publish-windows-contained
 
 ci-publish-macos:
     @just publish-macos

@@ -268,7 +268,7 @@ namespace Froststrap
                 TryDeleteDirectory(Paths.CustomThemes);
                 TryDeleteDirectory(Paths.FastFlagProfiles);
                 TryDeleteDirectory(Paths.SavedFlagProfiles);
-                TryDeleteDirectory(Path.Combine(installRoot, "AltMan"));
+                TryDeleteDirectory(Path.Combine(installRoot, "Accounts"));
                 TryDeleteDirectory(Path.Combine(installRoot, "CustomThemes"));
                 TryDeleteDirectory(Path.Combine(installRoot, "CustomCursorsSets"));
                 TryDeleteDirectory(Path.Combine(installRoot, "SavedFlagProfiles"));
@@ -834,12 +834,31 @@ namespace Froststrap
             }
         }
 
+        private static void RemoveEmptyAccountStoreFolders()
+        {
+            foreach (string name in new[] { "Accounts", "AltMan" })
+            {
+                string dir = Path.Combine(Paths.Base, name);
+                try
+                {
+                    if (Directory.Exists(dir) && !Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories).Any(File.Exists))
+                        Directory.Delete(dir, true);
+                }
+                catch (Exception ex)
+                {
+                    App.Logger.WriteException("Installer::RemoveEmptyAccountStoreFolders", ex);
+                }
+            }
+        }
+
         public static async Task RunMigrations(string? previousVersion = null)
         {
             const string LOG_IDENT = "Installer::RunMigrations";
 
             if (OperatingSystem.IsLinux())
                 SetupSoberSymlink();
+
+            RemoveEmptyAccountStoreFolders();
 
             string currentVer = App.Version;
             string? existingVer = previousVersion ?? App.State.Prop.LastMigratedVersion;
@@ -926,7 +945,6 @@ namespace Froststrap
             if (Utilities.CompareVersions(existingVer, "1.5.1") == VersionComparison.LessThan)
             {
                 App.Settings.Prop.BootstrapperStyle = BootstrapperStyle.FluentAeroDialog;
-                App.Settings.Prop.SelectedBackdrop = WindowsBackdrops.None;
             }
 
             App.State.Prop.LastMigratedVersion = currentVer;

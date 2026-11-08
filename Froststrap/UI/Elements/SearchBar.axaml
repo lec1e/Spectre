@@ -26,14 +26,14 @@
             <Setter Property="BorderThickness" Value="0" />
         </Style>
         <Style Selector="TextBox /template/ TextBlock#PART_Watermark">
-            <Setter Property="Foreground" Value="#CCFFFFFF" />
+            <Setter Property="Foreground" Value="{DynamicResource WbFgFaintBrush}" />
             <Setter Property="Margin" Value="0" />
         </Style>
     </UserControl.Styles>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
         <TextBox x:Name="SearchTextBox"
-                 PlaceholderText="Search games, experiences…"
+                 PlaceholderText="Search Spectre…"
                  Text="{Binding SearchQuery}"
                  VerticalAlignment="Center"
                  VerticalContentAlignment="Center"
@@ -41,8 +41,8 @@
                  Padding="4,0,4,0"
                  MinHeight="28"
                  FontSize="12.5"
-                 Foreground="White"
-                 CaretBrush="White"
+                 Foreground="{DynamicResource WbFgBrush}"
+                 CaretBrush="{DynamicResource WbFgBrightBrush}"
                  Background="Transparent"
                  BorderBrush="Transparent"
                  BorderThickness="0">
@@ -58,7 +58,7 @@
                                      Margin="0,0,6,0"
                                      Background="Transparent"
                                      BorderThickness="0"
-                                     Foreground="White"
+                                     Foreground="{DynamicResource WbFgFaintBrush}"
                                      IsTabStop="False"
                                      VerticalAlignment="Center">
                 </controls:IconButton>
@@ -86,10 +86,10 @@
                         ShowMode="Transient">
                     <Border Width="400"
                             MaxHeight="450"
-                            Background="{DynamicResource SolidBackgroundFillColorQuarternaryBrush}"
-                            BorderBrush="{DynamicResource ControlStrokeColorDefault}"
+                            Background="{DynamicResource WbOverlayBrush}"
+                            BorderBrush="{DynamicResource WbLineStrongBrush}"
                             BorderThickness="1"
-                            CornerRadius="8"
+                            CornerRadius="6"
                             BoxShadow="0 8 32 0 #40000000"
                             Margin="0,4,0,0">
                         <Grid RowDefinitions="*,Auto">
@@ -105,8 +105,8 @@
                                                         Command="{Binding $parent[UserControl].DataContext.SearchResultSelectedCommand}"
                                                         CommandParameter="{Binding}"
                                                         HorizontalAlignment="Stretch"
-                                                        Background="{DynamicResource ControlFillColorDefaultBrush}"
-                                                        BorderBrush="{DynamicResource ControlStrokeColorDefault}"
+                                                        Background="Transparent"
+                                                        BorderBrush="{DynamicResource WbLineBrush}"
                                                         HorizontalContentAlignment="Left"
                                                         Padding="12,8"
                                                         CornerRadius="4"
@@ -141,8 +141,8 @@
                                     <ItemsControl ItemsSource="{Binding GameSearchResults}" HorizontalAlignment="Stretch">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="robloxApis:OmniSearchContent">
-                                                <Border Background="{DynamicResource ControlFillColorDefaultBrush}"
-                                                        BorderBrush="{DynamicResource ControlStrokeColorDefault}"
+                                                <Border Background="Transparent"
+                                                        BorderBrush="{DynamicResource WbLineBrush}"
                                                         Width="390"
                                                         BorderThickness="1"
                                                         Padding="8"
@@ -176,7 +176,7 @@
                                                                              Margin="0,0,4,0" Width="32" Height="32"
                                                                              IconSize="16"
                                                                              Icon="Globe"
-                                                                             Background="{DynamicResource ControlFillColorSecondaryBrush}"
+                                                                             Background="{DynamicResource WbRaisedBrush}"
                                                                              CornerRadius="6"/>
 
                                                         <controls:IconButton Grid.Column="3"

@@ -1,8 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using Froststrap.Models.Entities;
 using Froststrap.UI.Elements.Base;
 using Froststrap.UI.Utility;
+using Froststrap.UI.Converters;
 
 namespace Froststrap.UI.Elements.Dialogs
 {
@@ -19,12 +22,11 @@ namespace Froststrap.UI.Elements.Dialogs
             ShowInTaskbar = false;
             ShowActivated = false;
             Topmost = true;
-            SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-            if (ShellGlass is not null)
-                ShellGlass.CornerRadius = new CornerRadius(18);
+            SpectreChrome.Apply(this);
+            Backdrop.ApplyFromSettings();
         }
 
-        public static void ShowToast(string title, string message, int durationSeconds = 8)
+        public static void ShowToast(string title, string message, int durationSeconds = 8, ActivityData? activity = null)
         {
             void ShowCore()
             {
@@ -35,8 +37,7 @@ namespace Froststrap.UI.Elements.Dialogs
                 catch { /* previous toast already gone */ }
 
                 var toast = new DesktopToastWindow();
-                toast.TitleText.Text = title;
-                toast.MessageText.Text = message;
+                toast.ApplyContent(title, message, activity);
                 _current = toast;
                 toast.Closed += (_, _) =>
                 {
@@ -63,6 +64,60 @@ namespace Froststrap.UI.Elements.Dialogs
                 ShowCore();
             else
                 Dispatcher.UIThread.Post(ShowCore);
+        }
+
+        private void ApplyContent(string title, string message, ActivityData? activity)
+        {
+            bool game = activity is not null;
+            KickerText.Text = game ? "JOINED GAME" : App.BrandName.ToUpperInvariant();
+            TitleText.Text = activity?.UniverseDetails?.Data?.Name ?? title;
+            MessageText.Text = message;
+            _ = LoadThumbAsync(activity);
+        }
+
+        private async Task LoadThumbAsync(ActivityData? activity)
+        {
+            try
+            {
+                if (activity is null)
+                    return;
+
+                if (activity.ThumbnailBitmap is { } existing)
+                {
+                    SetThumb(existing);
+                    return;
+                }
+
+                if (activity.UniverseDetails is null && activity.UniverseId != 0)
+                {
+                    await UniverseDetails.FetchSingle(activity.UniverseId);
+                    activity.UniverseDetails = UniverseDetails.LoadFromCache(activity.UniverseId);
+                    if (activity.UniverseDetails?.Data?.Name is { Length: > 0 } name)
+                        TitleText.Text = name;
+                }
+
+                string? url = activity.UniverseDetails?.Thumbnail?.ImageUrl;
+                if (string.IsNullOrEmpty(url))
+                    return;
+
+                var bitmap = await UrlToBitmapConverter.GetBitmapFromCacheOrDownloadAsync(url);
+                if (bitmap is null)
+                    return;
+
+                activity.ThumbnailBitmap = bitmap;
+                SetThumb(bitmap);
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteLine("DesktopToastWindow", $"Thumb load failed: {ex.Message}");
+            }
+        }
+
+        private void SetThumb(Bitmap bitmap)
+        {
+            ThumbImage.Source = bitmap;
+            ThumbImage.IsVisible = true;
+            Mark.IsVisible = false;
         }
 
         protected override void OnOpened(EventArgs e)
@@ -104,8 +159,6 @@ namespace Froststrap.UI.Elements.Dialogs
             int gapX = (int)Math.Round(16 * scale);
             int gapY = (int)Math.Round(16 * scale);
 
-            // WorkingArea already excludes the taskbar. If it doesn't (auto-hide / overlay),
-            // keep a tray-sized reserve so the toast never sits on the bar.
             int workBottom = work.Y + work.Height;
             int screenBottom = bounds.Y + bounds.Height;
             if (screenBottom - workBottom < (int)(8 * scale))

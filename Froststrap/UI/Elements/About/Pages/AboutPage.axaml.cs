@@ -40,7 +40,7 @@ namespace Froststrap.UI.Elements.About.Pages
 
                 if (Resources.TryGetResource("EggAnimation", null, out object? res) && res is Animation animation)
                 {
-                    var image1 = this.FindControl<Image>("Image1");
+                    var image1 = this.FindControl<Control>("Image1");
                     var image2 = this.FindControl<Image>("Image2");
 
                     if (image1 != null && image2 != null)

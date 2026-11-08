@@ -15,19 +15,12 @@
         MaxWidth="420"
         SizeToContent="Height"
         CanResize="False"
-        Background="Transparent"
+        Background="{DynamicResource WbWindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen">
 
     <Panel>
-        <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="0"
-                                   CornerRadius="0"
-                                   TintOpacity="0.58"
-                                   MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False"
-                                   ClipToBounds="True">
+        <Panel ClipToBounds="True">
             <Panel>
-                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
                 <Grid RowDefinitions="Auto,*,Auto">
                     <controls:TitleBar Grid.Row="0"
                                        x:Name="RootTitleBar"
@@ -39,25 +32,25 @@
                     <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*"
                           Margin="22,10,22,8">
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,0,20,12" VerticalAlignment="Center"
-                                   Foreground="White" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_Type}" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" Foreground="White" Text="{Binding ServerType, Mode=OneWay}"/>
+                                   Foreground="{DynamicResource WbFgBrush}" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_Type}" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource WbFgBrush}" Text="{Binding ServerType, Mode=OneWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,0,20,12" VerticalAlignment="Center"
-                                   Foreground="White" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_InstanceId}" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" Foreground="White" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource WbFgBrush}" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_InstanceId}" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource WbFgBrush}" TextWrapping="Wrap"
                                    Text="{Binding InstanceId, Mode=OneWay}" />
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,0,20,12" VerticalAlignment="Center"
-                                   Foreground="White" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_Location}"
+                                   Foreground="{DynamicResource WbFgBrush}" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_Location}"
                                    IsVisible="{Binding ServerLocationVisibility, Mode=OneTime}" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Foreground="White"
+                        <TextBlock Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource WbFgBrush}"
                                    Text="{Binding ServerLocation, Mode=OneWay}"
                                    IsVisible="{Binding ServerLocationVisibility, Mode=OneTime}" />
 
                         <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,0,20,8" VerticalAlignment="Center"
-                                   Foreground="White" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_Uptime}"
+                                   Foreground="{DynamicResource WbFgBrush}" Text="{x:Static resources:Strings.ContextMenu_ServerInformation_Uptime}"
                                    IsVisible="{Binding ServerUptimeVisibility, Mode=OneTime}" />
-                        <TextBlock Grid.Row="3" Grid.Column="1" Foreground="White"
+                        <TextBlock Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource WbFgBrush}"
                                    Text="{Binding ServerUptime, Mode=OneWay}"
                                    IsVisible="{Binding ServerUptimeVisibility, Mode=OneTime}" />
                     </Grid>
@@ -87,6 +80,6 @@
                     </StackPanel>
                 </Grid>
             </Panel>
-        </controls:LiquidGlassPanel>
+        </Panel>
     </Panel>
 </base:AvaloniaWindow>

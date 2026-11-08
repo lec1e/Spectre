@@ -1,14 +1,14 @@
 <base:AvaloniaWindow x:Class="Froststrap.UI.Elements.Dialogs.DesktopToastWindow"
                      xmlns="https://github.com/avaloniaui"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
                      xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+                     xmlns:base="clr-namespace:Froststrap.UI.Elements.Base"
                      xmlns:app="clr-namespace:Froststrap"
                      Title="{x:Static app:App.BrandName}"
-                     Width="380"
-                     MinWidth="380"
-                     MaxWidth="380"
-                     MinHeight="92"
+                     Width="360"
+                     MinWidth="360"
+                     MaxWidth="360"
+                     MinHeight="88"
                      SizeToContent="Height"
                      CanResize="False"
                      ShowInTaskbar="False"
@@ -18,29 +18,35 @@
                      WindowStartupLocation="Manual">
 
     <Panel>
-        <controls:LiquidGlassPanel x:Name="ShellGlass"
-                                   Margin="0"
-                                   CornerRadius="18"
-                                   TintOpacity="0.58"
-                                   MaterialOpacity="0.46"
-                                   UseSettingsCornerRadius="False"
-                                   ClipToBounds="True">
-            <Panel>
-                <controls:AbyssGlowBackground x:Name="AbyssBackground" />
-                <Grid Margin="16,14,18,14" ColumnDefinitions="Auto,*">
-                    <Border Width="52" Height="52" CornerRadius="16" ClipToBounds="True"
-                            VerticalAlignment="Center" Margin="0,0,14,0">
-                        <Image Width="52" Height="52" Source="avares://Spectre/SpectreMark.png"
-                               RenderOptions.BitmapInterpolationMode="HighQuality" />
+        <controls:AnimatedBackground x:Name="Backdrop" />
+
+        <Border CornerRadius="16" ClipToBounds="True"
+                BorderBrush="{DynamicResource WbLineStrongBrush}" BorderThickness="1"
+                Background="{DynamicResource WbOverlayBrush}">
+            <Grid ColumnDefinitions="4,*" MinHeight="88">
+                <Border Background="{DynamicResource WbAccentBrush}" />
+                <Grid Grid.Column="1" Margin="12,12,14,12" ColumnDefinitions="Auto,*">
+                    <Border Width="48" Height="48" CornerRadius="12" ClipToBounds="True"
+                            VerticalAlignment="Center" Margin="0,0,12,0">
+                        <Panel>
+                            <controls:AnimatedBackground />
+                            <Image x:Name="ThumbImage" Stretch="UniformToFill" IsVisible="False" />
+                            <controls:SpectreLogo x:Name="Mark" Width="32" Height="32" Glow="0.5" />
+                        </Panel>
                     </Border>
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
-                        <TextBlock x:Name="TitleText" FontSize="14.5" FontWeight="SemiBold"
-                                   Foreground="White" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
-                        <TextBlock x:Name="MessageText" FontSize="12.5" Foreground="#E6FFFFFF"
-                                   TextWrapping="Wrap" LineHeight="18" />
+                        <TextBlock x:Name="KickerText" FontSize="10.5" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource WbAccentBrush}"
+                                   Text="SPECTRE" />
+                        <TextBlock x:Name="TitleText" FontSize="14" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource WbFgBrightBrush}"
+                                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                        <TextBlock x:Name="MessageText" FontSize="12"
+                                   Foreground="{DynamicResource WbFgMutedBrush}"
+                                   TextWrapping="Wrap" LineHeight="17" />
                     </StackPanel>
                 </Grid>
-            </Panel>
-        </controls:LiquidGlassPanel>
+            </Grid>
+        </Border>
     </Panel>
 </base:AvaloniaWindow>

@@ -1,11 +1,11 @@
 using FluentAvalonia.UI.Controls;
-using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Froststrap.UI.Elements.Settings.Pages;
 using Froststrap.UI.ViewModels.Settings.FastFlags;
 using Froststrap.UI.ViewModels.Settings.GlobalSettings;
 using Froststrap.UI.ViewModels.Settings.Mods;
+using LucideAvalonia.Enum;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
@@ -40,10 +40,50 @@ namespace Froststrap.UI.ViewModels.Settings
             App.PendingSettingTasks.Count > 0;
 
         private string _selectedPage = "home";
-        public string SelectedPage { get => _selectedPage; set => SetProperty(ref _selectedPage, value); }
+        public string SelectedPage
+        {
+            get => _selectedPage;
+            set
+            {
+                if (SetProperty(ref _selectedPage, value))
+                    OnPropertyChanged(nameof(ShowPageHeader));
+            }
+        }
 
-        private string _currentPageTitle = "Home";
+        public bool ShowPageHeader => SelectedPage != "home";
+
+        private string _currentPageTitle = "";
         public string CurrentPageTitle { get => _currentPageTitle; set => SetProperty(ref _currentPageTitle, value); }
+
+        private LucideIconNames _currentPageIcon = LucideIconNames.Plus;
+        public LucideIconNames CurrentPageIcon { get => _currentPageIcon; set => SetProperty(ref _currentPageIcon, value); }
+
+        public static readonly IReadOnlyDictionary<string, LucideIconNames> PageIcons = new Dictionary<string, LucideIconNames>
+        {
+            ["home"] = LucideIconNames.House,
+            ["integrations"] = LucideIconNames.Plug,
+            ["behaviour"] = LucideIconNames.Rocket,
+            ["quickplay"] = LucideIconNames.Gamepad2,
+            ["channels"] = LucideIconNames.HardDriveUpload,
+            ["versions"] = LucideIconNames.Layers,
+            ["mods"] = LucideIconNames.BookOpen,
+            ["custommods"] = LucideIconNames.Puzzle,
+            ["communitymods"] = LucideIconNames.Store,
+            ["modgenerator"] = LucideIconNames.WandSparkles,
+            ["appearance"] = LucideIconNames.Palette,
+            ["fastflags"] = LucideIconNames.Flag,
+            ["fastflageditor"] = LucideIconNames.Flag,
+            ["globalsettings"] = LucideIconNames.PenLine,
+            ["globalsettingseditor"] = LucideIconNames.PenLine,
+            ["linuxsettings"] = LucideIconNames.Cpu,
+            ["regionselector"] = LucideIconNames.Globe,
+            ["vipserver"] = LucideIconNames.Crown,
+            ["multiinstance"] = LucideIconNames.Copy,
+            ["shortcuts"] = LucideIconNames.Link2,
+            ["banasync"] = LucideIconNames.Shield,
+            ["hwidspoofer"] = LucideIconNames.FingerprintPattern,
+            ["news"] = LucideIconNames.Newspaper,
+        };
 
         private string _currentPageDescription = "";
         public string CurrentPageDescription { get => _currentPageDescription; set => SetProperty(ref _currentPageDescription, value); }
@@ -68,51 +108,20 @@ namespace Froststrap.UI.ViewModels.Settings
             }
         }
 
-        private NavigationViewPaneDisplayMode _navigationPaneDisplayMode;
-
-        public FANavigationViewPaneDisplayMode NavigationPaneDisplayMode
-        {
-            get
-            {
-                return _navigationPaneDisplayMode switch
-                {
-                    NavigationViewPaneDisplayMode.Auto => FANavigationViewPaneDisplayMode.Auto,
-                    NavigationViewPaneDisplayMode.Left => FANavigationViewPaneDisplayMode.Left,
-                    NavigationViewPaneDisplayMode.Top => FANavigationViewPaneDisplayMode.Top,
-                    NavigationViewPaneDisplayMode.LeftCompact => FANavigationViewPaneDisplayMode.LeftCompact,
-                    _ => FANavigationViewPaneDisplayMode.Left
-                };
-            }
-        }
-
-        private void UpdateNavigationPaneDisplayMode(NavigationViewPaneDisplayMode mode)
-        {
-            if (_navigationPaneDisplayMode != mode)
-            {
-                _navigationPaneDisplayMode = mode;
-                OnPropertyChanged(nameof(NavigationPaneDisplayMode));
-            }
-        }
-
         private void OnBreadcrumbsChanged(object? sender, NotifyCollectionChangedEventArgs e) => UpdateBreadcrumbVisibility();
 
         private void UpdateBreadcrumbVisibility()
         {
             OnPropertyChanged(nameof(HasBreadcrumbs));
             OnPropertyChanged(nameof(ShowPageTitle));
-            OnPropertyChanged(nameof(ShowPageChrome));
-            OnPropertyChanged(nameof(ShowFooter));
         }
 
         public bool HasBreadcrumbs => BreadcrumbItems.Count > 0;
-        public bool ShowPageTitle => !HasBreadcrumbs && SelectedPage != "home";
-        public bool ShowPageChrome => SelectedPage != "home" || HasBreadcrumbs;
-        public bool ShowFooter => SelectedPage != "home";
+        public bool ShowPageTitle => !HasBreadcrumbs;
 
         public ICommand SetLaunchModeCommand { get; }
 
         public IRelayCommand NavigateToHomeCommand { get; }
-        public IRelayCommand NavigateToToolsHubCommand { get; }
         public IRelayCommand NavigateToIntegrationsCommand { get; }
         public IRelayCommand NavigateToBehaviourCommand { get; }
         public IRelayCommand NavigateToLinuxSettingsCommand { get; }
@@ -129,7 +138,6 @@ namespace Froststrap.UI.ViewModels.Settings
         public IRelayCommand NavigateToVersionsManagerCommand { get; }
         public IRelayCommand NavigateToBanAsyncCommand { get; }
         public IRelayCommand NavigateToHwidSpooferCommand { get; }
-        public IRelayCommand NavigateToAltManCommand { get; }
         public IRelayCommand NavigateToMultiInstanceCommand { get; }
         public IRelayCommand NavigateToVipServerCommand { get; }
         public IRelayCommand NavigateToServerBrowserCommand { get; }
@@ -164,10 +172,7 @@ namespace Froststrap.UI.ViewModels.Settings
             BreadcrumbItemClickedCommand = new RelayCommand<BreadcrumbItemModel>(HandleBreadcrumbItemClicked);
             SearchBar = new();
 
-            NavigateToHomeCommand = new RelayCommand(() =>
-                Navigate("home", "Home", "", new HomeDashboardViewModel(this)));
-            NavigateToToolsHubCommand = new RelayCommand(() =>
-                Navigate("tools", "Settings", "All Spectre tools in one place.", new ToolsHubViewModel(this)));
+            NavigateToHomeCommand = new RelayCommand(() => Navigate("home", "Home", "", new HomeViewModel(this)));
             NavigateToIntegrationsCommand = new RelayCommand(() => Navigate("integrations", Strings.Menu_Integrations_Title, Strings.Menu_Integrations_Description, new IntegrationsViewModel()));
             NavigateToBehaviourCommand = new RelayCommand(() => Navigate("behaviour", Strings.Menu_Behaviour_Title, Strings.Menu_Behaviour_Description, new BehaviourViewModel()));
             NavigateToLinuxSettingsCommand = new RelayCommand(() => Navigate("linuxsettings", Strings.Menu_LinuxSettings_Title, null!, new LinuxSettingsViewModel()));
@@ -190,7 +195,6 @@ namespace Froststrap.UI.ViewModels.Settings
             NavigateToVersionsManagerCommand = new RelayCommand(() => Navigate("versions", "Versions Manager", "Pin Roblox builds per executor and switch with one click.", new VersionsManagerViewModel()));
             NavigateToBanAsyncCommand = new RelayCommand(() => Navigate("banasync", "BanAsync", "Clean Roblox traces and spoof identifiers (Windows).", new BanAsyncViewModel()));
             NavigateToHwidSpooferCommand = new RelayCommand(() => Navigate("hwidspoofer", "HWID Spoofer", "Spoof and revert machine-wide Windows identifiers (Windows).", new HwidSpooferViewModel()));
-            NavigateToAltManCommand = new RelayCommand(() => Navigate("altman", "AltMan", "Accounts, friends, games (with servers), history, and settings.", new AltManViewModel()));
             NavigateToMultiInstanceCommand = new RelayCommand(() => Navigate("multiinstance", "Multi Instance", "Run multiple Roblox clients side by side.", new MultiInstanceViewModel()));
             NavigateToVipServerCommand = new RelayCommand(() => Navigate("vipserver", "VIP Server", "Join a shared VIP before launch.", new VipServerViewModel()));
             NavigateToServerBrowserCommand = new RelayCommand(() => Navigate("serverbrowser", "Server Browser", "Browse public servers.", new ServerBrowserViewModel()));
@@ -215,43 +219,15 @@ namespace Froststrap.UI.ViewModels.Settings
             });
 
             NavigateToCommunityModsCommand = new RelayCommand(() =>
-            {
-                ObservableCollection<BreadcrumbItemModel> crumbs = [
-                    new() { Content = Strings.Menu_PresetMods_Title, Tag = "mods" },
-                    new() { Content = Strings.Menu_CommunityMods_Title, Tag = null, IsLast = true }
-                ];
-                Navigate("communitymods", Strings.Menu_CommunityMods_Title, Strings.Menu_CommunityMods_Description, new CommunityModsViewModel(), crumbs);
-            });
+                Navigate("communitymods", Strings.Menu_CommunityMods_Title, Strings.Menu_CommunityMods_Description, new CommunityModsViewModel()));
 
             NavigateToModGeneratorCommand = new RelayCommand(() =>
-            {
-                Navigate("modgenerator", Strings.Menu_ModGenerator_Title, Strings.Menu_ModGenerator_Description, new ModGeneratorViewModel(), [
-                    new() { Content = Strings.Menu_PresetMods_Title, Tag = "mods" },
-                    new() { Content = Strings.Menu_ModGenerator_Title, Tag = null, IsLast = true }
-                ]);
-            });
+                Navigate("modgenerator", Strings.Menu_ModGenerator_Title, Strings.Menu_ModGenerator_Description, new ModGeneratorViewModel()));
 
             NavigateToMyModsCommand = new RelayCommand(() =>
-            {
-                ObservableCollection<BreadcrumbItemModel> crumbs = [
-                    new() { Content = Strings.Menu_PresetMods_Title, Tag = "mods" },
-                    new() { Content = Strings.Menu_Mods_Title, Tag = null, IsLast = true }
-                ];
-                Navigate("custommods", Strings.Menu_Mods_Title, Strings.Menu_Mods_Description, new ModsViewModel(), crumbs);
-            });
+                Navigate("custommods", Strings.Menu_Mods_Title, Strings.Menu_Mods_Description, new ModsViewModel()));
 
-            var lastPageName = App.State.Prop.LastPage;
-            if (lastPageName != null)
-                NavigateToLastPage(lastPageName);
-            else
-                NavigateToHomeCommand.Execute(null);
-
-            _navigationPaneDisplayMode = App.Settings.Prop.NavigationPaneDisplayMode;
-
-            WeakReferenceMessenger.Default.Register<NavigationPaneDisplayModeChangedMessage>(this, (_, m) =>
-            {
-                UpdateNavigationPaneDisplayMode(m.NewMode);
-            });
+            NavigateToHomeCommand.Execute(null);
         }
 
         private void Navigate(string pageId, string title, string description, object viewModel, ObservableCollection<BreadcrumbItemModel>? customBreadcrumbs = null)
@@ -261,12 +237,11 @@ namespace Froststrap.UI.ViewModels.Settings
                 SelectedPage = pageId;
                 CurrentPageTitle = title;
                 CurrentPageDescription = description;
+                CurrentPageIcon = PageIcons.TryGetValue(pageId, out var icon) ? icon : LucideIconNames.Settings;
                 BreadcrumbItems = customBreadcrumbs ?? [];
                 CurrentPage = viewModel;
                 SearchBar.Clear();
                 OnPropertyChanged(nameof(ShowPageTitle));
-                OnPropertyChanged(nameof(ShowPageChrome));
-                OnPropertyChanged(nameof(ShowFooter));
             }
             catch (Exception ex)
             {
@@ -274,95 +249,39 @@ namespace Froststrap.UI.ViewModels.Settings
             }
         }
 
-        private void NavigateToLastPage(string pageTypeName)
+        public ICommand? GetNavigationCommand(string tag) => tag switch
         {
-            switch (pageTypeName)
-            {
-                case "Froststrap.UI.ViewModels.Settings.HomeDashboardViewModel":
-                    NavigateToHomeCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.ToolsHubViewModel":
-                    NavigateToToolsHubCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.IntegrationsViewModel":
-                    NavigateToIntegrationsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.BehaviourViewModel":
-                    NavigateToBehaviourCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.LinuxSettingsViewModel":
-                    if (OperatingSystem.IsLinux())
-                        NavigateToLinuxSettingsCommand.Execute(null);
-                    else
-                        NavigateToIntegrationsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.Mods.ModsViewModel":
-                    NavigateToMyModsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.FastFlagsViewModel":
-                    NavigateToFastFlagsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.AppearanceViewModel":
-                    NavigateToAppearanceCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.GlobalSettingsViewModel":
-                    if (GBSEnabled)
-                        NavigateToGlobalSettingsCommand.Execute(null);
-                    else
-                        NavigateToIntegrationsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.ShortcutsViewModel":
-                    NavigateToShortcutsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.QuickPlayViewModel":
-                    NavigateToQuickPlayCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.ChannelViewModel":
-                    NavigateToChannelsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.VersionsManagerViewModel":
-                    NavigateToVersionsManagerCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.BanAsyncViewModel":
-                    NavigateToBanAsyncCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.HwidSpooferViewModel":
-                    NavigateToHwidSpooferCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.MultiInstanceViewModel":
-                    NavigateToMultiInstanceCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.VipServerViewModel":
-                    NavigateToVipServerCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.NewsViewModel":
-                    NavigateToNewsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.Mods.CommunityModsViewModel":
-                    NavigateToCommunityModsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.Mods.ModsPresetsViewModel":
-                    NavigateToPresetModsCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.Mods.ModGeneratorViewModel":
-                    NavigateToModGeneratorCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.RegionSelectorViewModel":
-                    NavigateToRegionSelectorCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.FastFlags.FastFlagEditorViewModel":
-                    NavigateToFastFlagEditorCommand.Execute(null);
-                    break;
-                case "Froststrap.UI.ViewModels.Settings.GlobalSettings.GlobalSettingsEditorViewModel":
-                    if (GBSEnabled)
-                        NavigateToGlobalSettingsEditorCommand.Execute(null);
-                    else
-                        NavigateToIntegrationsCommand.Execute(null);
-                    break;
-                default:
-                    NavigateToHomeCommand.Execute(null);
-                    break;
-            }
+            "home" => NavigateToHomeCommand,
+            "custommods" => NavigateToMyModsCommand,
+            "communitymods" => NavigateToCommunityModsCommand,
+            "modgenerator" => NavigateToModGeneratorCommand,
+            "integrations" => NavigateToIntegrationsCommand,
+            "behaviour" => NavigateToBehaviourCommand,
+            "linuxsettings" => NavigateToLinuxSettingsCommand,
+            "mods" => NavigateToPresetModsCommand,
+            "fastflags" => NavigateToFastFlagsCommand,
+            "appearance" => NavigateToAppearanceCommand,
+            "regionselector" => NavigateToRegionSelectorCommand,
+            "globalsettings" => NavigateToGlobalSettingsCommand,
+            "shortcuts" => NavigateToShortcutsCommand,
+            "quickplay" => NavigateToQuickPlayCommand,
+            "channels" => NavigateToChannelsCommand,
+            "versions" => NavigateToVersionsManagerCommand,
+            "banasync" => NavigateToBanAsyncCommand,
+            "hwidspoofer" => NavigateToHwidSpooferCommand,
+            "multiinstance" => NavigateToMultiInstanceCommand,
+            "vipserver" => NavigateToVipServerCommand,
+            "news" => NavigateToNewsCommand,
+            "about" => OpenAboutCommand,
+            _ => null
+        };
+
+        public void NavigateTo(string tag)
+        {
+            if (tag != "about" && tag == SelectedPage)
+                return;
+
+            GetNavigationCommand(tag)?.Execute(null);
         }
 
         private void OpenAbout()

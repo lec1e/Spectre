@@ -4,6 +4,7 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Froststrap.UI.Elements.Bootstrapper.Base;
+using Froststrap.UI.Elements.Controls;
 using Froststrap.UI.ViewModels.Bootstrapper;
 
 namespace Froststrap.UI.Elements.Bootstrapper
@@ -36,14 +37,11 @@ namespace Froststrap.UI.Elements.Bootstrapper
                     Icon = new WindowIcon(bitmap);
             }
 
-            void ApplyGlass()
-            {
-                Froststrap.UI.Utility.SpectreChrome.Apply(this, ShellGlass, AbyssBackground);
-            }
-
-            ApplyGlass();
-            Loaded += (_, _) => ApplyGlass();
-            Froststrap.UI.Utility.SpectreChrome.AttachPointer(this, AbyssBackground);
+            Froststrap.UI.Utility.SpectreChrome.Apply(this);
+            Backdrop.ApplyFromSettings();
+            if (SpectreLogo.CreateBrandIcon() is { } mark)
+                Icon = mark;
+            Loaded += (_, _) => Froststrap.UI.Utility.SpectreChrome.Apply(this);
         }
 
         #region UI Elements Overrides
