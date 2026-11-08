@@ -14,7 +14,7 @@ namespace Froststrap.Integrations
 
         /// <summary>Hosted Spectre mark — Discord accepts external image URLs for LargeImageKey.</summary>
         public const string SpectreLogoUrl =
-            "https://cdn.jsdelivr.net/gh/lec1e/Spectre@main/Froststrap/SpectreMark.png";
+            "https://cdn.jsdelivr.net/gh/lec1e/Spectre@main/.github/preview/logo.png";
         private const string EclipseLogoUrl = SpectreLogoUrl;
 
         private readonly DiscordRpcClient? _rpcClient;
