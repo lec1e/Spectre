@@ -1754,9 +1754,9 @@ namespace Froststrap
         {
             const string LOG_IDENT = "Bootstrapper::CheckForUpdates";
 
-            if (App.CountOwnProcesses() > 1)
+            if (AnotherInstallerIsRunning())
             {
-                App.Logger.WriteLine(LOG_IDENT, $"More than one {App.ProjectName} instance running, aborting update check");
+                App.Logger.WriteLine(LOG_IDENT, $"Another {App.BrandName} installer is running, aborting update check");
                 return false;
             }
 
@@ -1895,6 +1895,75 @@ namespace Froststrap
             }
         }
 
+        /// <summary>
+        /// The tray watcher is another process of this install and must not block the update.
+        /// </summary>
+        private static bool AnotherInstallerIsRunning()
+        {
+            int self = Environment.ProcessId;
+            string install = Paths.Application;
+
+            foreach (string name in new[] { App.ExecutableName, App.ProjectName, "Eclipse" })
+            {
+                Process[] processes;
+                try { processes = Process.GetProcessesByName(name); }
+                catch { continue; }
+
+                foreach (var process in processes)
+                {
+                    if (process.Id == self)
+                        continue;
+
+                    string? path = null;
+                    try { path = process.MainModule?.FileName; }
+                    catch { continue; }
+
+                    if (string.IsNullOrEmpty(path) || !path.Equals(install, StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    string? command = ReadProcessCommandLine(process.Id);
+                    if (command != null && (
+                        command.Contains("-watcher", StringComparison.OrdinalIgnoreCase)
+                        || command.Contains("-backgroundupdater", StringComparison.OrdinalIgnoreCase)))
+                        continue;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static string? ReadProcessCommandLine(int pid)
+        {
+            if (!OperatingSystem.IsWindows())
+                return null;
+
+            try
+            {
+                var locatorType = Type.GetTypeFromProgID("WbemScripting.SWbemLocator");
+                if (locatorType is null)
+                    return null;
+
+                object locator = Activator.CreateInstance(locatorType)!;
+                dynamic service = locatorType.InvokeMember(
+                    "ConnectServer",
+                    System.Reflection.BindingFlags.InvokeMethod,
+                    null,
+                    locator,
+                    new object[] { ".", @"root\cimv2" })!;
+                dynamic results = service.ExecQuery($"SELECT CommandLine FROM Win32_Process WHERE ProcessId = {pid}");
+                foreach (dynamic item in results)
+                    return item.CommandLine as string;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException("Bootstrapper::ReadProcessCommandLine", ex);
+            }
+
+            return null;
+        }
+
         internal static GithubReleaseAsset? FindPlatformAsset(List<GithubReleaseAsset>? assets)
         {
             if (assets is null || assets.Count == 0)
@@ -2004,9 +2073,13 @@ namespace Froststrap
                 {
                     string installDir = Path.GetDirectoryName(processPath) ?? Paths.DataRoot;
                     string targetPath = Path.Combine(installDir, $"{App.ExecutableName}.exe");
+                    string targetLiteral = targetPath.Replace("'", "''");
                     scriptContent = $@"@echo off
 echo Waiting for {App.BrandName} to exit...
 timeout /t 2 /nobreak >nul
+echo Closing the tray watcher so the new file can replace it...
+powershell -NoProfile -Command ""Get-Process -Name '{App.ExecutableName}','{App.ProjectName}' -ErrorAction SilentlyContinue | Where-Object {{ $_.Path -eq '{targetLiteral}' }} | Stop-Process -Force""
+timeout /t 1 /nobreak >nul
 echo Installing update...
 copy /Y ""{updatePath}"" ""{targetPath}""
 if errorlevel 1 (

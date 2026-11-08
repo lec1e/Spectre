@@ -20,6 +20,12 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.39
+
+- The tray menu fills in as soon as a game starts: invite, server, rejoin, and region
+- Discord presence shows the game while you are playing, with the current Spectre logo
+- The auto updater no longer skips a release because the tray watcher is open
+
 ## What’s new in 2.0.38
 
 - Launching Roblox clears the local Roblox data and the saved login, so the client opens signed out

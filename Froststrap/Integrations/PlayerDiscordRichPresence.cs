@@ -361,15 +361,38 @@ namespace Froststrap.Integrations
 
             var timeStarted = activity.RootActivity?.TimeJoined ?? activity.TimeJoined;
 
-            if (activity.UniverseDetails is null)
+            if (activity.UniverseId == 0 && activity.PlaceId > 0)
+                activity.UniverseId = await LookupUniverseId(activity.PlaceId);
+
+            if (activity.UniverseDetails is null && activity.UniverseId > 0)
             {
                 try { await UniverseDetails.FetchSingle(activity.UniverseId); }
                 catch (Exception ex)
                 {
                     App.Logger.WriteException(LOG_IDENT, ex);
-                    return false;
                 }
                 activity.UniverseDetails = UniverseDetails.LoadFromCache(activity.UniverseId);
+            }
+
+            if (activity.UniverseDetails is null)
+            {
+                _currentPresence = new DiscordRPC.RichPresence
+                {
+                    Details = "Playing Roblox",
+                    State = activity.PlaceId > 0 ? $"Place {activity.PlaceId}" : "In a game",
+                    Type = ActivityType.Playing,
+                    StatusDisplay = StatusDisplayType.Details,
+                    Timestamps = new Timestamps { Start = timeStarted.ToUniversalTime() },
+                    Buttons = GetButtons(),
+                    Assets = new Assets
+                    {
+                        LargeImageKey = FroststrapRichPresence.SpectreLogoUrl,
+                        LargeImageText = App.BrandName
+                    }
+                };
+                _originalPresence = _currentPresence.Clone();
+                UpdatePresence();
+                return true;
             }
 
             var universeDetails = activity.UniverseDetails!;
@@ -425,6 +448,26 @@ namespace Froststrap.Integrations
 
             UpdatePresence();
             return true;
+        }
+
+        private static async Task<long> LookupUniverseId(long placeId)
+        {
+            try
+            {
+                var body = await Froststrap.Utility.Http.GetJson<UniverseLookup>($"https://apis.roblox.com/universes/v1/places/{placeId}/universe");
+                return body?.UniverseId ?? 0;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException("DiscordRichPresence::LookupUniverseId", ex);
+                return 0;
+            }
+        }
+
+        private sealed class UniverseLookup
+        {
+            [System.Text.Json.Serialization.JsonPropertyName("universeId")]
+            public long UniverseId { get; set; }
         }
 
         public Button[] GetButtons()

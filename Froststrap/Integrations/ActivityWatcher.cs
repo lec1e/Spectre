@@ -397,6 +397,23 @@ namespace Froststrap.Integrations
                 }
             }
 
+            if (logMessage.Contains(GameJoiningUniverseEntry))
+            {
+                long previousUniverse = Data.UniverseId;
+                var universeMatch = Regex.Match(logMessage, GameJoiningUniversePattern, RegexOptions.IgnoreCase);
+                if (universeMatch.Success)
+                    Data.UniverseId = Int64.Parse(universeMatch.Groups[1].Value);
+
+                var userMatch = Regex.Match(logMessage, GameJoiningUniverseUserIDPattern, RegexOptions.IgnoreCase);
+                if (userMatch.Success)
+                    Data.UserId = Int64.Parse(userMatch.Groups[1].Value);
+
+                TryCaptureAccessCode(logMessage);
+
+                if (InGame && Data.UniverseId != 0 && Data.UniverseId != previousUniverse)
+                    OnGameJoin?.Invoke(this, EventArgs.Empty);
+            }
+
             if (!InGame && Data.PlaceId == 0)
             {
                 // We are not in a game, nor are in the process of joining one
@@ -430,6 +447,9 @@ namespace Froststrap.Integrations
                     }
 
                     App.Logger.WriteLine(LOG_IDENT, $"Joining Game ({Data})");
+                    InGame = true;
+                    Data.TimeJoined = DateTime.Now;
+                    OnGameJoin?.Invoke(this, EventArgs.Empty);
                 }
             }
             else if (!InGame && Data.PlaceId != 0)
