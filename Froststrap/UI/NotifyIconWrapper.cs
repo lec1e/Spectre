@@ -40,6 +40,16 @@ namespace Froststrap.UI
             };
 
             _trayIcon.Clicked += OnTrayIconClicked;
+            RefreshTip();
+
+            if (ActivityWatcher is not null)
+            {
+                ActivityWatcher.OnGameJoin += (_, _) => Dispatcher.UIThread.Post(RefreshTip);
+                ActivityWatcher.OnGameLeave += (_, _) => Dispatcher.UIThread.Post(RefreshTip);
+                var tipTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+                tipTimer.Tick += (_, _) => RefreshTip();
+                tipTimer.Start();
+            }
 
             if (ActivityWatcher is not null && App.Settings.Prop.ShowServerDetails && !OperatingSystem.IsMacOS())
                 ActivityWatcher.ShowNotif += ShowNotif;
@@ -103,6 +113,33 @@ namespace Froststrap.UI
                     else
                         _ = Frontend.ShowMessageBox("Join a game first to view server information.", MessageBoxImage.Information);
                     break;
+            }
+        }
+
+        private void RefreshTip()
+        {
+            if (_isDisposed)
+                return;
+
+            try
+            {
+                string tip = App.BrandName;
+                if (ActivityWatcher?.InGame == true)
+                {
+                    string? name = ActivityWatcher.Data.UniverseDetails?.Data?.Name;
+                    tip = string.IsNullOrWhiteSpace(name) ? $"{App.BrandName} · Playing" : $"Playing {name}";
+                }
+                else if (ActivityWatcher is not null)
+                {
+                    int count = Froststrap.Utility.InstallSession.Clients(LaunchMode.Player).Count;
+                    tip = count > 1 ? $"{App.BrandName} · {count} Roblox" : $"{App.BrandName} · Roblox";
+                }
+
+                _trayIcon.ToolTipText = tip;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException("NotifyIconWrapper::RefreshTip", ex);
             }
         }
 

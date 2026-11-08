@@ -357,6 +357,8 @@ namespace Froststrap
 
             try
             {
+                DateTime missingSince = default;
+
                 while (!_cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     var processExists = Utilities.GetProcessesSafe().Any(x => x.Id == _watcherData.ProcessId);
@@ -372,8 +374,32 @@ namespace Froststrap
                     if (!processExists && (_watcherData.LaunchMode == LaunchMode.Studio || _watcherData.LaunchMode == LaunchMode.StudioAuth) && OperatingSystem.IsMacOS())
                         processExists = Utilities.GetProcessesSafe().Any(x => x.ProcessName == "RobloxStudio");
 
-                    if (!processExists) break;
+                    if (!processExists && OperatingSystem.IsWindows())
+                    {
+                        var replacement = Froststrap.Utility.InstallSession.NewestOrRecent(_watcherData.LaunchMode);
+                        if (replacement is not null)
+                        {
+                            App.Logger.WriteLine("Watcher", $"Following Roblox in the install folder (PID {replacement.Id})");
+                            _watcherData.ProcessId = replacement.Id;
+                            ProcessId = replacement.Id;
+                            processExists = true;
+                        }
+                    }
 
+                    if (!processExists)
+                    {
+                        if (missingSince == default)
+                            missingSince = DateTime.UtcNow;
+                        if (DateTime.UtcNow - missingSince < TimeSpan.FromSeconds(15))
+                        {
+                            await Task.Delay(1000, _cancellationTokenSource.Token);
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    missingSince = default;
                     await Task.Delay(1000, _cancellationTokenSource.Token);
                 }
             }

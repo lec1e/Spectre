@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.36
+
+- The tray stays up while Roblox from the Spectre folder is launching or playing
+- Hovering the tray icon shows Roblox, or the game name once you are in a server
+
 ## What’s new in 2.0.35
 
 - Search results and the home actions are smaller

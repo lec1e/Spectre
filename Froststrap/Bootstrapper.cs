@@ -1540,9 +1540,12 @@ namespace Froststrap
                 {
                     if (Directory.Exists(rbxLogDir))
                     {
+                        string kind = IsStudioLaunch ? "Studio" : "Player";
                         logFileName = Directory.GetFiles(rbxLogDir, "*.log")
                             .Select(f => new FileInfo(f))
-                            .Where(f => f.CreationTimeUtc > DateTime.UtcNow.AddSeconds(-5))
+                            .Where(f => f.CreationTimeUtc > DateTime.UtcNow.AddSeconds(-15)
+                                && f.Name.Contains(kind, StringComparison.OrdinalIgnoreCase)
+                                && !f.Name.Contains("CrashHandler", StringComparison.OrdinalIgnoreCase))
                             .OrderByDescending(f => f.CreationTimeUtc)
                             .FirstOrDefault()?.FullName;
                     }
