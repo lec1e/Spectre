@@ -52,6 +52,12 @@
                                         <TextBlock Text="Open folder" />
                                     </StackPanel>
                                 </Button>
+                                <Button Classes="hero" Command="{Binding ReinstallRobloxCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ic:Lucide Icon="RefreshCw" Width="13" Height="13" />
+                                        <TextBlock Text="Reinstall Roblox" />
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
 

@@ -64,15 +64,20 @@ namespace Froststrap.UI.ViewModels.Dialogs
         public string LaunchButtonIcon => SelectedLaunchMode == LaunchMode.Player ? "Gamepad2" : "Wrench";
 
         public ICommand LaunchCommand { get; }
+        public ICommand ReinstallRobloxCommand { get; }
         public ICommand SetLaunchModeCommand { get; }
         public ICommand LaunchSettingsCommand { get; }
         public ICommand LaunchAboutCommand { get; }
+
+        private bool _reinstalling;
+        public bool CanReinstall => !_reinstalling;
 
         public event EventHandler<NextAction>? CloseWindowRequest;
 
         public LaunchMenuViewModel()
         {
             LaunchCommand = new RelayCommand(ExecuteLaunch);
+            ReinstallRobloxCommand = new AsyncRelayCommand(ReinstallRobloxAsync);
             SetLaunchModeCommand = new RelayCommand<LaunchMode>(mode => SelectedLaunchMode = mode);
             LaunchSettingsCommand = new RelayCommand(() => CloseWindowRequest?.Invoke(this, NextAction.LaunchSettings));
             LaunchAboutCommand = new RelayCommand(() => new Elements.About.MainWindow().Show());
@@ -84,6 +89,27 @@ namespace Froststrap.UI.ViewModels.Dialogs
                 ? NextAction.LaunchRoblox
                 : NextAction.LaunchRobloxStudio;
             CloseWindowRequest?.Invoke(this, action);
+        }
+
+        private async Task ReinstallRobloxAsync()
+        {
+            if (_reinstalling)
+                return;
+
+            _reinstalling = true;
+            OnPropertyChanged(nameof(CanReinstall));
+            try
+            {
+                if (!await RobloxReinstaller.ConfirmAndPrepareAsync())
+                    return;
+
+                CloseWindowRequest?.Invoke(this, NextAction.ReinstallRoblox);
+            }
+            finally
+            {
+                _reinstalling = false;
+                OnPropertyChanged(nameof(CanReinstall));
+            }
         }
 
         public static string Version => string.Format(Strings.Menu_About_Version, App.Version);

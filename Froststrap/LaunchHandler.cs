@@ -27,6 +27,11 @@ namespace Froststrap
                     LaunchRoblox(LaunchMode.Studio);
                     break;
 
+                case NextAction.ReinstallRoblox:
+                    App.Logger.WriteLine(LOG_IDENT, "Reinstalling Roblox");
+                    LaunchRoblox(LaunchMode.Player);
+                    break;
+
                 default:
                     App.Logger.WriteLine(LOG_IDENT, "Closing");
                     App.Terminate(isUnfinishedInstall ? ErrorCode.ERROR_INSTALL_USEREXIT : ErrorCode.ERROR_SUCCESS);

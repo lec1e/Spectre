@@ -37,6 +37,7 @@ namespace Froststrap.UI.ViewModels.Settings
             NavigateCommand = new RelayCommand<string>(tag => { if (tag is not null) _shell.NavigateTo(tag); });
             LaunchPlayerCommand = new RelayCommand(() => Launch(LaunchMode.Player));
             LaunchStudioCommand = new RelayCommand(() => Launch(LaunchMode.Studio));
+            ReinstallRobloxCommand = new AsyncRelayCommand(ReinstallRobloxAsync);
             PlayGameCommand = new RelayCommand<HomeRecentGame>(PlayGame);
             OpenFolderCommand = new RelayCommand(OpenFolder);
 
@@ -46,6 +47,7 @@ namespace Froststrap.UI.ViewModels.Settings
         public ICommand NavigateCommand { get; }
         public ICommand LaunchPlayerCommand { get; }
         public ICommand LaunchStudioCommand { get; }
+        public ICommand ReinstallRobloxCommand { get; }
         public ICommand PlayGameCommand { get; }
         public ICommand OpenFolderCommand { get; }
 
@@ -269,6 +271,14 @@ namespace Froststrap.UI.ViewModels.Settings
                 return;
 
             Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
+        }
+
+        private async Task ReinstallRobloxAsync()
+        {
+            if (!await RobloxReinstaller.ConfirmAndPrepareAsync())
+                return;
+
+            Launch(LaunchMode.Player);
         }
 
         private void Launch(LaunchMode mode)

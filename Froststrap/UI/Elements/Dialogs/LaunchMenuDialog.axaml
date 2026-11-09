@@ -13,11 +13,11 @@
                      x:DataType="vm:LaunchMenuViewModel"
                      Title="{x:Static app:App.BrandName}"
                      Width="420"
-                     Height="440"
+                     Height="496"
                      MinWidth="420"
                      MaxWidth="420"
-                     MinHeight="440"
-                     MaxHeight="440"
+                     MinHeight="496"
+                     MaxHeight="496"
                      SizeToContent="Manual"
                      CanResize="False"
                      Background="{DynamicResource WbWindowBackgroundBrush}"
@@ -77,6 +77,17 @@
                             </MenuFlyout>
                         </controls:IconButton.Flyout>
                     </controls:IconButton>
+
+                    <controls:IconButton Classes="ghost"
+                                         HorizontalAlignment="Stretch"
+                                         Height="44"
+                                         CornerRadius="14"
+                                         IconSize="16"
+                                         Icon="RefreshCw"
+                                         Content="Reinstall Roblox"
+                                         Padding="16,0"
+                                         IsEnabled="{Binding CanReinstall}"
+                                         Command="{Binding ReinstallRobloxCommand}" />
 
                     <controls:IconButton Classes="ghost"
                                          HorizontalAlignment="Stretch"

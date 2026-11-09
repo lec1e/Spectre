@@ -5,6 +5,7 @@
         Terminate,
         LaunchSettings,
         LaunchRoblox,
-        LaunchRobloxStudio
+        LaunchRobloxStudio,
+        ReinstallRoblox
     }
 }

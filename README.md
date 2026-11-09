@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.44
+
+- Reinstall Roblox removes the current installation, Roblox files, and Roblox registry keys, then downloads a fresh copy
+- Browser cookies are left in place
+
 ## What’s new in 2.0.43
 
 - The tray closes once Roblox has fully exited
