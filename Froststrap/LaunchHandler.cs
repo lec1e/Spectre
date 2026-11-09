@@ -43,6 +43,19 @@ namespace Froststrap
         {
             const string LOG_IDENT = "LaunchHandler::ProcessLaunchArgs";
 
+            // The menu and Settings never reached the bootstrapper update check, so a new
+            // release sat unused until a Roblox launch — and that launch aborted when Settings was open.
+#if (!DEBUG || DEBUG_UPDATER) && !QA_BUILD
+            if (!App.LaunchSettings.UninstallFlag.Active
+                && !App.LaunchSettings.BypassUpdateCheck
+                && !App.LaunchSettings.UpgradeFlag.Active)
+            {
+                bool updated = await Utility.AppUpdater.TryUpdateAsync();
+                if (updated)
+                    return;
+            }
+#endif
+
             // this order is specific
             if (App.LaunchSettings.UninstallFlag.Active)
             {

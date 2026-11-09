@@ -1742,217 +1742,9 @@ namespace Froststrap
         #region App Install
         private async Task<bool> CheckForUpdates()
         {
-            const string LOG_IDENT = "Bootstrapper::CheckForUpdates";
-
-            if (AnotherInstallerIsRunning())
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"Another {App.BrandName} installer is running, aborting update check");
-                return false;
-            }
-
-            if (App.Settings.Prop.UpdateChecks == UpdateCheck.Disabled)
-            {
-                App.Logger.WriteLine(LOG_IDENT, "Update checking is disabled in settings");
-                return false;
-            }
-
-            SetStatus(Strings.Bootstrapper_Status_CheckingUpdates);
-
-            App.Logger.WriteLine(LOG_IDENT, "Checking for updates...");
-
-            try
-            {
-                bool includePreRelease = false;
-
-                // Spectre only tracks stable releases — never auto-update to pre-release builds.
-                var releaseInfo = await App.GetLatestRelease(includePreRelease);
-
-                if (releaseInfo is null)
-                {
-                    App.Logger.WriteLine(LOG_IDENT, "Failed to get release information");
-                    return false;
-                }
-
-                string currentVer = App.Version;
-                string releaseVer = releaseInfo.TagName;
-                var versionComparison = Utilities.CompareVersions(currentVer, releaseVer);
-
-                if (versionComparison == VersionComparison.Equal || versionComparison == VersionComparison.GreaterThan)
-                {
-                    App.Logger.WriteLine(LOG_IDENT, $"No updates found. Current: {currentVer}, Latest: {releaseVer}");
-                    return false;
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, $"Update available: {currentVer} -> {releaseVer}");
-
-                if (OperatingSystem.IsLinux())
-                {
-                    App.Logger.WriteLine(LOG_IDENT, "Update detected, prompting user to manually update");
-
-                    var results = await Frontend.ShowMessageBox(
-                        string.Format(Strings.Update_Linux_Available, releaseVer),
-                        MessageBoxImage.Information,
-                        MessageBoxButton.YesNo
-                    );
-
-                    if (results == MessageBoxResult.Yes)
-                    {
-                        App.Logger.WriteLine(LOG_IDENT, "User chose to visit releases page");
-                        Utilities.ShellExecute(App.ProjectDownloadLink);
-                    }
-                    else
-                    {
-                        App.Logger.WriteLine(LOG_IDENT, "User declined the update, continuing launch");
-                    }
-
-                    return false;
-                }
-
-                var asset = FindPlatformAsset(releaseInfo.Assets);
-                if (asset is null)
-                {
-                    App.Logger.WriteLine(LOG_IDENT, "No suitable asset found for this platform");
-                    await Frontend.ShowMessageBox(
-                        string.Format(Strings.Update_NoPackageAvailable, GetPlatformName()),
-                        MessageBoxImage.Warning
-                    );
-                    Utilities.ShellExecute(App.ProjectDownloadLink);
-                    return false;
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, $"Found matching asset: {asset.Name}");
-
-                if (!App.LaunchSettings.QuietFlag.Active)
-                {
-                    string releaseType = releaseInfo.Prerelease ? "pre-release" : "stable";
-                    string newlinePart = "\n\nWould you like to update now?";
-                    var result = await Frontend.ShowMessageBox(
-                        string.Format(Strings.Update_Available, releaseType, releaseVer, newlinePart),
-                        MessageBoxImage.Question,
-                        MessageBoxButton.YesNo
-                    );
-
-                    if (result != MessageBoxResult.Yes)
-                    {
-                        App.Logger.WriteLine(LOG_IDENT, "User declined the update");
-                        return false;
-                    }
-                }
-
-                SetStatus(string.Format(Strings.Bootstrapper_Status_DownloadingUpdate, releaseVer));
-
-                string downloadPath = Path.Combine(Paths.TempUpdates, asset.Name);
-                Directory.CreateDirectory(Paths.TempUpdates);
-
-                App.Logger.WriteLine(LOG_IDENT, $"Downloading update from {asset.BrowserDownloadUrl}");
-
-                await DownloadFileWithProgressAsync(asset.BrowserDownloadUrl, downloadPath);
-
-                App.Logger.WriteLine(LOG_IDENT, $"Download complete: {downloadPath}");
-
-                Dialog?.ProgressIndeterminate = true;
-                Dialog?.TaskbarProgressState = TaskbarItemProgressState.Indeterminate;
-
-                SetStatus(string.Format(Strings.Bootstrapper_Status_InstallingUpdate, releaseVer));
-
-                bool updateApplied = await ApplyUpdate(downloadPath);
-
-                if (!updateApplied)
-                {
-                    App.Logger.WriteLine(LOG_IDENT, "Update application failed");
-                    await Frontend.ShowMessageBox(
-                        string.Format(Strings.Bootstrapper_AutoUpdateFailed, releaseVer),
-                        MessageBoxImage.Information
-                    );
-                    Utilities.ShellExecute(App.ProjectDownloadLink);
-                    return false;
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, "Update applied successfully");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteLine(LOG_IDENT, "An exception occurred during update check");
-                App.Logger.WriteException(LOG_IDENT, ex);
-
-                if (!App.LaunchSettings.QuietFlag.Active)
-                {
-                    await Frontend.ShowMessageBox(Strings.Bootstrapper_AutoUpdateFailed, MessageBoxImage.Information);
-                }
-
-                return false;
-            }
+            return await AppUpdater.TryUpdateAsync(SetStatus, Dialog);
         }
 
-        /// <summary>
-        /// The tray watcher is another process of this install and must not block the update.
-        /// </summary>
-        private static bool AnotherInstallerIsRunning()
-        {
-            int self = Environment.ProcessId;
-            string install = Paths.Application;
-
-            foreach (string name in new[] { App.ExecutableName, App.ProjectName, "Eclipse" })
-            {
-                Process[] processes;
-                try { processes = Process.GetProcessesByName(name); }
-                catch { continue; }
-
-                foreach (var process in processes)
-                {
-                    if (process.Id == self)
-                        continue;
-
-                    string? path = null;
-                    try { path = process.MainModule?.FileName; }
-                    catch { continue; }
-
-                    if (string.IsNullOrEmpty(path) || !path.Equals(install, StringComparison.OrdinalIgnoreCase))
-                        continue;
-
-                    string? command = ReadProcessCommandLine(process.Id);
-                    if (command != null && (
-                        command.Contains("-watcher", StringComparison.OrdinalIgnoreCase)
-                        || command.Contains("-backgroundupdater", StringComparison.OrdinalIgnoreCase)))
-                        continue;
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static string? ReadProcessCommandLine(int pid)
-        {
-            if (!OperatingSystem.IsWindows())
-                return null;
-
-            try
-            {
-                var locatorType = Type.GetTypeFromProgID("WbemScripting.SWbemLocator");
-                if (locatorType is null)
-                    return null;
-
-                object locator = Activator.CreateInstance(locatorType)!;
-                dynamic service = locatorType.InvokeMember(
-                    "ConnectServer",
-                    System.Reflection.BindingFlags.InvokeMethod,
-                    null,
-                    locator,
-                    new object[] { ".", @"root\cimv2" })!;
-                dynamic results = service.ExecQuery($"SELECT CommandLine FROM Win32_Process WHERE ProcessId = {pid}");
-                foreach (dynamic item in results)
-                    return item.CommandLine as string;
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteException("Bootstrapper::ReadProcessCommandLine", ex);
-            }
-
-            return null;
-        }
 
         internal static GithubReleaseAsset? FindPlatformAsset(List<GithubReleaseAsset>? assets)
         {
@@ -2063,24 +1855,24 @@ namespace Froststrap
                 {
                     string installDir = Path.GetDirectoryName(processPath) ?? Paths.DataRoot;
                     string targetPath = Path.Combine(installDir, $"{App.ExecutableName}.exe");
-                    string targetLiteral = targetPath.Replace("'", "''");
+                    string failureLog = Path.Combine(Paths.TempUpdates, "update_failed.txt");
+                    // Keep trying after this process exits. A single copy fails while Spectre.exe is still locked.
                     scriptContent = $@"@echo off
-echo Waiting for {App.BrandName} to exit...
-timeout /t 2 /nobreak >nul
-echo Closing the tray watcher so the new file can replace it...
-powershell -NoProfile -Command ""Get-Process -Name '{App.ExecutableName}','{App.ProjectName}' -ErrorAction SilentlyContinue | Where-Object {{ $_.Path -eq '{targetLiteral}' }} | Stop-Process -Force""
-timeout /t 1 /nobreak >nul
-echo Installing update...
-copy /Y ""{updatePath}"" ""{targetPath}""
-if errorlevel 1 (
-    echo Update failed with error code %errorlevel%
-    pause
-    exit /b %errorlevel%
+setlocal
+set ""SOURCE={updatePath}""
+set ""TARGET={targetPath}""
+for /L %%i in (1,1,40) do (
+    taskkill /F /IM {App.ExecutableName}.exe >nul 2>&1
+    timeout /t 1 /nobreak >nul
+    copy /Y ""%SOURCE%"" ""%TARGET%"" >nul 2>&1
+    if not errorlevel 1 goto installed
 )
-echo Update installed successfully!
-echo Restarting {App.BrandName}...
-start """" ""{targetPath}""
-exit";
+echo Update failed %date% %time%> ""{failureLog}""
+exit /b 1
+:installed
+start """" ""%TARGET%""
+exit /b 0
+";
                 }
                 else
                 {
@@ -2102,14 +1894,15 @@ exit";
 
                 await File.WriteAllTextAsync(scriptPath, scriptContent);
 
-                var startInfo = new ProcessStartInfo
+                // Detach so closing Spectre cannot kill the script before the file is replaced.
+                Process.Start(new ProcessStartInfo
                 {
-                    FileName = scriptPath,
-                    UseShellExecute = true,
+                    FileName = "cmd.exe",
+                    Arguments = $"/c start \"\" /min cmd.exe /c \"{scriptPath}\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
                     WindowStyle = ProcessWindowStyle.Hidden
-                };
-
-                Process.Start(startInfo);
+                });
                 App.Terminate();
                 return true;
             }

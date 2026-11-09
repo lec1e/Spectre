@@ -6,8 +6,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <Version>2.0.44</Version>
-    <FileVersion>2.0.44</FileVersion>
+    <Version>2.0.45</Version>
+    <FileVersion>2.0.45</FileVersion>
     <Company>Spectre</Company>
     <Product>Spectre</Product>
     <AssemblyName>Spectre</AssemblyName>

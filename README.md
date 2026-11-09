@@ -20,6 +20,12 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.45
+
+- Spectre checks for an update as soon as it opens, including from the launch menu and Settings
+- The settings window and tray no longer cancel that check
+- The downloaded Spectre.exe replaces the installed one after the app closes, and retries while the file is still locked
+
 ## What’s new in 2.0.44
 
 - Reinstall Roblox removes the current installation, Roblox files, and Roblox registry keys, then downloads a fresh copy
