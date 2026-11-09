@@ -20,6 +20,10 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.48
+
+- The search field and its results list are smaller and stay within the sidebar
+
 ## What’s new in 2.0.47
 
 - Reinstall sits under Install Player, and the launch menu closes up around the buttons

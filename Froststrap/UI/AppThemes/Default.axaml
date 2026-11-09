@@ -666,7 +666,7 @@
     </Style>
 
     <Style Selector="Border.sidebar-search">
-        <Setter Property="Height" Value="36" />
+        <Setter Property="Height" Value="30" />
         <Setter Property="Padding" Value="8,0,6,0" />
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="Background" Value="{DynamicResource WbFillBrush}" />
