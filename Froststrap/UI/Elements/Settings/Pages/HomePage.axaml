@@ -27,38 +27,38 @@
                             <TextBlock Text="{Binding HeroSubtitle}" FontSize="12.5" MaxWidth="520" HorizontalAlignment="Left"
                                        Foreground="{DynamicResource WbFgMutedBrush}" TextWrapping="Wrap" LineHeight="18" />
 
-                            <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,8,0,0">
-                                <Button Classes="accent hero" Command="{Binding LaunchPlayerCommand}">
+                            <WrapPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <Button Classes="accent hero" Margin="0,0,6,6" Command="{Binding LaunchPlayerCommand}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <ic:Lucide Icon="Play" Width="13" Height="13" StrokeBrush="{DynamicResource WbOnAccentBrush}" />
                                         <TextBlock Text="{Binding PlayerLaunchText}" />
                                     </StackPanel>
                                 </Button>
-                                <Button Classes="hero" Command="{Binding LaunchStudioCommand}">
+                                <Button Classes="hero" Margin="0,0,6,6" Command="{Binding ReinstallRobloxCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ic:Lucide Icon="RefreshCw" Width="13" Height="13" />
+                                        <TextBlock Text="Reinstall" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="hero" Margin="0,0,6,6" Command="{Binding LaunchStudioCommand}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <ic:Lucide Icon="Wrench" Width="13" Height="13" />
                                         <TextBlock Text="{Binding StudioLaunchText}" />
                                     </StackPanel>
                                 </Button>
-                                <Button Classes="hero" Command="{Binding NavigateCommand}" CommandParameter="quickplay">
+                                <Button Classes="hero" Margin="0,0,6,6" Command="{Binding NavigateCommand}" CommandParameter="quickplay">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <ic:Lucide Icon="Gamepad2" Width="13" Height="13" />
                                         <TextBlock Text="Quick Play" />
                                     </StackPanel>
                                 </Button>
-                                <Button Classes="hero" Command="{Binding OpenFolderCommand}">
+                                <Button Classes="hero" Margin="0,0,6,6" Command="{Binding OpenFolderCommand}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <ic:Lucide Icon="FolderOpen" Width="13" Height="13" />
                                         <TextBlock Text="Open folder" />
                                     </StackPanel>
                                 </Button>
-                                <Button Classes="hero" Command="{Binding ReinstallRobloxCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <ic:Lucide Icon="RefreshCw" Width="13" Height="13" />
-                                        <TextBlock Text="Reinstall Roblox" />
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
+                            </WrapPanel>
                         </StackPanel>
 
                         <Panel Grid.Column="1" Width="84" Height="84" VerticalAlignment="Center">

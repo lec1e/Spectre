@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.46
+
+- Reinstall sits beside Install on the launch menu and on Home
+- The launch menu is back to its shorter size
+
 ## What’s new in 2.0.45
 
 - Spectre checks for an update as soon as it opens, including from the launch menu and Settings
