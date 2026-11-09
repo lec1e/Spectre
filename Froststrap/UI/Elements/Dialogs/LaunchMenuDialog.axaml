@@ -12,13 +12,10 @@
                      xmlns:app="clr-namespace:Froststrap"
                      x:DataType="vm:LaunchMenuViewModel"
                      Title="{x:Static app:App.BrandName}"
-                     Width="468"
-                     Height="440"
-                     MinWidth="468"
-                     MaxWidth="468"
-                     MinHeight="440"
-                     MaxHeight="440"
-                     SizeToContent="Manual"
+                     Width="420"
+                     MinWidth="420"
+                     MaxWidth="420"
+                     SizeToContent="Height"
                      CanResize="False"
                      Background="{DynamicResource WbWindowBackgroundBrush}"
                      WindowStartupLocation="CenterScreen"
@@ -27,7 +24,7 @@
     <Panel>
         <controls:AnimatedBackground x:Name="Backdrop" />
 
-        <Grid RowDefinitions="36,*,Auto">
+        <Grid RowDefinitions="36,Auto,Auto">
             <Panel Grid.Row="0">
                 <Panel WindowDecorationProperties.ElementRole="TitleBar" Background="Transparent" />
                 <controls:IconButton Classes="TitleBarButton Close"
@@ -49,49 +46,45 @@
                 </StackPanel>
 
                 <StackPanel Spacing="8">
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                        <controls:IconButton Grid.Column="0"
-                                             Classes="DropDownButton Primary"
-                                             HorizontalAlignment="Stretch"
-                                             Height="48"
-                                             CornerRadius="14"
-                                             Command="{Binding LaunchCommand}"
-                                             IconSize="18"
-                                             Icon="{Binding LaunchButtonIcon}"
-                                             Content="{Binding LaunchButtonText}"
-                                             Padding="16,0">
-                            <controls:IconButton.Flyout>
-                                <MenuFlyout Placement="BottomEdgeAlignedRight">
-                                    <MenuItem Header="{Binding PlayerMenuItemText}"
-                                              Command="{Binding SetLaunchModeCommand}"
-                                              CommandParameter="{x:Static enums:LaunchMode.Player}">
-                                        <MenuItem.Icon>
-                                            <ic:Lucide Icon="Gamepad2" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem Header="{x:Static resources:Strings.Common_Studio}"
-                                              Command="{Binding SetLaunchModeCommand}"
-                                              CommandParameter="{x:Static enums:LaunchMode.Studio}">
-                                        <MenuItem.Icon>
-                                            <ic:Lucide Icon="Wrench" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                </MenuFlyout>
-                            </controls:IconButton.Flyout>
-                        </controls:IconButton>
+                    <controls:IconButton Classes="DropDownButton Primary"
+                                         HorizontalAlignment="Stretch"
+                                         Height="48"
+                                         CornerRadius="14"
+                                         Command="{Binding LaunchCommand}"
+                                         IconSize="18"
+                                         Icon="{Binding LaunchButtonIcon}"
+                                         Content="{Binding LaunchButtonText}"
+                                         Padding="16,0">
+                        <controls:IconButton.Flyout>
+                            <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                <MenuItem Header="{Binding PlayerMenuItemText}"
+                                          Command="{Binding SetLaunchModeCommand}"
+                                          CommandParameter="{x:Static enums:LaunchMode.Player}">
+                                    <MenuItem.Icon>
+                                        <ic:Lucide Icon="Gamepad2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static resources:Strings.Common_Studio}"
+                                          Command="{Binding SetLaunchModeCommand}"
+                                          CommandParameter="{x:Static enums:LaunchMode.Studio}">
+                                    <MenuItem.Icon>
+                                        <ic:Lucide Icon="Wrench" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuFlyout>
+                        </controls:IconButton.Flyout>
+                    </controls:IconButton>
 
-                        <controls:IconButton Grid.Column="1"
-                                             Classes="ghost"
-                                             Height="48"
-                                             MinWidth="132"
-                                             CornerRadius="14"
-                                             IconSize="16"
-                                             Icon="RefreshCw"
-                                             Content="Reinstall"
-                                             Padding="14,0"
-                                             IsEnabled="{Binding CanReinstall}"
-                                             Command="{Binding ReinstallRobloxCommand}" />
-                    </Grid>
+                    <controls:IconButton Classes="ghost"
+                                         HorizontalAlignment="Stretch"
+                                         Height="44"
+                                         CornerRadius="14"
+                                         IconSize="16"
+                                         Icon="RefreshCw"
+                                         Content="Reinstall"
+                                         Padding="16,0"
+                                         IsEnabled="{Binding CanReinstall}"
+                                         Command="{Binding ReinstallRobloxCommand}" />
 
                     <controls:IconButton Classes="ghost"
                                          HorizontalAlignment="Stretch"
