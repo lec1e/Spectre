@@ -32,7 +32,9 @@
     </UserControl.Styles>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-        <TextBox x:Name="SearchTextBox"
+        <Border x:Name="SearchHost" Classes="sidebar-search">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+        <TextBox x:Name="SearchTextBox" Grid.Column="0"
                  PlaceholderText="Search Spectre…"
                  Text="{Binding SearchQuery}"
                  VerticalAlignment="Center"
@@ -80,18 +82,29 @@
                                Width="14"/>
                 </Button>
             </TextBox.InnerRightContent>
+        </TextBox>
 
-            <FlyoutBase.AttachedFlyout>
-                <Flyout Placement="Bottom"
-                        ShowMode="Transient">
-                    <Border Width="212"
+                <Border Grid.Column="1" Classes="kbd" VerticalAlignment="Center">
+                    <TextBlock Text="Ctrl K" FontSize="10" Foreground="{DynamicResource WbFgFaintBrush}" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <Popup PlacementTarget="{Binding #SearchHost}"
+               Placement="BottomEdgeAlignedLeft"
+               HorizontalOffset="0"
+               VerticalOffset="4"
+               IsLightDismissEnabled="True"
+               Opened="OnResultsOpened"
+               IsOpen="{Binding IsSearchFlyoutOpen, Mode=TwoWay}">
+                    <Border x:Name="ResultsPanel"
                             MaxHeight="168"
                             Background="{DynamicResource WbOverlayBrush}"
                             BorderBrush="{DynamicResource WbLineStrongBrush}"
                             BorderThickness="1"
                             CornerRadius="8"
                             BoxShadow="0 6 16 0 #40000000"
-                            Margin="0,4,0,0">
+                            Margin="0">
                         <Grid RowDefinitions="*,Auto">
                             <ScrollViewer VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Disabled"
@@ -211,8 +224,6 @@
                                          IsVisible="{Binding IsGameSearchLoading}" />
                         </Grid>
                     </Border>
-                </Flyout>
-            </FlyoutBase.AttachedFlyout>
-        </TextBox>
+        </Popup>
     </Grid>
 </UserControl>

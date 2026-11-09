@@ -49,15 +49,10 @@
                         </StackPanel>
                     </Panel>
 
-                    <Border Grid.Row="1" Classes="sidebar-search" Margin="14,8,14,6">
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
-                            <elements:SearchBar x:Name="TitleSearchBar" DataContext="{Binding SearchBar}"
-                                                HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                            <Border Grid.Column="1" Classes="kbd">
-                                <TextBlock Text="Ctrl K" FontSize="10" Foreground="{DynamicResource WbFgFaintBrush}" />
-                            </Border>
-                        </Grid>
-                    </Border>
+                    <elements:SearchBar x:Name="TitleSearchBar" Grid.Row="1"
+                                        DataContext="{Binding SearchBar}"
+                                        Margin="14,8,14,6"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
                     <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel x:Name="NavPanel" Margin="12,4,12,10" Spacing="2">

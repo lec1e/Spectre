@@ -20,6 +20,10 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.49
+
+- Search results line up with the left and right edges of the search bar
+
 ## What’s new in 2.0.48
 
 - The search field and its results list are smaller and stay within the sidebar

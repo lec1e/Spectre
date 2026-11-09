@@ -25,27 +25,18 @@ public partial class SearchBar : UserControl
         if (e.PropertyName == nameof(SearchBarViewModel.IsSearchFlyoutOpen) &&
             sender is SearchBarViewModel vm)
         {
-            var flyout = FlyoutBase.GetAttachedFlyout(SearchTextBox);
-            if (flyout == null) return;
-
             if (vm.IsSearchFlyoutOpen)
-            {
-                if (!flyout.IsOpen)
-                    FlyoutBase.ShowAttachedFlyout(SearchTextBox);
-            }
-            else
-            {
-                flyout.Hide();
-            }
+                AlignResults();
         }
     }
 
-    private void OnSearchIconClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void OnResultsOpened(object? sender, EventArgs e) => AlignResults();
+
+    private void AlignResults()
     {
-        if (DataContext is SearchBarViewModel vm)
-            vm.IsSearchFlyoutOpen = true;
-        else
-            FlyoutBase.ShowAttachedFlyout(SearchTextBox);
+        var width = SearchHost.Bounds.Width;
+        if (width > 0)
+            ResultsPanel.Width = width;
     }
 
     public void FocusSearch()
