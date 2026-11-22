@@ -12,6 +12,7 @@ public sealed class WornItemRow : NotifyPropertyChangedViewModel
 {
     public required long Id { get; init; }
     public required string Name { get; init; }
+    public required string TypeName { get; init; }
     public required string TypeLabel { get; init; }
     public required string Group { get; init; }
 
@@ -38,6 +39,7 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
     private readonly Dictionary<long, AccountClip> _clipCache = [];
     private Dictionary<string, long> _clipIds = new(StringComparer.OrdinalIgnoreCase);
     private IReadOnlyList<WornAsset> _worn = [];
+    private WornAsset[]? _tryOn;
     private string _liveKind = "outfit";
     private long _liveAssetId;
     private bool _liveShown;
@@ -260,7 +262,7 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
             {
                 var row = new WornGroup { Title = group.Key };
                 foreach (var item in group)
-                    row.Items.Add(new WornItemRow { Id = item.Id, Name = item.Name, TypeLabel = item.TypeLabel, Group = item.Group });
+                    row.Items.Add(new WornItemRow { Id = item.Id, Name = item.Name, TypeName = item.TypeName, TypeLabel = item.TypeLabel, Group = item.Group });
                 Groups.Add(row);
             }
 
@@ -271,6 +273,7 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
             }
 
             OnPropertyChanged(nameof(WornCount));
+            _tryOn = null;
             _liveKind = "outfit";
             IsPlaying = !string.Equals(Motion, "Turntable", StringComparison.Ordinal);
             Publish(IsPlaying ? $"Playing {Motion} on your avatar." : "Drag to turn your avatar.", true);
@@ -370,8 +373,9 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
     private Task ShowAvatarAsync()
     {
         _previewAssetId = null;
+        _tryOn = null;
         _liveKind = "outfit";
-        if (string.Equals(Motion, "Turntable", StringComparison.Ordinal))
+        if (string.Equals(Motion, "Turntable", StringComparison.Ordinal) || FindMood(Motion) is not null)
         {
             _motion = "Idle";
             OnPropertyChanged(nameof(Motion));
@@ -384,12 +388,24 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
 
     private Task UseMotionAsync()
     {
+        if (FindMood(Motion) is WornAsset mood)
+        {
+            _previewAssetId = mood.Id;
+            _liveKind = "outfit";
+            _tryOn = MoodSubject(mood);
+            IsPlaying = true;
+            Publish($"{mood.Name} on its own.", true);
+            return Task.CompletedTask;
+        }
+
         var wasItem = _liveKind == "item";
+        var wasTryingOn = _tryOn is not null;
         _previewAssetId = null;
+        _tryOn = null;
         _liveKind = "outfit";
         var turntable = string.Equals(Motion, "Turntable", StringComparison.Ordinal);
         IsPlaying = !turntable;
-        Publish(turntable ? "Drag to turn your avatar." : $"Playing {Motion} on your avatar.", wasItem || !_liveShown);
+        Publish(turntable ? "Drag to turn your avatar." : $"Playing {Motion} on your avatar.", wasItem || wasTryingOn || !_liveShown);
         return Task.CompletedTask;
     }
 
@@ -462,12 +478,22 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
             return;
         }
 
-        _liveKind = "item";
         _liveAssetId = assetId;
         _previewAssetId = assetId;
         PreviewTitle = row.Name;
-        IsPlaying = false;
-        Publish(row.Name, true);
+        if (StandsAlone(row.TypeName))
+        {
+            _tryOn = null;
+            _liveKind = "item";
+            IsPlaying = false;
+            Publish(row.Name, true);
+            return;
+        }
+
+        _tryOn = [new WornAsset(row.Id, row.Name, row.TypeName, row.TypeLabel, row.Group)];
+        _liveKind = "outfit";
+        IsPlaying = true;
+        Publish($"{row.Name} on a plain avatar.", true);
         await Task.CompletedTask;
     }
 
@@ -498,6 +524,11 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
             Status = status;
 
         var kind = full || !_liveShown ? _liveKind : "motion";
+        var tryingOn = _tryOn is not null;
+        var paint = tryingOn
+            ? new BodyPaint("A3A2A5", "A3A2A5", "A3A2A5", "A3A2A5", "A3A2A5", "A3A2A5", 1, 1, 1, 0, 0)
+            : _paint;
+        var worn = tryingOn ? _tryOn! : _worn;
         LiveDocument = JsonSerializer.Serialize(new
         {
             kind,
@@ -510,23 +541,23 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
                 playerAvatarType = string.IsNullOrWhiteSpace(Rig) ? "R15" : Rig,
                 scale = new
                 {
-                    height = _paint.Height,
-                    width = _paint.Width,
-                    head = _paint.HeadScale,
-                    depth = _paint.Width,
-                    proportion = _paint.Proportion,
-                    bodyType = _paint.BodyType
+                    height = paint.Height,
+                    width = paint.Width,
+                    head = paint.HeadScale,
+                    depth = paint.Width,
+                    proportion = paint.Proportion,
+                    bodyType = paint.BodyType
                 },
                 bodyColor3s = new
                 {
-                    headColor3 = Hash(_paint.Head),
-                    torsoColor3 = Hash(_paint.Torso),
-                    leftArmColor3 = Hash(_paint.LeftArm),
-                    rightArmColor3 = Hash(_paint.RightArm),
-                    leftLegColor3 = Hash(_paint.LeftLeg),
-                    rightLegColor3 = Hash(_paint.RightLeg)
+                    headColor3 = Hash(paint.Head),
+                    torsoColor3 = Hash(paint.Torso),
+                    leftArmColor3 = Hash(paint.LeftArm),
+                    rightArmColor3 = Hash(paint.RightArm),
+                    leftLegColor3 = Hash(paint.LeftLeg),
+                    rightLegColor3 = Hash(paint.RightLeg)
                 },
-                assets = _worn.Select(asset => new
+                assets = worn.Select(asset => new
                 {
                     id = asset.Id,
                     name = asset.Name,
@@ -540,6 +571,10 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
 
     private string AnimationToken()
     {
+        var mood = _tryOn?.FirstOrDefault(asset => asset.TypeName == "MoodAnimation");
+        if (mood is not null)
+            return "mood." + mood.Id.ToString(CultureInfo.InvariantCulture);
+
         if (Slot(Motion) is string named)
             return named;
 
@@ -554,6 +589,32 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
         return "idle:0";
     }
 
+    private WornAsset? FindMood(string name)
+    {
+        foreach (var asset in _worn)
+        {
+            if (asset.TypeName != "MoodAnimation")
+                continue;
+            if (name is "Mood" or "MoodAnimation" || asset.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                return asset;
+        }
+
+        return null;
+    }
+
+    private WornAsset[] MoodSubject(WornAsset mood)
+    {
+        var head = _worn.FirstOrDefault(asset => asset.TypeName is "DynamicHead" or "Head");
+        if (head is null || IsHeadless(head))
+            head = new WornAsset(10638267973, "Classic head", "DynamicHead", "Head", "Heads and bodies");
+        return [head, mood];
+    }
+
+    private static bool IsHeadless(WornAsset head) =>
+        head.Id is 15093053680 or 134082579 || head.Name.Contains("headless", StringComparison.OrdinalIgnoreCase);
+
+    private static bool StandsAlone(string typeName) => typeName is "Hat" or "HairAccessory" or "FaceAccessory" or "NeckAccessory" or "ShoulderAccessory" or "FrontAccessory" or "BackAccessory" or "WaistAccessory";
+
     private static string? Slot(string name) => name switch
     {
         "Walk" or "WalkAnimation" => "walk",
@@ -562,7 +623,7 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
         "Fall" or "FallAnimation" => "fall",
         "Climb" or "ClimbAnimation" => "climb",
         "Swim" or "SwimAnimation" => "swim",
-        "Idle" or "IdleAnimation" or "Mood" or "MoodAnimation" or "Turntable" => "idle:0",
+        "Idle" or "IdleAnimation" or "Turntable" => "idle:0",
         _ => null
     };
 

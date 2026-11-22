@@ -1,11 +1,13 @@
 import {
   API,
+  AnimatorWrapper,
   Authentication,
   CFrame,
   FLAGS,
   Outfit,
   OutfitRenderer,
   RBXRenderer,
+  getThumbnailCamera,
 } from "roavatar-renderer";
 
 FLAGS.ONLINE_ASSETS = true;
@@ -29,6 +31,8 @@ let playing = true;
 let speed = 1;
 let last = performance.now();
 let cameraHeld = false;
+let framingItem = false;
+let framingMood = false;
 
 function post(message) {
   window.chrome.webview.postMessage(message);
@@ -127,6 +131,8 @@ function dropOutfit() {
 
 async function showOutfit(data) {
   cameraHeld = false;
+  framingItem = false;
+  framingMood = typeof animation === "string" && animation.startsWith("mood.");
   clearItem();
   const outfit = new Outfit();
   outfit.fromJson(data.outfit);
@@ -138,7 +144,7 @@ async function showOutfit(data) {
       frameCamera(created.currentRig);
       post({ kind: "status", state: "shown" });
       if (animation)
-        void created.setMainAnimation(animation);
+        void playMotion(animation);
     });
     created.onError.Connect(() => {
       if (renderer === created)
@@ -156,21 +162,64 @@ async function showOutfit(data) {
 }
 
 async function showItem(data) {
+  cameraHeld = false;
+  framingItem = true;
   dropOutfit();
   clearItem();
   const model = await API.Asset.GetRBX(`rbxassetid://${data.assetId}`, {
     "Roblox-AssetFormat": "avatar_meshpart_accessory",
   }).catch(() => null);
   if (!model || model instanceof Response || !model.generateTree) {
+    framingItem = false;
     post({ kind: "status", state: "failed", message: "This item has no 3D model." });
     return;
   }
   const root = model.generateTree();
-  const shown = root.FindFirstChildOfClass("Accessory") || root.FindFirstChildOfClass("MeshPart") || root;
+  const accessory = root.FindFirstChildOfClass("Accessory");
+  if (!accessory) {
+    root.Destroy?.();
+    framingItem = false;
+    post({ kind: "status", state: "failed", message: "This item has no 3D model." });
+    return;
+  }
   itemRoot = root;
-  RBXRenderer.addInstance(shown, auth);
+  RBXRenderer.addInstance(accessory, auth);
+  frameAccessory(accessory);
   RBXRenderer.animateAll(false);
   post({ kind: "status", state: "shown" });
+}
+
+function frameAccessory(accessory) {
+  const thumbnail = getThumbnailCamera(accessory);
+  const frame = thumbnail?.Prop?.("CFrame");
+  const framedFieldOfView = Number(thumbnail?.PropOrDefault?.("FieldOfView", 70)) || 70;
+  const handle = accessory.FindFirstChild("Handle");
+  const position = handle?.Prop?.("Position");
+  if (thumbnail && thumbnail !== accessory.FindFirstChild("ThumbnailCamera"))
+    thumbnail.Destroy?.();
+  if (!frame?.Position || !position)
+    return;
+  const eye = frame.Position;
+  const target = [position.X ?? position[0], position.Y ?? position[1], position.Z ?? position[2]];
+  placeCamera(eye, target, framedFieldOfView);
+}
+
+function placeCamera(eye, target, framedFieldOfView) {
+  const controls = RBXRenderer.getRendererControls();
+  const camera = RBXRenderer.firstScene.camera;
+  if (!controls)
+    return;
+  const scale = Math.tan((framedFieldOfView * Math.PI) / 360) / Math.tan((viewerFieldOfView * Math.PI) / 360);
+  controls.target.set(target[0], target[1], target[2]);
+  camera.fov = viewerFieldOfView;
+  camera.position.set(
+    target[0] + (eye[0] - target[0]) * scale,
+    target[1] + (eye[1] - target[1]) * scale,
+    target[2] + (eye[2] - target[2]) * scale,
+  );
+  camera.lookAt(controls.target);
+  camera.updateProjectionMatrix();
+  controls.update();
 }
 
 async function apply(data) {
@@ -187,7 +236,7 @@ async function apply(data) {
       animation = data.animation;
     if (data.kind === "motion") {
       if (renderer && data.animation)
-        await renderer.setMainAnimation(data.animation);
+        await playMotion(data.animation);
       return;
     }
     if (data.kind === "item") {
@@ -235,11 +284,65 @@ function boundsOf(rig) {
   return found ? { minX, minY, minZ, maxX, maxY, maxZ } : null;
 }
 
+async function playMotion(name) {
+  if (!renderer || !name)
+    return;
+  const mood = name.startsWith("mood.");
+  const wasMood = framingMood;
+  framingMood = mood;
+  if (!mood) {
+    await renderer.setMainAnimation(name);
+    if (wasMood && !cameraHeld)
+      frameCamera(renderer.currentRig);
+    return;
+  }
+
+  const humanoid = renderer.currentRig?.FindFirstChildOfClass("Humanoid");
+  const animator = humanoid?.FindFirstChildOfClass("Animator");
+  if (!animator)
+    return;
+  const wrapper = new AnimatorWrapper(animator);
+  const loaded = await wrapper.loadAvatarAnimation(BigInt(name.slice(5)), false, true);
+  if (loaded instanceof Response) {
+    post({ kind: "status", state: "failed", message: "That mood could not be loaded." });
+    return;
+  }
+  wrapper.stopMoodAnimation();
+  wrapper.playAnimation("idle:0");
+  wrapper.playAnimation("mood", "mood");
+  frameHead(renderer.currentRig);
+}
+
+function frameHead(rig) {
+  const controls = RBXRenderer.getRendererControls();
+  const scene = RBXRenderer.firstScene;
+  const camera = scene.camera;
+  const head = rig?.FindFirstChild?.("Head");
+  const size = head?.Prop?.("Size");
+  const frame = head?.Prop?.("CFrame");
+  if (!controls || !camera || !size || !frame?.Position || cameraHeld)
+    return;
+  const target = frame.Position;
+  const height = Math.max(size.Y * 4.5, 3);
+  const width = Math.max(size.X * 3.2, 2);
+  const aspect = camera.aspect > 0 ? camera.aspect : 1;
+  const tangent = Math.tan((viewerFieldOfView * Math.PI) / 360);
+  const distance = Math.max(height / 2 / tangent, width / 2 / (tangent * aspect)) / 0.86;
+  const [x, y, z] = scene.lookAwayVector;
+  const length = Math.hypot(x, y, z) || 1;
+  camera.fov = viewerFieldOfView;
+  controls.target.set(target[0], target[1], target[2]);
+  camera.position.set(target[0] + x / length * distance, target[1] + y / length * distance, target[2] + z / length * distance);
+  camera.lookAt(controls.target);
+  camera.updateProjectionMatrix();
+  controls.update();
+}
+
 function frameCamera(rig) {
   const controls = RBXRenderer.getRendererControls();
   const scene = RBXRenderer.firstScene;
   const camera = scene.camera;
-  if (!controls || cameraHeld)
+  if (!controls || cameraHeld || framingItem || framingMood)
     return;
   const bounds = rig ? boundsOf(rig) : null;
   const targetX = bounds ? (bounds.minX + bounds.maxX) / 2 : controls.target.x;

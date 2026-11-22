@@ -20,6 +20,12 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.52
+
+- Selecting a worn shirt, pants, accessory, or head shows that item in the 3D preview
+- A mood opens on its own. A headless head uses the classic face so the expression is visible
+- Choosing an animation or emote after that returns to your avatar
+
 ## What’s new in 2.0.51
 
 - The avatar preview opens from the installed Spectre.exe. The 3D viewer files travel inside the app

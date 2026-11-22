@@ -59191,6 +59191,69 @@ var CONSTANTS_CameraPresetsUtility = {
   UPVECTOR_ORENTATION_TRESHOLD: -60 / 100,
   AVATAR_ROTATION_DEGREE: 15
 };
+function getCorners(cframe, size) {
+  const halfX = size.X / 2;
+  const halfY = size.Y / 2;
+  const halfZ = size.Z / 2;
+  return [
+    cframe.multiply(new CFrame(halfX, halfY, halfZ)),
+    cframe.multiply(new CFrame(halfX, halfY, -halfZ)),
+    cframe.multiply(new CFrame(-halfX, halfY, halfZ)),
+    cframe.multiply(new CFrame(-halfX, halfY, -halfZ)),
+    cframe.multiply(new CFrame(halfX, -halfY, halfZ)),
+    cframe.multiply(new CFrame(halfX, -halfY, -halfZ)),
+    cframe.multiply(new CFrame(-halfX, -halfY, halfZ)),
+    cframe.multiply(new CFrame(-halfX, -halfY, -halfZ))
+  ];
+}
+function getLower(a, b) {
+  return new Vector3(a.X < b.X ? a.X : b.X, a.Y < b.Y ? a.Y : b.Y, a.Z < b.Z ? a.Z : b.Z);
+}
+function getHigher(a, b) {
+  return new Vector3(a.X > b.X ? a.X : b.X, a.Y > b.Y ? a.Y : b.Y, a.Z > b.Z ? a.Z : b.Z);
+}
+function getExtents(cframe, parts) {
+  const inverseCF = cframe.inverse();
+  let lowerExtents = new Vector3(1e6, 1e6, 1e6);
+  let higherExtents = new Vector3(-1e6, -1e6, -1e5);
+  for (const child of parts) if (child.createWrapper()?.IsA("BasePart")) {
+    const partCF = child.Prop("CFrame");
+    const partSize = child.Prop("Size");
+    const corners = getCorners(inverseCF.multiply(partCF), partSize);
+    for (const corner of corners) {
+      lowerExtents = getLower(lowerExtents, new Vector3().fromVec3(corner.Position));
+      higherExtents = getHigher(higherExtents, new Vector3().fromVec3(corner.Position));
+    }
+  }
+  return [lowerExtents, higherExtents];
+}
+function getExtentsWorld(rig) {
+  const rigParts = [];
+  for (const child of rig.GetDescendants()) if (child.createWrapper()?.IsA("BasePart") && !(child.Prop("Name") === "HumanoidRootPart")) rigParts.push(child);
+  return getExtents(new CFrame(), rigParts);
+}
+function getExtentsCenter(extents) {
+  return extents[1].minus(extents[0]).divide(new Vector3(2, 2, 2)).add(extents[0]);
+}
+function zoomExtents(cameraCFrame, modelCFrame, modelSize, targetFOV, distanceScale, sizeType = "calculate") {
+  let largestSize = Math.max(modelSize.X, modelSize.Y, modelSize.Z);
+  if (sizeType === "calculate") largestSize = modelSize.magnitude() / 2 / Math.sin(rad(targetFOV / 2));
+  const fovMultiplier = sizeType === "largestAxis" ? 70 / targetFOV : 1;
+  const lookDir = multiply(normalize(minus(cameraCFrame.Position, modelCFrame.Position)), [
+    distanceScale,
+    distanceScale,
+    distanceScale
+  ]);
+  cameraCFrame.Position = add(modelCFrame.Position, multiply(multiply(lookDir, [
+    largestSize,
+    largestSize,
+    largestSize
+  ]), [
+    fovMultiplier,
+    fovMultiplier,
+    fovMultiplier
+  ]));
+}
 var BackgroundRenderer = class {
   auth;
   avatarCyclorama;
@@ -59866,6 +59929,67 @@ var OutfitRenderer = class {
     this.backgroundRenderer.destroy();
   }
 };
+function getThumbnailCamera(model) {
+  const thumbnailCamera = model.FindFirstChild("ThumbnailCamera");
+  if (thumbnailCamera && thumbnailCamera.IsA("Camera")) return thumbnailCamera;
+  const camera = new Instance("Camera");
+  const thumbnailConfiguration = model.FindFirstChild("ThumbnailConfiguration");
+  if (thumbnailConfiguration) {
+    const thumbnailCameraTarget = thumbnailConfiguration.FindFirstChild("ThumbnailCameraTarget");
+    if (thumbnailCameraTarget && thumbnailCameraTarget.IsA("ObjectValue")) {
+      const targetInstance = thumbnailCameraTarget.Prop("Value");
+      if (targetInstance && targetInstance.IsA("BasePart")) {
+        const targetCF = targetInstance.PropOrDefault("CFrame", new CFrame());
+        const thumbnailCameraValue = thumbnailConfiguration.FindFirstChild("ThumbnailCameraValue");
+        if (thumbnailCameraValue && thumbnailCameraValue.IsA("CFrameValue")) {
+          const cf = thumbnailCameraValue.PropOrDefault("Value", new CFrame());
+          const resultCF = targetCF.multiply(cf);
+          camera.setProperty("FieldOfView", 70);
+          camera.setProperty("CFrame", resultCF);
+          return camera;
+        }
+      }
+    }
+  }
+  let rootPart = model.PropOrDefault("PrimaryPart", void 0);
+  if (!rootPart) rootPart = model.FindFirstChildOfClass("Part");
+  if (!rootPart) rootPart = model.FindFirstChildOfClass("MeshPart");
+  if (!rootPart) return camera;
+  const rootPartCF = rootPart.PropOrDefault("CFrame", new CFrame()).clone();
+  const worldExtents = getExtentsWorld(model);
+  if (!worldExtents) return camera;
+  const extentsSize = worldExtents[1].minus(worldExtents[0]);
+  rootPartCF.Position = getExtentsCenter(worldExtents).toVec3();
+  let lookVector = rootPartCF.lookVector();
+  if (Math.abs(lookVector[1]) > 0.95) lookVector = [
+    0,
+    0,
+    -1
+  ];
+  else {
+    lookVector[1] = 0;
+    lookVector = normalize(lookVector);
+  }
+  let lookCF = CFrame.lookAt([
+    0,
+    0,
+    0
+  ], lookVector);
+  lookCF = lookCF.multiply(CFrame.fromEulerAngles(0, 0, rad(45)));
+  lookCF = lookCF.multiply(CFrame.fromEulerAngles(rad(35), 0, 0));
+  lookCF = lookCF.multiply(CFrame.fromEulerAngles(0, 0, 0));
+  lookVector = lookCF.lookVector();
+  lookCF.Position = add(rootPartCF.Position, multiply([
+    10,
+    10,
+    10
+  ], lookVector));
+  lookCF = CFrame.lookAt(lookCF.Position, rootPartCF.Position);
+  const cameraCF = lookCF.clone();
+  zoomExtents(cameraCF, rootPartCF, extentsSize, 70, 1);
+  camera.setProperty("CFrame", cameraCF);
+  return camera;
+}
 
 // viewer.mjs
 FLAGS.ONLINE_ASSETS = true;
@@ -59888,6 +60012,8 @@ var playing = true;
 var speed = 1;
 var last = performance.now();
 var cameraHeld = false;
+var framingItem = false;
+var framingMood = false;
 function post(message) {
   window.chrome.webview.postMessage(message);
 }
@@ -59975,6 +60101,8 @@ function dropOutfit() {
 }
 async function showOutfit(data) {
   cameraHeld = false;
+  framingItem = false;
+  framingMood = typeof animation === "string" && animation.startsWith("mood.");
   clearItem();
   const outfit = new Outfit();
   outfit.fromJson(data.outfit);
@@ -59986,7 +60114,7 @@ async function showOutfit(data) {
       frameCamera(created.currentRig);
       post({ kind: "status", state: "shown" });
       if (animation)
-        void created.setMainAnimation(animation);
+        void playMotion(animation);
     });
     created.onError.Connect(() => {
       if (renderer === created)
@@ -60003,21 +60131,62 @@ async function showOutfit(data) {
   renderer.setOutfit(outfit);
 }
 async function showItem(data) {
+  cameraHeld = false;
+  framingItem = true;
   dropOutfit();
   clearItem();
   const model = await API.Asset.GetRBX(`rbxassetid://${data.assetId}`, {
     "Roblox-AssetFormat": "avatar_meshpart_accessory"
   }).catch(() => null);
   if (!model || model instanceof Response || !model.generateTree) {
+    framingItem = false;
     post({ kind: "status", state: "failed", message: "This item has no 3D model." });
     return;
   }
   const root = model.generateTree();
-  const shown = root.FindFirstChildOfClass("Accessory") || root.FindFirstChildOfClass("MeshPart") || root;
+  const accessory = root.FindFirstChildOfClass("Accessory");
+  if (!accessory) {
+    root.Destroy?.();
+    framingItem = false;
+    post({ kind: "status", state: "failed", message: "This item has no 3D model." });
+    return;
+  }
   itemRoot = root;
-  RBXRenderer.addInstance(shown, auth);
+  RBXRenderer.addInstance(accessory, auth);
+  frameAccessory(accessory);
   RBXRenderer.animateAll(false);
   post({ kind: "status", state: "shown" });
+}
+function frameAccessory(accessory) {
+  const thumbnail = getThumbnailCamera(accessory);
+  const frame2 = thumbnail?.Prop?.("CFrame");
+  const framedFieldOfView = Number(thumbnail?.PropOrDefault?.("FieldOfView", 70)) || 70;
+  const handle = accessory.FindFirstChild("Handle");
+  const position = handle?.Prop?.("Position");
+  if (thumbnail && thumbnail !== accessory.FindFirstChild("ThumbnailCamera"))
+    thumbnail.Destroy?.();
+  if (!frame2?.Position || !position)
+    return;
+  const eye = frame2.Position;
+  const target = [position.X ?? position[0], position.Y ?? position[1], position.Z ?? position[2]];
+  placeCamera(eye, target, framedFieldOfView);
+}
+function placeCamera(eye, target, framedFieldOfView) {
+  const controls = RBXRenderer.getRendererControls();
+  const camera = RBXRenderer.firstScene.camera;
+  if (!controls)
+    return;
+  const scale = Math.tan(framedFieldOfView * Math.PI / 360) / Math.tan(viewerFieldOfView * Math.PI / 360);
+  controls.target.set(target[0], target[1], target[2]);
+  camera.fov = viewerFieldOfView;
+  camera.position.set(
+    target[0] + (eye[0] - target[0]) * scale,
+    target[1] + (eye[1] - target[1]) * scale,
+    target[2] + (eye[2] - target[2]) * scale
+  );
+  camera.lookAt(controls.target);
+  camera.updateProjectionMatrix();
+  controls.update();
 }
 async function apply(data) {
   if (!ready) {
@@ -60033,7 +60202,7 @@ async function apply(data) {
       animation = data.animation;
     if (data.kind === "motion") {
       if (renderer && data.animation)
-        await renderer.setMainAnimation(data.animation);
+        await playMotion(data.animation);
       return;
     }
     if (data.kind === "item") {
@@ -60078,11 +60247,62 @@ function boundsOf(rig) {
   visit(rig);
   return found ? { minX, minY, minZ, maxX, maxY, maxZ } : null;
 }
+async function playMotion(name) {
+  if (!renderer || !name)
+    return;
+  const mood = name.startsWith("mood.");
+  const wasMood = framingMood;
+  framingMood = mood;
+  if (!mood) {
+    await renderer.setMainAnimation(name);
+    if (wasMood && !cameraHeld)
+      frameCamera(renderer.currentRig);
+    return;
+  }
+  const humanoid = renderer.currentRig?.FindFirstChildOfClass("Humanoid");
+  const animator = humanoid?.FindFirstChildOfClass("Animator");
+  if (!animator)
+    return;
+  const wrapper = new AnimatorWrapper(animator);
+  const loaded = await wrapper.loadAvatarAnimation(BigInt(name.slice(5)), false, true);
+  if (loaded instanceof Response) {
+    post({ kind: "status", state: "failed", message: "That mood could not be loaded." });
+    return;
+  }
+  wrapper.stopMoodAnimation();
+  wrapper.playAnimation("idle:0");
+  wrapper.playAnimation("mood", "mood");
+  frameHead(renderer.currentRig);
+}
+function frameHead(rig) {
+  const controls = RBXRenderer.getRendererControls();
+  const scene = RBXRenderer.firstScene;
+  const camera = scene.camera;
+  const head = rig?.FindFirstChild?.("Head");
+  const size = head?.Prop?.("Size");
+  const frame2 = head?.Prop?.("CFrame");
+  if (!controls || !camera || !size || !frame2?.Position || cameraHeld)
+    return;
+  const target = frame2.Position;
+  const height = Math.max(size.Y * 4.5, 3);
+  const width = Math.max(size.X * 3.2, 2);
+  const aspect2 = camera.aspect > 0 ? camera.aspect : 1;
+  const tangent = Math.tan(viewerFieldOfView * Math.PI / 360);
+  const distance2 = Math.max(height / 2 / tangent, width / 2 / (tangent * aspect2)) / 0.86;
+  const [x, y, z] = scene.lookAwayVector;
+  const length = Math.hypot(x, y, z) || 1;
+  camera.fov = viewerFieldOfView;
+  controls.target.set(target[0], target[1], target[2]);
+  camera.position.set(target[0] + x / length * distance2, target[1] + y / length * distance2, target[2] + z / length * distance2);
+  camera.lookAt(controls.target);
+  camera.updateProjectionMatrix();
+  controls.update();
+}
 function frameCamera(rig) {
   const controls = RBXRenderer.getRendererControls();
   const scene = RBXRenderer.firstScene;
   const camera = scene.camera;
-  if (!controls || cameraHeld)
+  if (!controls || cameraHeld || framingItem || framingMood)
     return;
   const bounds = rig ? boundsOf(rig) : null;
   const targetX = bounds ? (bounds.minX + bounds.maxX) / 2 : controls.target.x;
