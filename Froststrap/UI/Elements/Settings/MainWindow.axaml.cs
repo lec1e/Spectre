@@ -327,6 +327,10 @@ namespace Froststrap.UI.Elements.Settings
             ["multiinstance"] = ("Multi Instance", LucideIconNames.Copy),
             ["vipserver"] = ("VIP Server", LucideIconNames.Crown),
             ["news"] = ("News", LucideIconNames.Newspaper),
+            ["accounts"] = ("Accounts", LucideIconNames.IdCard),
+            ["avatar"] = ("Avatar", LucideIconNames.User),
+            ["inventory"] = ("Inventory", LucideIconNames.Shirt),
+            ["chats"] = ("Chats", LucideIconNames.MessageCircle),
         };
 
         private void UpdatePageView(object? viewModel)

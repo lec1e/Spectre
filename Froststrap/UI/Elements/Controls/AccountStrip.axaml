@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
+             x:Class="Froststrap.UI.Elements.Controls.AccountStrip"
+             x:DataType="vm:AccountSession"
+             DataContext="{x:Static vm:AccountSession.Instance}">
+  <UserControl.Styles>
+    <Style Selector="ComboBox Popup">
+      <Setter Property="Placement" Value="Bottom" />
+      <Setter Property="PlacementConstraintAdjustment" Value="FlipY,ResizeY,SlideX" />
+    </Style>
+  </UserControl.Styles>
+  <Border Background="{DynamicResource WbFillBrush}" BorderBrush="{DynamicResource WbLineStrongBrush}" BorderThickness="1" CornerRadius="14" Padding="12,8" Margin="0,0,0,12">
+    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+      <StackPanel VerticalAlignment="Center" Spacing="1" Margin="0,0,4,0">
+        <TextBlock Text="ACCOUNT" FontSize="10" FontWeight="SemiBold" Opacity="0.5" />
+        <TextBlock Text="{Binding Status}" FontSize="12" Opacity="0.8" />
+      </StackPanel>
+      <ComboBox Grid.Column="1" HorizontalAlignment="Left" MinWidth="280" MaxWidth="420" MaxDropDownHeight="240"
+                DropDownOpened="FitDropDown"
+                ItemsSource="{Binding Accounts}" SelectedItem="{Binding Selected}"
+                PlaceholderText="No saved accounts">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:AccountCard">
+            <TextBlock Text="{Binding Line}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <Button Grid.Column="2" Content="Save login" Command="{Binding CaptureCommand}" MinWidth="108" VerticalAlignment="Center" />
+    </Grid>
+  </Border>
+</UserControl>

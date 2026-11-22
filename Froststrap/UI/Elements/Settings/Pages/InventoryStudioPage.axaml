@@ -1,0 +1,123 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Froststrap.UI.Elements.Controls"
+             xmlns:studio="using:Froststrap.Integrations"
+             xmlns:vm="clr-namespace:Froststrap.UI.ViewModels.Settings"
+             x:Class="Froststrap.UI.Elements.Settings.Pages.InventoryStudioPage"
+             x:DataType="vm:InventoryStudioViewModel"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+  <UserControl.Styles>
+    <Style Selector="TextBox.speed">
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="MinHeight" Value="0" />
+      <Setter Property="Height" Value="16" />
+      <Setter Property="MinWidth" Value="0" />
+      <Setter Property="Width" Value="34" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="Opacity" Value="0.7" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TextBox.speed:pointerover /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="MinHeight" Value="0" />
+    </Style>
+    <Style Selector="TextBox.speed:focus /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="#55FFFFFF" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+      <Setter Property="MinHeight" Value="0" />
+    </Style>
+  </UserControl.Styles>
+  <controls:FitHost>
+    <Grid RowDefinitions="Auto,*">
+    <controls:AccountStrip />
+    <Grid Grid.Row="1" ColumnDefinitions="168,*,300" ColumnSpacing="12">
+      <Border Background="{DynamicResource WbFillBrush}" BorderBrush="{DynamicResource WbLineStrongBrush}" BorderThickness="1" CornerRadius="16" Padding="8">
+        <controls:WheelScroll>
+          <ItemsControl ItemsSource="{Binding Categories}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="studio:InventoryCategory">
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,4" Padding="10,8"
+                        Content="{Binding Label}"
+                        Command="{Binding $parent[UserControl].((vm:InventoryStudioViewModel)DataContext).SelectCategoryCommand}"
+                        CommandParameter="{Binding Id}" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </controls:WheelScroll>
+      </Border>
+
+      <Border Grid.Column="1" Background="{DynamicResource WbFillBrush}" BorderBrush="{DynamicResource WbLineStrongBrush}" BorderThickness="1" CornerRadius="16" Padding="12">
+        <Grid RowDefinitions="Auto,*,Auto">
+          <DockPanel Margin="0,0,0,10">
+            <Button DockPanel.Dock="Right" Content="Load more" Margin="8,0,0,0" IsVisible="{Binding HasMore}" Command="{Binding LoadMoreCommand}" />
+            <TextBox PlaceholderText="Filter this list" Text="{Binding Filter}" />
+          </DockPanel>
+          <controls:WheelScroll Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding VisibleItems}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:InventoryItemRow">
+                  <Button Width="132" Height="168" Margin="0,0,8,8" Padding="8"
+                          Command="{Binding $parent[UserControl].((vm:InventoryStudioViewModel)DataContext).SelectItemCommand}"
+                          CommandParameter="{Binding Id}">
+                    <StackPanel Spacing="6">
+                      <Border Height="84" CornerRadius="8" ClipToBounds="True" Background="#121216">
+                        <Image Source="{Binding Image}" Stretch="Uniform" />
+                      </Border>
+                      <TextBlock Text="{Binding Name}" FontSize="12" TextWrapping="Wrap" MaxHeight="32" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Text="{Binding PriceText}" FontSize="11" Opacity="0.55" />
+                    </StackPanel>
+                  </Button>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </controls:WheelScroll>
+          <TextBlock Grid.Row="2" Text="{Binding Status}" Opacity="0.65" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0" />
+        </Grid>
+      </Border>
+
+      <Border Grid.Column="2" Background="#121216" BorderBrush="{DynamicResource WbLineStrongBrush}" BorderThickness="1" CornerRadius="16" Padding="12">
+        <Grid RowDefinitions="Auto,*,Auto">
+          <TextBlock Text="{Binding PreviewTitle}" FontSize="16" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+          <Image Grid.Row="1" MinHeight="200" Source="{Binding Preview}" Stretch="Uniform" Margin="0,8"
+                 PointerPressed="PreviewPressed" PointerMoved="PreviewMoved" PointerReleased="PreviewReleased"
+                 PointerWheelChanged="PreviewWheel" />
+          <StackPanel Grid.Row="2" Spacing="8">
+            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8">
+              <Button Content="{Binding PlayLabel}" MinWidth="72" Command="{Binding TogglePlayCommand}" />
+              <TextBox Grid.Column="1" Classes="speed" VerticalAlignment="Center" IsVisible="{Binding ShowSpin}"
+                       Text="{Binding SpeedText, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+              <Slider Grid.Column="2" Minimum="0.25" Maximum="2" Value="{Binding Speed}" VerticalAlignment="Center" IsVisible="{Binding ShowSpin}" />
+            </Grid>
+            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8" IsVisible="{Binding ShowAudio}">
+              <TextBlock Text="Volume" FontSize="11" Opacity="0.55" VerticalAlignment="Center" />
+              <TextBox Grid.Column="1" Classes="speed" VerticalAlignment="Center"
+                       Text="{Binding VolumeText, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+              <Slider Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding Volume}" VerticalAlignment="Center" />
+            </Grid>
+            <TextBlock Text="{Binding Details}" TextWrapping="Wrap" FontSize="12" MaxHeight="72" />
+            <Button Content="Wear" Classes="accent" HorizontalAlignment="Left" MinWidth="96" Command="{Binding WearCommand}" IsVisible="{Binding CanWear}" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <Button Content="Download" MinWidth="96" Command="{Binding DownloadCommand}" />
+              <Button Content="Download 3D" MinWidth="110" Command="{Binding DownloadModelCommand}" />
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
+    </Grid>
+    </Grid>
+  </controls:FitHost>
+</UserControl>

@@ -83,6 +83,10 @@ namespace Froststrap.UI.ViewModels.Settings
             ["banasync"] = LucideIconNames.Shield,
             ["hwidspoofer"] = LucideIconNames.FingerprintPattern,
             ["news"] = LucideIconNames.Newspaper,
+            ["accounts"] = LucideIconNames.IdCard,
+            ["avatar"] = LucideIconNames.User,
+            ["inventory"] = LucideIconNames.Shirt,
+            ["chats"] = LucideIconNames.MessageCircle,
         };
 
         private string _currentPageDescription = "";
@@ -142,6 +146,10 @@ namespace Froststrap.UI.ViewModels.Settings
         public IRelayCommand NavigateToVipServerCommand { get; }
         public IRelayCommand NavigateToServerBrowserCommand { get; }
         public IRelayCommand NavigateToNewsCommand { get; }
+        public IRelayCommand NavigateToAccountsCommand { get; }
+        public IRelayCommand NavigateToAvatarCommand { get; }
+        public IRelayCommand NavigateToInventoryCommand { get; }
+        public IRelayCommand NavigateToChatsCommand { get; }
         public IRelayCommand NavigateToCommunityModsCommand { get; }
         public IRelayCommand NavigateToPresetModsCommand { get; }
         public IRelayCommand NavigateToModGeneratorCommand { get; }
@@ -199,6 +207,10 @@ namespace Froststrap.UI.ViewModels.Settings
             NavigateToVipServerCommand = new RelayCommand(() => Navigate("vipserver", "VIP Server", "Join a shared VIP before launch.", new VipServerViewModel()));
             NavigateToServerBrowserCommand = new RelayCommand(() => Navigate("serverbrowser", "Server Browser", "Browse public servers.", new ServerBrowserViewModel()));
             NavigateToNewsCommand = new RelayCommand(() => Navigate("news", "News", "Roblox news feed.", new NewsViewModel()));
+            NavigateToAccountsCommand = new RelayCommand(() => Navigate("accounts", "Accounts", "Saved logins, profile, and switching.", new AccountsViewModel()));
+            NavigateToAvatarCommand = new RelayCommand(() => Navigate("avatar", "Avatar", "Worn items and animation playback.", new AvatarStudioViewModel()));
+            NavigateToInventoryCommand = new RelayCommand(() => Navigate("inventory", "Inventory", "Catalog items, animations, and asset downloads.", new InventoryStudioViewModel()));
+            NavigateToChatsCommand = new RelayCommand(() => Navigate("chats", "Chats", "Read and send Roblox chats.", new ChatsStudioViewModel()));
 
             NavigateToGlobalSettingsEditorCommand = new RelayCommand(() =>
             {
@@ -272,6 +284,10 @@ namespace Froststrap.UI.ViewModels.Settings
             "multiinstance" => NavigateToMultiInstanceCommand,
             "vipserver" => NavigateToVipServerCommand,
             "news" => NavigateToNewsCommand,
+            "accounts" => NavigateToAccountsCommand,
+            "avatar" => NavigateToAvatarCommand,
+            "inventory" => NavigateToInventoryCommand,
+            "chats" => NavigateToChatsCommand,
             "about" => OpenAboutCommand,
             _ => null
         };

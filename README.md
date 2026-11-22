@@ -20,6 +20,13 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.50
+
+- Settings has Accounts, Avatar, Inventory, and Chats
+- The avatar preview shows your real character, plays animations on its own, and fits the frame
+- New chat starts a direct chat, or a party with up to five friends
+- Accounts you play on are saved in an encrypted vault on this PC
+
 ## What’s new in 2.0.49
 
 - Search results line up with the left and right edges of the search bar

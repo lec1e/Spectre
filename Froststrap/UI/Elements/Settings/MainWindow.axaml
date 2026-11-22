@@ -87,6 +87,12 @@
                                 <controls:NavButton Tag="hwidspoofer" Icon="FingerprintPattern" Text="HWID Spoofer" Click="Nav_Click" />
                             </StackPanel>
 
+                            <TextBlock Classes="nav-section" Text="ACCOUNT" />
+                            <controls:NavButton Tag="accounts" Icon="IdCard" Text="Accounts" Click="Nav_Click" />
+                            <controls:NavButton Tag="avatar" Icon="User" Text="Avatar" Click="Nav_Click" />
+                            <controls:NavButton Tag="inventory" Icon="Shirt" Text="Inventory" Click="Nav_Click" />
+                            <controls:NavButton Tag="chats" Icon="MessageCircle" Text="Chats" Click="Nav_Click" />
+
                             <TextBlock Classes="nav-section" Text="MORE" />
                             <controls:NavButton Tag="news" Icon="Newspaper" Text="News" Click="Nav_Click" />
                             <controls:NavButton Tag="about" Icon="Info" Text="{x:Static resources:Strings.Menu_About_Title}" Click="Nav_Click" />

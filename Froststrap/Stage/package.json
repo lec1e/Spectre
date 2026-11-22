@@ -1,0 +1,9 @@
+{
+  "name": "spectre-stage",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "esbuild": "0.25.12",
+    "roavatar-renderer": "1.10.3"
+  }
+}

@@ -1,4 +1,5 @@
-﻿using Froststrap.RobloxInterfaces;
+﻿using Froststrap.Integrations;
+using Froststrap.RobloxInterfaces;
 using System.Security.Cryptography;
 
 namespace Froststrap
@@ -80,6 +81,30 @@ namespace Froststrap
             return null;
         }
 
+        public async Task<bool> CaptureCurrentSessionAsync()
+        {
+            if (!Enabled)
+            {
+                App.Settings.Prop.AllowCookieAccess = true;
+                App.Settings.Save();
+            }
+
+            var previousCookie = AuthCookie;
+            var previousUser = User;
+            var previousState = State;
+            AuthCookie = string.Empty;
+            User = null;
+            State = CookieState.Unknown;
+            await LoadCookies();
+            if (User is { Id: > 0 } && !string.IsNullOrWhiteSpace(AuthCookie))
+                return true;
+
+            AuthCookie = previousCookie;
+            User = previousUser;
+            State = previousUser is { Id: > 0 } ? CookieState.Success : previousState;
+            return false;
+        }
+
         public async Task LoadCookies()
         {
             const string LOG_IDENT = "CookiesManager::LoadCookies";
@@ -94,6 +119,8 @@ namespace Froststrap
 
             if (!string.IsNullOrEmpty(AuthCookie))
             {
+                if (User is { Id: > 0 } loaded)
+                    AccountVault.Remember(loaded.Id, loaded.Username, loaded.DisplayName, AuthCookie);
                 App.Logger.WriteLine(LOG_IDENT, "Cookie was already loaded!");
                 return;
             }
@@ -132,6 +159,8 @@ namespace Froststrap
                 AuthenticatedUser? user = await GetAuthenticated();
                 User = user;
                 State = (user != null && user.Id != 0) ? CookieState.Success : CookieState.Invalid;
+                if (user is { Id: > 0 })
+                    AccountVault.Remember(user.Id, user.Username, user.DisplayName, AuthCookie);
             }
             catch (Exception ex)
             {
