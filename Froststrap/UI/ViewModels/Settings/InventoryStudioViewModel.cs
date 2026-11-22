@@ -397,7 +397,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
             Details = $"{row.Name}\n{row.TypeLabel}\n\n{ex.Message}";
         }
 
-        if (_categoryId is "emotes" or "animations" or "models")
+        if (_categoryId is "emotes" or "animations")
         {
             await ShowLiveAsync(row);
             return;
@@ -561,7 +561,13 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         {
             Status = "Downloading the 3D model…";
             var package = await _client.GetModelAsync(Selected.Id, avatar: false, CancellationToken.None);
-            _mesh = AccountMesh.Parse(package.Obj, package.Material, package.Surfaces);
+            _mesh = AccountMesh.Parse(package.Obj, package.Material, package.Surfaces, package.Shot);
+            if (package.Shot is not null)
+            {
+                _yaw = 0;
+                _pitch = 0;
+                _zoom = 1;
+            }
             ShowingModel = true;
             ModelReady?.Invoke(this, package);
             await RenderAsync();

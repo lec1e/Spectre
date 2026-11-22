@@ -39,6 +39,7 @@ public sealed class AccountMesh
     public Vector3[]? Pivots { get; init; }
     public Vector3 Center { get; init; }
     public float Fit { get; init; }
+    public ModelShot? Shot { get; init; }
     public float PoseScale { get; init; } = 1f;
     public bool CanPose { get; init; }
     public bool RigidParts { get; init; }
@@ -46,7 +47,7 @@ public sealed class AccountMesh
     public static AccountMesh Parse(string obj, byte[]? texturePng)
         => Parse(obj, null, texturePng is { Length: > 0 } png ? [("texture", png)] : []);
 
-    public static AccountMesh Parse(string obj, string? material, IReadOnlyList<(string Name, byte[] Png)> textures)
+    public static AccountMesh Parse(string obj, string? material, IReadOnlyList<(string Name, byte[] Png)> textures, ModelShot? shot = null)
     {
         var positions = new List<Vector3>();
         var uvs = new List<Vector2>();
@@ -156,6 +157,7 @@ public sealed class AccountMesh
             Pivots = skin.Pivots,
             Center = center,
             Fit = fit,
+            Shot = shot,
             PoseScale = skin.Scale,
             CanPose = skin.CanPose
         };
@@ -562,7 +564,8 @@ public sealed class AccountMesh
             else if (current is not null && line.StartsWith("map_Kd ", StringComparison.Ordinal))
             {
                 var file = line[7..].Trim().Trim('"');
-                if (textures.TryGetValue(file, out var index) || textures.TryGetValue(Path.GetFileName(file), out index))
+                var token = file.Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault() ?? file;
+                if (textures.TryGetValue(token, out var index) || textures.TryGetValue(Path.GetFileName(token), out index) || textures.TryGetValue(Path.GetFileNameWithoutExtension(token), out index))
                 {
                     map[current] = index;
                     mapped = true;
@@ -624,6 +627,7 @@ public static class AccountMeshPreview
         var center = mesh.Fit > 0.001f ? mesh.Center : CenterOf(positions);
         var fit = mesh.Fit > 0.001f ? mesh.Fit : 1f;
         var scale = 0.82f * MathF.Min(width, height) / fit * Math.Clamp(zoom, 0.4f, 3.6f);
+        var fill = mesh.Shot is ModelShot framed ? FillOf(framed, width, height) * Math.Clamp(zoom, 0.45f, 3.4f) : 1f;
         var cy = MathF.Cos(yaw);
         var sy = MathF.Sin(yaw);
         var cp = MathF.Cos(pitch);
@@ -648,9 +652,9 @@ public static class AccountMeshPreview
         for (var faceIndex = 0; faceIndex < mesh.Faces.Count; faceIndex++)
         {
             var face = mesh.Faces[faceIndex];
-            if (!Project(positions, mesh, face[0], face[1], center, cy, sy, cp, sp, scale, width, height, out var a) ||
-                !Project(positions, mesh, face[2], face[3], center, cy, sy, cp, sp, scale, width, height, out var b) ||
-                !Project(positions, mesh, face[4], face[5], center, cy, sy, cp, sp, scale, width, height, out var c))
+            if (!Project(positions, mesh, face[0], face[1], center, yaw, pitch, cy, sy, cp, sp, scale, fill, width, height, out var a) ||
+                !Project(positions, mesh, face[2], face[3], center, yaw, pitch, cy, sy, cp, sp, scale, fill, width, height, out var b) ||
+                !Project(positions, mesh, face[4], face[5], center, yaw, pitch, cy, sy, cp, sp, scale, fill, width, height, out var c))
                 continue;
 
             var normal = Vector3.Cross(b.View - a.View, c.View - a.View);
@@ -692,20 +696,70 @@ public static class AccountMeshPreview
         return sum / Math.Max(1, positions.Count);
     }
 
-    private static bool Project(IReadOnlyList<Vector3> positions, AccountMesh mesh, int positionIndex, int uvIndex, Vector3 center, float cy, float sy, float cp, float sp, float scale, int width, int height, out Vert vert)
+    private static bool Project(IReadOnlyList<Vector3> positions, AccountMesh mesh, int positionIndex, int uvIndex, Vector3 center, float yaw, float pitch, float cy, float sy, float cp, float sp, float scale, float fill, int width, int height, out Vert vert)
     {
         vert = default;
         if ((uint)positionIndex >= (uint)positions.Count)
             return false;
+
+        var uv = uvIndex >= 0 && uvIndex < mesh.Uvs.Count ? mesh.Uvs[uvIndex] : Vector2.Zero;
+        if (mesh.Shot is ModelShot shot)
+            return ProjectShot(positions[positionIndex], shot, yaw, pitch, fill, width, height, uv, out vert);
 
         var point = positions[positionIndex] - center;
         var x1 = point.X * cy + point.Z * sy;
         var z1 = -point.X * sy + point.Z * cy;
         var y2 = point.Y * cp - z1 * sp;
         var z2 = point.Y * sp + z1 * cp;
-        var uv = uvIndex >= 0 && uvIndex < mesh.Uvs.Count ? mesh.Uvs[uvIndex] : Vector2.Zero;
         vert = new Vert(width * 0.5f + x1 * scale, height * 0.5f - y2 * scale, z2, uv.X, uv.Y, new Vector3(x1, y2, z2));
         return true;
+    }
+
+    private static bool ProjectShot(Vector3 point, ModelShot shot, float yaw, float pitch, float fill, int width, int height, Vector2 uv, out Vert vert)
+    {
+        var target = new Vector3(shot.TargetX, shot.TargetY, shot.TargetZ);
+        var offset = new Vector3(shot.EyeX, shot.EyeY, shot.EyeZ) - target;
+        offset = Vector3.Transform(offset, Matrix4x4.CreateRotationY(yaw));
+        var forwardHint = offset.LengthSquared() > 0.0001f ? Vector3.Normalize(offset) : Vector3.UnitZ;
+        var upReference = MathF.Abs(forwardHint.Y) > 0.95f ? Vector3.UnitZ : Vector3.UnitY;
+        var pitchAxis = Vector3.Normalize(Vector3.Cross(forwardHint, upReference));
+        offset = Vector3.Transform(offset, Matrix4x4.CreateFromAxisAngle(pitchAxis, pitch));
+        var eye = target + offset;
+        var forward = Vector3.Normalize(target - eye);
+        var up = Vector3.Normalize(Vector3.Cross(pitchAxis, forward));
+        var right = Vector3.Cross(forward, up);
+        var view = point - eye;
+        var z = Vector3.Dot(view, forward);
+        vert = default;
+        if (z < 0.05f)
+            return false;
+
+        var aspect = width / (float)Math.Max(1, height);
+        var tangent = MathF.Tan(shot.FieldOfView * 0.5f * (MathF.PI / 180f));
+        var ndcX = Vector3.Dot(view, right) / (z * tangent * aspect) * fill;
+        var ndcY = Vector3.Dot(view, up) / (z * tangent) * fill;
+        vert = new Vert((ndcX * 0.5f + 0.5f) * width, (1f - (ndcY * 0.5f + 0.5f)) * height, z, uv.X, uv.Y, view);
+        return true;
+    }
+
+    private static float FillOf(ModelShot shot, int width, int height)
+    {
+        var furthest = 0.001f;
+        foreach (var x in new[] { shot.MinX, shot.MaxX })
+        {
+            foreach (var y in new[] { shot.MinY, shot.MaxY })
+            {
+                foreach (var z in new[] { shot.MinZ, shot.MaxZ })
+                {
+                    if (!ProjectShot(new Vector3(x, y, z), shot, 0, 0, 1f, width, height, default, out var corner))
+                        continue;
+                    furthest = MathF.Max(furthest, MathF.Abs(corner.X / width * 2f - 1f));
+                    furthest = MathF.Max(furthest, MathF.Abs(1f - corner.Y / height * 2f));
+                }
+            }
+        }
+
+        return Math.Clamp(0.9f / furthest, 0.2f, 8f);
     }
 
     private static void Fill(byte[] color, float[] depth, int width, int height, Vert a, Vert b, Vert c, AccountMesh mesh, int face, float shade, bool coarse)
@@ -803,12 +857,18 @@ public static class AccountMeshPreview
         return false;
     }
 
+    private static float Repeat(float value)
+    {
+        var wrapped = value - MathF.Floor(value);
+        return wrapped < 0f ? wrapped + 1f : wrapped;
+    }
+
     private static Rgba32 Sample(AccountMesh mesh, int face, float u, float v, float shade)
     {
         if (Textured(mesh, face, out var surface))
         {
-            var uu = Math.Clamp(u, 0f, 1f);
-            var vv = Math.Clamp(1f - v, 0f, 1f);
+            var uu = Repeat(u);
+            var vv = Repeat(1f - v);
             var x = Math.Clamp((int)(uu * (surface.Width - 1)), 0, surface.Width - 1);
             var y = Math.Clamp((int)(vv * (surface.Height - 1)), 0, surface.Height - 1);
             var texel = surface.Pixels[y * surface.Width + x];

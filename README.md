@@ -20,6 +20,10 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.54
+
+- A model preview uses Roblox’s textured thumbnail and is framed to fill the preview
+
 ## What’s new in 2.0.53
 
 - Inventory lists keep loading until the category is complete, including places and later pages of game passes

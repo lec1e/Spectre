@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text.Json.Nodes;
 using Froststrap.Utility;
 
@@ -652,7 +653,42 @@ public sealed class AccountStudioClient
         }
 
         App.Logger.WriteLine("Avatar", $"3D model textures {loaded.Count}.");
-        return new ModelPackage(obj, loaded.Count > 0 ? loaded[0].Png : null, files, material, loaded);
+        return new ModelPackage(obj, loaded.Count > 0 ? loaded[0].Png : null, files, material, loaded, ReadShot(manifest));
+    }
+
+    private static ModelShot? ReadShot(JsonElement manifest)
+    {
+        if (!manifest.TryGetProperty("camera", out var camera) || camera.ValueKind != JsonValueKind.Object
+            || !manifest.TryGetProperty("aabb", out var box) || box.ValueKind != JsonValueKind.Object
+            || !TryVec(camera, "position", out var eye)
+            || !TryVec(box, "min", out var min)
+            || !TryVec(box, "max", out var max))
+            return null;
+
+        var fov = camera.TryGetProperty("fov", out var fovElement) && fovElement.TryGetSingle(out var degrees) ? degrees : 70f;
+        if (fov < 5f || fov > 120f)
+            fov = 70f;
+        return new ModelShot(
+            eye.X, eye.Y, eye.Z,
+            (min.X + max.X) * 0.5f, (min.Y + max.Y) * 0.5f, (min.Z + max.Z) * 0.5f,
+            fov,
+            min.X, min.Y, min.Z,
+            max.X, max.Y, max.Z);
+    }
+
+    private static bool TryVec(JsonElement parent, string name, out Vector3 point)
+    {
+        point = default;
+        if (!parent.TryGetProperty(name, out var value) || value.ValueKind != JsonValueKind.Object)
+            return false;
+        if (!value.TryGetProperty("x", out var x) || !value.TryGetProperty("y", out var y) || !value.TryGetProperty("z", out var z))
+            return false;
+        if (!x.TryGetSingle(out var px) || !y.TryGetSingle(out var py) || !z.TryGetSingle(out var pz))
+            return false;
+        if (!float.IsFinite(px) || !float.IsFinite(py) || !float.IsFinite(pz))
+            return false;
+        point = new Vector3(px, py, pz);
+        return true;
     }
 
     public async Task<IReadOnlyList<ChatConversation>> GetConversationsAsync(CancellationToken token)
@@ -1752,7 +1788,14 @@ public sealed record AssetDetails(string Name, string Description, string Creato
 
 public sealed record DownloadedFile(string FileName, byte[] Bytes);
 
-public sealed record ModelPackage(string Obj, byte[]? Texture, IReadOnlyList<DownloadedFile> Files, string? Material = null, IReadOnlyList<(string Name, byte[] Png)>? Textures = null)
+public readonly record struct ModelShot(
+    float EyeX, float EyeY, float EyeZ,
+    float TargetX, float TargetY, float TargetZ,
+    float FieldOfView,
+    float MinX, float MinY, float MinZ,
+    float MaxX, float MaxY, float MaxZ);
+
+public sealed record ModelPackage(string Obj, byte[]? Texture, IReadOnlyList<DownloadedFile> Files, string? Material = null, IReadOnlyList<(string Name, byte[] Png)>? Textures = null, ModelShot? Shot = null)
 {
     public IReadOnlyList<(string Name, byte[] Png)> Surfaces
         => Textures is { Count: > 0 } list ? list : Texture is { Length: > 0 } png ? [("texture", png)] : [];
