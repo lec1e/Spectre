@@ -9,10 +9,52 @@ public partial class InventoryStudioPage : UserControl
 {
     private bool _dragging;
     private Point _last;
+    private InventoryStudioViewModel? _model;
 
     public InventoryStudioPage()
     {
         InitializeComponent();
+        DataContextChanged += (_, _) => Hook(DataContext as InventoryStudioViewModel);
+        Stage.StatusChanged += OnStageStatus;
+    }
+
+    private void Hook(InventoryStudioViewModel? model)
+    {
+        if (_model is not null)
+            _model.LiveChanged -= OnLive;
+
+        _model = model;
+        if (_model is null)
+            return;
+
+        _model.LiveChanged += OnLive;
+        if (_model.LiveDocument is not null)
+            _ = Stage.ApplyAsync(_model.LiveDocument);
+    }
+
+    private void OnLive(object? sender, EventArgs e)
+    {
+        if (_model?.LiveDocument is string document)
+            _ = Stage.ApplyAsync(document);
+    }
+
+    private void OnStageStatus(string state, string? message)
+    {
+        if (_model is null)
+            return;
+
+        if (state == "failed" && _model.CategoryId == "models")
+        {
+            _ = _model.UsePhotoFallbackAsync();
+            return;
+        }
+
+        if (state is not ("failed" or "loading"))
+            return;
+
+        _model.Status = state == "failed"
+            ? message ?? "That preview could not be opened."
+            : "Opening the preview…";
     }
 
     private void PreviewPressed(object? sender, PointerPressedEventArgs e)

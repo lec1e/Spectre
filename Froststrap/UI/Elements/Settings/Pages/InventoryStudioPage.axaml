@@ -92,9 +92,12 @@
       <Border Grid.Column="2" Background="#121216" BorderBrush="{DynamicResource WbLineStrongBrush}" BorderThickness="1" CornerRadius="16" Padding="12">
         <Grid RowDefinitions="Auto,*,Auto">
           <TextBlock Text="{Binding PreviewTitle}" FontSize="16" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
-          <Image Grid.Row="1" MinHeight="200" Source="{Binding Preview}" Stretch="Uniform" Margin="0,8"
-                 PointerPressed="PreviewPressed" PointerMoved="PreviewMoved" PointerReleased="PreviewReleased"
-                 PointerWheelChanged="PreviewWheel" />
+          <Panel Grid.Row="1" Margin="0,8" MinHeight="200">
+            <controls:AccountStage x:Name="Stage" IsVisible="{Binding ShowLive}" />
+            <Image Source="{Binding Preview}" Stretch="Uniform" IsVisible="{Binding ShowPhoto}"
+                   PointerPressed="PreviewPressed" PointerMoved="PreviewMoved" PointerReleased="PreviewReleased"
+                   PointerWheelChanged="PreviewWheel" />
+          </Panel>
           <StackPanel Grid.Row="2" Spacing="8">
             <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8">
               <Button Content="{Binding PlayLabel}" MinWidth="72" Command="{Binding TogglePlayCommand}" />

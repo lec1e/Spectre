@@ -32,6 +32,9 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
     private string _status = "Loading accessories…";
     private bool _loading;
     private bool _showingModel;
+    private bool _showLive;
+    private int _loadTicket;
+    private AvatarSnapshot? _avatar;
     private InventoryItemRow? _selected;
     private string _details = "Select an item to wear it, turn it in 3D, or download it.";
     private Bitmap? _preview;
@@ -71,11 +74,17 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
             _yaw += (float)(0.016 * Math.Clamp(Speed, 0.25, 2));
             RequestRender();
         };
-        AccountVault.Changed += () => Dispatcher.UIThread.Post(() => _ = LoadCategoryAsync(_categoryId, false));
+        AccountVault.Changed += () => Dispatcher.UIThread.Post(() =>
+        {
+            _avatar = null;
+            _ = LoadCategoryAsync(_categoryId, false);
+        });
         _ = LoadCategoryAsync(_categoryId, false);
     }
 
     public event EventHandler<ModelPackage>? ModelReady;
+    public event EventHandler? LiveChanged;
+    public string? LiveDocument { get; private set; }
 
     public string Filter
     {
@@ -90,8 +99,20 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
     public string Status { get => _status; set => SetProperty(ref _status, value); }
     public bool IsLoading { get => _loading; set => SetProperty(ref _loading, value); }
     public bool ShowingModel { get => _showingModel; set => SetProperty(ref _showingModel, value); }
+    public bool ShowLive
+    {
+        get => _showLive;
+        private set
+        {
+            if (SetProperty(ref _showLive, value))
+                OnPropertyChanged(nameof(ShowPhoto));
+        }
+    }
+
+    public bool ShowPhoto => !ShowLive;
+    public string CategoryId => _categoryId;
     public bool HasMore => _pages.TryGetValue(_categoryId, out var page) && !string.IsNullOrEmpty(page.Cursor);
-    public bool CanWear => Selected is not null && _categoryId is not ("badges" or "passes" or "bundles" or "collectibles" or "decals" or "audio" or "models");
+    public bool CanWear => Selected is not null && _categoryId is not ("badges" or "passes" or "bundles" or "collectibles" or "decals" or "audio" or "models" or "places");
     public InventoryItemRow? Selected
     {
         get => _selected;
@@ -246,6 +267,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
 
     private async Task LoadCategoryAsync(string categoryId, bool append)
     {
+        var ticket = ++_loadTicket;
         _categoryId = categoryId;
         OnPropertyChanged(nameof(HasMore));
         OnPropertyChanged(nameof(CanWear));
@@ -256,32 +278,53 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         IsLoading = true;
         try
         {
-            var cursor = append && _pages.TryGetValue(categoryId, out var existing) ? existing.Cursor : null;
-            var page = await _client.GetInventoryAsync(categoryId, cursor, CancellationToken.None);
-            var rows = page.Items.Select(item => new InventoryItemRow
-            {
-                Id = item.Id,
-                Name = item.Name,
-                TypeName = item.TypeName,
-                PriceText = AccountStudioClient.TypeLabel(item.TypeName)
-            }).ToList();
-
             var stored = append && _pages.TryGetValue(categoryId, out var previous) ? previous.Items : [];
-            stored.AddRange(rows);
-            _pages[categoryId] = (stored, page.NextCursor);
-            ApplyFilter();
-            Status = $"{stored.Count} {Categories.First(category => category.Id == categoryId).Label.ToLowerInvariant()}";
-            OnPropertyChanged(nameof(HasMore));
-            _ = LoadImagesAsync(rows, categoryId);
+            var seen = stored.Select(item => item.Id).ToHashSet();
+            var cursor = append && _pages.TryGetValue(categoryId, out var existing) ? existing.Cursor : null;
+            var label = Categories.First(category => category.Id == categoryId).Label.ToLowerInvariant();
+            for (var pageNumber = 0; pageNumber < 40; pageNumber++)
+            {
+                var page = await _client.GetInventoryAsync(categoryId, cursor, CancellationToken.None);
+                if (ticket != _loadTicket)
+                    return;
+
+                var rows = new List<InventoryItemRow>();
+                foreach (var item in page.Items)
+                {
+                    if (!seen.Add(item.Id))
+                        continue;
+                    rows.Add(new InventoryItemRow
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        TypeName = string.IsNullOrWhiteSpace(item.TypeName) ? label : item.TypeName,
+                        PriceText = AccountStudioClient.TypeLabel(item.TypeName)
+                    });
+                }
+
+                stored.AddRange(rows);
+                var next = page.NextCursor;
+                _pages[categoryId] = (stored, next);
+                ApplyFilter();
+                Status = $"{stored.Count} {label}";
+                OnPropertyChanged(nameof(HasMore));
+                _ = LoadImagesAsync(rows, categoryId);
+                if (page.Items.Count == 0 || string.IsNullOrEmpty(next) || next == cursor)
+                    break;
+                cursor = next;
+            }
         }
         catch (Exception ex)
         {
+            if (ticket != _loadTicket)
+                return;
             Status = ex is RobloxApiException or HttpRequestException ? ex.Message : "That list could not be loaded. Try another category.";
             App.Logger.WriteException("Inventory", ex);
         }
         finally
         {
-            IsLoading = false;
+            if (ticket == _loadTicket)
+                IsLoading = false;
         }
     }
 
@@ -306,7 +349,14 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         };
         try
         {
-            var thumbs = await _client.GetThumbnailsAsync(rows.Select(row => row.Id).ToList(), type, "150x150", CancellationToken.None);
+            var thumbs = new Dictionary<long, string>();
+            var ids = rows.Select(row => row.Id).ToList();
+            for (var index = 0; index < ids.Count; index += 100)
+            {
+                var batch = await _client.GetThumbnailsAsync(ids.Skip(index).Take(100).ToList(), type, "150x150", CancellationToken.None);
+                foreach (var pair in batch)
+                    thumbs[pair.Key] = pair.Value;
+            }
             foreach (var row in rows)
             {
                 if (thumbs.TryGetValue(row.Id, out var url))
@@ -330,6 +380,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         Selected = row;
         ShowingModel = false;
         _mesh = null;
+        ShowLive = false;
         Preview = row.Image;
         Details = $"{row.Name}\n{row.TypeLabel}";
         if (_categoryId is "badges" or "passes" or "bundles")
@@ -346,8 +397,113 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
             Details = $"{row.Name}\n{row.TypeLabel}\n\n{ex.Message}";
         }
 
-        if (_categoryId is not ("badges" or "passes" or "audio" or "bundles"))
+        if (_categoryId is "emotes" or "animations" or "models")
+        {
+            await ShowLiveAsync(row);
+            return;
+        }
+
+        if (_categoryId is not ("badges" or "passes" or "audio" or "bundles" or "places" or "decals"))
             await ShowModelAsync();
+    }
+
+    private async Task ShowLiveAsync(InventoryItemRow row)
+    {
+        ShowLive = true;
+        OnPropertyChanged(nameof(ShowPhoto));
+        try
+        {
+            if (_categoryId == "models")
+            {
+                PublishLive(row.Name, "model", row.Id, "idle:0", null);
+                return;
+            }
+
+            Status = $"Opening {row.Name}…";
+            _avatar ??= await _client.GetAvatarAsync(CancellationToken.None);
+            var animation = row.TypeName switch
+            {
+                "EmoteAnimation" => "emote." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "MoodAnimation" => "mood." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "WalkAnimation" => "set.walk." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "RunAnimation" => "set.run." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "JumpAnimation" => "set.jump." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "FallAnimation" => "set.fall." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "ClimbAnimation" => "set.climb." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "SwimAnimation" => "set.swim." + row.Id.ToString(CultureInfo.InvariantCulture),
+                "IdleAnimation" => "set.idle." + row.Id.ToString(CultureInfo.InvariantCulture),
+                _ => "emote." + row.Id.ToString(CultureInfo.InvariantCulture)
+            };
+            PublishLive($"Playing {row.Name} on your avatar.", "outfit", row.Id, animation, _avatar);
+        }
+        catch (Exception ex)
+        {
+            ShowLive = false;
+            OnPropertyChanged(nameof(ShowPhoto));
+            Status = ex is RobloxApiException or HttpRequestException ? ex.Message : "That preview could not be opened.";
+        }
+    }
+
+    private void PublishLive(string status, string kind, long assetId, string animation, AvatarSnapshot? avatar)
+    {
+        Status = status;
+        var paint = avatar?.Paint ?? new BodyPaint("A3A2A5", "A3A2A5", "A3A2A5", "A3A2A5", "A3A2A5", "A3A2A5", 1, 1, 1, 0, 0);
+        IReadOnlyList<WornAsset> worn = avatar?.Assets ?? [];
+        if (animation.StartsWith("mood.", StringComparison.Ordinal))
+        {
+            var head = worn.FirstOrDefault(asset => asset.TypeName is "DynamicHead" or "Head");
+            if (head is null || head.Id is 15093053680 or 134082579 || head.Name.Contains("headless", StringComparison.OrdinalIgnoreCase))
+            {
+                worn = worn.Where(asset => asset.TypeName is not ("DynamicHead" or "Head"))
+                    .Append(new WornAsset(10638267973, "Classic head", "DynamicHead", "Head", "Heads and bodies"))
+                    .ToArray();
+            }
+        }
+        LiveDocument = JsonSerializer.Serialize(new
+        {
+            kind,
+            assetId,
+            animation,
+            speed = 1,
+            playing = true,
+            outfit = new
+            {
+                playerAvatarType = string.IsNullOrWhiteSpace(avatar?.RigType) ? "R15" : avatar.RigType,
+                scale = new
+                {
+                    height = paint.Height,
+                    width = paint.Width,
+                    head = paint.HeadScale,
+                    depth = paint.Width,
+                    proportion = paint.Proportion,
+                    bodyType = paint.BodyType
+                },
+                bodyColor3s = new
+                {
+                    headColor3 = Hash(paint.Head),
+                    torsoColor3 = Hash(paint.Torso),
+                    leftArmColor3 = Hash(paint.LeftArm),
+                    rightArmColor3 = Hash(paint.RightArm),
+                    leftLegColor3 = Hash(paint.LeftLeg),
+                    rightLegColor3 = Hash(paint.RightLeg)
+                },
+                assets = worn.Select(asset => new
+                {
+                    id = asset.Id,
+                    name = asset.Name,
+                    assetType = new { name = asset.TypeName }
+                })
+            }
+        });
+        LiveChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private static string Hash(string color)
+    {
+        var text = (color ?? "").Trim();
+        if (text.Length == 0)
+            return "#A3A2A5";
+        return text.StartsWith('#') ? text : "#" + text;
     }
 
     private async Task WearAsync()
@@ -383,6 +539,16 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         {
             Status = ex.Message;
         }
+    }
+
+    public async Task UsePhotoFallbackAsync()
+    {
+        if (_categoryId != "models" || Selected is null)
+            return;
+
+        ShowLive = false;
+        Status = "Opening the thumbnail…";
+        await ShowModelAsync();
     }
 
     private async Task ShowModelAsync()

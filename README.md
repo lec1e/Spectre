@@ -20,6 +20,12 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.53
+
+- Inventory lists keep loading until the category is complete, including places and later pages of game passes
+- Animations and emotes play on your avatar in the inventory preview
+- Models open in the 3D preview
+
 ## What’s new in 2.0.52
 
 - Selecting a worn shirt, pants, accessory, or head shows that item in the 3D preview

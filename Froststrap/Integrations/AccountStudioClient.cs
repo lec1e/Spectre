@@ -40,6 +40,7 @@ public sealed class AccountStudioClient
         new("badges", "Badges", null),
         new("passes", "Game passes", null),
         new("models", "Models", "Model"),
+        new("places", "Places", "Place"),
         new("decals", "Decals", "Decal"),
         new("audio", "Audio", "Audio"),
     ];
@@ -311,7 +312,7 @@ public sealed class AccountStudioClient
         await EnsureSessionAsync();
         var userId = AccountVault.CurrentUserId;
         var category = Categories.First(item => item.Id == categoryId);
-        var query = $"limit=25&sortOrder=Desc";
+        var query = $"limit=100&sortOrder=Desc";
         if (!string.IsNullOrEmpty(cursor))
             query += "&cursor=" + Uri.EscapeDataString(cursor);
 
@@ -330,22 +331,65 @@ public sealed class AccountStudioClient
         else if (category.Id == "badges")
         {
             json = await GetJsonAsync(UrlBuilder.BuildApiUrl("badges", $"v1/users/{userId}/badges?{query}"), token);
-            items = json.TryGetProperty("data", out var data)
-                ? data.EnumerateArray().Select(row => new InventoryAsset(row.GetProperty("id").GetInt64(), row.GetProperty("name").GetString() ?? "Badge", "Badge")).ToList()
-                : [];
+            items = [];
+            if (json.TryGetProperty("data", out var data) && data.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var row in data.EnumerateArray())
+                {
+                    var id = LongField(row, "id");
+                    if (id <= 0)
+                        continue;
+                    var name = FieldText(row, "name");
+                    items.Add(new InventoryAsset(id, string.IsNullOrWhiteSpace(name) ? "Badge" : name, "Badge"));
+                }
+            }
         }
         else if (category.Id == "passes")
         {
-            json = await GetJsonAsync(UrlBuilder.BuildApiUrl("apis", $"game-passes/v1/users/{userId}/game-passes?count=30"), token);
-            items = json.TryGetProperty("gamePasses", out var passes)
-                ? passes.EnumerateArray().Select(row => new InventoryAsset(row.GetProperty("gamePassId").GetInt64(), row.GetProperty("name").GetString() ?? "Game pass", "GamePass")).ToList()
-                : [];
-            return new InventoryPage(items, null);
+            var passQuery = "count=100";
+            if (!string.IsNullOrEmpty(cursor) && long.TryParse(cursor, NumberStyles.Integer, CultureInfo.InvariantCulture, out _))
+                passQuery += "&exclusiveStartId=" + Uri.EscapeDataString(cursor);
+            json = await GetJsonAsync(UrlBuilder.BuildApiUrl("apis", $"game-passes/v1/users/{userId}/game-passes?{passQuery}"), token);
+            items = [];
+            if (json.TryGetProperty("gamePasses", out var passes) && passes.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var row in passes.EnumerateArray())
+                {
+                    var id = LongField(row, "gamePassId");
+                    if (id <= 0)
+                        continue;
+                    var name = FieldText(row, "name");
+                    items.Add(new InventoryAsset(id, string.IsNullOrWhiteSpace(name) ? "Game pass" : name, "GamePass"));
+                }
+            }
+
+            var nextPass = items.Count == 100 ? items[^1].Id.ToString(CultureInfo.InvariantCulture) : null;
+            return new InventoryPage(items, nextPass);
         }
         else
         {
-            json = await GetJsonAsync(UrlBuilder.BuildApiUrl("inventory", $"v2/users/{userId}/inventory?{query}&assetTypes={category.AssetTypes}"), token);
-            items = ReadItems(json, "assetId", "name", null);
+            try
+            {
+                json = await GetJsonAsync(UrlBuilder.BuildApiUrl("inventory", $"v2/users/{userId}/inventory?{query}&assetTypes={category.AssetTypes}"), token);
+                items = ReadItems(json, "assetId", "name", null);
+            }
+            catch (RobloxApiException) when (category.AssetTypes?.Contains(',') == true)
+            {
+                items = [];
+                foreach (var typeName in category.AssetTypes.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                {
+                    try
+                    {
+                        var one = await GetJsonAsync(UrlBuilder.BuildApiUrl("inventory", $"v2/users/{userId}/inventory?{query}&assetTypes={typeName}"), token);
+                        items.AddRange(ReadItems(one, "assetId", "name", typeName));
+                    }
+                    catch (RobloxApiException)
+                    {
+                    }
+                }
+
+                return new InventoryPage(items.GroupBy(item => item.Id).Select(group => group.First()).ToList(), null);
+            }
         }
 
         var next = json.TryGetProperty("nextPageCursor", out var cursorElement) && cursorElement.ValueKind == JsonValueKind.String
@@ -792,6 +836,26 @@ public sealed class AccountStudioClient
         return names;
     }
 
+    private static long LongField(JsonElement row, string name)
+    {
+        if (!row.TryGetProperty(name, out var value))
+            return 0;
+        if (value.ValueKind == JsonValueKind.Number && value.TryGetInt64(out var number))
+            return number;
+        return value.ValueKind == JsonValueKind.String && long.TryParse(value.GetString(), out var parsed) ? parsed : 0;
+    }
+
+    private static string AssetTypeName(JsonElement row)
+    {
+        if (!row.TryGetProperty("assetType", out var type))
+            return "";
+        if (type.ValueKind == JsonValueKind.String)
+            return type.GetString() ?? "";
+        return type.ValueKind == JsonValueKind.Object && type.TryGetProperty("name", out var name) && name.ValueKind == JsonValueKind.String
+            ? name.GetString() ?? ""
+            : "";
+    }
+
     private static string FieldText(JsonElement row, string name)
         => row.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.String ? (value.GetString() ?? "").Trim() : "";
 
@@ -800,13 +864,19 @@ public sealed class AccountStudioClient
         if (!json.TryGetProperty("data", out var data))
             return [];
 
-        return data.EnumerateArray().Select(row =>
+        var items = new List<InventoryAsset>();
+        foreach (var row in data.EnumerateArray())
         {
-            var id = row.GetProperty(idName).GetInt64();
-            var name = row.TryGetProperty(nameName, out var nameElement) ? nameElement.GetString() ?? "Item" : "Item";
-            var type = forcedType ?? (row.TryGetProperty("assetType", out var typeElement) ? typeElement.GetString() ?? "" : "");
-            return new InventoryAsset(id, name, type);
-        }).ToList();
+            var id = LongField(row, idName);
+            if (id <= 0)
+                continue;
+            var name = row.TryGetProperty(nameName, out var nameElement) && nameElement.ValueKind == JsonValueKind.String
+                ? nameElement.GetString() ?? "Item"
+                : "Item";
+            items.Add(new InventoryAsset(id, name, forcedType ?? AssetTypeName(row)));
+        }
+
+        return items;
     }
 
     private static ChatConversation ReadConversation(JsonElement row)

@@ -60032,7 +60032,7 @@ window.chrome.webview.addEventListener("message", (event) => {
       waiter.resolve(data);
     return;
   }
-  if (data.kind === "outfit" || data.kind === "item" || data.kind === "motion")
+  if (data.kind === "outfit" || data.kind === "item" || data.kind === "model" || data.kind === "motion")
     void apply(data);
 });
 function requestFile(url, headers) {
@@ -60157,6 +60157,26 @@ async function showItem(data) {
   RBXRenderer.animateAll(false);
   post({ kind: "status", state: "shown" });
 }
+async function showModel(data) {
+  cameraHeld = false;
+  framingMood = false;
+  framingItem = false;
+  dropOutfit();
+  clearItem();
+  const model = await API.Asset.GetRBX(`rbxassetid://${data.assetId}`).catch(() => null);
+  if (!model || model instanceof Response || !model.generateTree) {
+    post({ kind: "status", state: "failed", message: "This model has no 3D preview." });
+    return;
+  }
+  const root = model.generateTree();
+  const shown = root.FindFirstChildOfClass("Model") || root.FindFirstChildOfClass("Accessory") || root.FindFirstChildOfClass("MeshPart") || root;
+  itemRoot = root;
+  RBXRenderer.addInstance(shown, auth);
+  frameCamera(shown);
+  framingItem = true;
+  RBXRenderer.animateAll(false);
+  post({ kind: "status", state: "shown" });
+}
 function frameAccessory(accessory) {
   const thumbnail = getThumbnailCamera(accessory);
   const frame2 = thumbnail?.Prop?.("CFrame");
@@ -60209,6 +60229,10 @@ async function apply(data) {
       await showItem(data);
       return;
     }
+    if (data.kind === "model") {
+      await showModel(data);
+      return;
+    }
     if (data.kind === "outfit")
       await showOutfit(data);
   } catch {
@@ -60253,6 +60277,33 @@ async function playMotion(name) {
   const mood = name.startsWith("mood.");
   const wasMood = framingMood;
   framingMood = mood;
+  if (name.startsWith("set.")) {
+    framingMood = false;
+    const parts = name.split(".");
+    const humanoid2 = renderer.currentRig?.FindFirstChildOfClass("Humanoid");
+    const animator2 = humanoid2?.FindFirstChildOfClass("Animator");
+    if (!animator2)
+      return;
+    const wrapper2 = new AnimatorWrapper(animator2);
+    const id = BigInt(parts[2]);
+    const slot = parts[1];
+    try {
+      await wrapper2.loadAvatarAnimation(id, false, true);
+      const names = Object.keys(wrapper2.data?.animationSet ?? {});
+      const match = names.find((key) => key.toLowerCase() === slot && wrapper2.data.animationSet[key]?.length);
+      if (match)
+        wrapper2.playAnimation(match);
+      else {
+        await wrapper2.loadAvatarAnimation(id, true, true);
+        wrapper2.playAnimation(`emote.${parts[2]}`);
+      }
+    } catch {
+      post({ kind: "status", state: "failed", message: "That animation could not be played." });
+    }
+    if (wasMood && !cameraHeld)
+      frameCamera(renderer.currentRig);
+    return;
+  }
   if (!mood) {
     await renderer.setMainAnimation(name);
     if (wasMood && !cameraHeld)
