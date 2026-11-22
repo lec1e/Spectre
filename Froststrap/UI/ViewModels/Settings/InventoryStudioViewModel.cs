@@ -397,7 +397,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
             Details = $"{row.Name}\n{row.TypeLabel}\n\n{ex.Message}";
         }
 
-        if (_categoryId is "emotes" or "animations")
+        if (_categoryId is "emotes" or "animations" or "models")
         {
             await ShowLiveAsync(row);
             return;
@@ -415,7 +415,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         {
             if (_categoryId == "models")
             {
-                PublishLive(row.Name, "model", row.Id, "idle:0", null);
+                await ShowTexturedModelAsync(row);
                 return;
             }
 
@@ -442,6 +442,45 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
             OnPropertyChanged(nameof(ShowPhoto));
             Status = ex is RobloxApiException or HttpRequestException ? ex.Message : "That preview could not be opened.";
         }
+    }
+
+    private async Task ShowTexturedModelAsync(InventoryItemRow row)
+    {
+        Status = $"Opening {row.Name}…";
+        var package = await _client.GetModelAsync(row.Id, avatar: false, CancellationToken.None);
+        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Eclipse", "Stage", "models");
+        Directory.CreateDirectory(folder);
+        var stem = row.Id.ToString(CultureInfo.InvariantCulture);
+        await File.WriteAllTextAsync(Path.Combine(folder, stem + ".obj"), package.Obj);
+        var textures = new Dictionary<string, string>();
+        var index = 0;
+        foreach (var (name, png) in package.Surfaces)
+        {
+            if (png is not { Length: > 8 })
+                continue;
+            var extension = png[0] == 0xFF && png[1] == 0xD8 ? ".jpg" : ".png";
+            var file = stem + "-" + index.ToString(CultureInfo.InvariantCulture) + extension;
+            await File.WriteAllBytesAsync(Path.Combine(folder, file), png);
+            if (!string.IsNullOrWhiteSpace(name))
+                textures[name] = "https://spectre.stage/models/" + file;
+            index++;
+        }
+
+        var shot = package.Shot;
+        LiveDocument = JsonSerializer.Serialize(new
+        {
+            kind = "mesh",
+            obj = "https://spectre.stage/models/" + stem + ".obj",
+            mtl = package.Material ?? "",
+            textures,
+            shot = shot is null ? null : new
+            {
+                eye = new[] { shot.Value.EyeX, shot.Value.EyeY, shot.Value.EyeZ },
+                target = new[] { shot.Value.TargetX, shot.Value.TargetY, shot.Value.TargetZ }
+            }
+        });
+        Status = "Drag the model to turn it.";
+        LiveChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void PublishLive(string status, string kind, long assetId, string animation, AvatarSnapshot? avatar)

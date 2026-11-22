@@ -20,6 +20,11 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.55
+
+- A model opens as a 3D object you can turn, with its texture, fitted to the preview
+- Saved accounts can be removed from the list
+
 ## What’s new in 2.0.54
 
 - A model preview uses Roblox’s textured thumbnail and is framed to fill the preview

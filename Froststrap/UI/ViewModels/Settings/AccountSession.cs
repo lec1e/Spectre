@@ -33,11 +33,13 @@ public sealed class AccountSession : NotifyPropertyChangedViewModel
     public static AccountSession Instance { get; } = new();
 
     private string _status = "Sign in to Roblox and play. Spectre saves that login.";
+    private string? _notice;
     private AccountCard? _selected;
 
     private AccountSession()
     {
         SelectCommand = new RelayCommand<long>(AccountVault.Select);
+        RemoveCommand = new RelayCommand<long>(Remove);
         CaptureCommand = new AsyncRelayCommand(CaptureAsync);
         AccountVault.Changed += Reload;
         Reload();
@@ -46,6 +48,7 @@ public sealed class AccountSession : NotifyPropertyChangedViewModel
 
     public ObservableCollection<AccountCard> Accounts { get; } = [];
     public ICommand SelectCommand { get; }
+    public ICommand RemoveCommand { get; }
     public ICommand CaptureCommand { get; }
     public string Status { get => _status; private set => SetProperty(ref _status, value); }
 
@@ -96,10 +99,23 @@ public sealed class AccountSession : NotifyPropertyChangedViewModel
                 Accounts.Add(card);
             Selected = Accounts.FirstOrDefault(card => card.IsActive);
             var active = Selected;
-            Status = active is null
+            Status = _notice ?? (active is null
                 ? "Sign in to Roblox and play. Spectre saves that login."
-                : $"Using {active.DisplayName}.";
+                : $"Using {active.DisplayName}.");
+            _notice = null;
         });
+    }
+
+    private void Remove(long userId)
+    {
+        var card = Accounts.FirstOrDefault(item => item.UserId == userId);
+        if (!AccountVault.Forget(userId))
+        {
+            Status = "That account is already gone.";
+            return;
+        }
+
+        _notice = card is null ? "Removed that account." : $"Removed {card.DisplayName}.";
     }
 
     private async Task CaptureAsync()

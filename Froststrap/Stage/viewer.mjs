@@ -9,6 +9,7 @@ import {
   RBXRenderer,
   getThumbnailCamera,
 } from "roavatar-renderer";
+import * as THREE from "three";
 
 FLAGS.ONLINE_ASSETS = true;
 FLAGS.USE_WORKERS = false;
@@ -24,6 +25,7 @@ const waiters = new Map();
 let sequence = 1;
 let renderer;
 let itemRoot;
+let shownMesh;
 let ready = false;
 let queued = null;
 let animation = "idle:0";
@@ -53,7 +55,7 @@ window.chrome.webview.addEventListener("message", (event) => {
       waiter.resolve(data);
     return;
   }
-  if (data.kind === "outfit" || data.kind === "item" || data.kind === "model" || data.kind === "motion")
+  if (data.kind === "outfit" || data.kind === "item" || data.kind === "model" || data.kind === "mesh" || data.kind === "motion")
     void apply(data);
 });
 
@@ -110,6 +112,27 @@ async function imageFromHost(input) {
   }
 }
 
+function setGround(visible) {
+  const scene = RBXRenderer.firstScene;
+  if (scene?.plane) scene.plane.visible = visible;
+  if (scene?.shadowPlane) scene.shadowPlane.visible = visible;
+}
+
+function clearMesh() {
+  if (!shownMesh)
+    return;
+  RBXRenderer.firstScene.scene.remove(shownMesh);
+  shownMesh.traverse((child) => {
+    child.geometry?.dispose();
+    const materials = Array.isArray(child.material) ? child.material : [child.material];
+    for (const material of materials) {
+      material?.map?.dispose();
+      material?.dispose();
+    }
+  });
+  shownMesh = null;
+}
+
 function clearItem() {
   if (!itemRoot)
     return;
@@ -133,6 +156,8 @@ async function showOutfit(data) {
   cameraHeld = false;
   framingItem = false;
   framingMood = typeof animation === "string" && animation.startsWith("mood.");
+  setGround(true);
+  clearMesh();
   clearItem();
   const outfit = new Outfit();
   outfit.fromJson(data.outfit);
@@ -164,7 +189,9 @@ async function showOutfit(data) {
 async function showItem(data) {
   cameraHeld = false;
   framingItem = true;
+  setGround(true);
   dropOutfit();
+  clearMesh();
   clearItem();
   const model = await API.Asset.GetRBX(`rbxassetid://${data.assetId}`, {
     "Roblox-AssetFormat": "avatar_meshpart_accessory",
@@ -193,7 +220,9 @@ async function showModel(data) {
   cameraHeld = false;
   framingMood = false;
   framingItem = false;
+  setGround(false);
   dropOutfit();
+  clearMesh();
   clearItem();
   const model = await API.Asset.GetRBX(`rbxassetid://${data.assetId}`).catch(() => null);
   if (!model || model instanceof Response || !model.generateTree) {
@@ -208,6 +237,149 @@ async function showModel(data) {
   framingItem = true;
   RBXRenderer.animateAll(false);
   post({ kind: "status", state: "shown" });
+}
+
+async function showTexturedMesh(data) {
+  cameraHeld = false;
+  framingMood = false;
+  framingItem = true;
+  setGround(false);
+  dropOutfit();
+  clearItem();
+  clearMesh();
+  const response = await fetch(data.obj);
+  if (!response.ok)
+    throw new Error("The model file could not be opened.");
+  const parsed = parseObj(await response.text());
+  if (parsed.faces.length === 0)
+    throw new Error("This model has no 3D mesh.");
+  const materialUrls = materialMap(data.mtl || "", data.textures || {});
+  const group = new THREE.Group();
+  const buckets = new Map();
+  for (const face of parsed.faces) {
+    const key = face.material || "";
+    const list = buckets.get(key) ?? [];
+    list.push(face);
+    buckets.set(key, list);
+  }
+  for (const [name, faces] of buckets) {
+    const position = [];
+    const uv = [];
+    for (const face of faces) {
+      for (const corner of [face.a, face.b, face.c]) {
+        const point = parsed.positions[corner[0]];
+        if (!point)
+          continue;
+        position.push(point[0], point[1], point[2]);
+        const tex = parsed.uvs[corner[1]] || [0, 0];
+        uv.push(tex[0], tex[1]);
+      }
+    }
+    if (position.length < 9)
+      continue;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute(position, 3));
+    geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+    geometry.computeVertexNormals();
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.55, metalness: 0.04, side: THREE.DoubleSide });
+    const only = Object.values(data.textures || {})[0];
+    const address = materialUrls[name] || data.textures?.[name] || only;
+    if (address) {
+      const texture = await new THREE.TextureLoader().loadAsync(address);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.flipY = true;
+      material.map = texture;
+    }
+    group.add(new THREE.Mesh(geometry, material));
+  }
+  if (group.children.length === 0)
+    throw new Error("This model has no 3D mesh.");
+  shownMesh = group;
+  RBXRenderer.firstScene.scene.add(group);
+  frameMesh(group, data.shot);
+  RBXRenderer.animateAll(false);
+  post({ kind: "status", state: "shown" });
+}
+
+function parseObj(text) {
+  const positions = [];
+  const uvs = [];
+  const faces = [];
+  let material = "";
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    if (line.startsWith("usemtl "))
+      material = line.slice(7).trim();
+    else if (line.startsWith("v ")) {
+      const parts = line.split(/\s+/);
+      positions.push([Number(parts[1]), Number(parts[2]), Number(parts[3])]);
+    } else if (line.startsWith("vt ")) {
+      const parts = line.split(/\s+/);
+      uvs.push([Number(parts[1]), Number(parts[2])]);
+    } else if (line.startsWith("f ")) {
+      const corners = line.split(/\s+/).slice(1).map((part) => {
+        const bits = part.split("/");
+        const position = Number(bits[0]);
+        const uv = bits[1] ? Number(bits[1]) : 0;
+        return [
+          position < 0 ? positions.length + position : position - 1,
+          uv < 0 ? uvs.length + uv : uv - 1,
+        ];
+      });
+      for (let index = 1; index < corners.length - 1; index++)
+        faces.push({ a: corners[0], b: corners[index], c: corners[index + 1], material });
+    }
+  }
+  return { positions, uvs, faces };
+}
+
+function materialMap(mtl, textures) {
+  const map = {};
+  let current = "";
+  for (const raw of mtl.split("\n")) {
+    const line = raw.trim();
+    if (line.startsWith("newmtl "))
+      current = line.slice(7).trim();
+    else if (current && line.startsWith("map_Kd ")) {
+      const token = line.slice(7).trim().split(/\s+/).pop();
+      if (token && textures[token])
+        map[current] = textures[token];
+    }
+  }
+  if (Object.keys(map).length === 0) {
+    const only = Object.values(textures)[0];
+    if (only)
+      map[""] = only;
+  }
+  return map;
+}
+
+function frameMesh(group, shot) {
+  const box = new THREE.Box3().setFromObject(group);
+  if (box.isEmpty())
+    return;
+  const center = box.getCenter(new THREE.Vector3());
+  const size = box.getSize(new THREE.Vector3());
+  const camera = RBXRenderer.firstScene.camera;
+  const controls = RBXRenderer.getRendererControls();
+  if (!controls)
+    return;
+  camera.fov = viewerFieldOfView;
+  const aspect = camera.aspect > 0 ? camera.aspect : 1;
+  const tangent = Math.tan((viewerFieldOfView * Math.PI) / 360);
+  const distance = Math.max(size.y / 2 / tangent, Math.max(size.x, size.z) / 2 / (tangent * aspect)) / 0.82;
+  let direction = new THREE.Vector3(0.42, 0.22, 1);
+  if (shot?.eye && shot?.target) {
+    direction = new THREE.Vector3(...shot.eye).sub(new THREE.Vector3(...shot.target));
+  }
+  if (direction.lengthSq() < 0.0001)
+    direction.set(0.42, 0.22, 1);
+  controls.target.copy(center);
+  camera.position.copy(center).add(direction.normalize().multiplyScalar(Math.max(distance, 0.4)));
+  camera.lookAt(controls.target);
+  camera.updateProjectionMatrix();
+  controls.update();
+  controls.maxDistance = Math.max(distance * 8, 20);
 }
 
 function frameAccessory(accessory) {
@@ -266,6 +438,14 @@ async function apply(data) {
     }
     if (data.kind === "model") {
       await showModel(data);
+      return;
+    }
+    if (data.kind === "mesh") {
+      try {
+        await showTexturedMesh(data);
+      } catch (error) {
+        post({ kind: "status", state: "failed", message: error?.message || "This model has no 3D preview." });
+      }
       return;
     }
     if (data.kind === "outfit")
@@ -449,7 +629,10 @@ async function boot() {
     RBXRenderer.setRendererSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / Math.max(1, innerHeight);
     camera.updateProjectionMatrix();
-    frameCamera(renderer?.currentRig);
+    if (shownMesh && !cameraHeld)
+      frameMesh(shownMesh);
+    else
+      frameCamera(renderer?.currentRig);
     RBXRenderer.animateAll(false);
   };
   addEventListener("resize", resize);

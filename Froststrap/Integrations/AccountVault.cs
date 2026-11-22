@@ -121,6 +121,27 @@ public static class AccountVault
             Changed?.Invoke();
     }
 
+    public static bool Forget(long userId)
+    {
+        if (userId <= 0)
+            return false;
+
+        lock (Gate)
+        {
+            EnsureLoaded();
+            var removed = _file.Accounts.RemoveAll(account => account.UserId == userId);
+            if (removed == 0)
+                return false;
+
+            if (_file.ActiveUserId == userId)
+                _file.ActiveUserId = _file.Accounts.FirstOrDefault()?.UserId ?? 0;
+            Save();
+        }
+
+        Changed?.Invoke();
+        return true;
+    }
+
     public static void Select(long userId)
     {
         lock (Gate)
