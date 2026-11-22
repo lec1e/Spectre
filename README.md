@@ -20,6 +20,10 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.51
+
+- The avatar preview opens from the installed Spectre.exe. The 3D viewer files travel inside the app
+
 ## What’s new in 2.0.50
 
 - Settings has Accounts, Avatar, Inventory, and Chats

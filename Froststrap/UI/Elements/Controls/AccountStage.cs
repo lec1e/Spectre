@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Platform;
@@ -102,19 +103,27 @@ public partial class AccountStage : NativeControlHost
 
     private static string PrepareFolder()
     {
-        var source = Path.Combine(AppContext.BaseDirectory, "Stage", "www");
-        if (!File.Exists(Path.Combine(source, "viewer.js")))
-            throw new InvalidOperationException("The avatar viewer is missing.");
-
         var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Eclipse", "Stage");
         Directory.CreateDirectory(folder);
+        var assembly = typeof(AccountStage).Assembly;
+        var source = Path.Combine(AppContext.BaseDirectory, "Stage", "www");
         foreach (var name in new[] { "index.html", "viewer.js", "draco_decoder.js", "roavatar-renderer-LICENSE.txt" })
         {
-            var from = Path.Combine(source, name);
             var to = Path.Combine(folder, name);
+            using var packed = assembly.GetManifestResourceStream("Froststrap.Stage.www." + name);
+            if (packed is not null)
+            {
+                WriteIfChanged(packed, to);
+                continue;
+            }
+
+            var from = Path.Combine(source, name);
             if (File.Exists(from) && (!File.Exists(to) || File.GetLastWriteTimeUtc(from) > File.GetLastWriteTimeUtc(to)))
                 File.Copy(from, to, true);
         }
+
+        if (!File.Exists(Path.Combine(folder, "viewer.js")))
+            throw new InvalidOperationException("The avatar viewer is missing.");
 
         var cache = Path.Combine(folder, "cache");
         Directory.CreateDirectory(cache);
@@ -130,6 +139,25 @@ public partial class AccountStage : NativeControlHost
         }
 
         return folder;
+    }
+
+    private static void WriteIfChanged(Stream source, string destination)
+    {
+        using var memory = new MemoryStream();
+        source.CopyTo(memory);
+        var bytes = memory.ToArray();
+        if (File.Exists(destination))
+        {
+            var existing = new FileInfo(destination);
+            if (existing.Length == bytes.Length)
+            {
+                var current = File.ReadAllBytes(destination);
+                if (current.AsSpan().SequenceEqual(bytes))
+                    return;
+            }
+        }
+
+        File.WriteAllBytes(destination, bytes);
     }
 
     private async void OnMessage(object? sender, CoreWebView2WebMessageReceivedEventArgs e)

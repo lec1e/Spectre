@@ -6,8 +6,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <Version>2.0.50</Version>
-    <FileVersion>2.0.50</FileVersion>
+    <Version>2.0.51</Version>
+    <FileVersion>2.0.51</FileVersion>
     <Company>Spectre</Company>
     <Product>Spectre</Product>
     <AssemblyName>Spectre</AssemblyName>
@@ -119,6 +119,10 @@
     <Content Include="Stage\www\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Stage\www\index.html" LogicalName="Froststrap.Stage.www.index.html" />
+    <EmbeddedResource Include="Stage\www\viewer.js" LogicalName="Froststrap.Stage.www.viewer.js" />
+    <EmbeddedResource Include="Stage\www\draco_decoder.js" LogicalName="Froststrap.Stage.www.draco_decoder.js" />
+    <EmbeddedResource Include="Stage\www\roavatar-renderer-LICENSE.txt" LogicalName="Froststrap.Stage.www.roavatar-renderer-LICENSE.txt" />
   </ItemGroup>
 
   <ItemGroup>
