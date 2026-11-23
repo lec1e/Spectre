@@ -73,7 +73,7 @@
 
       <TextBlock Margin="0,8,0,0" Text="Clean Roblox traces" FontSize="15" FontWeight="SemiBold" />
       <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.7"
-                 Text="Closes Roblox and wipes its caches, logs, and HKCU registry. Spectre settings stay untouched." />
+                 Text="Closes Roblox and wipes its caches, logs, and Roblox registry keys. Spectre settings stay. Browser cookies stay unless you turn that option on." />
 
       <controls:OptionControl Header="Preserve in-game settings"
                               Description="Keeps camera / graphics / keybind choices through the wipe.">

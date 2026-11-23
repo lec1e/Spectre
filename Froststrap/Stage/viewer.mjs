@@ -9,7 +9,6 @@ import {
   RBXRenderer,
   getThumbnailCamera,
 } from "roavatar-renderer";
-import * as THREE from "three";
 
 FLAGS.ONLINE_ASSETS = true;
 FLAGS.USE_WORKERS = false;
@@ -35,6 +34,7 @@ let last = performance.now();
 let cameraHeld = false;
 let framingItem = false;
 let framingMood = false;
+let meshShot = null;
 
 function post(message) {
   window.chrome.webview.postMessage(message);
@@ -233,28 +233,49 @@ async function showModel(data) {
   const shown = root.FindFirstChildOfClass("Model") || root.FindFirstChildOfClass("Accessory") || root.FindFirstChildOfClass("MeshPart") || root;
   itemRoot = root;
   RBXRenderer.addInstance(shown, auth);
-  frameCamera(shown);
+  frameCamera(shown, 512);
   framingItem = true;
   RBXRenderer.animateAll(false);
   post({ kind: "status", state: "shown" });
+}
+
+function sceneMeshTypes() {
+  const plane = RBXRenderer.firstScene?.plane;
+  const position = plane?.geometry?.attributes?.position;
+  const Object3D = plane ? Object.getPrototypeOf(plane.constructor.prototype)?.constructor : null;
+  const geometryParent = plane ? Object.getPrototypeOf(plane.geometry.constructor.prototype)?.constructor : null;
+  const BufferGeometry = geometryParent?.prototype?.setAttribute ? geometryParent : plane?.geometry?.constructor;
+  if (!plane || !position || !Object3D || !BufferGeometry?.prototype?.setAttribute)
+    return null;
+  return {
+    Group: Object3D,
+    Mesh: plane.constructor,
+    BufferGeometry,
+    Attribute: position.constructor,
+    Material: plane.material.constructor,
+  };
 }
 
 async function showTexturedMesh(data) {
   cameraHeld = false;
   framingMood = false;
   framingItem = true;
+  meshShot = data.shot || null;
   setGround(false);
   dropOutfit();
   clearItem();
   clearMesh();
-  const response = await fetch(data.obj);
-  if (!response.ok)
-    throw new Error("The model file could not be opened.");
-  const parsed = parseObj(await response.text());
+  const text = typeof data.objText === "string" && data.objText.includes("v ")
+    ? data.objText
+    : await readObj(data.obj);
+  const parsed = parseObj(text);
   if (parsed.faces.length === 0)
     throw new Error("This model has no 3D mesh.");
-  const materialUrls = materialMap(data.mtl || "", data.textures || {});
-  const group = new THREE.Group();
+  const types = sceneMeshTypes();
+  if (!types)
+    throw new Error("The 3D view is not ready.");
+  const paints = await texturePaints(data);
+  const group = new types.Group();
   const buckets = new Map();
   for (const face of parsed.faces) {
     const key = face.material || "";
@@ -262,9 +283,11 @@ async function showTexturedMesh(data) {
     list.push(face);
     buckets.set(key, list);
   }
+  const fallback = paints.get("") || paints.values().next().value || null;
   for (const [name, faces] of buckets) {
     const position = [];
-    const uv = [];
+    const color = [];
+    const paint = paints.get(name) || fallback;
     for (const face of faces) {
       for (const corner of [face.a, face.b, face.c]) {
         const point = parsed.positions[corner[0]];
@@ -272,33 +295,92 @@ async function showTexturedMesh(data) {
           continue;
         position.push(point[0], point[1], point[2]);
         const tex = parsed.uvs[corner[1]] || [0, 0];
-        uv.push(tex[0], tex[1]);
+        const sample = paint ? samplePaint(paint, tex[0], tex[1]) : [0.82, 0.82, 0.86];
+        color.push(sample[0], sample[1], sample[2]);
       }
     }
     if (position.length < 9)
       continue;
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.Float32BufferAttribute(position, 3));
-    geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
-    geometry.computeVertexNormals();
-    const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.55, metalness: 0.04, side: THREE.DoubleSide });
-    const only = Object.values(data.textures || {})[0];
-    const address = materialUrls[name] || data.textures?.[name] || only;
-    if (address) {
-      const texture = await new THREE.TextureLoader().loadAsync(address);
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.flipY = true;
-      material.map = texture;
-    }
-    group.add(new THREE.Mesh(geometry, material));
+    const geometry = new types.BufferGeometry();
+    geometry.setAttribute("position", new types.Attribute(new Float32Array(position), 3));
+    geometry.setAttribute("color", new types.Attribute(new Float32Array(color), 3));
+    const material = new types.Material({ color: 0xffffff, vertexColors: true });
+    material.side = 2;
+    material.toneMapped = false;
+    group.add(new types.Mesh(geometry, material));
   }
   if (group.children.length === 0)
     throw new Error("This model has no 3D mesh.");
   shownMesh = group;
   RBXRenderer.firstScene.scene.add(group);
-  frameMesh(group, data.shot);
+  frameMesh(group, meshShot);
   RBXRenderer.animateAll(false);
   post({ kind: "status", state: "shown" });
+}
+
+async function readObj(address) {
+  if (!address)
+    throw new Error("The model file could not be opened.");
+  const response = await fetch(address);
+  if (!response.ok)
+    throw new Error("The model file could not be opened.");
+  return response.text();
+}
+
+async function texturePaints(data) {
+  const paints = new Map();
+  const urls = data.textures || {};
+  const decoded = new Map();
+  for (const [name, address] of Object.entries(urls)) {
+    if (!address || decoded.has(address))
+      continue;
+    const paint = await decodePaint(address);
+    if (paint)
+      decoded.set(address, paint);
+  }
+  const assigned = materialMap(data.mtl || "", urls);
+  for (const [name, address] of Object.entries(assigned)) {
+    const paint = decoded.get(address);
+    if (paint)
+      paints.set(name, paint);
+  }
+  if (paints.size === 0) {
+    const first = decoded.values().next().value;
+    if (first)
+      paints.set("", first);
+  }
+  return paints;
+}
+
+function decodePaint(address) {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.onload = () => {
+      const width = image.naturalWidth || image.width;
+      const height = image.naturalHeight || image.height;
+      if (width < 1 || height < 1) {
+        resolve(null);
+        return;
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext("2d", { willReadFrequently: true });
+      context.drawImage(image, 0, 0, width, height);
+      resolve({ pixels: context.getImageData(0, 0, width, height).data, width, height });
+    };
+    image.onerror = () => resolve(null);
+    image.src = address;
+  });
+}
+
+function samplePaint(paint, u, v) {
+  const wrappedU = u - Math.floor(u);
+  const wrappedV = v - Math.floor(v);
+  const x = Math.min(paint.width - 1, Math.max(0, Math.floor(wrappedU * paint.width)));
+  const y = Math.min(paint.height - 1, Math.max(0, Math.floor((1 - wrappedV) * paint.height)));
+  const index = (y * paint.width + x) * 4;
+  return [paint.pixels[index] / 255, paint.pixels[index + 1] / 255, paint.pixels[index + 2] / 255];
 }
 
 function parseObj(text) {
@@ -355,11 +437,27 @@ function materialMap(mtl, textures) {
 }
 
 function frameMesh(group, shot) {
-  const box = new THREE.Box3().setFromObject(group);
-  if (box.isEmpty())
+  let minX = Infinity, minY = Infinity, minZ = Infinity;
+  let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+  group.traverse?.((child) => {
+    const geometry = child.geometry;
+    if (!geometry?.computeBoundingBox)
+      return;
+    geometry.computeBoundingBox();
+    const bounds = geometry.boundingBox;
+    if (!bounds?.min || !bounds?.max)
+      return;
+    minX = Math.min(minX, bounds.min.x);
+    minY = Math.min(minY, bounds.min.y);
+    minZ = Math.min(minZ, bounds.min.z);
+    maxX = Math.max(maxX, bounds.max.x);
+    maxY = Math.max(maxY, bounds.max.y);
+    maxZ = Math.max(maxZ, bounds.max.z);
+  });
+  if (!Number.isFinite(minX))
     return;
-  const center = box.getCenter(new THREE.Vector3());
-  const size = box.getSize(new THREE.Vector3());
+  const center = [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
+  const size = [maxX - minX, maxY - minY, maxZ - minZ];
   const camera = RBXRenderer.firstScene.camera;
   const controls = RBXRenderer.getRendererControls();
   if (!controls)
@@ -367,19 +465,21 @@ function frameMesh(group, shot) {
   camera.fov = viewerFieldOfView;
   const aspect = camera.aspect > 0 ? camera.aspect : 1;
   const tangent = Math.tan((viewerFieldOfView * Math.PI) / 360);
-  const distance = Math.max(size.y / 2 / tangent, Math.max(size.x, size.z) / 2 / (tangent * aspect)) / 0.82;
-  let direction = new THREE.Vector3(0.42, 0.22, 1);
+  const distance = Math.max(size[1] / 2 / tangent, Math.max(size[0], size[2]) / 2 / (tangent * aspect)) / 0.82;
+  let dx = 0.42, dy = 0.22, dz = 1;
   if (shot?.eye && shot?.target) {
-    direction = new THREE.Vector3(...shot.eye).sub(new THREE.Vector3(...shot.target));
+    dx = shot.eye[0] - shot.target[0];
+    dy = shot.eye[1] - shot.target[1];
+    dz = shot.eye[2] - shot.target[2];
   }
-  if (direction.lengthSq() < 0.0001)
-    direction.set(0.42, 0.22, 1);
-  controls.target.copy(center);
-  camera.position.copy(center).add(direction.normalize().multiplyScalar(Math.max(distance, 0.4)));
+  const length = Math.hypot(dx, dy, dz) || 1;
+  const span = Math.max(distance, 0.4);
+  controls.target.set(center[0], center[1], center[2]);
+  camera.position.set(center[0] + dx / length * span, center[1] + dy / length * span, center[2] + dz / length * span);
   camera.lookAt(controls.target);
   camera.updateProjectionMatrix();
   controls.update();
-  controls.maxDistance = Math.max(distance * 8, 20);
+  controls.maxDistance = Math.max(span * 8, 20);
 }
 
 function frameAccessory(accessory) {
@@ -457,7 +557,7 @@ async function apply(data) {
 
 const viewerFieldOfView = 30;
 
-function boundsOf(rig) {
+function boundsOf(rig, limit = 30) {
   let minX = Infinity, minY = Infinity, minZ = Infinity;
   let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
   let found = false;
@@ -465,7 +565,7 @@ function boundsOf(rig) {
     if (instance.IsA?.("BasePart")) {
       const size = instance.Prop("Size");
       const cf = instance.Prop("CFrame");
-      if (size && cf && Math.max(size.X, size.Y, size.Z) < 30) {
+      if (size && cf && Math.max(size.X, size.Y, size.Z) < limit) {
         for (const x of [-size.X / 2, size.X / 2]) {
           for (const y of [-size.Y / 2, size.Y / 2]) {
             for (const z of [-size.Z / 2, size.Z / 2]) {
@@ -570,13 +670,13 @@ function frameHead(rig) {
   controls.update();
 }
 
-function frameCamera(rig) {
+function frameCamera(rig, limit = 30) {
   const controls = RBXRenderer.getRendererControls();
   const scene = RBXRenderer.firstScene;
   const camera = scene.camera;
   if (!controls || cameraHeld || framingItem || framingMood)
     return;
-  const bounds = rig ? boundsOf(rig) : null;
+  const bounds = rig ? boundsOf(rig, limit) : null;
   const targetX = bounds ? (bounds.minX + bounds.maxX) / 2 : controls.target.x;
   const targetY = bounds ? (bounds.minY + bounds.maxY) / 2 : controls.target.y;
   const targetZ = bounds ? (bounds.minZ + bounds.maxZ) / 2 : controls.target.z;
@@ -630,7 +730,7 @@ async function boot() {
     camera.aspect = innerWidth / Math.max(1, innerHeight);
     camera.updateProjectionMatrix();
     if (shownMesh && !cameraHeld)
-      frameMesh(shownMesh);
+      frameMesh(shownMesh, meshShot);
     else
       frameCamera(renderer?.currentRig);
     RBXRenderer.animateAll(false);

@@ -43,18 +43,14 @@ public partial class InventoryStudioPage : UserControl
         if (_model is null)
             return;
 
-        if (state == "failed" && _model.CategoryId == "models")
-        {
-            _ = _model.UsePhotoFallbackAsync();
-            return;
-        }
-
         if (state is not ("failed" or "loading"))
             return;
 
         _model.Status = state == "failed"
             ? message ?? "That preview could not be opened."
             : "Opening the preview…";
+        if (state == "failed")
+            _model.UseLiveModelFallback();
     }
 
     private void PreviewPressed(object? sender, PointerPressedEventArgs e)

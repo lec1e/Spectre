@@ -20,6 +20,13 @@
   <img src="./.github/preview/app-preview.png" width="920" alt="Spectre home"/>
 </p>
 
+## What’s new in 2.0.56
+
+- Inventory models open as a 3D mesh you can turn, with the texture on the model
+- Download 3D, playback, and the animation list only appear when that item can use them
+- Opening the current version no longer asks you to download it again
+- Clean traces removes Roblox registry keys
+
 ## What’s new in 2.0.55
 
 - A model opens as a 3D object you can turn, with its texture, fitted to the preview

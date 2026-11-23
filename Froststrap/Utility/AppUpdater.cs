@@ -49,20 +49,9 @@ namespace Froststrap.Utility
                 return false;
             }
 
-            string currentVer = App.Version;
             string releaseVer = releaseInfo.TagName;
-            VersionComparison versionComparison;
-            try
-            {
-                versionComparison = Utilities.CompareVersions(currentVer, releaseVer);
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteException(LOG_IDENT, ex);
-                return false;
-            }
-
-            if (versionComparison == VersionComparison.Equal || versionComparison == VersionComparison.GreaterThan)
+            string currentVer = string.Join(", ", LocalVersions());
+            if (!IsNewerRelease(releaseVer))
             {
                 App.Logger.WriteLine(LOG_IDENT, $"No updates found. Current: {currentVer}, Latest: {releaseVer}");
                 return false;
@@ -170,6 +159,56 @@ namespace Froststrap.Utility
                 Interlocked.Exchange(ref _checked, 0);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// An update is offered only when every version on this exe is older than the release.
+        /// The file version is included because that is the version Windows shows as current.
+        /// </summary>
+        private static bool IsNewerRelease(string releaseVer)
+        {
+            var parsed = false;
+            foreach (var local in LocalVersions())
+            {
+                try
+                {
+                    var comparison = Utilities.CompareVersions(local, releaseVer);
+                    parsed = true;
+                    if (comparison is VersionComparison.Equal or VersionComparison.GreaterThan)
+                        return false;
+                }
+                catch (Exception ex)
+                {
+                    App.Logger.WriteException(LOG_IDENT, ex);
+                }
+            }
+
+            return parsed;
+        }
+
+        private static IEnumerable<string> LocalVersions()
+        {
+            yield return App.Version;
+
+            var path = Environment.ProcessPath;
+            if (string.IsNullOrWhiteSpace(path))
+                yield break;
+
+            System.Diagnostics.FileVersionInfo info;
+            try
+            {
+                info = System.Diagnostics.FileVersionInfo.GetVersionInfo(path);
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteException(LOG_IDENT, ex);
+                yield break;
+            }
+
+            if (!string.IsNullOrWhiteSpace(info.ProductVersion))
+                yield return info.ProductVersion;
+            if (!string.IsNullOrWhiteSpace(info.FileVersion) && !string.Equals(info.FileVersion, info.ProductVersion, StringComparison.Ordinal))
+                yield return info.FileVersion;
         }
 
         /// <summary>

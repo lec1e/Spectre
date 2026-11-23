@@ -24,6 +24,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
     private readonly AccountStudioClient _client = new();
     private readonly Dictionary<string, (List<InventoryItemRow> Items, string? Cursor)> _pages = [];
     private AccountMesh? _mesh;
+    private bool _usedLiveModel;
     private float _yaw = 0.7f;
     private float _pitch = 0.2f;
     private int _renderGeneration;
@@ -119,10 +120,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         private set
         {
             if (SetProperty(ref _selected, value))
-            {
-                OnPropertyChanged(nameof(CanWear));
-                OnPropertyChanged(nameof(PreviewTitle));
-            }
+                NotifyActions();
         }
     }
     public string Details { get => _details; set => SetProperty(ref _details, value); }
@@ -180,8 +178,11 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         RequestRender();
     }
 
-    public bool ShowSpin => _categoryId != "audio";
-    public bool ShowAudio => _categoryId == "audio";
+    public bool ShowMotion => Selected is not null && _categoryId is "emotes" or "animations";
+    public bool ShowSpin => ShowMotion;
+    public bool ShowAudio => Selected is not null && _categoryId == "audio";
+    public bool CanDownload => Selected is not null && _categoryId is not ("badges" or "passes" or "bundles" or "collectibles" or "places");
+    public bool CanDownload3D => Selected is not null && _categoryId is "accessories" or "classic" or "layered" or "bodies" or "gear" or "models";
     private double _volume = 0.8;
     public double Volume
     {
@@ -269,10 +270,14 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
     {
         var ticket = ++_loadTicket;
         _categoryId = categoryId;
-        OnPropertyChanged(nameof(HasMore));
-        OnPropertyChanged(nameof(CanWear));
-        OnPropertyChanged(nameof(ShowSpin));
-        OnPropertyChanged(nameof(ShowAudio));
+        if (!append)
+        {
+            ShowLive = false;
+            Preview = null;
+            Details = "Select an item to wear it, turn it in 3D, or download it.";
+            Selected = null;
+        }
+        NotifyActions();
         AccountAudio.Stop();
         IsPlaying = false;
         IsLoading = true;
@@ -397,14 +402,26 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
             Details = $"{row.Name}\n{row.TypeLabel}\n\n{ex.Message}";
         }
 
-        if (_categoryId is "emotes" or "animations" or "models")
+        if (ShowMotion)
         {
             await ShowLiveAsync(row);
             return;
         }
 
-        if (_categoryId is not ("badges" or "passes" or "audio" or "bundles" or "places" or "decals"))
-            await ShowModelAsync();
+        if (CanDownload3D)
+            await ShowMeshPreviewAsync(row);
+    }
+
+    private void NotifyActions()
+    {
+        OnPropertyChanged(nameof(HasMore));
+        OnPropertyChanged(nameof(CanWear));
+        OnPropertyChanged(nameof(PreviewTitle));
+        OnPropertyChanged(nameof(ShowMotion));
+        OnPropertyChanged(nameof(ShowSpin));
+        OnPropertyChanged(nameof(ShowAudio));
+        OnPropertyChanged(nameof(CanDownload));
+        OnPropertyChanged(nameof(CanDownload3D));
     }
 
     private async Task ShowLiveAsync(InventoryItemRow row)
@@ -413,12 +430,6 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         OnPropertyChanged(nameof(ShowPhoto));
         try
         {
-            if (_categoryId == "models")
-            {
-                await ShowTexturedModelAsync(row);
-                return;
-            }
-
             Status = $"Opening {row.Name}…";
             _avatar ??= await _client.GetAvatarAsync(CancellationToken.None);
             var animation = row.TypeName switch
@@ -444,33 +455,57 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         }
     }
 
+    private async Task ShowMeshPreviewAsync(InventoryItemRow row)
+    {
+        ShowLive = true;
+        OnPropertyChanged(nameof(ShowPhoto));
+        _usedLiveModel = false;
+        try
+        {
+            await ShowTexturedModelAsync(row);
+        }
+        catch (Exception ex) when (ex is RobloxApiException or HttpRequestException or InvalidOperationException)
+        {
+            App.Logger.WriteException("Inventory", ex);
+            _usedLiveModel = true;
+            PublishLiveModel(row);
+        }
+    }
+
+    public void UseLiveModelFallback()
+    {
+        if (_usedLiveModel || Selected is null || !CanDownload3D)
+            return;
+
+        _usedLiveModel = true;
+        PublishLiveModel(Selected);
+    }
+
+    private void PublishLiveModel(InventoryItemRow row)
+    {
+        Status = "Drag the model to turn it.";
+        LiveDocument = JsonSerializer.Serialize(new { kind = "model", assetId = row.Id });
+        LiveChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     private async Task ShowTexturedModelAsync(InventoryItemRow row)
     {
         Status = $"Opening {row.Name}…";
         var package = await _client.GetModelAsync(row.Id, avatar: false, CancellationToken.None);
-        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Eclipse", "Stage", "models");
-        Directory.CreateDirectory(folder);
-        var stem = row.Id.ToString(CultureInfo.InvariantCulture);
-        await File.WriteAllTextAsync(Path.Combine(folder, stem + ".obj"), package.Obj);
         var textures = new Dictionary<string, string>();
-        var index = 0;
         foreach (var (name, png) in package.Surfaces)
         {
-            if (png is not { Length: > 8 })
+            if (png is not { Length: > 8 } || string.IsNullOrWhiteSpace(name))
                 continue;
-            var extension = png[0] == 0xFF && png[1] == 0xD8 ? ".jpg" : ".png";
-            var file = stem + "-" + index.ToString(CultureInfo.InvariantCulture) + extension;
-            await File.WriteAllBytesAsync(Path.Combine(folder, file), png);
-            if (!string.IsNullOrWhiteSpace(name))
-                textures[name] = "https://spectre.stage/models/" + file;
-            index++;
+            var mime = png[0] == 0xFF && png[1] == 0xD8 ? "image/jpeg" : "image/png";
+            textures[name] = "data:" + mime + ";base64," + Convert.ToBase64String(png);
         }
 
         var shot = package.Shot;
         LiveDocument = JsonSerializer.Serialize(new
         {
             kind = "mesh",
-            obj = "https://spectre.stage/models/" + stem + ".obj",
+            objText = package.Obj,
             mtl = package.Material ?? "",
             textures,
             shot = shot is null ? null : new
@@ -480,6 +515,8 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
             }
         });
         Status = "Drag the model to turn it.";
+        if (LiveDocument.Length > 6_000_000)
+            throw new RobloxApiException("This model is too large to preview here.");
         LiveChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -564,7 +601,7 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
 
     private async Task DownloadAsync()
     {
-        if (Selected is null)
+        if (Selected is null || !CanDownload)
             return;
 
         try
@@ -578,16 +615,6 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
         {
             Status = ex.Message;
         }
-    }
-
-    public async Task UsePhotoFallbackAsync()
-    {
-        if (_categoryId != "models" || Selected is null)
-            return;
-
-        ShowLive = false;
-        Status = "Opening the thumbnail…";
-        await ShowModelAsync();
     }
 
     private async Task ShowModelAsync()
@@ -626,16 +653,17 @@ public sealed class InventoryStudioViewModel : NotifyPropertyChangedViewModel
 
     private async Task DownloadModelAsync()
     {
-        if (Selected is null)
+        if (Selected is null || !CanDownload3D)
             return;
 
         try
         {
+            Status = "Downloading the 3D model…";
             var package = await _client.GetModelAsync(Selected.Id, avatar: false, CancellationToken.None);
             await AccountImages.SaveManyAsync(AccountStudioClient.SafeFileName(Selected.Name, Selected.Id, "3d"), package.Files);
             Status = "Saved the mesh and texture.";
         }
-        catch (Exception ex) when (ex is RobloxApiException or HttpRequestException)
+        catch (Exception ex) when (ex is RobloxApiException or HttpRequestException or IOException or InvalidOperationException)
         {
             Status = ex.Message;
         }

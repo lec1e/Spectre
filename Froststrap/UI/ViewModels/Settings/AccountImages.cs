@@ -49,13 +49,24 @@ internal static class AccountImages
         if (first is null)
             return;
 
-        var folder = Path.GetDirectoryName(first.Path.LocalPath);
+        await using (var stream = await first.OpenWriteAsync())
+            await stream.WriteAsync(files[0].Bytes);
+
+        string? folder = null;
+        try
+        {
+            folder = Path.GetDirectoryName(first.Path.LocalPath);
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or ArgumentException or NotSupportedException)
+        {
+        }
+
         if (string.IsNullOrEmpty(folder))
             return;
 
         Directory.CreateDirectory(folder);
-        foreach (var file in files)
-            await File.WriteAllBytesAsync(Path.Combine(folder, file.FileName), file.Bytes);
+        for (var index = 1; index < files.Count; index++)
+            await File.WriteAllBytesAsync(Path.Combine(folder, files[index].FileName), files[index].Bytes);
     }
 
     private static async Task<IStorageFile?> PickAsync(string suggestedName)
@@ -86,13 +97,14 @@ internal static class AccountImages
 
     private static Window? FindWindow()
     {
-        if (MainWindow.Instance is { IsVisible: true } settings)
-            return settings;
+        if (MainWindow.Instance is not null)
+            return MainWindow.Instance;
 
         if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
             return null;
 
         return desktop.MainWindow
-            ?? desktop.Windows.FirstOrDefault(window => window.IsVisible);
+            ?? desktop.Windows.FirstOrDefault(window => window.IsVisible)
+            ?? desktop.Windows.FirstOrDefault();
     }
 }

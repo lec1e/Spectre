@@ -99,11 +99,11 @@
                    PointerWheelChanged="PreviewWheel" />
           </Panel>
           <StackPanel Grid.Row="2" Spacing="8">
-            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8">
+            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8" IsVisible="{Binding ShowMotion}">
               <Button Content="{Binding PlayLabel}" MinWidth="72" Command="{Binding TogglePlayCommand}" />
-              <TextBox Grid.Column="1" Classes="speed" VerticalAlignment="Center" IsVisible="{Binding ShowSpin}"
+              <TextBox Grid.Column="1" Classes="speed" VerticalAlignment="Center"
                        Text="{Binding SpeedText, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-              <Slider Grid.Column="2" Minimum="0.25" Maximum="2" Value="{Binding Speed}" VerticalAlignment="Center" IsVisible="{Binding ShowSpin}" />
+              <Slider Grid.Column="2" Minimum="0.25" Maximum="2" Value="{Binding Speed}" VerticalAlignment="Center" />
             </Grid>
             <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8" IsVisible="{Binding ShowAudio}">
               <TextBlock Text="Volume" FontSize="11" Opacity="0.55" VerticalAlignment="Center" />
@@ -112,10 +112,10 @@
               <Slider Grid.Column="2" Minimum="0" Maximum="1" Value="{Binding Volume}" VerticalAlignment="Center" />
             </Grid>
             <TextBlock Text="{Binding Details}" TextWrapping="Wrap" FontSize="12" MaxHeight="72" />
-            <Button Content="Wear" Classes="accent" HorizontalAlignment="Left" MinWidth="96" Command="{Binding WearCommand}" IsVisible="{Binding CanWear}" />
             <StackPanel Orientation="Horizontal" Spacing="8">
-              <Button Content="Download" MinWidth="96" Command="{Binding DownloadCommand}" />
-              <Button Content="Download 3D" MinWidth="110" Command="{Binding DownloadModelCommand}" />
+              <Button Content="Wear" Classes="accent" MinWidth="84" Command="{Binding WearCommand}" IsVisible="{Binding CanWear}" />
+              <Button Content="Download" MinWidth="96" Command="{Binding DownloadCommand}" IsVisible="{Binding CanDownload}" />
+              <Button Content="Download 3D" MinWidth="110" Command="{Binding DownloadModelCommand}" IsVisible="{Binding CanDownload3D}" />
             </StackPanel>
           </StackPanel>
         </Grid>

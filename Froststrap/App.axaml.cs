@@ -53,7 +53,19 @@ public partial class App : Application
 
     public static readonly BuildMetadataAttribute BuildMetadata = Assembly.GetExecutingAssembly().GetCustomAttribute<BuildMetadataAttribute>()!;
 
-    public static readonly string Version = Assembly.GetExecutingAssembly().GetName().Version!.ToString()[..^2];
+    public static readonly string Version = FormatVersion(Assembly.GetExecutingAssembly().GetName().Version);
+
+    private static string FormatVersion(Version? version)
+    {
+        if (version is null)
+            return "0.0.0";
+
+        if (version.Revision > 0)
+            return version.ToString();
+
+        var build = version.Build < 0 ? 0 : version.Build;
+        return $"{version.Major}.{version.Minor}.{build}";
+    }
 
     public static Bootstrapper? Bootstrapper { get; set; } = null!;
 

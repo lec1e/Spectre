@@ -340,7 +340,7 @@ namespace Froststrap.UI.ViewModels.Settings
                 "  ? %ProgramData%\\Roblox\n" +
                 "  ? %Temp%\\Roblox*\n" +
                 "  ? Prefetch entries for Roblox (admin only)\n" +
-                "  ? HKCU\\Software\\ROBLOX Corporation\n" +
+                "  ? Roblox registry keys (HKCU, and HKLM when this window is elevated)\n" +
                 (CleanMrExVersions ? "  ? Spectre's downloaded Roblox installs (Versions)\n" : "") +
                 (ClearBrowserCookies ? "  ? Roblox cookies in installed browsers\n" : "") +
                 "\n" +

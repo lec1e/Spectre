@@ -52,18 +52,18 @@
             <TextBlock Text="{Binding Heading}" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" />
             <TextBlock Text="{Binding Status}" Opacity="0.75" FontSize="12" TextWrapping="Wrap" />
             <ComboBox ItemsSource="{Binding Motions}" SelectedItem="{Binding Motion}" HorizontalAlignment="Stretch"
-                      MaxDropDownHeight="220" DropDownOpened="FitDropDown" />
+                      MaxDropDownHeight="220" DropDownOpened="FitDropDown" IsVisible="{Binding ShowMotion}" />
             <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8">
-              <Button Content="{Binding PlayLabel}" MinWidth="72" Command="{Binding TogglePlayCommand}" />
-              <TextBox Grid.Column="1" Classes="speed" VerticalAlignment="Center"
+              <Button Content="{Binding PlayLabel}" MinWidth="72" Command="{Binding TogglePlayCommand}" IsVisible="{Binding ShowMotion}" />
+              <TextBox Grid.Column="1" Classes="speed" VerticalAlignment="Center" IsVisible="{Binding ShowMotion}"
                        Text="{Binding SpeedText, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-              <Slider Grid.Column="2" Minimum="0.25" Maximum="2" Value="{Binding Speed}" TickFrequency="0.25" VerticalAlignment="Center" />
+              <Slider Grid.Column="2" Minimum="0.25" Maximum="2" Value="{Binding Speed}" TickFrequency="0.25" VerticalAlignment="Center" IsVisible="{Binding ShowMotion}" />
               <Button Grid.Column="3" Content="My avatar" MinWidth="88" Command="{Binding ShowModelCommand}" />
             </Grid>
             <StackPanel Orientation="Horizontal" Spacing="8">
               <Button Content="Refresh" MinWidth="84" Command="{Binding RefreshCommand}" />
               <Button Content="Redraw" MinWidth="84" Command="{Binding RedrawCommand}" />
-              <Button Content="Save 3D" MinWidth="84" Command="{Binding DownloadModelCommand}" />
+              <Button Content="Save 3D" MinWidth="84" Command="{Binding DownloadModelCommand}" IsVisible="{Binding ShowSave3D}" />
             </StackPanel>
           </StackPanel>
         </Grid>

@@ -606,7 +606,7 @@ public sealed class AccountStudioClient
             throw new RobloxApiException("The 3D model has no mesh.");
         var objBytes = await DownloadBytesAsync(ResolveCdn(manifestUri, objName).ToString(), token);
         var obj = Encoding.UTF8.GetString(objBytes);
-        if (!obj.Contains("\nv ", StringComparison.Ordinal) && !obj.StartsWith("v ", StringComparison.Ordinal))
+        if (obj.IndexOf("v ", StringComparison.Ordinal) < 0 && obj.IndexOf("v\t", StringComparison.Ordinal) < 0)
             throw new RobloxApiException("Roblox returned a file that is not a 3D mesh.");
         string? material = null;
         if (manifest.TryGetProperty("mtl", out var materialElement) && materialElement.ValueKind == JsonValueKind.String && materialElement.GetString() is string materialName && materialName.Length > 0)
@@ -648,7 +648,8 @@ public sealed class AccountStudioClient
             if (download.Png is null)
                 continue;
 
-            files.Add(new DownloadedFile(SafeFileName($"texture-{loaded.Count + 1}", id, "png"), download.Png));
+            var extension = download.Png.Length > 2 && download.Png[0] == 0xFF && download.Png[1] == 0xD8 ? "jpg" : "png";
+            files.Add(new DownloadedFile(SafeFileName($"texture-{loaded.Count + 1}", id, extension), download.Png));
             loaded.Add((download.Name, download.Png));
         }
 
@@ -1658,7 +1659,7 @@ public sealed class AccountStudioClient
             return false;
 
         var path = uri.AbsolutePath.Trim('/');
-        return path.Length is >= 32 and <= 80 && !path.Contains('/');
+        return path.Length is >= 32 and <= 128 && !path.Contains('/');
     }
 
     private static Uri ResolveCdn(Uri manifest, string name)
@@ -1672,9 +1673,8 @@ public sealed class AccountStudioClient
 
     private static int CdnIndex(string hash)
     {
-        var length = hash.StartsWith("30DAY-", StringComparison.Ordinal) ? Math.Min(hash.Length, 38) : Math.Min(hash.Length, 32);
         var mixed = 31;
-        for (var index = 0; index < length; index++)
+        for (var index = 0; index < hash.Length; index++)
             mixed ^= hash[index];
 
         var server = mixed % 8;

@@ -66,6 +66,7 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
     private readonly System.Diagnostics.Stopwatch _clock = System.Diagnostics.Stopwatch.StartNew();
     private double _lastTick;
     private long? _previewAssetId;
+    private string? _previewType;
     private readonly DispatcherTimer _playTimer;
 
     public ObservableCollection<WornGroup> Groups { get; } = [];
@@ -109,6 +110,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
     public Bitmap? Portrait { get => _portrait; set => SetProperty(ref _portrait, value); }
     public int WornCount => Groups.Sum(group => group.Items.Count);
     public string PreviewTitle { get => _previewTitle; set => SetProperty(ref _previewTitle, value); }
+    public bool ShowMotion => _previewAssetId is null || IsMotion(_previewType);
+    public bool ShowSave3D => _previewAssetId is null || CanSaveMesh(_previewType);
     public string Motion
     {
         get => _motion;
@@ -274,6 +277,9 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
 
             OnPropertyChanged(nameof(WornCount));
             _tryOn = null;
+            _previewAssetId = null;
+            _previewType = null;
+            NotifyPreview();
             _liveKind = "outfit";
             IsPlaying = !string.Equals(Motion, "Turntable", StringComparison.Ordinal);
             Publish(IsPlaying ? $"Playing {Motion} on your avatar." : "Drag to turn your avatar.", true);
@@ -309,6 +315,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
 
         IsLoading = true;
         _previewAssetId = null;
+        _previewType = null;
+        NotifyPreview();
         PreviewTitle = "Avatar";
         try
         {
@@ -373,6 +381,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
     private Task ShowAvatarAsync()
     {
         _previewAssetId = null;
+        _previewType = null;
+        NotifyPreview();
         _tryOn = null;
         _liveKind = "outfit";
         if (string.Equals(Motion, "Turntable", StringComparison.Ordinal) || FindMood(Motion) is not null)
@@ -391,6 +401,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
         if (FindMood(Motion) is WornAsset mood)
         {
             _previewAssetId = mood.Id;
+            _previewType = "MoodAnimation";
+            NotifyPreview();
             _liveKind = "outfit";
             _tryOn = MoodSubject(mood);
             IsPlaying = true;
@@ -401,6 +413,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
         var wasItem = _liveKind == "item";
         var wasTryingOn = _tryOn is not null;
         _previewAssetId = null;
+        _previewType = null;
+        NotifyPreview();
         _tryOn = null;
         _liveKind = "outfit";
         var turntable = string.Equals(Motion, "Turntable", StringComparison.Ordinal);
@@ -415,6 +429,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
             return;
 
         _previewAssetId = null;
+        _previewType = null;
+        NotifyPreview();
         if (_avatarMesh is not null)
             _mesh = _avatarMesh;
 
@@ -469,6 +485,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
         if (row.Group is "Emotes" or "Animations")
         {
             _previewAssetId = null;
+            _previewType = null;
+            NotifyPreview();
             if (_avatarMesh is not null)
                 _mesh = _avatarMesh;
             if (Motions.Contains(row.Name))
@@ -480,6 +498,8 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
 
         _liveAssetId = assetId;
         _previewAssetId = assetId;
+        _previewType = row.TypeName;
+        NotifyPreview();
         PreviewTitle = row.Name;
         if (StandsAlone(row.TypeName))
         {
@@ -615,6 +635,16 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
 
     private static bool StandsAlone(string typeName) => typeName is "Hat" or "HairAccessory" or "FaceAccessory" or "NeckAccessory" or "ShoulderAccessory" or "FrontAccessory" or "BackAccessory" or "WaistAccessory";
 
+    private static bool IsMotion(string? typeName) => typeName is "EmoteAnimation" or "MoodAnimation" or "WalkAnimation" or "RunAnimation" or "JumpAnimation" or "FallAnimation" or "ClimbAnimation" or "SwimAnimation" or "IdleAnimation";
+
+    private static bool CanSaveMesh(string? typeName) => !string.IsNullOrEmpty(typeName) && !IsMotion(typeName) && typeName is not ("Face" or "Decal" or "Audio");
+
+    private void NotifyPreview()
+    {
+        OnPropertyChanged(nameof(ShowMotion));
+        OnPropertyChanged(nameof(ShowSave3D));
+    }
+
     private static string? Slot(string name) => name switch
     {
         "Walk" or "WalkAnimation" => "walk",
@@ -637,6 +667,9 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
 
     private async Task DownloadModelAsync()
     {
+        if (!ShowSave3D)
+            return;
+
         try
         {
             if (_previewAssetId is long assetId)
@@ -658,7 +691,7 @@ public sealed class AvatarStudioViewModel : NotifyPropertyChangedViewModel
             await AccountImages.SaveManyAsync($"avatar-{AccountVault.CurrentUsername}", avatar.Files);
             Status = "Saved the avatar mesh and texture.";
         }
-        catch (Exception ex) when (ex is RobloxApiException or HttpRequestException)
+        catch (Exception ex) when (ex is RobloxApiException or HttpRequestException or IOException or InvalidOperationException)
         {
             Status = ex.Message;
         }

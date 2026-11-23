@@ -626,6 +626,12 @@ namespace Froststrap
             {
                 var comparison = Utilities.CompareVersions(currentVer, existingVer);
 
+                if (comparison == VersionComparison.Equal)
+                {
+                    App.Logger.WriteLine(LOG_IDENT, $"Launched {currentVer}, which matches the installed copy.");
+                    return;
+                }
+
                 if (comparison == VersionComparison.LessThan)
                 {
                     var result = await Frontend.ShowMessageBox(

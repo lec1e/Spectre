@@ -1,5 +1,3 @@
-using Microsoft.Win32;
-
 namespace Froststrap.Utility.BanAsync
 {
     // Sweeps Roblox-related files, registry, and prefetch entries off the machine.
@@ -116,17 +114,21 @@ namespace Froststrap.Utility.BanAsync
             int prefetchDeleted = DeletePrefetch(log);
             result.DeletedFiles += prefetchDeleted;
 
-            // Registry: HKCU\Software\ROBLOX Corporation.
+            int registry = RobloxReinstaller.RemoveRobloxRegistry();
+            result.RegistryKeysRemoved += registry;
+            log(registry == 0
+                ? "No Roblox registry keys were present."
+                : $"Removed {registry} Roblox registry key(s).");
             try
             {
-                Registry.CurrentUser.DeleteSubKeyTree(@"Software\ROBLOX Corporation", throwOnMissingSubKey: false);
-                result.RegistryKeysRemoved++;
-                log(@"Removed HKCU\Software\ROBLOX Corporation");
+                WindowsRegistry.RegisterPlayer();
+                WindowsRegistry.RegisterStudio();
+                log("Restored Spectre's Roblox launch registration.");
             }
             catch (Exception ex)
             {
-                App.Logger.WriteException(LOG_IDENT + "::RegistryHKCU", ex);
-                log($"Couldn't remove HKCU\\Software\\ROBLOX Corporation: {ex.Message}");
+                App.Logger.WriteException(LOG_IDENT + "::Register", ex);
+                log($"Couldn't restore the launch registration: {ex.Message}");
             }
 
             // Restore preserved files.

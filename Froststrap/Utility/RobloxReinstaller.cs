@@ -47,7 +47,7 @@ namespace Froststrap.Utility
 
             bool installCleared = ClearCurrentInstallation();
             ClearRobloxFiles();
-            ClearRobloxRegistry();
+            RemoveRobloxRegistry();
             ForgetInstalledPlayer();
 
             if (OperatingSystem.IsWindows())
@@ -178,10 +178,10 @@ namespace Froststrap.Utility
             }
         }
 
-        private static void ClearRobloxRegistry()
+        public static int RemoveRobloxRegistry()
         {
             if (!OperatingSystem.IsWindows())
-                return;
+                return 0;
 
             string[] userKeys =
             [
@@ -205,47 +205,52 @@ namespace Froststrap.Utility
                 @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\roblox-studio"
             ];
 
+            int removed = 0;
             foreach (string key in userKeys)
-                DeleteRegistryTree(Registry.CurrentUser, key);
+            {
+                if (DeleteRegistryTree(Registry.CurrentUser, key))
+                    removed++;
+            }
 
             try
             {
                 foreach (string key in machineKeys)
-                    DeleteRegistryTree(Registry.LocalMachine, key);
+                {
+                    if (DeleteRegistryTree(Registry.LocalMachine, key))
+                        removed++;
+                }
             }
             catch (Exception ex)
             {
                 App.Logger.WriteLine(LOG_IDENT, $"Machine registry cleanup needs administrator rights: {ex.Message}");
             }
 
-            DeleteRobloxProtocolKeys();
-            DeleteRobloxAppCompatEntries();
+            removed += DeleteRobloxProtocolKeys();
+            removed += DeleteRobloxAppCompatEntries();
+            return removed;
         }
 
-        private static void DeleteRobloxProtocolKeys()
+        private static int DeleteRobloxProtocolKeys()
         {
+            int removed = 0;
             foreach (string name in new[] { "roblox", "roblox-player", "roblox-studio", "roblox-studio-auth" })
             {
-                try
-                {
-                    Registry.CurrentUser.DeleteSubKeyTree($@"Software\Classes\{name}", throwOnMissingSubKey: false);
-                    App.Logger.WriteLine(LOG_IDENT, $@"Removed HKCU\Software\Classes\{name}");
-                }
-                catch (Exception ex)
-                {
-                    App.Logger.WriteException(LOG_IDENT + "::Protocol", ex);
-                }
+                if (DeleteRegistryTree(Registry.CurrentUser, $@"Software\Classes\{name}"))
+                    removed++;
             }
+
+            return removed;
         }
 
-        private static void DeleteRobloxAppCompatEntries()
+        private static int DeleteRobloxAppCompatEntries()
         {
             const string layers = @"Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers";
+            var removed = 0;
             try
             {
                 using var key = Registry.CurrentUser.OpenSubKey(layers, writable: true);
                 if (key is null)
-                    return;
+                    return 0;
 
                 foreach (string name in key.GetValueNames())
                 {
@@ -253,6 +258,7 @@ namespace Froststrap.Utility
                         continue;
 
                     key.DeleteValue(name, throwOnMissingValue: false);
+                    removed++;
                     App.Logger.WriteLine(LOG_IDENT, $"Removed AppCompat entry {name}");
                 }
             }
@@ -260,6 +266,8 @@ namespace Froststrap.Utility
             {
                 App.Logger.WriteException(LOG_IDENT + "::AppCompat", ex);
             }
+
+            return removed;
         }
 
         private static void ForgetInstalledPlayer()
@@ -284,16 +292,30 @@ namespace Froststrap.Utility
                 WindowsRegistry.RegisterClientLocation(isStudio: false, clientPath: "");
         }
 
-        private static void DeleteRegistryTree(RegistryKey root, string subKey)
+        private static bool DeleteRegistryTree(RegistryKey root, string subKey)
         {
+            try
+            {
+                using var existing = root.OpenSubKey(subKey);
+                if (existing is null)
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteLine(LOG_IDENT, $"Couldn't open {root.Name}\\{subKey}: {ex.Message}");
+                return false;
+            }
+
             try
             {
                 root.DeleteSubKeyTree(subKey, throwOnMissingSubKey: false);
                 App.Logger.WriteLine(LOG_IDENT, $"Removed {root.Name}\\{subKey}");
+                return true;
             }
             catch (Exception ex)
             {
                 App.Logger.WriteLine(LOG_IDENT, $"Couldn't remove {root.Name}\\{subKey}: {ex.Message}");
+                return false;
             }
         }
 
